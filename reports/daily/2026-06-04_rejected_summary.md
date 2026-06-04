@@ -6,6 +6,7 @@
 - REJECT idle_tycoon score=33.63 quality=40.67 mvp=65.0 installs=1154 risks=classifier_low_confidence, leader_dominated, low_data_quality, single_developer_cluster, unknown_coverage, weak_rating_signal, weak_revenue_signal
 - REJECT merge score=33.63 quality=40.67 mvp=65.0 installs=1477 risks=audience_uncertain, classifier_low_confidence, leader_dominated, low_data_quality, single_developer_cluster, unknown_coverage, weak_rating_signal, weak_revenue_signal
 - REJECT runner score=33.63 quality=40.67 mvp=65.0 installs=1287 risks=classifier_low_confidence, leader_dominated, low_data_quality, single_developer_cluster, unknown_coverage, weak_rating_signal, weak_revenue_signal
+- REJECT coloring score=32.03 quality=47.67 mvp=85.0 installs=1029 risks=leader_dominated, single_developer_cluster, unknown_coverage, weak_rating_signal, weak_revenue_signal
 - REJECT word_puzzle score=31.24 quality=44.67 mvp=85.0 installs=574 risks=classifier_low_confidence, leader_dominated, low_data_quality, single_developer_cluster, unknown_coverage, weak_rating_signal
 - REJECT idle_tycoon score=29.43 quality=44.67 mvp=65.0 installs=751 risks=classifier_low_confidence, leader_dominated, low_data_quality, single_developer_cluster, unknown_coverage, weak_rating_signal
 - REJECT runner score=29.43 quality=44.67 mvp=65.0 installs=967 risks=classifier_low_confidence, leader_dominated, low_data_quality, single_developer_cluster, unknown_coverage, weak_rating_signal
@@ -20,7 +21,6 @@
 - REJECT arrow_puzzle score=25.63 quality=45.67 mvp=85.0 installs=1388 risks=leader_dominated, single_developer_cluster, unknown_coverage, weak_monetization_signal, weak_rating_signal, weak_revenue_signal
 - REJECT sort_puzzle score=24.23 quality=38.67 mvp=85.0 installs=1074 risks=classifier_low_confidence, leader_dominated, low_data_quality, single_developer_cluster, unknown_coverage, weak_monetization_signal, weak_rating_signal, weak_revenue_signal
 - REJECT sort_puzzle score=24.23 quality=38.67 mvp=85.0 installs=1478 risks=classifier_low_confidence, leader_dominated, low_data_quality, single_developer_cluster, unknown_coverage, weak_monetization_signal, weak_rating_signal, weak_revenue_signal
-- REJECT sort_puzzle score=24.23 quality=38.67 mvp=85.0 installs=1360 risks=classifier_low_confidence, leader_dominated, low_data_quality, single_developer_cluster, unknown_coverage, weak_monetization_signal, weak_rating_signal, weak_revenue_signal
 - REJECT tile_match score=24.23 quality=38.67 mvp=85.0 installs=1371 risks=classifier_low_confidence, leader_dominated, low_data_quality, single_developer_cluster, unknown_coverage, weak_monetization_signal, weak_rating_signal, weak_revenue_signal
 - REJECT idle_tycoon score=22.63 quality=45.67 mvp=65.0 installs=1432 risks=leader_dominated, single_developer_cluster, unknown_coverage, weak_monetization_signal, weak_rating_signal, weak_revenue_signal
 - REJECT sort_puzzle score=22.63 quality=40.67 mvp=85.0 installs=744 risks=classifier_low_confidence, leader_dominated, low_data_quality, single_developer_cluster, unknown_coverage, weak_rating_signal, weak_revenue_signal
