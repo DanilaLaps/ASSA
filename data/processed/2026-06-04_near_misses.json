@@ -302,7 +302,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -616,7 +617,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -1124,7 +1126,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -1448,7 +1451,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -1852,7 +1856,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -2256,7 +2261,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -2565,7 +2571,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -3046,10 +3053,10 @@
       "sticker.room.design.game.decor",
       "survival.one.nights"
     ],
-    "total_daily_installs": 3314724,
-    "avg_daily_installs": 7637.61,
+    "total_daily_installs": 3314300,
+    "avg_daily_installs": 7636.64,
     "median_daily_installs": 2225.0,
-    "total_monthly_downloads": 20275000,
+    "total_monthly_downloads": 20315000,
     "total_monthly_revenue": 3430000.0,
     "avg_rating": 3.92,
     "rating_count_total": 0,
@@ -3059,7 +3066,7 @@
     "top_app_share": 0.1234,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
-    "giant_developer_share": 0.035,
+    "giant_developer_share": 0.0349,
     "single_developer_share": 0.1234,
     "classification_confidence_avg": 0.6082,
     "unknown_or_new_pattern_cluster": true,
@@ -3205,7 +3212,7 @@
       "mvp_feasibility": 7.56,
       "data_quality": 15.6,
       "competition_penalty": 3.0,
-      "giant_risk_penalty": 0.88,
+      "giant_risk_penalty": 0.87,
       "paid_spike_penalty": 0.0
     },
     "opportunity_score": 74.29,
@@ -3298,7 +3305,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -3659,7 +3667,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -4130,10 +4139,10 @@
       "untangle.rope.knot.tangle.twisted.escape.puzzle",
       "vmpx.xhouf.hzhj.hoqzw"
     ],
-    "total_daily_installs": 3195231,
-    "avg_daily_installs": 7535.92,
+    "total_daily_installs": 3194807,
+    "avg_daily_installs": 7534.92,
     "median_daily_installs": 2052.0,
-    "total_monthly_downloads": 18659000,
+    "total_monthly_downloads": 18699000,
     "total_monthly_revenue": 1170000.0,
     "avg_rating": 3.9,
     "rating_count_total": 0,
@@ -4143,7 +4152,7 @@
     "top_app_share": 0.038,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
-    "giant_developer_share": 0.0268,
+    "giant_developer_share": 0.0267,
     "single_developer_share": 0.0425,
     "classification_confidence_avg": 0.5856,
     "unknown_or_new_pattern_cluster": true,
@@ -4292,7 +4301,7 @@
       "giant_risk_penalty": 0.67,
       "paid_spike_penalty": 0.0
     },
-    "opportunity_score": 73.86,
+    "opportunity_score": 73.87,
     "risk_tags": [
       "audience_uncertain",
       "classifier_low_confidence",
@@ -4382,7 +4391,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -4689,7 +4699,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -4993,7 +5004,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -7101,8 +7113,8 @@
       "wild.party.bronk.win",
       "winter.car.simulator"
     ],
-    "total_daily_installs": 13126371,
-    "avg_daily_installs": 6368.93,
+    "total_daily_installs": 13126327,
+    "avg_daily_installs": 6368.91,
     "median_daily_installs": 1809.0,
     "total_monthly_downloads": 107884000,
     "total_monthly_revenue": 11187000.0,
@@ -7353,7 +7365,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -7663,7 +7676,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -9163,8 +9177,8 @@
       "wild.party.bronk.win",
       "winter.car.simulator"
     ],
-    "total_daily_installs": 8446123,
-    "avg_daily_installs": 5812.89,
+    "total_daily_installs": 8446079,
+    "avg_daily_installs": 5812.86,
     "median_daily_installs": 1900.0,
     "total_monthly_downloads": 52142000,
     "total_monthly_revenue": 6977000.0,
@@ -9415,7 +9429,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -9818,7 +9833,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -10167,7 +10183,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -10818,7 +10835,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -11383,7 +11401,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -11709,7 +11728,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -13360,8 +13380,8 @@
       "vn.funtap.infinitykingdom",
       "wild.party.bronk.win"
     ],
-    "total_daily_installs": 3045703,
-    "avg_daily_installs": 7033.96,
+    "total_daily_installs": 3045659,
+    "avg_daily_installs": 7033.85,
     "median_daily_installs": 2305.0,
     "total_monthly_downloads": 15387000,
     "total_monthly_revenue": 5782000.0,
@@ -14223,8 +14243,8 @@
       "pl.berobasket.speedwaychallenge26.google",
       "se.raketspel.retroracing"
     ],
-    "total_daily_installs": 664788,
-    "avg_daily_installs": 7641.24,
+    "total_daily_installs": 664364,
+    "avg_daily_installs": 7636.37,
     "median_daily_installs": 2671.0,
     "total_monthly_downloads": 4280000,
     "total_monthly_revenue": 770000.0,
@@ -14233,11 +14253,11 @@
     "rating_confidence": 0.0,
     "successful_new_apps_count": 87,
     "traction_fresh_apps_count": 19,
-    "top_app_share": 0.0999,
+    "top_app_share": 0.1,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
-    "giant_developer_share": 0.0417,
-    "single_developer_share": 0.0999,
+    "giant_developer_share": 0.0411,
+    "single_developer_share": 0.1,
     "classification_confidence_avg": 0.5512,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
@@ -14382,10 +14402,10 @@
       "mvp_feasibility": 5.25,
       "data_quality": 15.6,
       "competition_penalty": 3.0,
-      "giant_risk_penalty": 1.04,
+      "giant_risk_penalty": 1.03,
       "paid_spike_penalty": 0.0
     },
-    "opportunity_score": 71.81,
+    "opportunity_score": 71.82,
     "risk_tags": [
       "audience_uncertain",
       "classifier_low_confidence",
@@ -14657,8 +14677,8 @@
       "vn.vplay.thiethan3q.t028a",
       "wild.dino.hunting.game.survival"
     ],
-    "total_daily_installs": 1231043,
-    "avg_daily_installs": 6479.17,
+    "total_daily_installs": 1231531,
+    "avg_daily_installs": 6481.74,
     "median_daily_installs": 2139.5,
     "total_monthly_downloads": 5578000,
     "total_monthly_revenue": 542000.0,
@@ -15040,7 +15060,7 @@
     "total_daily_installs": 1132017,
     "avg_daily_installs": 8323.65,
     "median_daily_installs": 2475.0,
-    "total_monthly_downloads": 4101000,
+    "total_monthly_downloads": 4141000,
     "total_monthly_revenue": 20000.0,
     "avg_rating": 3.93,
     "rating_count_total": 0,
@@ -15620,8 +15640,8 @@
       "vn.funtap.tan3qmax",
       "winter.car.simulator"
     ],
-    "total_daily_installs": 2421635,
-    "avg_daily_installs": 7164.6,
+    "total_daily_installs": 2421591,
+    "avg_daily_installs": 7164.47,
     "median_daily_installs": 2457.0,
     "total_monthly_downloads": 11752000,
     "total_monthly_revenue": 260000.0,
@@ -16522,8 +16542,8 @@
       "jp.yugi.bridgecrane.prod",
       "site.servebot.shadowcricket"
     ],
-    "total_daily_installs": 265037,
-    "avg_daily_installs": 5000.7,
+    "total_daily_installs": 264613,
+    "avg_daily_installs": 4992.7,
     "median_daily_installs": 2490.0,
     "total_monthly_downloads": 1910000,
     "total_monthly_revenue": 50000.0,
@@ -16532,11 +16552,11 @@
     "rating_confidence": 0.0,
     "successful_new_apps_count": 53,
     "traction_fresh_apps_count": 15,
-    "top_app_share": 0.1929,
+    "top_app_share": 0.1932,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
-    "giant_developer_share": 0.0562,
-    "single_developer_share": 0.1929,
+    "giant_developer_share": 0.0547,
+    "single_developer_share": 0.1932,
     "classification_confidence_avg": 0.5792,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
@@ -16681,10 +16701,10 @@
       "mvp_feasibility": 6.18,
       "data_quality": 15.6,
       "competition_penalty": 3.0,
-      "giant_risk_penalty": 1.41,
+      "giant_risk_penalty": 1.37,
       "paid_spike_penalty": 0.0
     },
-    "opportunity_score": 71.48,
+    "opportunity_score": 71.51,
     "risk_tags": [
       "audience_uncertain",
       "classifier_low_confidence",
@@ -43536,9 +43556,9 @@
       "com.xplay.strike.ops.fpsgun",
       "crime.city.gangster.simulation3d"
     ],
-    "total_daily_installs": 205127,
-    "avg_daily_installs": 7889.5,
-    "median_daily_installs": 4095.5,
+    "total_daily_installs": 205083,
+    "avg_daily_installs": 7887.81,
+    "median_daily_installs": 4073.5,
     "total_monthly_downloads": 950000,
     "total_monthly_revenue": 0.0,
     "avg_rating": 3.73,
@@ -53360,6 +53380,260 @@
     "niche": "runner",
     "normalized_niche": "runner",
     "market_category": "casual",
+    "core_mechanic": "physics",
+    "theme": "animals",
+    "meta": "story",
+    "audience_summary": "men_18_35:4, broad:1, unknown:1",
+    "production_complexity": "high",
+    "full_product_complexity": "high",
+    "mvp_complexity": "high",
+    "mvp_feasibility_score": 48.33,
+    "simplifiable": true,
+    "simplification_idea": "Focus the MVP on physics gameplay with a narrow animals theme and one progression loop.",
+    "group_key_type": "core_mechanic_theme_meta",
+    "group_key_value": "physics::animals::story",
+    "group_key": "core_mechanic_theme_meta::physics::animals::story",
+    "signal_signature": "runner::casual::physics::animals::story",
+    "release_date_window": "last_180d",
+    "source_scope": "single_appstorespy_query_no_country_language",
+    "collection_sort": "-release_date",
+    "min_app_daily_installs": 500,
+    "source_query": {
+      "limit": 10000,
+      "page": 1,
+      "sort": "-release_date",
+      "release_date_days_back": 180,
+      "min_downloads_daily": 500,
+      "requested_country": null,
+      "requested_language": null,
+      "requested_active_countries": null
+    },
+    "coverage": {
+      "total_count": null,
+      "result_count": 4788,
+      "sample_truncated": "unknown",
+      "coverage_ratio": null,
+      "full_window_claim_allowed": false
+    },
+    "app_count": 6,
+    "app_ids": [
+      "com.ca.openworldgangster.gangstercargame",
+      "com.gungirls.gplay",
+      "com.iam.monkeybattle.prank.game",
+      "com.kgpl.spider.rope.hero.street.rescue.games",
+      "com.xtp.rope.hero.run",
+      "de.lotum.new4pics"
+    ],
+    "total_daily_installs": 22805,
+    "avg_daily_installs": 3800.83,
+    "median_daily_installs": 3177.5,
+    "total_monthly_downloads": 20000,
+    "total_monthly_revenue": 0.0,
+    "avg_rating": 0.0,
+    "rating_count_total": 0,
+    "rating_confidence": 0.0,
+    "successful_new_apps_count": 6,
+    "traction_fresh_apps_count": 2,
+    "top_app_share": 0.4197,
+    "growth_by_one_app_share": 0.0,
+    "advertised_top_app_share": 0.0,
+    "giant_developer_share": 0.187,
+    "single_developer_share": 0.4197,
+    "classification_confidence_avg": 0.6067,
+    "unknown_or_new_pattern_cluster": true,
+    "top_apps": [
+      {
+        "app_id": "com.xtp.rope.hero.run",
+        "bundle": "com.xtp.rope.hero.run",
+        "name": "Spider Rope Hero Man",
+        "developer_name": "EVV SYSTEM",
+        "developer_id": "4961137961954361118",
+        "downloads_daily": 9571,
+        "downloads_month": 0,
+        "revenue_month": 0.0,
+        "rating_avg": 0.0,
+        "rating_count": 0,
+        "review_count": 0,
+        "release_date": "2026-02-10",
+        "update_date": "2026-05-12",
+        "iap": false,
+        "advertised": false,
+        "ads": false,
+        "url_appstorespy": "https://appstorespy.com/android-google-play/com.xtp.rope.hero.run-trends-revenue-statistics-downloads-ratings",
+        "url": "https://play.google.com/store/apps/details?id=com.xtp.rope.hero.run",
+        "website": "https://evvsystem.blogspot.com/"
+      },
+      {
+        "app_id": "com.iam.monkeybattle.prank.game",
+        "bundle": "com.iam.monkeybattle.prank.game",
+        "name": "I Am Monkey Prank Battle",
+        "developer_name": "ASACO OVERSEAS STUDIO",
+        "developer_id": "7534278756405124951",
+        "downloads_daily": 4264,
+        "downloads_month": 0,
+        "revenue_month": 0.0,
+        "rating_avg": 0.0,
+        "rating_count": 0,
+        "review_count": 0,
+        "release_date": "2026-02-23",
+        "update_date": "2026-04-30",
+        "iap": true,
+        "advertised": false,
+        "ads": false,
+        "url_appstorespy": "https://appstorespy.com/android-google-play/com.iam.monkeybattle.prank.game-trends-revenue-statistics-downloads-ratings",
+        "url": "https://play.google.com/store/apps/details?id=com.iam.monkeybattle.prank.game",
+        "website": "https://theplaymaxgroup.com/"
+      },
+      {
+        "app_id": "com.kgpl.spider.rope.hero.street.rescue.games",
+        "bundle": "com.kgpl.spider.rope.hero.street.rescue.games",
+        "name": "Spider Rope Hero Man Rescue 3D",
+        "developer_name": "RACHAELPITTS TRADING LTD",
+        "developer_id": "8242678036457509633",
+        "downloads_daily": 4155,
+        "downloads_month": 0,
+        "revenue_month": 0.0,
+        "rating_avg": 0.0,
+        "rating_count": 0,
+        "review_count": 0,
+        "release_date": "2026-01-27",
+        "update_date": "2026-04-08",
+        "iap": false,
+        "advertised": false,
+        "ads": false,
+        "url_appstorespy": "https://appstorespy.com/android-google-play/com.kgpl.spider.rope.hero.street.rescue.games-trends-revenue-statistics-downloads-ratings",
+        "url": "https://play.google.com/store/apps/details?id=com.kgpl.spider.rope.hero.street.rescue.games",
+        "website": "https://rachaelpittstradingltd.blogspot.com/"
+      },
+      {
+        "app_id": "de.lotum.new4pics",
+        "bundle": "de.lotum.new4pics",
+        "name": "4 Pics 1 Word: Magic Museum",
+        "developer_name": "Lotum GmbH",
+        "developer_id": "7848396439597711856",
+        "downloads_daily": 2200,
+        "downloads_month": 20000,
+        "revenue_month": 0.0,
+        "rating_avg": 0.0,
+        "rating_count": 0,
+        "review_count": 0,
+        "release_date": "2026-05-26",
+        "update_date": "2026-06-02",
+        "iap": true,
+        "advertised": false,
+        "ads": false,
+        "url_appstorespy": "https://appstorespy.com/android-google-play/de.lotum.new4pics-trends-revenue-statistics-downloads-ratings",
+        "url": "https://play.google.com/store/apps/details?id=de.lotum.new4pics",
+        "website": "https://lotum.com/en/games"
+      },
+      {
+        "app_id": "com.ca.openworldgangster.gangstercargame",
+        "bundle": "com.ca.openworldgangster.gangstercargame",
+        "name": "Open World Gangster Car Game",
+        "developer_name": "Chromic Apps",
+        "developer_id": "6514654763458038778",
+        "downloads_daily": 1397,
+        "downloads_month": 0,
+        "revenue_month": 0.0,
+        "rating_avg": 0.0,
+        "rating_count": 0,
+        "review_count": 0,
+        "release_date": "2025-12-23",
+        "update_date": "2026-03-24",
+        "iap": false,
+        "advertised": false,
+        "ads": false,
+        "url_appstorespy": "https://appstorespy.com/android-google-play/com.ca.openworldgangster.gangstercargame-trends-revenue-statistics-downloads-ratings",
+        "url": "https://play.google.com/store/apps/details?id=com.ca.openworldgangster.gangstercargame",
+        "website": "https://saskyafridi-jpg.github.io/app-ads.txt"
+      }
+    ],
+    "has_history": false,
+    "history_depth_days": 0,
+    "weekly_growth_percent": 0.0,
+    "monthly_growth_percent": 0.0,
+    "previous_total_daily_installs": 0,
+    "data_quality_score": 72.39,
+    "data_quality_components": {
+      "field_completeness": 35.0,
+      "history_depth": 0.0,
+      "sample_size": 20.0,
+      "signal_diversity": 13.39,
+      "monetization_reliability": 6.0,
+      "fresh_success_reliability": 10.0,
+      "penalty": 12.0
+    },
+    "data_quality_reasons": [
+      "classifier_low_confidence",
+      "no_history",
+      "unknown_coverage",
+      "weak_revenue_signal"
+    ],
+    "monetization_signal": {
+      "iap_present": true,
+      "ads_present": false,
+      "revenue_month_available": false,
+      "revenue_confidence": "medium",
+      "monetization_model": "iap"
+    },
+    "score_components": {
+      "demand": 25,
+      "freshness": 15,
+      "revenue_monetization": 6.0,
+      "rating": 0.0,
+      "mvp_feasibility": 7.25,
+      "data_quality": 14.48,
+      "competition_penalty": 1.5,
+      "giant_risk_penalty": 4.67,
+      "paid_spike_penalty": 0.0
+    },
+    "opportunity_score": 61.55,
+    "risk_tags": [
+      "audience_uncertain",
+      "classifier_low_confidence",
+      "high_full_complexity",
+      "unknown_coverage",
+      "weak_rating_signal",
+      "weak_revenue_signal"
+    ],
+    "reason_codes": [
+      "diversified_apps",
+      "fresh_traction",
+      "low_giant_share",
+      "monetization_signal_present",
+      "multi_app_cluster",
+      "new_pattern_detected",
+      "simplifiable_high_complexity",
+      "strong_daily_installs"
+    ],
+    "severe_paid_spike_risk": false,
+    "candidate_id": "2026-06-04:f5ddc3e029818a82:core_mechanic_theme_meta",
+    "dedupe_key": "f5ddc3e029818a82",
+    "alert_instance_id": null,
+    "status": "NEAR_MISS",
+    "failed_alert_conditions": [
+      "low_score",
+      "low_mvp_feasibility"
+    ],
+    "llm_summary": null,
+    "send_regular_alert": false,
+    "initial_baseline_digest": false,
+    "would_be_status": "NEAR_MISS",
+    "exclude_from_cooldown": true,
+    "history_state": "FIRST_RUN_NO_HISTORY",
+    "first_run_without_history": true,
+    "confidence_level": "MEDIUM",
+    "alert_filter_reasons": [
+      "excluded_from_cooldown"
+    ]
+  },
+  {
+    "snapshot_date": "2026-06-04",
+    "score_version": "v1.3.2",
+    "platform": "google_play",
+    "niche": "runner",
+    "normalized_niche": "runner",
+    "market_category": "casual",
     "core_mechanic": "runner",
     "theme": "supermarket",
     "meta": "levels",
@@ -54227,260 +54501,6 @@
     "snapshot_date": "2026-06-04",
     "score_version": "v1.3.2",
     "platform": "google_play",
-    "niche": "runner",
-    "normalized_niche": "runner",
-    "market_category": "casual",
-    "core_mechanic": "physics",
-    "theme": "animals",
-    "meta": "story",
-    "audience_summary": "men_18_35:4, broad:1, unknown:1",
-    "production_complexity": "high",
-    "full_product_complexity": "high",
-    "mvp_complexity": "high",
-    "mvp_feasibility_score": 48.33,
-    "simplifiable": true,
-    "simplification_idea": "Focus the MVP on physics gameplay with a narrow animals theme and one progression loop.",
-    "group_key_type": "core_mechanic_theme_meta",
-    "group_key_value": "physics::animals::story",
-    "group_key": "core_mechanic_theme_meta::physics::animals::story",
-    "signal_signature": "runner::casual::physics::animals::story",
-    "release_date_window": "last_180d",
-    "source_scope": "single_appstorespy_query_no_country_language",
-    "collection_sort": "-release_date",
-    "min_app_daily_installs": 500,
-    "source_query": {
-      "limit": 10000,
-      "page": 1,
-      "sort": "-release_date",
-      "release_date_days_back": 180,
-      "min_downloads_daily": 500,
-      "requested_country": null,
-      "requested_language": null,
-      "requested_active_countries": null
-    },
-    "coverage": {
-      "total_count": null,
-      "result_count": 4788,
-      "sample_truncated": "unknown",
-      "coverage_ratio": null,
-      "full_window_claim_allowed": false
-    },
-    "app_count": 6,
-    "app_ids": [
-      "com.ca.openworldgangster.gangstercargame",
-      "com.gungirls.gplay",
-      "com.iam.monkeybattle.prank.game",
-      "com.kgpl.spider.rope.hero.street.rescue.games",
-      "com.xtp.rope.hero.run",
-      "de.lotum.new4pics"
-    ],
-    "total_daily_installs": 23229,
-    "avg_daily_installs": 3871.5,
-    "median_daily_installs": 3177.5,
-    "total_monthly_downloads": 20000,
-    "total_monthly_revenue": 0.0,
-    "avg_rating": 0.0,
-    "rating_count_total": 0,
-    "rating_confidence": 0.0,
-    "successful_new_apps_count": 6,
-    "traction_fresh_apps_count": 2,
-    "top_app_share": 0.412,
-    "growth_by_one_app_share": 0.0,
-    "advertised_top_app_share": 0.0,
-    "giant_developer_share": 0.2018,
-    "single_developer_share": 0.412,
-    "classification_confidence_avg": 0.6067,
-    "unknown_or_new_pattern_cluster": true,
-    "top_apps": [
-      {
-        "app_id": "com.xtp.rope.hero.run",
-        "bundle": "com.xtp.rope.hero.run",
-        "name": "Spider Rope Hero Man",
-        "developer_name": "EVV SYSTEM",
-        "developer_id": "4961137961954361118",
-        "downloads_daily": 9571,
-        "downloads_month": 0,
-        "revenue_month": 0.0,
-        "rating_avg": 0.0,
-        "rating_count": 0,
-        "review_count": 0,
-        "release_date": "2026-02-10",
-        "update_date": "2026-05-12",
-        "iap": false,
-        "advertised": false,
-        "ads": false,
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.xtp.rope.hero.run-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.xtp.rope.hero.run",
-        "website": "https://evvsystem.blogspot.com/"
-      },
-      {
-        "app_id": "com.iam.monkeybattle.prank.game",
-        "bundle": "com.iam.monkeybattle.prank.game",
-        "name": "I Am Monkey Prank Battle",
-        "developer_name": "ASACO OVERSEAS STUDIO",
-        "developer_id": "7534278756405124951",
-        "downloads_daily": 4688,
-        "downloads_month": 0,
-        "revenue_month": 0.0,
-        "rating_avg": 0.0,
-        "rating_count": 0,
-        "review_count": 0,
-        "release_date": "2026-02-23",
-        "update_date": "2026-04-30",
-        "iap": true,
-        "advertised": false,
-        "ads": false,
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.iam.monkeybattle.prank.game-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.iam.monkeybattle.prank.game",
-        "website": "https://theplaymaxgroup.com/"
-      },
-      {
-        "app_id": "com.kgpl.spider.rope.hero.street.rescue.games",
-        "bundle": "com.kgpl.spider.rope.hero.street.rescue.games",
-        "name": "Spider Rope Hero Man Rescue 3D",
-        "developer_name": "RACHAELPITTS TRADING LTD",
-        "developer_id": "8242678036457509633",
-        "downloads_daily": 4155,
-        "downloads_month": 0,
-        "revenue_month": 0.0,
-        "rating_avg": 0.0,
-        "rating_count": 0,
-        "review_count": 0,
-        "release_date": "2026-01-27",
-        "update_date": "2026-04-08",
-        "iap": false,
-        "advertised": false,
-        "ads": false,
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.kgpl.spider.rope.hero.street.rescue.games-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.kgpl.spider.rope.hero.street.rescue.games",
-        "website": "https://rachaelpittstradingltd.blogspot.com/"
-      },
-      {
-        "app_id": "de.lotum.new4pics",
-        "bundle": "de.lotum.new4pics",
-        "name": "4 Pics 1 Word: Magic Museum",
-        "developer_name": "Lotum GmbH",
-        "developer_id": "7848396439597711856",
-        "downloads_daily": 2200,
-        "downloads_month": 20000,
-        "revenue_month": 0.0,
-        "rating_avg": 0.0,
-        "rating_count": 0,
-        "review_count": 0,
-        "release_date": "2026-05-26",
-        "update_date": "2026-06-02",
-        "iap": true,
-        "advertised": false,
-        "ads": false,
-        "url_appstorespy": "https://appstorespy.com/android-google-play/de.lotum.new4pics-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=de.lotum.new4pics",
-        "website": "https://lotum.com/en/games"
-      },
-      {
-        "app_id": "com.ca.openworldgangster.gangstercargame",
-        "bundle": "com.ca.openworldgangster.gangstercargame",
-        "name": "Open World Gangster Car Game",
-        "developer_name": "Chromic Apps",
-        "developer_id": "6514654763458038778",
-        "downloads_daily": 1397,
-        "downloads_month": 0,
-        "revenue_month": 0.0,
-        "rating_avg": 0.0,
-        "rating_count": 0,
-        "review_count": 0,
-        "release_date": "2025-12-23",
-        "update_date": "2026-03-24",
-        "iap": false,
-        "advertised": false,
-        "ads": false,
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.ca.openworldgangster.gangstercargame-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.ca.openworldgangster.gangstercargame",
-        "website": "https://saskyafridi-jpg.github.io/app-ads.txt"
-      }
-    ],
-    "has_history": false,
-    "history_depth_days": 0,
-    "weekly_growth_percent": 0.0,
-    "monthly_growth_percent": 0.0,
-    "previous_total_daily_installs": 0,
-    "data_quality_score": 72.57,
-    "data_quality_components": {
-      "field_completeness": 35.0,
-      "history_depth": 0.0,
-      "sample_size": 20.0,
-      "signal_diversity": 13.57,
-      "monetization_reliability": 6.0,
-      "fresh_success_reliability": 10.0,
-      "penalty": 12.0
-    },
-    "data_quality_reasons": [
-      "classifier_low_confidence",
-      "no_history",
-      "unknown_coverage",
-      "weak_revenue_signal"
-    ],
-    "monetization_signal": {
-      "iap_present": true,
-      "ads_present": false,
-      "revenue_month_available": false,
-      "revenue_confidence": "medium",
-      "monetization_model": "iap"
-    },
-    "score_components": {
-      "demand": 25,
-      "freshness": 15,
-      "revenue_monetization": 6.0,
-      "rating": 0.0,
-      "mvp_feasibility": 7.25,
-      "data_quality": 14.51,
-      "competition_penalty": 1.5,
-      "giant_risk_penalty": 5.04,
-      "paid_spike_penalty": 0.0
-    },
-    "opportunity_score": 61.22,
-    "risk_tags": [
-      "audience_uncertain",
-      "classifier_low_confidence",
-      "high_full_complexity",
-      "unknown_coverage",
-      "weak_rating_signal",
-      "weak_revenue_signal"
-    ],
-    "reason_codes": [
-      "diversified_apps",
-      "fresh_traction",
-      "low_giant_share",
-      "monetization_signal_present",
-      "multi_app_cluster",
-      "new_pattern_detected",
-      "simplifiable_high_complexity",
-      "strong_daily_installs"
-    ],
-    "severe_paid_spike_risk": false,
-    "candidate_id": "2026-06-04:f5ddc3e029818a82:core_mechanic_theme_meta",
-    "dedupe_key": "f5ddc3e029818a82",
-    "alert_instance_id": null,
-    "status": "NEAR_MISS",
-    "failed_alert_conditions": [
-      "low_score",
-      "low_mvp_feasibility"
-    ],
-    "llm_summary": null,
-    "send_regular_alert": false,
-    "initial_baseline_digest": false,
-    "would_be_status": "NEAR_MISS",
-    "exclude_from_cooldown": true,
-    "history_state": "FIRST_RUN_NO_HISTORY",
-    "first_run_without_history": true,
-    "confidence_level": "MEDIUM",
-    "alert_filter_reasons": [
-      "excluded_from_cooldown"
-    ]
-  },
-  {
-    "snapshot_date": "2026-06-04",
-    "score_version": "v1.3.2",
-    "platform": "google_play",
     "niche": "idle tycoon",
     "normalized_niche": "idle_tycoon",
     "market_category": "simulation",
@@ -55180,7 +55200,7 @@
     "total_daily_installs": 72460,
     "avg_daily_installs": 9057.5,
     "median_daily_installs": 7344.5,
-    "total_monthly_downloads": 360000,
+    "total_monthly_downloads": 400000,
     "total_monthly_revenue": 0.0,
     "avg_rating": 3.87,
     "rating_count_total": 0,

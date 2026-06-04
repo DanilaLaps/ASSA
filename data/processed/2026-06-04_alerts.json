@@ -351,7 +351,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -742,7 +743,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -1042,7 +1044,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -1103,8 +1106,8 @@
       "org.smapps.wool",
       "sort.puzzle.category.card.games.solitaire"
     ],
-    "total_daily_installs": 57259,
-    "avg_daily_installs": 4089.93,
+    "total_daily_installs": 58418,
+    "avg_daily_installs": 4172.71,
     "median_daily_installs": 3250.0,
     "total_monthly_downloads": 868000,
     "total_monthly_revenue": 20000.0,
@@ -1113,11 +1116,11 @@
     "rating_confidence": 0.0,
     "successful_new_apps_count": 14,
     "traction_fresh_apps_count": 3,
-    "top_app_share": 0.3091,
+    "top_app_share": 0.3029,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
     "giant_developer_share": 0.0,
-    "single_developer_share": 0.3091,
+    "single_developer_share": 0.3029,
     "classification_confidence_avg": 0.7023,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
@@ -1164,6 +1167,27 @@
         "website": "http://maglab.com.tr"
       },
       {
+        "app_id": "com.puzzle.water.sort.color.jam",
+        "bundle": "com.puzzle.water.sort.color.jam",
+        "name": "Water Puzzle: Sort Color Jam",
+        "developer_name": "Sweetener",
+        "developer_id": "5196938618751074563",
+        "downloads_daily": 5221,
+        "downloads_month": 100000,
+        "revenue_month": 0.0,
+        "rating_avg": 4.8,
+        "rating_count": 0,
+        "review_count": 211,
+        "release_date": "2025-12-24",
+        "update_date": "2026-04-09",
+        "iap": true,
+        "advertised": false,
+        "ads": false,
+        "url_appstorespy": "https://appstorespy.com/android-google-play/com.puzzle.water.sort.color.jam-trends-revenue-statistics-downloads-ratings",
+        "url": "https://play.google.com/store/apps/details?id=com.puzzle.water.sort.color.jam",
+        "website": "https://gamestar6688.com"
+      },
+      {
         "app_id": "com.mintgames.jigsolitaire",
         "bundle": "com.mintgames.jigsolitaire",
         "name": "Jigsolitaire Master Puzzle",
@@ -1204,27 +1228,6 @@
         "url_appstorespy": "https://appstorespy.com/android-google-play/com.magic.relaxing.water.sort.colorgame.puzzle-trends-revenue-statistics-downloads-ratings",
         "url": "https://play.google.com/store/apps/details?id=com.magic.relaxing.water.sort.colorgame.puzzle",
         "website": "https://www.lbsbanana.com/"
-      },
-      {
-        "app_id": "net.waystargames.water.sort.alchemists.journey",
-        "bundle": "net.waystargames.water.sort.alchemists.journey",
-        "name": "Wizard Sort - Color Match Game",
-        "developer_name": "WAYSTAR GAMES DİJİTAL SERVİSLER A.S",
-        "developer_id": "9137623121682938712",
-        "downloads_daily": 4224,
-        "downloads_month": 0,
-        "revenue_month": 0.0,
-        "rating_avg": 0.0,
-        "rating_count": 0,
-        "review_count": 0,
-        "release_date": "2026-02-26",
-        "update_date": "2026-05-30",
-        "iap": true,
-        "advertised": false,
-        "ads": false,
-        "url_appstorespy": "https://appstorespy.com/android-google-play/net.waystargames.water.sort.alchemists.journey-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=net.waystargames.water.sort.alchemists.journey",
-        "website": "https://waystargames.net"
       }
     ],
     "has_history": false,
@@ -1341,7 +1344,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -1704,8 +1708,8 @@
       "wild.card.nomercy.card.bombayplay.games",
       "xyz.hollowark.savannagoalspin"
     ],
-    "total_daily_installs": 1236741,
-    "avg_daily_installs": 3913.74,
+    "total_daily_installs": 1236626,
+    "avg_daily_installs": 3913.37,
     "median_daily_installs": 1553.0,
     "total_monthly_downloads": 12067000,
     "total_monthly_revenue": 6606000.0,
@@ -1950,7 +1954,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -2209,8 +2214,8 @@
       "wool.blast.match.escape.traffic.jam.rescue.puzzle",
       "wool.color.sort.mania.puzzle.android"
     ],
-    "total_daily_installs": 963892,
-    "avg_daily_installs": 4546.66,
+    "total_daily_installs": 965051,
+    "avg_daily_installs": 4552.13,
     "median_daily_installs": 1542.0,
     "total_monthly_downloads": 18282000,
     "total_monthly_revenue": 522000.0,
@@ -2219,11 +2224,11 @@
     "rating_confidence": 0.0,
     "successful_new_apps_count": 212,
     "traction_fresh_apps_count": 40,
-    "top_app_share": 0.1797,
+    "top_app_share": 0.1794,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
     "giant_developer_share": 0.0413,
-    "single_developer_share": 0.1797,
+    "single_developer_share": 0.1794,
     "classification_confidence_avg": 0.6903,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
@@ -2452,7 +2457,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -3000,7 +3006,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -3298,7 +3305,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -3675,7 +3683,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -4097,7 +4106,8 @@
         "Check top apps manually in AppStoreSpy and stores.",
         "Confirm the signal is not paid traffic."
       ]
-    }
+    },
+    "llm_analysis_source": "fallback"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -5092,8 +5102,8 @@
       "xyz.hollowark.savannagoalspin",
       "zen.arrow.flow.game.puzzle.gp"
     ],
-    "total_daily_installs": 3200121,
-    "avg_daily_installs": 7494.43,
+    "total_daily_installs": 3200006,
+    "avg_daily_installs": 7494.16,
     "median_daily_installs": 1709.0,
     "total_monthly_downloads": 42136000,
     "total_monthly_revenue": 652000.0,
@@ -6991,8 +7001,8 @@
       "tim.advanture.run",
       "xyz.hollowark.savannagoalspin"
     ],
-    "total_daily_installs": 3019228,
-    "avg_daily_installs": 8160.08,
+    "total_daily_installs": 3019113,
+    "avg_daily_installs": 8159.76,
     "median_daily_installs": 1701.5,
     "total_monthly_downloads": 46680000,
     "total_monthly_revenue": 7247000.0,
@@ -7508,8 +7518,8 @@
       "com.sweet.sugar.honey.shelf.dessert",
       "com.sweet.tile.casual.tasty.mouth"
     ],
-    "total_daily_installs": 33302,
-    "avg_daily_installs": 2378.71,
+    "total_daily_installs": 33187,
+    "avg_daily_installs": 2370.5,
     "median_daily_installs": 1769.0,
     "total_monthly_downloads": 105000,
     "total_monthly_revenue": 200000.0,
@@ -7518,11 +7528,11 @@
     "rating_confidence": 0.0,
     "successful_new_apps_count": 14,
     "traction_fresh_apps_count": 6,
-    "top_app_share": 0.2528,
+    "top_app_share": 0.2537,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
-    "giant_developer_share": 0.0446,
-    "single_developer_share": 0.2528,
+    "giant_developer_share": 0.0448,
+    "single_developer_share": 0.2537,
     "classification_confidence_avg": 0.6749,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
@@ -7569,27 +7579,6 @@
         "website": "http://musicgamestudio.top"
       },
       {
-        "app_id": "com.gs.erskraft.game",
-        "bundle": "com.gs.erskraft.game",
-        "name": "Grand Theft Auto V",
-        "developer_name": "Shahnaz Developers",
-        "developer_id": "6004856569142378228",
-        "downloads_daily": 3433,
-        "downloads_month": 0,
-        "revenue_month": 0.0,
-        "rating_avg": 0.0,
-        "rating_count": 0,
-        "review_count": 0,
-        "release_date": "2026-04-06",
-        "update_date": "2026-06-03",
-        "iap": false,
-        "advertised": false,
-        "ads": false,
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.gs.erskraft.game-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.gs.erskraft.game",
-        "website": "https://glowsoft1.blogspot.com"
-      },
-      {
         "app_id": "com.supermah.jong.match.puzzle.free.game",
         "bundle": "com.supermah.jong.match.puzzle.free.game",
         "name": "Super Mahjong Match 3",
@@ -7609,6 +7598,27 @@
         "url_appstorespy": "https://appstorespy.com/android-google-play/com.supermah.jong.match.puzzle.free.game-trends-revenue-statistics-downloads-ratings",
         "url": "https://play.google.com/store/apps/details?id=com.supermah.jong.match.puzzle.free.game",
         "website": "http://casaebstacks.com"
+      },
+      {
+        "app_id": "com.gs.erskraft.game",
+        "bundle": "com.gs.erskraft.game",
+        "name": "Grand Theft Auto V",
+        "developer_name": "Shahnaz Developers",
+        "developer_id": "6004856569142378228",
+        "downloads_daily": 3318,
+        "downloads_month": 0,
+        "revenue_month": 0.0,
+        "rating_avg": 0.0,
+        "rating_count": 0,
+        "review_count": 0,
+        "release_date": "2026-04-06",
+        "update_date": "2026-06-03",
+        "iap": false,
+        "advertised": false,
+        "ads": false,
+        "url_appstorespy": "https://appstorespy.com/android-google-play/com.gs.erskraft.game-trends-revenue-statistics-downloads-ratings",
+        "url": "https://play.google.com/store/apps/details?id=com.gs.erskraft.game",
+        "website": "https://glowsoft1.blogspot.com"
       },
       {
         "app_id": "com.color.gem.block.challenge.jungle",
@@ -7667,10 +7677,10 @@
       "mvp_feasibility": 11.59,
       "data_quality": 15.6,
       "competition_penalty": 3.0,
-      "giant_risk_penalty": 1.11,
+      "giant_risk_penalty": 1.12,
       "paid_spike_penalty": 0.0
     },
-    "opportunity_score": 78.08,
+    "opportunity_score": 78.07,
     "risk_tags": [
       "classifier_low_confidence",
       "unknown_coverage",
@@ -9155,8 +9165,8 @@
       "water.sort.color.puzzle.master",
       "wool.color.sort.mania.puzzle.android"
     ],
-    "total_daily_installs": 178805,
-    "avg_daily_installs": 2750.85,
+    "total_daily_installs": 179964,
+    "avg_daily_installs": 2768.68,
     "median_daily_installs": 1666.0,
     "total_monthly_downloads": 2553000,
     "total_monthly_revenue": 20000.0,
@@ -9165,11 +9175,11 @@
     "rating_confidence": 0.0,
     "successful_new_apps_count": 65,
     "traction_fresh_apps_count": 18,
-    "top_app_share": 0.099,
+    "top_app_share": 0.0983,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
-    "giant_developer_share": 0.0154,
-    "single_developer_share": 0.099,
+    "giant_developer_share": 0.0153,
+    "single_developer_share": 0.0983,
     "classification_confidence_avg": 0.6893,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
@@ -9314,7 +9324,7 @@
       "mvp_feasibility": 12.69,
       "data_quality": 15.6,
       "competition_penalty": 3.0,
-      "giant_risk_penalty": 0.39,
+      "giant_risk_penalty": 0.38,
       "paid_spike_penalty": 0.0
     },
     "opportunity_score": 77.81,
@@ -9917,8 +9927,8 @@
       "studio.gammate.farmloop",
       "tile.triple.match.puzzle.game.journey"
     ],
-    "total_daily_installs": 1279270,
-    "avg_daily_installs": 5635.55,
+    "total_daily_installs": 1280195,
+    "avg_daily_installs": 5639.63,
     "median_daily_installs": 1637.0,
     "total_monthly_downloads": 15791000,
     "total_monthly_revenue": 3594000.0,
@@ -9927,11 +9937,11 @@
     "rating_confidence": 0.0,
     "successful_new_apps_count": 227,
     "traction_fresh_apps_count": 55,
-    "top_app_share": 0.0661,
+    "top_app_share": 0.066,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
     "giant_developer_share": 0.0173,
-    "single_developer_share": 0.0661,
+    "single_developer_share": 0.066,
     "classification_confidence_avg": 0.6468,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
@@ -10985,8 +10995,8 @@
       "xyz.hollowark.savannagoalspin",
       "zen.arrow.flow.game.puzzle.gp"
     ],
-    "total_daily_installs": 5297581,
-    "avg_daily_installs": 6413.54,
+    "total_daily_installs": 5297466,
+    "avg_daily_installs": 6413.4,
     "median_daily_installs": 1673.5,
     "total_monthly_downloads": 74036000,
     "total_monthly_revenue": 7703000.0,
@@ -16908,8 +16918,8 @@
       "net.im30.travel.gp",
       "pl.idreams.SkyForceReloadedTV"
     ],
-    "total_daily_installs": 217003,
-    "avg_daily_installs": 10850.15,
+    "total_daily_installs": 217491,
+    "avg_daily_installs": 10874.55,
     "median_daily_installs": 3126.5,
     "total_monthly_downloads": 3616000,
     "total_monthly_revenue": 209000.0,
@@ -16918,11 +16928,11 @@
     "rating_confidence": 0.0,
     "successful_new_apps_count": 20,
     "traction_fresh_apps_count": 5,
-    "top_app_share": 0.3761,
+    "top_app_share": 0.3753,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
     "giant_developer_share": 0.0039,
-    "single_developer_share": 0.3761,
+    "single_developer_share": 0.3753,
     "classification_confidence_avg": 0.6388,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
@@ -17037,12 +17047,12 @@
     "weekly_growth_percent": 0.0,
     "monthly_growth_percent": 0.0,
     "previous_total_daily_installs": 0,
-    "data_quality_score": 77.4,
+    "data_quality_score": 77.42,
     "data_quality_components": {
       "field_completeness": 35.0,
       "history_depth": 0.0,
       "sample_size": 20.0,
-      "signal_diversity": 14.4,
+      "signal_diversity": 14.42,
       "monetization_reliability": 10.0,
       "fresh_success_reliability": 10.0,
       "penalty": 12.0
@@ -19127,8 +19137,8 @@
       "slots.casino.tinysoft.slot.machines",
       "uniqo.imposter"
     ],
-    "total_daily_installs": 1363956,
-    "avg_daily_installs": 11179.97,
+    "total_daily_installs": 1364444,
+    "avg_daily_installs": 11183.97,
     "median_daily_installs": 1845.5,
     "total_monthly_downloads": 14243000,
     "total_monthly_revenue": 1974000.0,
@@ -20872,8 +20882,8 @@
       "sort.yarn.wool.color.match.puzzle.android",
       "stitch.paint.color.cozy.number.puzzle.drawing.yarn"
     ],
-    "total_daily_installs": 2465567,
-    "avg_daily_installs": 5926.84,
+    "total_daily_installs": 2466055,
+    "avg_daily_installs": 5928.02,
     "median_daily_installs": 1522.5,
     "total_monthly_downloads": 30033000,
     "total_monthly_revenue": 1908000.0,
@@ -25393,8 +25403,8 @@
       "triumph.free.cash.real.game",
       "uniqo.imposter"
     ],
-    "total_daily_installs": 7115719,
-    "avg_daily_installs": 6675.16,
+    "total_daily_installs": 7117132,
+    "avg_daily_installs": 6676.48,
     "median_daily_installs": 1736.5,
     "total_monthly_downloads": 74279000,
     "total_monthly_revenue": 8232000.0,
@@ -25406,7 +25416,7 @@
     "top_app_share": 0.0754,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
-    "giant_developer_share": 0.0504,
+    "giant_developer_share": 0.0503,
     "single_developer_share": 0.0754,
     "classification_confidence_avg": 0.6267,
     "unknown_or_new_pattern_cluster": true,
@@ -27396,8 +27406,8 @@
       "vn.vplay.batluongnhan.t030a",
       "vn.zoneplay.gp01"
     ],
-    "total_daily_installs": 3224903,
-    "avg_daily_installs": 6073.26,
+    "total_daily_installs": 3225828,
+    "avg_daily_installs": 6075.01,
     "median_daily_installs": 1873.0,
     "total_monthly_downloads": 18629000,
     "total_monthly_revenue": 3438000.0,
@@ -33388,8 +33398,8 @@
       "jp.co.mixi.strikeworld",
       "jp.nhk.netra"
     ],
-    "total_daily_installs": 981193,
-    "avg_daily_installs": 7787.25,
+    "total_daily_installs": 982118,
+    "avg_daily_installs": 7794.59,
     "median_daily_installs": 1185.5,
     "total_monthly_downloads": 16438000,
     "total_monthly_revenue": 75000.0,
@@ -33398,11 +33408,11 @@
     "rating_confidence": 0.0,
     "successful_new_apps_count": 126,
     "traction_fresh_apps_count": 41,
-    "top_app_share": 0.5471,
+    "top_app_share": 0.5466,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
     "giant_developer_share": 0.011,
-    "single_developer_share": 0.5471,
+    "single_developer_share": 0.5466,
     "classification_confidence_avg": 0.5524,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
@@ -33517,12 +33527,12 @@
     "weekly_growth_percent": 0.0,
     "monthly_growth_percent": 0.0,
     "previous_total_daily_installs": 0,
-    "data_quality_score": 73.45,
+    "data_quality_score": 73.46,
     "data_quality_components": {
       "field_completeness": 35.0,
       "history_depth": 0.0,
       "sample_size": 20.0,
-      "signal_diversity": 10.45,
+      "signal_diversity": 10.46,
       "monetization_reliability": 10.0,
       "fresh_success_reliability": 10.0,
       "penalty": 12.0
@@ -34835,7 +34845,7 @@
     "total_daily_installs": 316012,
     "avg_daily_installs": 5266.87,
     "median_daily_installs": 1411.0,
-    "total_monthly_downloads": 2086000,
+    "total_monthly_downloads": 2126000,
     "total_monthly_revenue": 700000.0,
     "avg_rating": 4.35,
     "rating_count_total": 0,
@@ -42997,9 +43007,9 @@
       "net.waystargames.water.sort.alchemists.journey",
       "sort.puzzle.category.card.games.solitaire"
     ],
-    "total_daily_installs": 44173,
-    "avg_daily_installs": 4908.11,
-    "median_daily_installs": 4062.0,
+    "total_daily_installs": 45332,
+    "avg_daily_installs": 5036.89,
+    "median_daily_installs": 4224.0,
     "total_monthly_downloads": 670000,
     "total_monthly_revenue": 0.0,
     "avg_rating": 4.4,
@@ -43007,11 +43017,11 @@
     "rating_confidence": 0.0,
     "successful_new_apps_count": 9,
     "traction_fresh_apps_count": 2,
-    "top_app_share": 0.4006,
+    "top_app_share": 0.3904,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
     "giant_developer_share": 0.0,
-    "single_developer_share": 0.4006,
+    "single_developer_share": 0.3904,
     "classification_confidence_avg": 0.7082,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
@@ -43058,6 +43068,27 @@
         "website": "http://maglab.com.tr"
       },
       {
+        "app_id": "com.puzzle.water.sort.color.jam",
+        "bundle": "com.puzzle.water.sort.color.jam",
+        "name": "Water Puzzle: Sort Color Jam",
+        "developer_name": "Sweetener",
+        "developer_id": "5196938618751074563",
+        "downloads_daily": 5221,
+        "downloads_month": 100000,
+        "revenue_month": 0.0,
+        "rating_avg": 4.8,
+        "rating_count": 0,
+        "review_count": 211,
+        "release_date": "2025-12-24",
+        "update_date": "2026-04-09",
+        "iap": true,
+        "advertised": false,
+        "ads": false,
+        "url_appstorespy": "https://appstorespy.com/android-google-play/com.puzzle.water.sort.color.jam-trends-revenue-statistics-downloads-ratings",
+        "url": "https://play.google.com/store/apps/details?id=com.puzzle.water.sort.color.jam",
+        "website": "https://gamestar6688.com"
+      },
+      {
         "app_id": "com.magic.relaxing.water.sort.colorgame.puzzle",
         "bundle": "com.magic.relaxing.water.sort.colorgame.puzzle",
         "name": "3D Colorful Sort™ Magic Water",
@@ -43098,27 +43129,6 @@
         "url_appstorespy": "https://appstorespy.com/android-google-play/net.waystargames.water.sort.alchemists.journey-trends-revenue-statistics-downloads-ratings",
         "url": "https://play.google.com/store/apps/details?id=net.waystargames.water.sort.alchemists.journey",
         "website": "https://waystargames.net"
-      },
-      {
-        "app_id": "com.puzzle.water.sort.color.jam",
-        "bundle": "com.puzzle.water.sort.color.jam",
-        "name": "Water Puzzle: Sort Color Jam",
-        "developer_name": "Sweetener",
-        "developer_id": "5196938618751074563",
-        "downloads_daily": 4062,
-        "downloads_month": 100000,
-        "revenue_month": 0.0,
-        "rating_avg": 4.8,
-        "rating_count": 0,
-        "review_count": 209,
-        "release_date": "2025-12-24",
-        "update_date": "2026-04-09",
-        "iap": true,
-        "advertised": false,
-        "ads": false,
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.puzzle.water.sort.color.jam-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.puzzle.water.sort.color.jam",
-        "website": "https://gamestar6688.com"
       }
     ],
     "has_history": false,
@@ -43126,12 +43136,12 @@
     "weekly_growth_percent": 0.0,
     "monthly_growth_percent": 0.0,
     "previous_total_daily_installs": 0,
-    "data_quality_score": 79.83,
+    "data_quality_score": 80.07,
     "data_quality_components": {
       "field_completeness": 35.0,
       "history_depth": 0.0,
       "sample_size": 20.0,
-      "signal_diversity": 13.83,
+      "signal_diversity": 14.07,
       "monetization_reliability": 6.0,
       "fresh_success_reliability": 10.0,
       "penalty": 5.0
@@ -43154,12 +43164,12 @@
       "revenue_monetization": 6.0,
       "rating": 0.0,
       "mvp_feasibility": 12.75,
-      "data_quality": 15.97,
+      "data_quality": 16.01,
       "competition_penalty": 2.25,
       "giant_risk_penalty": 0.0,
       "paid_spike_penalty": 0.0
     },
-    "opportunity_score": 72.47,
+    "opportunity_score": 72.51,
     "risk_tags": [
       "unknown_coverage",
       "weak_rating_signal",
