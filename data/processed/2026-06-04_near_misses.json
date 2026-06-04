@@ -36,7 +36,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -50,9 +50,9 @@
       "com.footballplink.speedy.goalcoin",
       "com.vnggames.totalfootball"
     ],
-    "total_daily_installs": 58876,
-    "avg_daily_installs": 9812.67,
-    "median_daily_installs": 4967.0,
+    "total_daily_installs": 59932,
+    "avg_daily_installs": 9988.67,
+    "median_daily_installs": 5495.0,
     "total_monthly_downloads": 1110000,
     "total_monthly_revenue": 300000.0,
     "avg_rating": 0.0,
@@ -60,11 +60,11 @@
     "rating_confidence": 0.0,
     "successful_new_apps_count": 6,
     "traction_fresh_apps_count": 1,
-    "top_app_share": 0.4215,
+    "top_app_share": 0.4141,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
     "giant_developer_share": 0.0,
-    "single_developer_share": 0.4215,
+    "single_developer_share": 0.4141,
     "classification_confidence_avg": 0.6237,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
@@ -116,7 +116,7 @@
         "name": "Flying Car Robot Game",
         "developer_name": "Developr",
         "developer_id": "6395047500192076623",
-        "downloads_daily": 7960,
+        "downloads_daily": 9016,
         "downloads_month": 0,
         "revenue_month": 0.0,
         "rating_avg": 0.0,
@@ -179,12 +179,12 @@
     "weekly_growth_percent": 0.0,
     "monthly_growth_percent": 0.0,
     "previous_total_daily_installs": 0,
-    "data_quality_score": 76.35,
+    "data_quality_score": 76.52,
     "data_quality_components": {
       "field_completeness": 35.0,
       "history_depth": 0.0,
       "sample_size": 20.0,
-      "signal_diversity": 13.35,
+      "signal_diversity": 13.52,
       "monetization_reliability": 10.0,
       "fresh_success_reliability": 10.0,
       "penalty": 12.0
@@ -207,12 +207,12 @@
       "revenue_monetization": 15.0,
       "rating": 0.0,
       "mvp_feasibility": 7.75,
-      "data_quality": 15.27,
+      "data_quality": 15.3,
       "competition_penalty": 1.5,
       "giant_risk_penalty": 0.0,
       "paid_spike_penalty": 0.0
     },
-    "opportunity_score": 76.52,
+    "opportunity_score": 76.55,
     "risk_tags": [
       "audience_uncertain",
       "classifier_low_confidence",
@@ -303,7 +303,27 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback"
+    "llm_analysis_source": "fallback",
+    "llm_status": {
+      "analysis_source": "fallback",
+      "should_call_openai": true,
+      "fallback_reason": "openai_error",
+      "requested": true,
+      "enabled": true,
+      "api_key_present": true,
+      "api_key_env": "OPENAI_API_KEY",
+      "model": "gpt-4.1-mini",
+      "model_env": "OPENAI_MODEL",
+      "candidate_counts": {
+        "alerts": 3,
+        "watch": 10,
+        "near_misses": 20,
+        "initial_baseline_digest": 10
+      },
+      "fallback_detail": "HTTP Error 429: Too Many Requests"
+    },
+    "llm_fallback_reason": "openai_error",
+    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -342,7 +362,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -618,7 +638,27 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback"
+    "llm_analysis_source": "fallback",
+    "llm_status": {
+      "analysis_source": "fallback",
+      "should_call_openai": true,
+      "fallback_reason": "openai_error",
+      "requested": true,
+      "enabled": true,
+      "api_key_present": true,
+      "api_key_env": "OPENAI_API_KEY",
+      "model": "gpt-4.1-mini",
+      "model_env": "OPENAI_MODEL",
+      "candidate_counts": {
+        "alerts": 3,
+        "watch": 10,
+        "near_misses": 20,
+        "initial_baseline_digest": 10
+      },
+      "fallback_detail": "HTTP Error 429: Too Many Requests"
+    },
+    "llm_fallback_reason": "openai_error",
+    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -657,7 +697,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -875,8 +915,8 @@
       "puzzle.arrow.jam.master",
       "unscrew.star.nuts.bolts.screw.pin.jam.puzzle.color.sort.out"
     ],
-    "total_daily_installs": 1122033,
-    "avg_daily_installs": 5343.01,
+    "total_daily_installs": 1124536,
+    "avg_daily_installs": 5354.93,
     "median_daily_installs": 1648.5,
     "total_monthly_downloads": 11731000,
     "total_monthly_revenue": 240000.0,
@@ -885,11 +925,11 @@
     "rating_confidence": 0.0,
     "successful_new_apps_count": 210,
     "traction_fresh_apps_count": 60,
-    "top_app_share": 0.0643,
+    "top_app_share": 0.0641,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
-    "giant_developer_share": 0.0236,
-    "single_developer_share": 0.0643,
+    "giant_developer_share": 0.0235,
+    "single_developer_share": 0.0641,
     "classification_confidence_avg": 0.5521,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
@@ -1127,7 +1167,27 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback"
+    "llm_analysis_source": "fallback",
+    "llm_status": {
+      "analysis_source": "fallback",
+      "should_call_openai": true,
+      "fallback_reason": "openai_error",
+      "requested": true,
+      "enabled": true,
+      "api_key_present": true,
+      "api_key_env": "OPENAI_API_KEY",
+      "model": "gpt-4.1-mini",
+      "model_env": "OPENAI_MODEL",
+      "candidate_counts": {
+        "alerts": 3,
+        "watch": 10,
+        "near_misses": 20,
+        "initial_baseline_digest": 10
+      },
+      "fallback_detail": "HTTP Error 429: Too Many Requests"
+    },
+    "llm_fallback_reason": "openai_error",
+    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -1166,7 +1226,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -1201,8 +1261,8 @@
       "com.wheel.cash.drop.spin.money.peg.gear",
       "com.who.is.daddy.game"
     ],
-    "total_daily_installs": 227507,
-    "avg_daily_installs": 8426.19,
+    "total_daily_installs": 228942,
+    "avg_daily_installs": 8479.33,
     "median_daily_installs": 2321.0,
     "total_monthly_downloads": 2450000,
     "total_monthly_revenue": 320000.0,
@@ -1211,11 +1271,11 @@
     "rating_confidence": 0.0,
     "successful_new_apps_count": 27,
     "traction_fresh_apps_count": 6,
-    "top_app_share": 0.2643,
+    "top_app_share": 0.2626,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
     "giant_developer_share": 0.0,
-    "single_developer_share": 0.2643,
+    "single_developer_share": 0.2626,
     "classification_confidence_avg": 0.6292,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
@@ -1452,7 +1512,27 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback"
+    "llm_analysis_source": "fallback",
+    "llm_status": {
+      "analysis_source": "fallback",
+      "should_call_openai": true,
+      "fallback_reason": "openai_error",
+      "requested": true,
+      "enabled": true,
+      "api_key_present": true,
+      "api_key_env": "OPENAI_API_KEY",
+      "model": "gpt-4.1-mini",
+      "model_env": "OPENAI_MODEL",
+      "candidate_counts": {
+        "alerts": 3,
+        "watch": 10,
+        "near_misses": 20,
+        "initial_baseline_digest": 10
+      },
+      "fallback_detail": "HTTP Error 429: Too Many Requests"
+    },
+    "llm_fallback_reason": "openai_error",
+    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -1491,7 +1571,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -1857,7 +1937,27 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback"
+    "llm_analysis_source": "fallback",
+    "llm_status": {
+      "analysis_source": "fallback",
+      "should_call_openai": true,
+      "fallback_reason": "openai_error",
+      "requested": true,
+      "enabled": true,
+      "api_key_present": true,
+      "api_key_env": "OPENAI_API_KEY",
+      "model": "gpt-4.1-mini",
+      "model_env": "OPENAI_MODEL",
+      "candidate_counts": {
+        "alerts": 3,
+        "watch": 10,
+        "near_misses": 20,
+        "initial_baseline_digest": 10
+      },
+      "fallback_detail": "HTTP Error 429: Too Many Requests"
+    },
+    "llm_fallback_reason": "openai_error",
+    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -1896,7 +1996,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -2262,7 +2362,27 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback"
+    "llm_analysis_source": "fallback",
+    "llm_status": {
+      "analysis_source": "fallback",
+      "should_call_openai": true,
+      "fallback_reason": "openai_error",
+      "requested": true,
+      "enabled": true,
+      "api_key_present": true,
+      "api_key_env": "OPENAI_API_KEY",
+      "model": "gpt-4.1-mini",
+      "model_env": "OPENAI_MODEL",
+      "candidate_counts": {
+        "alerts": 3,
+        "watch": 10,
+        "near_misses": 20,
+        "initial_baseline_digest": 10
+      },
+      "fallback_detail": "HTTP Error 429: Too Many Requests"
+    },
+    "llm_fallback_reason": "openai_error",
+    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -2301,7 +2421,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -2572,7 +2692,27 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback"
+    "llm_analysis_source": "fallback",
+    "llm_status": {
+      "analysis_source": "fallback",
+      "should_call_openai": true,
+      "fallback_reason": "openai_error",
+      "requested": true,
+      "enabled": true,
+      "api_key_present": true,
+      "api_key_env": "OPENAI_API_KEY",
+      "model": "gpt-4.1-mini",
+      "model_env": "OPENAI_MODEL",
+      "candidate_counts": {
+        "alerts": 3,
+        "watch": 10,
+        "near_misses": 20,
+        "initial_baseline_digest": 10
+      },
+      "fallback_detail": "HTTP Error 429: Too Many Requests"
+    },
+    "llm_fallback_reason": "openai_error",
+    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -2611,7 +2751,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -3306,7 +3446,27 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback"
+    "llm_analysis_source": "fallback",
+    "llm_status": {
+      "analysis_source": "fallback",
+      "should_call_openai": true,
+      "fallback_reason": "openai_error",
+      "requested": true,
+      "enabled": true,
+      "api_key_present": true,
+      "api_key_env": "OPENAI_API_KEY",
+      "model": "gpt-4.1-mini",
+      "model_env": "OPENAI_MODEL",
+      "candidate_counts": {
+        "alerts": 3,
+        "watch": 10,
+        "near_misses": 20,
+        "initial_baseline_digest": 10
+      },
+      "fallback_detail": "HTTP Error 429: Too Many Requests"
+    },
+    "llm_fallback_reason": "openai_error",
+    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -3345,7 +3505,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -3668,7 +3828,27 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback"
+    "llm_analysis_source": "fallback",
+    "llm_status": {
+      "analysis_source": "fallback",
+      "should_call_openai": true,
+      "fallback_reason": "openai_error",
+      "requested": true,
+      "enabled": true,
+      "api_key_present": true,
+      "api_key_env": "OPENAI_API_KEY",
+      "model": "gpt-4.1-mini",
+      "model_env": "OPENAI_MODEL",
+      "candidate_counts": {
+        "alerts": 3,
+        "watch": 10,
+        "near_misses": 20,
+        "initial_baseline_digest": 10
+      },
+      "fallback_detail": "HTTP Error 429: Too Many Requests"
+    },
+    "llm_fallback_reason": "openai_error",
+    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -3707,7 +3887,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -4139,8 +4319,8 @@
       "untangle.rope.knot.tangle.twisted.escape.puzzle",
       "vmpx.xhouf.hzhj.hoqzw"
     ],
-    "total_daily_installs": 3194807,
-    "avg_daily_installs": 7534.92,
+    "total_daily_installs": 3242567,
+    "avg_daily_installs": 7647.56,
     "median_daily_installs": 2052.0,
     "total_monthly_downloads": 18699000,
     "total_monthly_revenue": 1170000.0,
@@ -4149,11 +4329,11 @@
     "rating_confidence": 0.0,
     "successful_new_apps_count": 424,
     "traction_fresh_apps_count": 99,
-    "top_app_share": 0.038,
+    "top_app_share": 0.0515,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
-    "giant_developer_share": 0.0267,
-    "single_developer_share": 0.0425,
+    "giant_developer_share": 0.0263,
+    "single_developer_share": 0.0515,
     "classification_confidence_avg": 0.5856,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
@@ -4163,7 +4343,7 @@
         "name": "Kissing Time: Match Love",
         "developer_name": "abcSTORE",
         "developer_id": "8833897756729137484",
-        "downloads_daily": 121343,
+        "downloads_daily": 167081,
         "downloads_month": 0,
         "revenue_month": 0.0,
         "rating_avg": 0.0,
@@ -4298,10 +4478,10 @@
       "mvp_feasibility": 6.93,
       "data_quality": 15.6,
       "competition_penalty": 3.0,
-      "giant_risk_penalty": 0.67,
+      "giant_risk_penalty": 0.66,
       "paid_spike_penalty": 0.0
     },
-    "opportunity_score": 73.87,
+    "opportunity_score": 73.88,
     "risk_tags": [
       "audience_uncertain",
       "classifier_low_confidence",
@@ -4392,7 +4572,27 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback"
+    "llm_analysis_source": "fallback",
+    "llm_status": {
+      "analysis_source": "fallback",
+      "should_call_openai": true,
+      "fallback_reason": "openai_error",
+      "requested": true,
+      "enabled": true,
+      "api_key_present": true,
+      "api_key_env": "OPENAI_API_KEY",
+      "model": "gpt-4.1-mini",
+      "model_env": "OPENAI_MODEL",
+      "candidate_counts": {
+        "alerts": 3,
+        "watch": 10,
+        "near_misses": 20,
+        "initial_baseline_digest": 10
+      },
+      "fallback_detail": "HTTP Error 429: Too Many Requests"
+    },
+    "llm_fallback_reason": "openai_error",
+    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -4431,7 +4631,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -4700,7 +4900,27 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback"
+    "llm_analysis_source": "fallback",
+    "llm_status": {
+      "analysis_source": "fallback",
+      "should_call_openai": true,
+      "fallback_reason": "openai_error",
+      "requested": true,
+      "enabled": true,
+      "api_key_present": true,
+      "api_key_env": "OPENAI_API_KEY",
+      "model": "gpt-4.1-mini",
+      "model_env": "OPENAI_MODEL",
+      "candidate_counts": {
+        "alerts": 3,
+        "watch": 10,
+        "near_misses": 20,
+        "initial_baseline_digest": 10
+      },
+      "fallback_detail": "HTTP Error 429: Too Many Requests"
+    },
+    "llm_fallback_reason": "openai_error",
+    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -4739,7 +4959,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -5005,7 +5225,27 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback"
+    "llm_analysis_source": "fallback",
+    "llm_status": {
+      "analysis_source": "fallback",
+      "should_call_openai": true,
+      "fallback_reason": "openai_error",
+      "requested": true,
+      "enabled": true,
+      "api_key_present": true,
+      "api_key_env": "OPENAI_API_KEY",
+      "model": "gpt-4.1-mini",
+      "model_env": "OPENAI_MODEL",
+      "candidate_counts": {
+        "alerts": 3,
+        "watch": 10,
+        "near_misses": 20,
+        "initial_baseline_digest": 10
+      },
+      "fallback_detail": "HTTP Error 429: Too Many Requests"
+    },
+    "llm_fallback_reason": "openai_error",
+    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -5017,7 +5257,7 @@
     "core_mechanic": "other",
     "theme": "cars",
     "meta": "none",
-    "audience_summary": "broad:726, unknown:712, men_18_35:495",
+    "audience_summary": "broad:726, unknown:711, men_18_35:495",
     "production_complexity": "high",
     "full_product_complexity": "high",
     "mvp_complexity": "high",
@@ -5044,12 +5284,12 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
     },
-    "app_count": 2061,
+    "app_count": 2060,
     "app_ids": [
       "ai.heyyyy.app",
       "ai.mybuddy.talkingfl",
@@ -5057,7 +5297,6 @@
       "air.mobi.mazniac.bob.bubbles.saw.trap",
       "app.gezoo.android",
       "app.nanogram.alpha",
-      "azur.cards.rummy",
       "barcelona.wonder.zenhole",
       "battle.city.crime.simulator3d",
       "beki.nedb.igqz.sbca",
@@ -7113,15 +7352,15 @@
       "wild.party.bronk.win",
       "winter.car.simulator"
     ],
-    "total_daily_installs": 13126327,
-    "avg_daily_installs": 6368.91,
-    "median_daily_installs": 1809.0,
-    "total_monthly_downloads": 107884000,
+    "total_daily_installs": 13132127,
+    "avg_daily_installs": 6374.82,
+    "median_daily_installs": 1812.0,
+    "total_monthly_downloads": 107877000,
     "total_monthly_revenue": 11187000.0,
     "avg_rating": 4.01,
     "rating_count_total": 0,
     "rating_confidence": 0.0,
-    "successful_new_apps_count": 2061,
+    "successful_new_apps_count": 2060,
     "traction_fresh_apps_count": 641,
     "top_app_share": 0.0409,
     "growth_by_one_app_share": 0.0,
@@ -7366,7 +7605,27 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback"
+    "llm_analysis_source": "fallback",
+    "llm_status": {
+      "analysis_source": "fallback",
+      "should_call_openai": true,
+      "fallback_reason": "openai_error",
+      "requested": true,
+      "enabled": true,
+      "api_key_present": true,
+      "api_key_env": "OPENAI_API_KEY",
+      "model": "gpt-4.1-mini",
+      "model_env": "OPENAI_MODEL",
+      "candidate_counts": {
+        "alerts": 3,
+        "watch": 10,
+        "near_misses": 20,
+        "initial_baseline_digest": 10
+      },
+      "fallback_detail": "HTTP Error 429: Too Many Requests"
+    },
+    "llm_fallback_reason": "openai_error",
+    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -7405,7 +7664,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -7677,7 +7936,27 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback"
+    "llm_analysis_source": "fallback",
+    "llm_status": {
+      "analysis_source": "fallback",
+      "should_call_openai": true,
+      "fallback_reason": "openai_error",
+      "requested": true,
+      "enabled": true,
+      "api_key_present": true,
+      "api_key_env": "OPENAI_API_KEY",
+      "model": "gpt-4.1-mini",
+      "model_env": "OPENAI_MODEL",
+      "candidate_counts": {
+        "alerts": 3,
+        "watch": 10,
+        "near_misses": 20,
+        "initial_baseline_digest": 10
+      },
+      "fallback_detail": "HTTP Error 429: Too Many Requests"
+    },
+    "llm_fallback_reason": "openai_error",
+    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -7689,7 +7968,7 @@
     "core_mechanic": "other",
     "theme": "cars",
     "meta": "none",
-    "audience_summary": "broad:528, unknown:519, men_18_35:346",
+    "audience_summary": "broad:528, unknown:518, men_18_35:346",
     "production_complexity": "high",
     "full_product_complexity": "high",
     "mvp_complexity": "high",
@@ -7716,12 +7995,12 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
     },
-    "app_count": 1453,
+    "app_count": 1452,
     "app_ids": [
       "ai.mybuddy.talkingfl",
       "air.com.shirogames.evolan",
@@ -7732,7 +8011,6 @@
       "arrow.clash.blast.escape.out.maze",
       "arrow.game3d.puzzle.escapearrow",
       "arrow.maze.escape.out.puzzle.logic",
-      "azur.cards.rummy",
       "beki.nedb.igqz.sbca",
       "bg.rope.hero.vicecity.action.simulation3d",
       "bike.motorbike.motorcycle",
@@ -9177,22 +9455,22 @@
       "wild.party.bronk.win",
       "winter.car.simulator"
     ],
-    "total_daily_installs": 8446079,
-    "avg_daily_installs": 5812.86,
-    "median_daily_installs": 1900.0,
-    "total_monthly_downloads": 52142000,
+    "total_daily_installs": 8449185,
+    "avg_daily_installs": 5819.0,
+    "median_daily_installs": 1901.0,
+    "total_monthly_downloads": 52135000,
     "total_monthly_revenue": 6977000.0,
     "avg_rating": 3.96,
     "rating_count_total": 0,
     "rating_confidence": 0.0,
-    "successful_new_apps_count": 1453,
+    "successful_new_apps_count": 1452,
     "traction_fresh_apps_count": 469,
     "top_app_share": 0.034,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
     "giant_developer_share": 0.0369,
     "single_developer_share": 0.0342,
-    "classification_confidence_avg": 0.4943,
+    "classification_confidence_avg": 0.4944,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
       {
@@ -9430,7 +9708,27 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback"
+    "llm_analysis_source": "fallback",
+    "llm_status": {
+      "analysis_source": "fallback",
+      "should_call_openai": true,
+      "fallback_reason": "openai_error",
+      "requested": true,
+      "enabled": true,
+      "api_key_present": true,
+      "api_key_env": "OPENAI_API_KEY",
+      "model": "gpt-4.1-mini",
+      "model_env": "OPENAI_MODEL",
+      "candidate_counts": {
+        "alerts": 3,
+        "watch": 10,
+        "near_misses": 20,
+        "initial_baseline_digest": 10
+      },
+      "fallback_detail": "HTTP Error 429: Too Many Requests"
+    },
+    "llm_fallback_reason": "openai_error",
+    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -9469,7 +9767,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -9834,7 +10132,27 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback"
+    "llm_analysis_source": "fallback",
+    "llm_status": {
+      "analysis_source": "fallback",
+      "should_call_openai": true,
+      "fallback_reason": "openai_error",
+      "requested": true,
+      "enabled": true,
+      "api_key_present": true,
+      "api_key_env": "OPENAI_API_KEY",
+      "model": "gpt-4.1-mini",
+      "model_env": "OPENAI_MODEL",
+      "candidate_counts": {
+        "alerts": 3,
+        "watch": 10,
+        "near_misses": 20,
+        "initial_baseline_digest": 10
+      },
+      "fallback_detail": "HTTP Error 429: Too Many Requests"
+    },
+    "llm_fallback_reason": "openai_error",
+    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -9873,7 +10191,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -10184,7 +10502,27 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback"
+    "llm_analysis_source": "fallback",
+    "llm_status": {
+      "analysis_source": "fallback",
+      "should_call_openai": true,
+      "fallback_reason": "openai_error",
+      "requested": true,
+      "enabled": true,
+      "api_key_present": true,
+      "api_key_env": "OPENAI_API_KEY",
+      "model": "gpt-4.1-mini",
+      "model_env": "OPENAI_MODEL",
+      "candidate_counts": {
+        "alerts": 3,
+        "watch": 10,
+        "near_misses": 20,
+        "initial_baseline_digest": 10
+      },
+      "fallback_detail": "HTTP Error 429: Too Many Requests"
+    },
+    "llm_fallback_reason": "openai_error",
+    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -10223,7 +10561,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -10836,7 +11174,27 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback"
+    "llm_analysis_source": "fallback",
+    "llm_status": {
+      "analysis_source": "fallback",
+      "should_call_openai": true,
+      "fallback_reason": "openai_error",
+      "requested": true,
+      "enabled": true,
+      "api_key_present": true,
+      "api_key_env": "OPENAI_API_KEY",
+      "model": "gpt-4.1-mini",
+      "model_env": "OPENAI_MODEL",
+      "candidate_counts": {
+        "alerts": 3,
+        "watch": 10,
+        "near_misses": 20,
+        "initial_baseline_digest": 10
+      },
+      "fallback_detail": "HTTP Error 429: Too Many Requests"
+    },
+    "llm_fallback_reason": "openai_error",
+    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -10875,7 +11233,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -11149,8 +11507,8 @@
       "vn.funtap.infinitykingdom",
       "wild.dino.hunting.game.survival"
     ],
-    "total_daily_installs": 1662272,
-    "avg_daily_installs": 6249.14,
+    "total_daily_installs": 1664775,
+    "avg_daily_installs": 6258.55,
     "median_daily_installs": 2301.5,
     "total_monthly_downloads": 9046000,
     "total_monthly_revenue": 1016000.0,
@@ -11159,11 +11517,11 @@
     "rating_confidence": 0.0,
     "successful_new_apps_count": 266,
     "traction_fresh_apps_count": 98,
-    "top_app_share": 0.1035,
+    "top_app_share": 0.1033,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
-    "giant_developer_share": 0.0335,
-    "single_developer_share": 0.1035,
+    "giant_developer_share": 0.0334,
+    "single_developer_share": 0.1033,
     "classification_confidence_avg": 0.4993,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
@@ -11308,7 +11666,7 @@
       "mvp_feasibility": 5.67,
       "data_quality": 15.6,
       "competition_penalty": 3.0,
-      "giant_risk_penalty": 0.84,
+      "giant_risk_penalty": 0.83,
       "paid_spike_penalty": 0.0
     },
     "opportunity_score": 72.44,
@@ -11402,7 +11760,27 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback"
+    "llm_analysis_source": "fallback",
+    "llm_status": {
+      "analysis_source": "fallback",
+      "should_call_openai": true,
+      "fallback_reason": "openai_error",
+      "requested": true,
+      "enabled": true,
+      "api_key_present": true,
+      "api_key_env": "OPENAI_API_KEY",
+      "model": "gpt-4.1-mini",
+      "model_env": "OPENAI_MODEL",
+      "candidate_counts": {
+        "alerts": 3,
+        "watch": 10,
+        "near_misses": 20,
+        "initial_baseline_digest": 10
+      },
+      "fallback_detail": "HTTP Error 429: Too Many Requests"
+    },
+    "llm_fallback_reason": "openai_error",
+    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -11441,7 +11819,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -11729,7 +12107,27 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback"
+    "llm_analysis_source": "fallback",
+    "llm_status": {
+      "analysis_source": "fallback",
+      "should_call_openai": true,
+      "fallback_reason": "openai_error",
+      "requested": true,
+      "enabled": true,
+      "api_key_present": true,
+      "api_key_env": "OPENAI_API_KEY",
+      "model": "gpt-4.1-mini",
+      "model_env": "OPENAI_MODEL",
+      "candidate_counts": {
+        "alerts": 3,
+        "watch": 10,
+        "near_misses": 20,
+        "initial_baseline_digest": 10
+      },
+      "fallback_detail": "HTTP Error 429: Too Many Requests"
+    },
+    "llm_fallback_reason": "openai_error",
+    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
   },
   {
     "snapshot_date": "2026-06-04",
@@ -11768,7 +12166,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -12062,8 +12460,8 @@
       "tho.san.sieu.cap",
       "vn.vplay.thiethan3q.t028a"
     ],
-    "total_daily_installs": 1350527,
-    "avg_daily_installs": 4722.12,
+    "total_daily_installs": 1350455,
+    "avg_daily_installs": 4721.87,
     "median_daily_installs": 1463.5,
     "total_monthly_downloads": 8713000,
     "total_monthly_revenue": 2748000.0,
@@ -12076,7 +12474,7 @@
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
     "giant_developer_share": 0.0295,
-    "single_developer_share": 0.2138,
+    "single_developer_share": 0.2139,
     "classification_confidence_avg": 0.4419,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
@@ -12299,7 +12697,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -12702,9 +13100,9 @@
       "tw.com.iwplay.nte",
       "vn.vplay.thiethan3q.t028a"
     ],
-    "total_daily_installs": 1816573,
-    "avg_daily_installs": 4598.92,
-    "median_daily_installs": 1519.0,
+    "total_daily_installs": 1816501,
+    "avg_daily_installs": 4598.74,
+    "median_daily_installs": 1517.0,
     "total_monthly_downloads": 12453000,
     "total_monthly_revenue": 3348000.0,
     "avg_rating": 3.94,
@@ -12939,7 +13337,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -13380,8 +13778,8 @@
       "vn.funtap.infinitykingdom",
       "wild.party.bronk.win"
     ],
-    "total_daily_installs": 3045659,
-    "avg_daily_installs": 7033.85,
+    "total_daily_installs": 3046899,
+    "avg_daily_installs": 7036.72,
     "median_daily_installs": 2305.0,
     "total_monthly_downloads": 15387000,
     "total_monthly_revenue": 5782000.0,
@@ -13616,7 +14014,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -13881,7 +14279,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -14148,7 +14546,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -14243,8 +14641,8 @@
       "pl.berobasket.speedwaychallenge26.google",
       "se.raketspel.retroracing"
     ],
-    "total_daily_installs": 664364,
-    "avg_daily_installs": 7636.37,
+    "total_daily_installs": 664219,
+    "avg_daily_installs": 7634.7,
     "median_daily_installs": 2671.0,
     "total_monthly_downloads": 4280000,
     "total_monthly_revenue": 770000.0,
@@ -14479,7 +14877,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -14913,7 +15311,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -15057,9 +15455,9 @@
       "jp.yugi.bridgecrane.prod",
       "mini.cleaning.asmr.games.makeover"
     ],
-    "total_daily_installs": 1132017,
-    "avg_daily_installs": 8323.65,
-    "median_daily_installs": 2475.0,
+    "total_daily_installs": 1133452,
+    "avg_daily_installs": 8334.21,
+    "median_daily_installs": 2477.5,
     "total_monthly_downloads": 4141000,
     "total_monthly_revenue": 20000.0,
     "avg_rating": 3.93,
@@ -15067,11 +15465,11 @@
     "rating_confidence": 0.0,
     "successful_new_apps_count": 136,
     "traction_fresh_apps_count": 33,
-    "top_app_share": 0.0689,
+    "top_app_share": 0.0688,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
-    "giant_developer_share": 0.0212,
-    "single_developer_share": 0.0689,
+    "giant_developer_share": 0.0211,
+    "single_developer_share": 0.0688,
     "classification_confidence_avg": 0.5779,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
@@ -15267,7 +15665,7 @@
     "core_mechanic": "other",
     "theme": "cars",
     "meta": "none",
-    "audience_summary": "men_18_35:137, unknown:127, broad:69",
+    "audience_summary": "men_18_35:137, unknown:126, broad:69",
     "production_complexity": "high",
     "full_product_complexity": "high",
     "mvp_complexity": "high",
@@ -15294,14 +15692,13 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
     },
-    "app_count": 338,
+    "app_count": 337,
     "app_ids": [
-      "azur.cards.rummy",
       "bike.motorbike.motorcycle",
       "com.Baksomalanganomali.PentolBaksoMalangAnomali",
       "com.Club609GgTwo.Club609GgTwo",
@@ -15640,22 +16037,22 @@
       "vn.funtap.tan3qmax",
       "winter.car.simulator"
     ],
-    "total_daily_installs": 2421591,
-    "avg_daily_installs": 7164.47,
+    "total_daily_installs": 2421026,
+    "avg_daily_installs": 7184.05,
     "median_daily_installs": 2457.0,
-    "total_monthly_downloads": 11752000,
+    "total_monthly_downloads": 11745000,
     "total_monthly_revenue": 260000.0,
-    "avg_rating": 3.91,
+    "avg_rating": 3.92,
     "rating_count_total": 0,
     "rating_confidence": 0.0,
-    "successful_new_apps_count": 338,
+    "successful_new_apps_count": 337,
     "traction_fresh_apps_count": 88,
     "top_app_share": 0.0408,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
-    "giant_developer_share": 0.0577,
+    "giant_developer_share": 0.0578,
     "single_developer_share": 0.0408,
-    "classification_confidence_avg": 0.4962,
+    "classification_confidence_avg": 0.4963,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
       {
@@ -15877,7 +16274,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -16106,7 +16503,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -16481,7 +16878,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -16542,8 +16939,8 @@
       "jp.yugi.bridgecrane.prod",
       "site.servebot.shadowcricket"
     ],
-    "total_daily_installs": 264613,
-    "avg_daily_installs": 4992.7,
+    "total_daily_installs": 265345,
+    "avg_daily_installs": 5006.51,
     "median_daily_installs": 2490.0,
     "total_monthly_downloads": 1910000,
     "total_monthly_revenue": 50000.0,
@@ -16552,11 +16949,11 @@
     "rating_confidence": 0.0,
     "successful_new_apps_count": 53,
     "traction_fresh_apps_count": 15,
-    "top_app_share": 0.1932,
+    "top_app_share": 0.1926,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
-    "giant_developer_share": 0.0547,
-    "single_developer_share": 0.1932,
+    "giant_developer_share": 0.0546,
+    "single_developer_share": 0.1926,
     "classification_confidence_avg": 0.5792,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
@@ -16701,10 +17098,10 @@
       "mvp_feasibility": 6.18,
       "data_quality": 15.6,
       "competition_penalty": 3.0,
-      "giant_risk_penalty": 1.37,
+      "giant_risk_penalty": 1.36,
       "paid_spike_penalty": 0.0
     },
-    "opportunity_score": 71.51,
+    "opportunity_score": 71.52,
     "risk_tags": [
       "audience_uncertain",
       "classifier_low_confidence",
@@ -16779,7 +17176,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -16958,8 +17355,8 @@
       "site.eliteelectricians.wusatkkto",
       "vmpx.xhouf.hzhj.hoqzw"
     ],
-    "total_daily_installs": 1377654,
-    "avg_daily_installs": 8056.46,
+    "total_daily_installs": 1377509,
+    "avg_daily_installs": 8055.61,
     "median_daily_installs": 2050.0,
     "total_monthly_downloads": 5267000,
     "total_monthly_revenue": 20000.0,
@@ -17195,7 +17592,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -17538,7 +17935,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -17833,6 +18230,235 @@
     "snapshot_date": "2026-06-04",
     "score_version": "v1.3.2",
     "platform": "google_play",
+    "niche": "coloring",
+    "normalized_niche": "coloring",
+    "market_category": "simulation",
+    "core_mechanic": "physics",
+    "theme": "social",
+    "meta": "none",
+    "audience_summary": "men_18_35:2, women_25_45:1, broad:1",
+    "production_complexity": "low",
+    "full_product_complexity": "low",
+    "mvp_complexity": "low",
+    "mvp_feasibility_score": 67.5,
+    "simplifiable": true,
+    "simplification_idea": "Focus the MVP on physics gameplay with a narrow social theme and one progression loop.",
+    "group_key_type": "core_mechanic_theme_meta",
+    "group_key_value": "physics::social::none",
+    "group_key": "core_mechanic_theme_meta::physics::social::none",
+    "signal_signature": "coloring::simulation::physics::social::none",
+    "release_date_window": "last_180d",
+    "source_scope": "single_appstorespy_query_no_country_language",
+    "collection_sort": "-release_date",
+    "min_app_daily_installs": 500,
+    "source_query": {
+      "limit": 10000,
+      "page": 1,
+      "sort": "-release_date",
+      "release_date_days_back": 180,
+      "min_downloads_daily": 500,
+      "requested_country": null,
+      "requested_language": null,
+      "requested_active_countries": null
+    },
+    "coverage": {
+      "total_count": null,
+      "result_count": 4786,
+      "sample_truncated": "unknown",
+      "coverage_ratio": null,
+      "full_window_claim_allowed": false
+    },
+    "app_count": 4,
+    "app_ids": [
+      "com.dogbytegames.otrnext",
+      "com.gbr05.realgangster.citymafia",
+      "com.khazaronline",
+      "com.wheel.cash.drop.spin.money.peg.gear"
+    ],
+    "total_daily_installs": 65385,
+    "avg_daily_installs": 16346.25,
+    "median_daily_installs": 1997.0,
+    "total_monthly_downloads": 380000,
+    "total_monthly_revenue": 20000.0,
+    "avg_rating": 4.0,
+    "rating_count_total": 0,
+    "rating_confidence": 0.0,
+    "successful_new_apps_count": 4,
+    "traction_fresh_apps_count": 3,
+    "top_app_share": 0.9195,
+    "growth_by_one_app_share": 0.0,
+    "advertised_top_app_share": 0.0,
+    "giant_developer_share": 0.0,
+    "single_developer_share": 0.9195,
+    "classification_confidence_avg": 0.6645,
+    "unknown_or_new_pattern_cluster": true,
+    "top_apps": [
+      {
+        "app_id": "com.dogbytegames.otrnext",
+        "bundle": "com.dogbytegames.otrnext",
+        "name": "OTR 2",
+        "developer_name": "DogByte Games",
+        "developer_id": "5257246860945271941",
+        "downloads_daily": 60122,
+        "downloads_month": 300000,
+        "revenue_month": 20000.0,
+        "rating_avg": 4.4,
+        "rating_count": 0,
+        "review_count": 269,
+        "release_date": "2026-03-16",
+        "update_date": "2026-06-02",
+        "iap": true,
+        "advertised": false,
+        "ads": false,
+        "url_appstorespy": "https://appstorespy.com/android-google-play/com.dogbytegames.otrnext-trends-revenue-statistics-downloads-ratings",
+        "url": "https://play.google.com/store/apps/details?id=com.dogbytegames.otrnext",
+        "website": "http://www.dogbytegames.com"
+      },
+      {
+        "app_id": "com.gbr05.realgangster.citymafia",
+        "bundle": "com.gbr05.realgangster.citymafia",
+        "name": "Peak: Climbing Challenge",
+        "developer_name": "Coding Addicted Publishers",
+        "developer_id": "6748090486283729077",
+        "downloads_daily": 2699,
+        "downloads_month": 0,
+        "revenue_month": 0.0,
+        "rating_avg": 0.0,
+        "rating_count": 0,
+        "review_count": 0,
+        "release_date": "2026-05-15",
+        "update_date": "2026-05-15",
+        "iap": true,
+        "advertised": false,
+        "ads": false,
+        "url_appstorespy": "https://appstorespy.com/android-google-play/com.gbr05.realgangster.citymafia-trends-revenue-statistics-downloads-ratings",
+        "url": "https://play.google.com/store/apps/details?id=com.gbr05.realgangster.citymafia",
+        "website": "https://codingaddictedpublishers-5f94b.web.app/app-ads.txt"
+      },
+      {
+        "app_id": "com.khazaronline",
+        "bundle": "com.khazaronline",
+        "name": "Xəzər Online",
+        "developer_name": "Farid Mustafa",
+        "developer_id": "9216853431555189206",
+        "downloads_daily": 1295,
+        "downloads_month": 80000,
+        "revenue_month": 0.0,
+        "rating_avg": 0.0,
+        "rating_count": 0,
+        "review_count": 0,
+        "release_date": "2026-05-07",
+        "update_date": "2026-05-28",
+        "iap": false,
+        "advertised": false,
+        "ads": false,
+        "url_appstorespy": "https://appstorespy.com/android-google-play/com.khazaronline-trends-revenue-statistics-downloads-ratings",
+        "url": "https://play.google.com/store/apps/details?id=com.khazaronline",
+        "website": "http://khazaronline.blogspot.com"
+      },
+      {
+        "app_id": "com.wheel.cash.drop.spin.money.peg.gear",
+        "bundle": "com.wheel.cash.drop.spin.money.peg.gear",
+        "name": "Gear Luck Plinko: Earn Money",
+        "developer_name": "liuyexi2022",
+        "developer_id": "8737423150266980995",
+        "downloads_daily": 1269,
+        "downloads_month": 0,
+        "revenue_month": 0.0,
+        "rating_avg": 3.6,
+        "rating_count": 0,
+        "review_count": 61,
+        "release_date": "2026-04-23",
+        "update_date": "2026-06-01",
+        "iap": false,
+        "advertised": false,
+        "ads": false,
+        "url_appstorespy": "https://appstorespy.com/android-google-play/com.wheel.cash.drop.spin.money.peg.gear-trends-revenue-statistics-downloads-ratings",
+        "url": "https://play.google.com/store/apps/details?id=com.wheel.cash.drop.spin.money.peg.gear",
+        "website": "http://www.luckymerge.xyz"
+      }
+    ],
+    "has_history": false,
+    "history_depth_days": 0,
+    "weekly_growth_percent": 0.0,
+    "monthly_growth_percent": 0.0,
+    "previous_total_daily_installs": 0,
+    "data_quality_score": 64.86,
+    "data_quality_components": {
+      "field_completeness": 35.0,
+      "history_depth": 0.0,
+      "sample_size": 20.0,
+      "signal_diversity": 1.86,
+      "monetization_reliability": 10.0,
+      "fresh_success_reliability": 10.0,
+      "penalty": 12.0
+    },
+    "data_quality_reasons": [
+      "classifier_low_confidence",
+      "no_history",
+      "top_app_dominance",
+      "unknown_coverage"
+    ],
+    "monetization_signal": {
+      "iap_present": true,
+      "ads_present": false,
+      "revenue_month_available": true,
+      "revenue_confidence": "high",
+      "monetization_model": "iap"
+    },
+    "score_components": {
+      "demand": 25,
+      "freshness": 15,
+      "revenue_monetization": 12.9,
+      "rating": 0.0,
+      "mvp_feasibility": 10.12,
+      "data_quality": 12.97,
+      "competition_penalty": 4.83,
+      "giant_risk_penalty": 0.0,
+      "paid_spike_penalty": 0.0
+    },
+    "opportunity_score": 71.17,
+    "risk_tags": [
+      "classifier_low_confidence",
+      "leader_dominated",
+      "single_developer_cluster",
+      "unknown_coverage",
+      "weak_rating_signal"
+    ],
+    "reason_codes": [
+      "fresh_traction",
+      "low_giant_share",
+      "low_mvp_complexity",
+      "monetization_signal_present",
+      "multi_app_cluster",
+      "new_pattern_detected",
+      "small_team_fit",
+      "strong_daily_installs"
+    ],
+    "severe_paid_spike_risk": false,
+    "candidate_id": "2026-06-04:9259b1be097b1336:core_mechanic_theme_meta",
+    "dedupe_key": "9259b1be097b1336",
+    "alert_instance_id": null,
+    "status": "NEAR_MISS",
+    "failed_alert_conditions": [
+      "weak_data_quality"
+    ],
+    "llm_summary": null,
+    "send_regular_alert": false,
+    "initial_baseline_digest": false,
+    "would_be_status": "NEAR_MISS",
+    "exclude_from_cooldown": true,
+    "history_state": "FIRST_RUN_NO_HISTORY",
+    "first_run_without_history": true,
+    "confidence_level": "LOW",
+    "alert_filter_reasons": [
+      "excluded_from_cooldown"
+    ]
+  },
+  {
+    "snapshot_date": "2026-06-04",
+    "score_version": "v1.3.2",
+    "platform": "google_play",
     "niche": "other",
     "normalized_niche": "other",
     "market_category": "simulation",
@@ -17866,7 +18492,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -18159,8 +18785,8 @@
       "vn.corochti.childhoodstreetvendor",
       "winter.car.simulator"
     ],
-    "total_daily_installs": 2158772,
-    "avg_daily_installs": 7574.64,
+    "total_daily_installs": 2158700,
+    "avg_daily_installs": 7574.39,
     "median_daily_installs": 2749.0,
     "total_monthly_downloads": 11893000,
     "total_monthly_revenue": 60000.0,
@@ -18363,235 +18989,6 @@
     "snapshot_date": "2026-06-04",
     "score_version": "v1.3.2",
     "platform": "google_play",
-    "niche": "coloring",
-    "normalized_niche": "coloring",
-    "market_category": "simulation",
-    "core_mechanic": "physics",
-    "theme": "social",
-    "meta": "none",
-    "audience_summary": "men_18_35:2, women_25_45:1, broad:1",
-    "production_complexity": "low",
-    "full_product_complexity": "low",
-    "mvp_complexity": "low",
-    "mvp_feasibility_score": 67.5,
-    "simplifiable": true,
-    "simplification_idea": "Focus the MVP on physics gameplay with a narrow social theme and one progression loop.",
-    "group_key_type": "core_mechanic_theme_meta",
-    "group_key_value": "physics::social::none",
-    "group_key": "core_mechanic_theme_meta::physics::social::none",
-    "signal_signature": "coloring::simulation::physics::social::none",
-    "release_date_window": "last_180d",
-    "source_scope": "single_appstorespy_query_no_country_language",
-    "collection_sort": "-release_date",
-    "min_app_daily_installs": 500,
-    "source_query": {
-      "limit": 10000,
-      "page": 1,
-      "sort": "-release_date",
-      "release_date_days_back": 180,
-      "min_downloads_daily": 500,
-      "requested_country": null,
-      "requested_language": null,
-      "requested_active_countries": null
-    },
-    "coverage": {
-      "total_count": null,
-      "result_count": 4788,
-      "sample_truncated": "unknown",
-      "coverage_ratio": null,
-      "full_window_claim_allowed": false
-    },
-    "app_count": 4,
-    "app_ids": [
-      "com.dogbytegames.otrnext",
-      "com.gbr05.realgangster.citymafia",
-      "com.khazaronline",
-      "com.wheel.cash.drop.spin.money.peg.gear"
-    ],
-    "total_daily_installs": 65171,
-    "avg_daily_installs": 16292.75,
-    "median_daily_installs": 1890.0,
-    "total_monthly_downloads": 380000,
-    "total_monthly_revenue": 20000.0,
-    "avg_rating": 4.0,
-    "rating_count_total": 0,
-    "rating_confidence": 0.0,
-    "successful_new_apps_count": 4,
-    "traction_fresh_apps_count": 3,
-    "top_app_share": 0.9225,
-    "growth_by_one_app_share": 0.0,
-    "advertised_top_app_share": 0.0,
-    "giant_developer_share": 0.0,
-    "single_developer_share": 0.9225,
-    "classification_confidence_avg": 0.6645,
-    "unknown_or_new_pattern_cluster": true,
-    "top_apps": [
-      {
-        "app_id": "com.dogbytegames.otrnext",
-        "bundle": "com.dogbytegames.otrnext",
-        "name": "OTR 2",
-        "developer_name": "DogByte Games",
-        "developer_id": "5257246860945271941",
-        "downloads_daily": 60122,
-        "downloads_month": 300000,
-        "revenue_month": 20000.0,
-        "rating_avg": 4.4,
-        "rating_count": 0,
-        "review_count": 269,
-        "release_date": "2026-03-16",
-        "update_date": "2026-06-02",
-        "iap": true,
-        "advertised": false,
-        "ads": false,
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.dogbytegames.otrnext-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.dogbytegames.otrnext",
-        "website": "http://www.dogbytegames.com"
-      },
-      {
-        "app_id": "com.gbr05.realgangster.citymafia",
-        "bundle": "com.gbr05.realgangster.citymafia",
-        "name": "Peak: Climbing Challenge",
-        "developer_name": "Coding Addicted Publishers",
-        "developer_id": "6748090486283729077",
-        "downloads_daily": 2485,
-        "downloads_month": 0,
-        "revenue_month": 0.0,
-        "rating_avg": 0.0,
-        "rating_count": 0,
-        "review_count": 0,
-        "release_date": "2026-05-15",
-        "update_date": "2026-05-15",
-        "iap": true,
-        "advertised": false,
-        "ads": false,
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.gbr05.realgangster.citymafia-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.gbr05.realgangster.citymafia",
-        "website": "https://codingaddictedpublishers-5f94b.web.app/app-ads.txt"
-      },
-      {
-        "app_id": "com.khazaronline",
-        "bundle": "com.khazaronline",
-        "name": "Xəzər Online",
-        "developer_name": "Farid Mustafa",
-        "developer_id": "9216853431555189206",
-        "downloads_daily": 1295,
-        "downloads_month": 80000,
-        "revenue_month": 0.0,
-        "rating_avg": 0.0,
-        "rating_count": 0,
-        "review_count": 0,
-        "release_date": "2026-05-07",
-        "update_date": "2026-05-28",
-        "iap": false,
-        "advertised": false,
-        "ads": false,
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.khazaronline-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.khazaronline",
-        "website": "http://khazaronline.blogspot.com"
-      },
-      {
-        "app_id": "com.wheel.cash.drop.spin.money.peg.gear",
-        "bundle": "com.wheel.cash.drop.spin.money.peg.gear",
-        "name": "Gear Luck Plinko: Earn Money",
-        "developer_name": "liuyexi2022",
-        "developer_id": "8737423150266980995",
-        "downloads_daily": 1269,
-        "downloads_month": 0,
-        "revenue_month": 0.0,
-        "rating_avg": 3.6,
-        "rating_count": 0,
-        "review_count": 61,
-        "release_date": "2026-04-23",
-        "update_date": "2026-06-01",
-        "iap": false,
-        "advertised": false,
-        "ads": false,
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.wheel.cash.drop.spin.money.peg.gear-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.wheel.cash.drop.spin.money.peg.gear",
-        "website": "http://www.luckymerge.xyz"
-      }
-    ],
-    "has_history": false,
-    "history_depth_days": 0,
-    "weekly_growth_percent": 0.0,
-    "monthly_growth_percent": 0.0,
-    "previous_total_daily_installs": 0,
-    "data_quality_score": 64.79,
-    "data_quality_components": {
-      "field_completeness": 35.0,
-      "history_depth": 0.0,
-      "sample_size": 20.0,
-      "signal_diversity": 1.79,
-      "monetization_reliability": 10.0,
-      "fresh_success_reliability": 10.0,
-      "penalty": 12.0
-    },
-    "data_quality_reasons": [
-      "classifier_low_confidence",
-      "no_history",
-      "top_app_dominance",
-      "unknown_coverage"
-    ],
-    "monetization_signal": {
-      "iap_present": true,
-      "ads_present": false,
-      "revenue_month_available": true,
-      "revenue_confidence": "high",
-      "monetization_model": "iap"
-    },
-    "score_components": {
-      "demand": 25,
-      "freshness": 15,
-      "revenue_monetization": 12.9,
-      "rating": 0.0,
-      "mvp_feasibility": 10.12,
-      "data_quality": 12.96,
-      "competition_penalty": 4.91,
-      "giant_risk_penalty": 0.0,
-      "paid_spike_penalty": 0.0
-    },
-    "opportunity_score": 71.08,
-    "risk_tags": [
-      "classifier_low_confidence",
-      "leader_dominated",
-      "single_developer_cluster",
-      "unknown_coverage",
-      "weak_rating_signal"
-    ],
-    "reason_codes": [
-      "fresh_traction",
-      "low_giant_share",
-      "low_mvp_complexity",
-      "monetization_signal_present",
-      "multi_app_cluster",
-      "new_pattern_detected",
-      "small_team_fit",
-      "strong_daily_installs"
-    ],
-    "severe_paid_spike_risk": false,
-    "candidate_id": "2026-06-04:9259b1be097b1336:core_mechanic_theme_meta",
-    "dedupe_key": "9259b1be097b1336",
-    "alert_instance_id": null,
-    "status": "NEAR_MISS",
-    "failed_alert_conditions": [
-      "weak_data_quality"
-    ],
-    "llm_summary": null,
-    "send_regular_alert": false,
-    "initial_baseline_digest": false,
-    "would_be_status": "NEAR_MISS",
-    "exclude_from_cooldown": true,
-    "history_state": "FIRST_RUN_NO_HISTORY",
-    "first_run_without_history": true,
-    "confidence_level": "LOW",
-    "alert_filter_reasons": [
-      "excluded_from_cooldown"
-    ]
-  },
-  {
-    "snapshot_date": "2026-06-04",
-    "score_version": "v1.3.2",
-    "platform": "google_play",
     "niche": "other",
     "normalized_niche": "other",
     "market_category": "simulation",
@@ -18625,7 +19022,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -18690,8 +19087,8 @@
       "com.xoj.craft.block",
       "vn.corochti.childhoodstreetvendor"
     ],
-    "total_daily_installs": 423950,
-    "avg_daily_installs": 7437.72,
+    "total_daily_installs": 425190,
+    "avg_daily_installs": 7459.47,
     "median_daily_installs": 3298.0,
     "total_monthly_downloads": 898000,
     "total_monthly_revenue": 20000.0,
@@ -18700,11 +19097,11 @@
     "rating_confidence": 0.0,
     "successful_new_apps_count": 57,
     "traction_fresh_apps_count": 18,
-    "top_app_share": 0.1458,
+    "top_app_share": 0.1454,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
     "giant_developer_share": 0.0028,
-    "single_developer_share": 0.1458,
+    "single_developer_share": 0.1454,
     "classification_confidence_avg": 0.4981,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
@@ -18927,7 +19324,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -19178,7 +19575,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -19432,7 +19829,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -19663,11 +20060,11 @@
     "core_mechanic": "other",
     "theme": "cars",
     "meta": "none",
-    "audience_summary": "men_18_35:70, unknown:61, broad:33",
+    "audience_summary": "men_18_35:70, unknown:60, broad:33",
     "production_complexity": "high",
     "full_product_complexity": "high",
     "mvp_complexity": "high",
-    "mvp_feasibility_score": 35.6,
+    "mvp_feasibility_score": 35.61,
     "simplifiable": true,
     "simplification_idea": "Focus the MVP on other gameplay with a narrow cars theme and one progression loop.",
     "group_key_type": "core_mechanic_theme_meta",
@@ -19690,14 +20087,13 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
     },
-    "app_count": 166,
+    "app_count": 165,
     "app_ids": [
-      "azur.cards.rummy",
       "bike.motorbike.motorcycle",
       "com.Baksomalanganomali.PentolBaksoMalangAnomali",
       "com.Club609GgTwo.Club609GgTwo",
@@ -19864,22 +20260,22 @@
       "swing.fight.crime.action.simualtion",
       "vn.funtap.tan3qmax"
     ],
-    "total_daily_installs": 1024740,
-    "avg_daily_installs": 6173.13,
-    "median_daily_installs": 1921.5,
-    "total_monthly_downloads": 5908000,
+    "total_daily_installs": 1024175,
+    "avg_daily_installs": 6207.12,
+    "median_daily_installs": 1945.0,
+    "total_monthly_downloads": 5901000,
     "total_monthly_revenue": 140000.0,
-    "avg_rating": 3.99,
+    "avg_rating": 4.01,
     "rating_count_total": 0,
     "rating_confidence": 0.0,
-    "successful_new_apps_count": 166,
+    "successful_new_apps_count": 165,
     "traction_fresh_apps_count": 48,
     "top_app_share": 0.094,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
-    "giant_developer_share": 0.1092,
+    "giant_developer_share": 0.1093,
     "single_developer_share": 0.094,
-    "classification_confidence_avg": 0.4886,
+    "classification_confidence_avg": 0.4888,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
       {
@@ -20101,7 +20497,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -20351,7 +20747,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -20545,7 +20941,7 @@
     "platform": "google_play",
     "niche": "merge",
     "normalized_niche": "merge",
-    "market_category": "card",
+    "market_category": "puzzle",
     "core_mechanic": "merge",
     "theme": "animals",
     "meta": "levels",
@@ -20559,7 +20955,7 @@
     "group_key_type": "core_mechanic_theme_meta",
     "group_key_value": "merge::animals::levels",
     "group_key": "core_mechanic_theme_meta::merge::animals::levels",
-    "signal_signature": "merge::card::merge::animals::levels",
+    "signal_signature": "merge::puzzle::merge::animals::levels",
     "release_date_window": "last_180d",
     "source_scope": "single_appstorespy_query_no_country_language",
     "collection_sort": "-release_date",
@@ -20576,7 +20972,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -20589,8 +20985,8 @@
       "com.orbit.gravity.match",
       "com.solitaire.pop.pair.match.puzzle"
     ],
-    "total_daily_installs": 5428,
-    "avg_daily_installs": 1085.6,
+    "total_daily_installs": 5290,
+    "avg_daily_installs": 1058.0,
     "median_daily_installs": 595.0,
     "total_monthly_downloads": 280000,
     "total_monthly_revenue": 200000.0,
@@ -20599,11 +20995,11 @@
     "rating_confidence": 0.0,
     "successful_new_apps_count": 5,
     "traction_fresh_apps_count": 1,
-    "top_app_share": 0.4016,
+    "top_app_share": 0.386,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
-    "giant_developer_share": 0.1096,
-    "single_developer_share": 0.4016,
+    "giant_developer_share": 0.1125,
+    "single_developer_share": 0.386,
     "classification_confidence_avg": 0.6612,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
@@ -20613,7 +21009,7 @@
         "name": "Jigmagic Solitaire Puzzle",
         "developer_name": "SayGames Ltd",
         "developer_id": "6392896734092635573",
-        "downloads_daily": 2180,
+        "downloads_daily": 2042,
         "downloads_month": 60000,
         "revenue_month": 0.0,
         "rating_avg": 4.7,
@@ -20718,12 +21114,12 @@
     "weekly_growth_percent": 0.0,
     "monthly_growth_percent": 0.0,
     "previous_total_daily_installs": 0,
-    "data_quality_score": 76.81,
+    "data_quality_score": 77.17,
     "data_quality_components": {
       "field_completeness": 35.0,
       "history_depth": 0.0,
       "sample_size": 20.0,
-      "signal_diversity": 13.81,
+      "signal_diversity": 14.17,
       "monetization_reliability": 10.0,
       "fresh_success_reliability": 10.0,
       "penalty": 12.0
@@ -20746,9 +21142,9 @@
       "revenue_monetization": 15.0,
       "rating": 0.0,
       "mvp_feasibility": 10.35,
-      "data_quality": 15.36,
+      "data_quality": 15.43,
       "competition_penalty": 1.25,
-      "giant_risk_penalty": 2.74,
+      "giant_risk_penalty": 2.81,
       "paid_spike_penalty": 0.0
     },
     "opportunity_score": 69.72,
@@ -20823,7 +21219,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -21050,7 +21446,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -21271,11 +21667,11 @@
     "core_mechanic": "other",
     "theme": "cars",
     "meta": "none",
-    "audience_summary": "unknown:20, broad:6, teens:5",
+    "audience_summary": "unknown:19, broad:6, teens:5",
     "production_complexity": "high",
     "full_product_complexity": "high",
     "mvp_complexity": "high",
-    "mvp_feasibility_score": 36.47,
+    "mvp_feasibility_score": 36.52,
     "simplifiable": true,
     "simplification_idea": "Focus the MVP on other gameplay with a narrow cars theme and one progression loop.",
     "group_key_type": "market_category_core_mechanic",
@@ -21298,15 +21694,14 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
     },
-    "app_count": 34,
+    "app_count": 33,
     "app_ids": [
       "ar.com.trucoafa.app",
-      "azur.cards.rummy",
       "com.Orihalcon.CardBattleXmasClash",
       "com.Rfewe.Tdfgr.Bdewf",
       "com.bullion.teenpatti",
@@ -21340,22 +21735,22 @@
       "org.piayu.sedll.wkez",
       "vn.funtap.tan3qmax"
     ],
-    "total_daily_installs": 80944,
-    "avg_daily_installs": 2380.71,
-    "median_daily_installs": 1246.0,
-    "total_monthly_downloads": 849000,
+    "total_daily_installs": 80379,
+    "avg_daily_installs": 2435.73,
+    "median_daily_installs": 1251.0,
+    "total_monthly_downloads": 842000,
     "total_monthly_revenue": 290000.0,
-    "avg_rating": 3.85,
+    "avg_rating": 3.87,
     "rating_count_total": 0,
     "rating_confidence": 0.0,
-    "successful_new_apps_count": 34,
+    "successful_new_apps_count": 33,
     "traction_fresh_apps_count": 14,
-    "top_app_share": 0.2236,
+    "top_app_share": 0.2251,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
-    "giant_developer_share": 0.1438,
-    "single_developer_share": 0.2236,
-    "classification_confidence_avg": 0.4751,
+    "giant_developer_share": 0.1449,
+    "single_developer_share": 0.2251,
+    "classification_confidence_avg": 0.4761,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
       {
@@ -21496,13 +21891,13 @@
       "freshness": 15,
       "revenue_monetization": 15.0,
       "rating": 0.0,
-      "mvp_feasibility": 5.47,
+      "mvp_feasibility": 5.48,
       "data_quality": 15.6,
       "competition_penalty": 3.0,
-      "giant_risk_penalty": 3.6,
+      "giant_risk_penalty": 3.62,
       "paid_spike_penalty": 0.0
     },
-    "opportunity_score": 69.48,
+    "opportunity_score": 69.46,
     "risk_tags": [
       "audience_uncertain",
       "classifier_low_confidence",
@@ -21578,7 +21973,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -21833,7 +22228,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -22091,7 +22486,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -22346,7 +22741,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -22600,7 +22995,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -22829,7 +23224,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -23082,7 +23477,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -23340,7 +23735,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -23628,7 +24023,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -23890,7 +24285,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -24139,7 +24534,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -24368,7 +24763,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -24621,7 +25016,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -24848,7 +25243,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -25102,7 +25497,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -25355,7 +25750,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -25615,7 +26010,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -25873,7 +26268,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -26130,7 +26525,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -26385,7 +26780,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -26403,8 +26798,8 @@
       "com.welcome.world.bloxburg.games",
       "net.chicworld.hairsalonprincessesasmr"
     ],
-    "total_daily_installs": 121021,
-    "avg_daily_installs": 12102.1,
+    "total_daily_installs": 121698,
+    "avg_daily_installs": 12169.8,
     "median_daily_installs": 1840.5,
     "total_monthly_downloads": 5000,
     "total_monthly_revenue": 0.0,
@@ -26413,11 +26808,11 @@
     "rating_confidence": 0.0,
     "successful_new_apps_count": 10,
     "traction_fresh_apps_count": 1,
-    "top_app_share": 0.4731,
+    "top_app_share": 0.4705,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
     "giant_developer_share": 0.0,
-    "single_developer_share": 0.7315,
+    "single_developer_share": 0.7274,
     "classification_confidence_avg": 0.6468,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
@@ -26490,7 +26885,7 @@
         "name": "Purrfect Cat Club: Pet Salon",
         "developer_name": "Joymoby",
         "developer_id": "6538334859974071627",
-        "downloads_daily": 4051,
+        "downloads_daily": 4728,
         "downloads_month": 0,
         "revenue_month": 0.0,
         "rating_avg": 4.2,
@@ -26532,12 +26927,12 @@
     "weekly_growth_percent": 0.0,
     "monthly_growth_percent": 0.0,
     "previous_total_daily_installs": 0,
-    "data_quality_score": 71.16,
+    "data_quality_score": 71.22,
     "data_quality_components": {
       "field_completeness": 35.0,
       "history_depth": 0.0,
       "sample_size": 20.0,
-      "signal_diversity": 12.16,
+      "signal_diversity": 12.22,
       "monetization_reliability": 6.0,
       "fresh_success_reliability": 10.0,
       "penalty": 12.0
@@ -26561,12 +26956,12 @@
       "revenue_monetization": 6.0,
       "rating": 0.0,
       "mvp_feasibility": 9.51,
-      "data_quality": 14.23,
+      "data_quality": 14.24,
       "competition_penalty": 2.5,
       "giant_risk_penalty": 0.0,
       "paid_spike_penalty": 0.0
     },
-    "opportunity_score": 67.24,
+    "opportunity_score": 67.25,
     "risk_tags": [
       "classifier_low_confidence",
       "high_full_complexity",
@@ -26641,7 +27036,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -26893,7 +27288,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -27147,7 +27542,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -27396,7 +27791,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -27674,7 +28069,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -27926,7 +28321,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -28189,7 +28584,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -28450,7 +28845,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -28731,7 +29126,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -28934,7 +29329,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -29192,7 +29587,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -29451,7 +29846,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -29700,7 +30095,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -29956,7 +30351,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -30179,7 +30574,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -30441,7 +30836,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -30710,7 +31105,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -30959,7 +31354,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -31208,7 +31603,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -31458,7 +31853,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -31715,7 +32110,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -31967,7 +32362,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -32230,7 +32625,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -32458,7 +32853,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -32705,7 +33100,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -32910,7 +33305,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -33173,7 +33568,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -33423,7 +33818,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -33651,7 +34046,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -33907,7 +34302,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -34162,7 +34557,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -34426,7 +34821,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -34681,7 +35076,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -34934,7 +35329,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -35192,7 +35587,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -35448,7 +35843,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -35726,7 +36121,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -35991,7 +36386,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -36205,277 +36600,6 @@
     "snapshot_date": "2026-06-04",
     "score_version": "v1.3.2",
     "platform": "google_play",
-    "niche": "other",
-    "normalized_niche": "other",
-    "market_category": "simulation",
-    "core_mechanic": "physics",
-    "theme": "supermarket",
-    "meta": "levels",
-    "audience_summary": "unknown:11, broad:9, men_18_35:3",
-    "production_complexity": "high",
-    "full_product_complexity": "high",
-    "mvp_complexity": "high",
-    "mvp_feasibility_score": 51.52,
-    "simplifiable": true,
-    "simplification_idea": "Focus the MVP on physics gameplay with a narrow supermarket theme and one progression loop.",
-    "group_key_type": "core_mechanic_theme",
-    "group_key_value": "physics::supermarket",
-    "group_key": "core_mechanic_theme::physics::supermarket",
-    "signal_signature": "other::simulation::physics::supermarket::levels",
-    "release_date_window": "last_180d",
-    "source_scope": "single_appstorespy_query_no_country_language",
-    "collection_sort": "-release_date",
-    "min_app_daily_installs": 500,
-    "source_query": {
-      "limit": 10000,
-      "page": 1,
-      "sort": "-release_date",
-      "release_date_days_back": 180,
-      "min_downloads_daily": 500,
-      "requested_country": null,
-      "requested_language": null,
-      "requested_active_countries": null
-    },
-    "coverage": {
-      "total_count": null,
-      "result_count": 4788,
-      "sample_truncated": "unknown",
-      "coverage_ratio": null,
-      "full_window_claim_allowed": false
-    },
-    "app_count": 23,
-    "app_ids": [
-      "com.ang.cargo.truck.simulator.game",
-      "com.ccs.tractor_farming_driver_simulator_game.Indian_Farming_Game_3D",
-      "com.colorflow.blockbuster",
-      "com.drivingsimulator.truckgame",
-      "com.efgs.bus.game.city.coach.simulator",
-      "com.funbird.minivan.minicoach.driving.game",
-      "com.game.us.farming.tractor",
-      "com.gbs.ropehero.rescue.game",
-      "com.gc.aa.farm.culti.vation.farming.game",
-      "com.gcs.world.truck.diving.simulator.cargo.city.truck.driving.game",
-      "com.hfl.snow.excavator.crane.simulator",
-      "com.hoj.theif.simulator",
-      "com.im.an.octupus.sim.game",
-      "com.kissing.time.match.love.oovbqk",
-      "com.megaentertainment.euro.truck.simulator.city.truck.driving.game",
-      "com.nopegames.sandoutblitz",
-      "com.nxn.farming.life.game.simulator",
-      "com.pgs.aa.truck.reborn.trailer.game",
-      "com.pgs.tractor.farming.driving.simulator.game",
-      "com.sgs.indian.cargotruck.driving.truckgames",
-      "com.tractorfarmingsimulator.tractorgame",
-      "com.zippygames.trainsimulator2026",
-      "ninja.creed2.sniper.real3d.action.free.android"
-    ],
-    "total_daily_installs": 293022,
-    "avg_daily_installs": 12740.09,
-    "median_daily_installs": 3079.0,
-    "total_monthly_downloads": 1480000,
-    "total_monthly_revenue": 0.0,
-    "avg_rating": 3.76,
-    "rating_count_total": 0,
-    "rating_confidence": 0.0,
-    "successful_new_apps_count": 23,
-    "traction_fresh_apps_count": 6,
-    "top_app_share": 0.4141,
-    "growth_by_one_app_share": 0.0,
-    "advertised_top_app_share": 0.0,
-    "giant_developer_share": 0.0,
-    "single_developer_share": 0.4141,
-    "classification_confidence_avg": 0.5857,
-    "unknown_or_new_pattern_cluster": true,
-    "top_apps": [
-      {
-        "app_id": "com.kissing.time.match.love.oovbqk",
-        "bundle": "com.kissing.time.match.love.oovbqk",
-        "name": "Kissing Time: Match Love",
-        "developer_name": "abcSTORE",
-        "developer_id": "8833897756729137484",
-        "downloads_daily": 121343,
-        "downloads_month": 0,
-        "revenue_month": 0.0,
-        "rating_avg": 0.0,
-        "rating_count": 0,
-        "review_count": 0,
-        "release_date": "2026-01-29",
-        "update_date": "2026-01-29",
-        "iap": false,
-        "advertised": false,
-        "ads": false,
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.kissing.time.match.love.oovbqk-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.kissing.time.match.love.oovbqk",
-        "website": "http://fahdroid.com"
-      },
-      {
-        "app_id": "com.gc.aa.farm.culti.vation.farming.game",
-        "bundle": "com.gc.aa.farm.culti.vation.farming.game",
-        "name": "Farm Simulator 3D Farming Game",
-        "developer_name": "Games Carrier",
-        "developer_id": "7481674924179764867",
-        "downloads_daily": 33569,
-        "downloads_month": 0,
-        "revenue_month": 0.0,
-        "rating_avg": 0.0,
-        "rating_count": 0,
-        "review_count": 0,
-        "release_date": "2026-05-12",
-        "update_date": "2026-05-18",
-        "iap": false,
-        "advertised": false,
-        "ads": false,
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.gc.aa.farm.culti.vation.farming.game-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.gc.aa.farm.culti.vation.farming.game",
-        "website": "https://gamescarrier-gaming.com"
-      },
-      {
-        "app_id": "com.game.us.farming.tractor",
-        "bundle": "com.game.us.farming.tractor",
-        "name": "US Farming Tractor Game 3D",
-        "developer_name": "Zippy Games",
-        "developer_id": "9061644148228411033",
-        "downloads_daily": 24993,
-        "downloads_month": 0,
-        "revenue_month": 0.0,
-        "rating_avg": 0.0,
-        "rating_count": 0,
-        "review_count": 0,
-        "release_date": "2026-04-13",
-        "update_date": "2026-05-14",
-        "iap": true,
-        "advertised": false,
-        "ads": false,
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.game.us.farming.tractor-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.game.us.farming.tractor",
-        "website": "https://zippygames.net/"
-      },
-      {
-        "app_id": "com.pgs.tractor.farming.driving.simulator.game",
-        "bundle": "com.pgs.tractor.farming.driving.simulator.game",
-        "name": "Real Indian Tractor Farming 3D",
-        "developer_name": "Pro Gaming Studio",
-        "developer_id": "6302380921962308072",
-        "downloads_daily": 24430,
-        "downloads_month": 600000,
-        "revenue_month": 0.0,
-        "rating_avg": 3.7,
-        "rating_count": 0,
-        "review_count": 3,
-        "release_date": "2026-01-02",
-        "update_date": "2026-05-08",
-        "iap": false,
-        "advertised": false,
-        "ads": false,
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.pgs.tractor.farming.driving.simulator.game-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.pgs.tractor.farming.driving.simulator.game",
-        "website": "https://progamingstudio09.com"
-      },
-      {
-        "app_id": "com.sgs.indian.cargotruck.driving.truckgames",
-        "bundle": "com.sgs.indian.cargotruck.driving.truckgames",
-        "name": "Indian Cargo Truck sim 2026",
-        "developer_name": "Stranger Gamers",
-        "developer_id": "7779054810050589561",
-        "downloads_daily": 20575,
-        "downloads_month": 0,
-        "revenue_month": 0.0,
-        "rating_avg": 0.0,
-        "rating_count": 0,
-        "review_count": 0,
-        "release_date": "2026-04-09",
-        "update_date": "2026-06-03",
-        "iap": false,
-        "advertised": false,
-        "ads": false,
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.sgs.indian.cargotruck.driving.truckgames-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.sgs.indian.cargotruck.driving.truckgames",
-        "website": "https://m6deee9b3.app-ads-txt.com/"
-      }
-    ],
-    "has_history": false,
-    "history_depth_days": 0,
-    "weekly_growth_percent": 0.0,
-    "monthly_growth_percent": 0.0,
-    "previous_total_daily_installs": 0,
-    "data_quality_score": 72.52,
-    "data_quality_components": {
-      "field_completeness": 35.0,
-      "history_depth": 0.0,
-      "sample_size": 20.0,
-      "signal_diversity": 13.52,
-      "monetization_reliability": 6.0,
-      "fresh_success_reliability": 10.0,
-      "penalty": 12.0
-    },
-    "data_quality_reasons": [
-      "classifier_low_confidence",
-      "no_history",
-      "unknown_coverage",
-      "weak_revenue_signal"
-    ],
-    "monetization_signal": {
-      "iap_present": true,
-      "ads_present": false,
-      "revenue_month_available": false,
-      "revenue_confidence": "medium",
-      "monetization_model": "iap"
-    },
-    "score_components": {
-      "demand": 25,
-      "freshness": 15,
-      "revenue_monetization": 6.0,
-      "rating": 0.0,
-      "mvp_feasibility": 7.73,
-      "data_quality": 14.5,
-      "competition_penalty": 3.0,
-      "giant_risk_penalty": 0.0,
-      "paid_spike_penalty": 0.0
-    },
-    "opportunity_score": 65.23,
-    "risk_tags": [
-      "audience_uncertain",
-      "classifier_low_confidence",
-      "high_full_complexity",
-      "unknown_coverage",
-      "weak_rating_signal",
-      "weak_revenue_signal"
-    ],
-    "reason_codes": [
-      "diversified_apps",
-      "fresh_traction",
-      "low_giant_share",
-      "monetization_signal_present",
-      "multi_app_cluster",
-      "new_pattern_detected",
-      "simplifiable_high_complexity",
-      "strong_daily_installs"
-    ],
-    "severe_paid_spike_risk": false,
-    "candidate_id": "2026-06-04:c11ffc8e079421cb:core_mechanic_theme",
-    "dedupe_key": "c11ffc8e079421cb",
-    "alert_instance_id": null,
-    "status": "NEAR_MISS",
-    "failed_alert_conditions": [
-      "low_score",
-      "low_mvp_feasibility"
-    ],
-    "llm_summary": null,
-    "send_regular_alert": false,
-    "initial_baseline_digest": false,
-    "would_be_status": "NEAR_MISS",
-    "exclude_from_cooldown": true,
-    "history_state": "FIRST_RUN_NO_HISTORY",
-    "first_run_without_history": true,
-    "confidence_level": "MEDIUM",
-    "alert_filter_reasons": [
-      "excluded_from_cooldown"
-    ]
-  },
-  {
-    "snapshot_date": "2026-06-04",
-    "score_version": "v1.3.2",
-    "platform": "google_play",
     "niche": "block puzzle",
     "normalized_niche": "block_puzzle",
     "market_category": "simulation",
@@ -36509,7 +36633,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -36739,7 +36863,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -36990,7 +37114,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -37247,7 +37371,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -37522,7 +37646,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -37774,7 +37898,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -38027,7 +38151,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -38234,7 +38358,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -38490,7 +38614,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -38748,7 +38872,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -38999,7 +39123,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -39186,7 +39310,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -39416,7 +39540,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -39665,7 +39789,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -39935,7 +40059,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -40187,7 +40311,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -40436,7 +40560,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -40688,7 +40812,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -40940,7 +41064,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -41162,6 +41286,261 @@
     "niche": "runner",
     "normalized_niche": "runner",
     "market_category": "casual",
+    "core_mechanic": "physics",
+    "theme": "animals",
+    "meta": "levels",
+    "audience_summary": "broad:4, men_18_35:3, unknown:2",
+    "production_complexity": "medium",
+    "full_product_complexity": "medium",
+    "mvp_complexity": "medium",
+    "mvp_feasibility_score": 49.44,
+    "simplifiable": true,
+    "simplification_idea": "Focus the MVP on physics gameplay with a narrow animals theme and one progression loop.",
+    "group_key_type": "core_mechanic_theme_meta",
+    "group_key_value": "physics::animals::levels",
+    "group_key": "core_mechanic_theme_meta::physics::animals::levels",
+    "signal_signature": "runner::casual::physics::animals::levels",
+    "release_date_window": "last_180d",
+    "source_scope": "single_appstorespy_query_no_country_language",
+    "collection_sort": "-release_date",
+    "min_app_daily_installs": 500,
+    "source_query": {
+      "limit": 10000,
+      "page": 1,
+      "sort": "-release_date",
+      "release_date_days_back": 180,
+      "min_downloads_daily": 500,
+      "requested_country": null,
+      "requested_language": null,
+      "requested_active_countries": null
+    },
+    "coverage": {
+      "total_count": null,
+      "result_count": 4786,
+      "sample_truncated": "unknown",
+      "coverage_ratio": null,
+      "full_window_claim_allowed": false
+    },
+    "app_count": 9,
+    "app_ids": [
+      "com.animalragdoll.hit.destroy",
+      "com.ca.animaltruck.animaltruckgame",
+      "com.delta.team.farm.animal.transport.games",
+      "com.epicbitstudio.iamsoccerlegends",
+      "com.gf.cargo.truck.driving.simulator.game",
+      "com.gp22.peak.climbingadventure.challenge",
+      "com.img.archery.hunt.animal.hunting.game",
+      "com.master.flip.parkour.mania",
+      "com.stellarspan.Match.proO"
+    ],
+    "total_daily_installs": 46678,
+    "avg_daily_installs": 5186.44,
+    "median_daily_installs": 2046.0,
+    "total_monthly_downloads": 220000,
+    "total_monthly_revenue": 0.0,
+    "avg_rating": 4.45,
+    "rating_count_total": 0,
+    "rating_confidence": 0.0,
+    "successful_new_apps_count": 9,
+    "traction_fresh_apps_count": 2,
+    "top_app_share": 0.5165,
+    "growth_by_one_app_share": 0.0,
+    "advertised_top_app_share": 0.0,
+    "giant_developer_share": 0.0438,
+    "single_developer_share": 0.5165,
+    "classification_confidence_avg": 0.5993,
+    "unknown_or_new_pattern_cluster": true,
+    "top_apps": [
+      {
+        "app_id": "com.gp22.peak.climbingadventure.challenge",
+        "bundle": "com.gp22.peak.climbingadventure.challenge",
+        "name": "Peak Climbing Challenge",
+        "developer_name": "Zaib Engineering",
+        "developer_id": "8672194033236545417",
+        "downloads_daily": 24108,
+        "downloads_month": 0,
+        "revenue_month": 0.0,
+        "rating_avg": 0.0,
+        "rating_count": 0,
+        "review_count": 0,
+        "release_date": "2026-04-23",
+        "update_date": "2026-06-03",
+        "iap": true,
+        "advertised": false,
+        "ads": false,
+        "url_appstorespy": "https://appstorespy.com/android-google-play/com.gp22.peak.climbingadventure.challenge-trends-revenue-statistics-downloads-ratings",
+        "url": "https://play.google.com/store/apps/details?id=com.gp22.peak.climbingadventure.challenge",
+        "website": "https://app-txt-file.web.app/app-ads.txt"
+      },
+      {
+        "app_id": "com.epicbitstudio.iamsoccerlegends",
+        "bundle": "com.epicbitstudio.iamsoccerlegends",
+        "name": "I Am Soccer Legend",
+        "developer_name": "EpicBit Studio",
+        "developer_id": "7015682654881470060",
+        "downloads_daily": 8081,
+        "downloads_month": 0,
+        "revenue_month": 0.0,
+        "rating_avg": 0.0,
+        "rating_count": 0,
+        "review_count": 0,
+        "release_date": "2026-03-02",
+        "update_date": "2026-04-29",
+        "iap": false,
+        "advertised": false,
+        "ads": false,
+        "url_appstorespy": "https://appstorespy.com/android-google-play/com.epicbitstudio.iamsoccerlegends-trends-revenue-statistics-downloads-ratings",
+        "url": "https://play.google.com/store/apps/details?id=com.epicbitstudio.iamsoccerlegends",
+        "website": "https://epicbitstudio.com/"
+      },
+      {
+        "app_id": "com.stellarspan.Match.proO",
+        "bundle": "com.stellarspan.Match.proO",
+        "name": "Tubi",
+        "developer_name": "YUVITEK",
+        "developer_id": "7079054120842372649",
+        "downloads_daily": 5224,
+        "downloads_month": 20000,
+        "revenue_month": 0.0,
+        "rating_avg": 0.0,
+        "rating_count": 0,
+        "review_count": 0,
+        "release_date": "2026-01-29",
+        "update_date": "2026-02-05",
+        "iap": false,
+        "advertised": false,
+        "ads": false,
+        "url_appstorespy": "https://appstorespy.com/android-google-play/com.stellarspan.Match.proO-trends-revenue-statistics-downloads-ratings",
+        "url": "https://play.google.com/store/apps/details?id=com.stellarspan.Match.proO",
+        "website": ""
+      },
+      {
+        "app_id": "com.master.flip.parkour.mania",
+        "bundle": "com.master.flip.parkour.mania",
+        "name": "Backflip Mania",
+        "developer_name": "Wayfu Game Studio",
+        "developer_id": "5887445903837528278",
+        "downloads_daily": 2646,
+        "downloads_month": 80000,
+        "revenue_month": 0.0,
+        "rating_avg": 4.6,
+        "rating_count": 0,
+        "review_count": 17,
+        "release_date": "2026-01-23",
+        "update_date": "2026-03-24",
+        "iap": true,
+        "advertised": false,
+        "ads": false,
+        "url_appstorespy": "https://appstorespy.com/android-google-play/com.master.flip.parkour.mania-trends-revenue-statistics-downloads-ratings",
+        "url": "https://play.google.com/store/apps/details?id=com.master.flip.parkour.mania",
+        "website": "https://wayfustudio.com/"
+      },
+      {
+        "app_id": "com.delta.team.farm.animal.transport.games",
+        "bundle": "com.delta.team.farm.animal.transport.games",
+        "name": "Animal Transport Cargo Games",
+        "developer_name": "Delta Team Games",
+        "developer_id": "5712994146768012586",
+        "downloads_daily": 2046,
+        "downloads_month": 0,
+        "revenue_month": 0.0,
+        "rating_avg": 0.0,
+        "rating_count": 0,
+        "review_count": 0,
+        "release_date": "2026-04-15",
+        "update_date": "2026-05-11",
+        "iap": false,
+        "advertised": false,
+        "ads": false,
+        "url_appstorespy": "https://appstorespy.com/android-google-play/com.delta.team.farm.animal.transport.games-trends-revenue-statistics-downloads-ratings",
+        "url": "https://play.google.com/store/apps/details?id=com.delta.team.farm.animal.transport.games",
+        "website": "https://j5e51513b.app-ads-txt.com"
+      }
+    ],
+    "has_history": false,
+    "history_depth_days": 0,
+    "weekly_growth_percent": 0.0,
+    "monthly_growth_percent": 0.0,
+    "previous_total_daily_installs": 0,
+    "data_quality_score": 70.16,
+    "data_quality_components": {
+      "field_completeness": 35.0,
+      "history_depth": 0.0,
+      "sample_size": 20.0,
+      "signal_diversity": 11.16,
+      "monetization_reliability": 6.0,
+      "fresh_success_reliability": 10.0,
+      "penalty": 12.0
+    },
+    "data_quality_reasons": [
+      "classifier_low_confidence",
+      "no_history",
+      "unknown_coverage",
+      "weak_revenue_signal"
+    ],
+    "monetization_signal": {
+      "iap_present": true,
+      "ads_present": false,
+      "revenue_month_available": false,
+      "revenue_confidence": "medium",
+      "monetization_model": "iap"
+    },
+    "score_components": {
+      "demand": 25,
+      "freshness": 15,
+      "revenue_monetization": 6.0,
+      "rating": 0.0,
+      "mvp_feasibility": 7.42,
+      "data_quality": 14.03,
+      "competition_penalty": 2.25,
+      "giant_risk_penalty": 1.09,
+      "paid_spike_penalty": 0.0
+    },
+    "opportunity_score": 64.1,
+    "risk_tags": [
+      "audience_uncertain",
+      "classifier_low_confidence",
+      "unknown_coverage",
+      "weak_rating_signal",
+      "weak_revenue_signal"
+    ],
+    "reason_codes": [
+      "diversified_apps",
+      "fresh_traction",
+      "low_giant_share",
+      "monetization_signal_present",
+      "multi_app_cluster",
+      "new_pattern_detected",
+      "strong_daily_installs"
+    ],
+    "severe_paid_spike_risk": false,
+    "candidate_id": "2026-06-04:feda0ef6dabc07b3:core_mechanic_theme_meta",
+    "dedupe_key": "feda0ef6dabc07b3",
+    "alert_instance_id": null,
+    "status": "NEAR_MISS",
+    "failed_alert_conditions": [
+      "low_score",
+      "low_mvp_feasibility"
+    ],
+    "llm_summary": null,
+    "send_regular_alert": false,
+    "initial_baseline_digest": false,
+    "would_be_status": "NEAR_MISS",
+    "exclude_from_cooldown": true,
+    "history_state": "FIRST_RUN_NO_HISTORY",
+    "first_run_without_history": true,
+    "confidence_level": "MEDIUM",
+    "alert_filter_reasons": [
+      "excluded_from_cooldown"
+    ]
+  },
+  {
+    "snapshot_date": "2026-06-04",
+    "score_version": "v1.3.2",
+    "platform": "google_play",
+    "niche": "runner",
+    "normalized_niche": "runner",
+    "market_category": "casual",
     "core_mechanic": "runner",
     "theme": "home",
     "meta": "customization",
@@ -41192,7 +41571,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -41408,261 +41787,6 @@
     "snapshot_date": "2026-06-04",
     "score_version": "v1.3.2",
     "platform": "google_play",
-    "niche": "runner",
-    "normalized_niche": "runner",
-    "market_category": "casual",
-    "core_mechanic": "physics",
-    "theme": "animals",
-    "meta": "levels",
-    "audience_summary": "broad:4, men_18_35:3, unknown:2",
-    "production_complexity": "medium",
-    "full_product_complexity": "medium",
-    "mvp_complexity": "medium",
-    "mvp_feasibility_score": 49.44,
-    "simplifiable": true,
-    "simplification_idea": "Focus the MVP on physics gameplay with a narrow animals theme and one progression loop.",
-    "group_key_type": "core_mechanic_theme_meta",
-    "group_key_value": "physics::animals::levels",
-    "group_key": "core_mechanic_theme_meta::physics::animals::levels",
-    "signal_signature": "runner::casual::physics::animals::levels",
-    "release_date_window": "last_180d",
-    "source_scope": "single_appstorespy_query_no_country_language",
-    "collection_sort": "-release_date",
-    "min_app_daily_installs": 500,
-    "source_query": {
-      "limit": 10000,
-      "page": 1,
-      "sort": "-release_date",
-      "release_date_days_back": 180,
-      "min_downloads_daily": 500,
-      "requested_country": null,
-      "requested_language": null,
-      "requested_active_countries": null
-    },
-    "coverage": {
-      "total_count": null,
-      "result_count": 4788,
-      "sample_truncated": "unknown",
-      "coverage_ratio": null,
-      "full_window_claim_allowed": false
-    },
-    "app_count": 9,
-    "app_ids": [
-      "com.animalragdoll.hit.destroy",
-      "com.ca.animaltruck.animaltruckgame",
-      "com.delta.team.farm.animal.transport.games",
-      "com.epicbitstudio.iamsoccerlegends",
-      "com.gf.cargo.truck.driving.simulator.game",
-      "com.gp22.peak.climbingadventure.challenge",
-      "com.img.archery.hunt.animal.hunting.game",
-      "com.master.flip.parkour.mania",
-      "com.stellarspan.Match.proO"
-    ],
-    "total_daily_installs": 45904,
-    "avg_daily_installs": 5100.44,
-    "median_daily_installs": 2046.0,
-    "total_monthly_downloads": 220000,
-    "total_monthly_revenue": 0.0,
-    "avg_rating": 4.45,
-    "rating_count_total": 0,
-    "rating_confidence": 0.0,
-    "successful_new_apps_count": 9,
-    "traction_fresh_apps_count": 2,
-    "top_app_share": 0.5252,
-    "growth_by_one_app_share": 0.0,
-    "advertised_top_app_share": 0.0,
-    "giant_developer_share": 0.0446,
-    "single_developer_share": 0.5252,
-    "classification_confidence_avg": 0.5993,
-    "unknown_or_new_pattern_cluster": true,
-    "top_apps": [
-      {
-        "app_id": "com.gp22.peak.climbingadventure.challenge",
-        "bundle": "com.gp22.peak.climbingadventure.challenge",
-        "name": "Peak Climbing Challenge",
-        "developer_name": "Zaib Engineering",
-        "developer_id": "8672194033236545417",
-        "downloads_daily": 24108,
-        "downloads_month": 0,
-        "revenue_month": 0.0,
-        "rating_avg": 0.0,
-        "rating_count": 0,
-        "review_count": 0,
-        "release_date": "2026-04-23",
-        "update_date": "2026-06-03",
-        "iap": true,
-        "advertised": false,
-        "ads": false,
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.gp22.peak.climbingadventure.challenge-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.gp22.peak.climbingadventure.challenge",
-        "website": "https://app-txt-file.web.app/app-ads.txt"
-      },
-      {
-        "app_id": "com.epicbitstudio.iamsoccerlegends",
-        "bundle": "com.epicbitstudio.iamsoccerlegends",
-        "name": "I Am Soccer Legend",
-        "developer_name": "EpicBit Studio",
-        "developer_id": "7015682654881470060",
-        "downloads_daily": 8081,
-        "downloads_month": 0,
-        "revenue_month": 0.0,
-        "rating_avg": 0.0,
-        "rating_count": 0,
-        "review_count": 0,
-        "release_date": "2026-03-02",
-        "update_date": "2026-04-29",
-        "iap": false,
-        "advertised": false,
-        "ads": false,
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.epicbitstudio.iamsoccerlegends-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.epicbitstudio.iamsoccerlegends",
-        "website": "https://epicbitstudio.com/"
-      },
-      {
-        "app_id": "com.stellarspan.Match.proO",
-        "bundle": "com.stellarspan.Match.proO",
-        "name": "Tubi",
-        "developer_name": "YUVITEK",
-        "developer_id": "7079054120842372649",
-        "downloads_daily": 4450,
-        "downloads_month": 20000,
-        "revenue_month": 0.0,
-        "rating_avg": 0.0,
-        "rating_count": 0,
-        "review_count": 0,
-        "release_date": "2026-01-29",
-        "update_date": "2026-02-05",
-        "iap": false,
-        "advertised": false,
-        "ads": false,
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.stellarspan.Match.proO-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.stellarspan.Match.proO",
-        "website": ""
-      },
-      {
-        "app_id": "com.master.flip.parkour.mania",
-        "bundle": "com.master.flip.parkour.mania",
-        "name": "Backflip Mania",
-        "developer_name": "Wayfu Game Studio",
-        "developer_id": "5887445903837528278",
-        "downloads_daily": 2646,
-        "downloads_month": 80000,
-        "revenue_month": 0.0,
-        "rating_avg": 4.6,
-        "rating_count": 0,
-        "review_count": 17,
-        "release_date": "2026-01-23",
-        "update_date": "2026-03-24",
-        "iap": true,
-        "advertised": false,
-        "ads": false,
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.master.flip.parkour.mania-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.master.flip.parkour.mania",
-        "website": "https://wayfustudio.com/"
-      },
-      {
-        "app_id": "com.delta.team.farm.animal.transport.games",
-        "bundle": "com.delta.team.farm.animal.transport.games",
-        "name": "Animal Transport Cargo Games",
-        "developer_name": "Delta Team Games",
-        "developer_id": "5712994146768012586",
-        "downloads_daily": 2046,
-        "downloads_month": 0,
-        "revenue_month": 0.0,
-        "rating_avg": 0.0,
-        "rating_count": 0,
-        "review_count": 0,
-        "release_date": "2026-04-15",
-        "update_date": "2026-05-11",
-        "iap": false,
-        "advertised": false,
-        "ads": false,
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.delta.team.farm.animal.transport.games-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.delta.team.farm.animal.transport.games",
-        "website": "https://j5e51513b.app-ads-txt.com"
-      }
-    ],
-    "has_history": false,
-    "history_depth_days": 0,
-    "weekly_growth_percent": 0.0,
-    "monthly_growth_percent": 0.0,
-    "previous_total_daily_installs": 0,
-    "data_quality_score": 69.96,
-    "data_quality_components": {
-      "field_completeness": 35.0,
-      "history_depth": 0.0,
-      "sample_size": 20.0,
-      "signal_diversity": 10.96,
-      "monetization_reliability": 6.0,
-      "fresh_success_reliability": 10.0,
-      "penalty": 12.0
-    },
-    "data_quality_reasons": [
-      "classifier_low_confidence",
-      "no_history",
-      "unknown_coverage",
-      "weak_revenue_signal"
-    ],
-    "monetization_signal": {
-      "iap_present": true,
-      "ads_present": false,
-      "revenue_month_available": false,
-      "revenue_confidence": "medium",
-      "monetization_model": "iap"
-    },
-    "score_components": {
-      "demand": 25,
-      "freshness": 15,
-      "revenue_monetization": 6.0,
-      "rating": 0.0,
-      "mvp_feasibility": 7.42,
-      "data_quality": 13.99,
-      "competition_penalty": 2.25,
-      "giant_risk_penalty": 1.11,
-      "paid_spike_penalty": 0.0
-    },
-    "opportunity_score": 64.04,
-    "risk_tags": [
-      "audience_uncertain",
-      "classifier_low_confidence",
-      "unknown_coverage",
-      "weak_rating_signal",
-      "weak_revenue_signal"
-    ],
-    "reason_codes": [
-      "diversified_apps",
-      "fresh_traction",
-      "low_giant_share",
-      "monetization_signal_present",
-      "multi_app_cluster",
-      "new_pattern_detected",
-      "strong_daily_installs"
-    ],
-    "severe_paid_spike_risk": false,
-    "candidate_id": "2026-06-04:feda0ef6dabc07b3:core_mechanic_theme_meta",
-    "dedupe_key": "feda0ef6dabc07b3",
-    "alert_instance_id": null,
-    "status": "NEAR_MISS",
-    "failed_alert_conditions": [
-      "low_score",
-      "low_mvp_feasibility"
-    ],
-    "llm_summary": null,
-    "send_regular_alert": false,
-    "initial_baseline_digest": false,
-    "would_be_status": "NEAR_MISS",
-    "exclude_from_cooldown": true,
-    "history_state": "FIRST_RUN_NO_HISTORY",
-    "first_run_without_history": true,
-    "confidence_level": "MEDIUM",
-    "alert_filter_reasons": [
-      "excluded_from_cooldown"
-    ]
-  },
-  {
-    "snapshot_date": "2026-06-04",
-    "score_version": "v1.3.2",
-    "platform": "google_play",
     "niche": "arrow puzzle",
     "normalized_niche": "arrow_puzzle",
     "market_category": "puzzle",
@@ -41696,7 +41820,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -41948,7 +42072,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -42205,7 +42329,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -42482,7 +42606,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -42779,7 +42903,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -43036,7 +43160,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -43266,7 +43390,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -43522,7 +43646,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -43796,7 +43920,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -44049,7 +44173,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -44301,7 +44425,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -44563,7 +44687,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -44830,7 +44954,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -45061,7 +45185,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -45314,7 +45438,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -45362,8 +45486,8 @@
       "com.tiga.playtime.fun.factory.games",
       "com.vml.gangster.vegas.crime.action"
     ],
-    "total_daily_installs": 552352,
-    "avg_daily_installs": 13808.8,
+    "total_daily_installs": 554855,
+    "avg_daily_installs": 13871.38,
     "median_daily_installs": 5973.0,
     "total_monthly_downloads": 2230000,
     "total_monthly_revenue": 0.0,
@@ -45372,11 +45496,11 @@
     "rating_confidence": 0.0,
     "successful_new_apps_count": 40,
     "traction_fresh_apps_count": 17,
-    "top_app_share": 0.3114,
+    "top_app_share": 0.31,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
-    "giant_developer_share": 0.0159,
-    "single_developer_share": 0.3114,
+    "giant_developer_share": 0.0158,
+    "single_developer_share": 0.31,
     "classification_confidence_avg": 0.5079,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
@@ -45602,7 +45726,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -45886,7 +46010,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -46196,7 +46320,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -46460,7 +46584,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -46778,7 +46902,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -47030,7 +47154,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -47314,7 +47438,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -47357,8 +47481,8 @@
       "com.ts.snatch.and.run.all.memerot.game",
       "vn.corochti.childhoodstreetvendor"
     ],
-    "total_daily_installs": 238485,
-    "avg_daily_installs": 6813.86,
+    "total_daily_installs": 239725,
+    "avg_daily_installs": 6849.29,
     "median_daily_installs": 3033.0,
     "total_monthly_downloads": 648000,
     "total_monthly_revenue": 0.0,
@@ -47367,11 +47491,11 @@
     "rating_confidence": 0.0,
     "successful_new_apps_count": 35,
     "traction_fresh_apps_count": 11,
-    "top_app_share": 0.2592,
+    "top_app_share": 0.2579,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
     "giant_developer_share": 0.0,
-    "single_developer_share": 0.2592,
+    "single_developer_share": 0.2579,
     "classification_confidence_avg": 0.4907,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
@@ -47597,7 +47721,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -47910,7 +48034,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -48173,7 +48297,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -48428,7 +48552,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -48705,7 +48829,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -48983,7 +49107,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -49244,7 +49368,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -49463,265 +49587,6 @@
     "snapshot_date": "2026-06-04",
     "score_version": "v1.3.2",
     "platform": "google_play",
-    "niche": "runner",
-    "normalized_niche": "runner",
-    "market_category": "casual",
-    "core_mechanic": "physics",
-    "theme": "supermarket",
-    "meta": "levels",
-    "audience_summary": "unknown:8, broad:3, men_18_35:2",
-    "production_complexity": "medium",
-    "full_product_complexity": "medium",
-    "mvp_complexity": "medium",
-    "mvp_feasibility_score": 37.31,
-    "simplifiable": true,
-    "simplification_idea": "Focus the MVP on physics gameplay with a narrow supermarket theme and one progression loop.",
-    "group_key_type": "core_mechanic_theme_meta",
-    "group_key_value": "physics::supermarket::levels",
-    "group_key": "core_mechanic_theme_meta::physics::supermarket::levels",
-    "signal_signature": "runner::casual::physics::supermarket::levels",
-    "release_date_window": "last_180d",
-    "source_scope": "single_appstorespy_query_no_country_language",
-    "collection_sort": "-release_date",
-    "min_app_daily_installs": 500,
-    "source_query": {
-      "limit": 10000,
-      "page": 1,
-      "sort": "-release_date",
-      "release_date_days_back": 180,
-      "min_downloads_daily": 500,
-      "requested_country": null,
-      "requested_language": null,
-      "requested_active_countries": null
-    },
-    "coverage": {
-      "total_count": null,
-      "result_count": 4788,
-      "sample_truncated": "unknown",
-      "coverage_ratio": null,
-      "full_window_claim_allowed": false
-    },
-    "app_count": 13,
-    "app_ids": [
-      "com.ccs.tractor_farming_driver_simulator_game.Indian_Farming_Game_3D",
-      "com.drivingsimulator.truckgame",
-      "com.efgs.bus.game.city.coach.simulator",
-      "com.funbird.minivan.minicoach.driving.game",
-      "com.game.us.farming.tractor",
-      "com.gbs.ropehero.rescue.game",
-      "com.gc.aa.farm.culti.vation.farming.game",
-      "com.hoj.theif.simulator",
-      "com.kissing.time.match.love.oovbqk",
-      "com.nopegames.sandoutblitz",
-      "com.nxn.farming.life.game.simulator",
-      "com.pgs.aa.truck.reborn.trailer.game",
-      "com.sgs.indian.cargotruck.driving.truckgames"
-    ],
-    "total_daily_installs": 237637,
-    "avg_daily_installs": 18279.77,
-    "median_daily_installs": 5077.0,
-    "total_monthly_downloads": 420000,
-    "total_monthly_revenue": 0.0,
-    "avg_rating": 3.8,
-    "rating_count_total": 0,
-    "rating_confidence": 0.0,
-    "successful_new_apps_count": 13,
-    "traction_fresh_apps_count": 5,
-    "top_app_share": 0.5106,
-    "growth_by_one_app_share": 0.0,
-    "advertised_top_app_share": 0.0,
-    "giant_developer_share": 0.0,
-    "single_developer_share": 0.5106,
-    "classification_confidence_avg": 0.5534,
-    "unknown_or_new_pattern_cluster": true,
-    "top_apps": [
-      {
-        "app_id": "com.kissing.time.match.love.oovbqk",
-        "bundle": "com.kissing.time.match.love.oovbqk",
-        "name": "Kissing Time: Match Love",
-        "developer_name": "abcSTORE",
-        "developer_id": "8833897756729137484",
-        "downloads_daily": 121343,
-        "downloads_month": 0,
-        "revenue_month": 0.0,
-        "rating_avg": 0.0,
-        "rating_count": 0,
-        "review_count": 0,
-        "release_date": "2026-01-29",
-        "update_date": "2026-01-29",
-        "iap": false,
-        "advertised": false,
-        "ads": false,
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.kissing.time.match.love.oovbqk-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.kissing.time.match.love.oovbqk",
-        "website": "http://fahdroid.com"
-      },
-      {
-        "app_id": "com.gc.aa.farm.culti.vation.farming.game",
-        "bundle": "com.gc.aa.farm.culti.vation.farming.game",
-        "name": "Farm Simulator 3D Farming Game",
-        "developer_name": "Games Carrier",
-        "developer_id": "7481674924179764867",
-        "downloads_daily": 33569,
-        "downloads_month": 0,
-        "revenue_month": 0.0,
-        "rating_avg": 0.0,
-        "rating_count": 0,
-        "review_count": 0,
-        "release_date": "2026-05-12",
-        "update_date": "2026-05-18",
-        "iap": false,
-        "advertised": false,
-        "ads": false,
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.gc.aa.farm.culti.vation.farming.game-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.gc.aa.farm.culti.vation.farming.game",
-        "website": "https://gamescarrier-gaming.com"
-      },
-      {
-        "app_id": "com.game.us.farming.tractor",
-        "bundle": "com.game.us.farming.tractor",
-        "name": "US Farming Tractor Game 3D",
-        "developer_name": "Zippy Games",
-        "developer_id": "9061644148228411033",
-        "downloads_daily": 24993,
-        "downloads_month": 0,
-        "revenue_month": 0.0,
-        "rating_avg": 0.0,
-        "rating_count": 0,
-        "review_count": 0,
-        "release_date": "2026-04-13",
-        "update_date": "2026-05-14",
-        "iap": true,
-        "advertised": false,
-        "ads": false,
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.game.us.farming.tractor-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.game.us.farming.tractor",
-        "website": "https://zippygames.net/"
-      },
-      {
-        "app_id": "com.sgs.indian.cargotruck.driving.truckgames",
-        "bundle": "com.sgs.indian.cargotruck.driving.truckgames",
-        "name": "Indian Cargo Truck sim 2026",
-        "developer_name": "Stranger Gamers",
-        "developer_id": "7779054810050589561",
-        "downloads_daily": 20575,
-        "downloads_month": 0,
-        "revenue_month": 0.0,
-        "rating_avg": 0.0,
-        "rating_count": 0,
-        "review_count": 0,
-        "release_date": "2026-04-09",
-        "update_date": "2026-06-03",
-        "iap": false,
-        "advertised": false,
-        "ads": false,
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.sgs.indian.cargotruck.driving.truckgames-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.sgs.indian.cargotruck.driving.truckgames",
-        "website": "https://m6deee9b3.app-ads-txt.com/"
-      },
-      {
-        "app_id": "com.nxn.farming.life.game.simulator",
-        "bundle": "com.nxn.farming.life.game.simulator",
-        "name": "Indian Tractor Farming Life 3D",
-        "developer_name": "Nexon Studio",
-        "developer_id": "6155162840431925974",
-        "downloads_daily": 10357,
-        "downloads_month": 400000,
-        "revenue_month": 0.0,
-        "rating_avg": 3.2,
-        "rating_count": 0,
-        "review_count": 40,
-        "release_date": "2025-12-21",
-        "update_date": "2026-03-03",
-        "iap": false,
-        "advertised": false,
-        "ads": false,
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.nxn.farming.life.game.simulator-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.nxn.farming.life.game.simulator",
-        "website": "https://nexons-studio.com"
-      }
-    ],
-    "has_history": false,
-    "history_depth_days": 0,
-    "weekly_growth_percent": 0.0,
-    "monthly_growth_percent": 0.0,
-    "previous_total_daily_installs": 0,
-    "data_quality_score": 70.29,
-    "data_quality_components": {
-      "field_completeness": 35.0,
-      "history_depth": 0.0,
-      "sample_size": 20.0,
-      "signal_diversity": 11.29,
-      "monetization_reliability": 6.0,
-      "fresh_success_reliability": 10.0,
-      "penalty": 12.0
-    },
-    "data_quality_reasons": [
-      "classifier_low_confidence",
-      "no_history",
-      "unknown_coverage",
-      "weak_revenue_signal"
-    ],
-    "monetization_signal": {
-      "iap_present": true,
-      "ads_present": false,
-      "revenue_month_available": false,
-      "revenue_confidence": "medium",
-      "monetization_model": "iap"
-    },
-    "score_components": {
-      "demand": 25,
-      "freshness": 15,
-      "revenue_monetization": 6.0,
-      "rating": 0.0,
-      "mvp_feasibility": 5.6,
-      "data_quality": 14.06,
-      "competition_penalty": 3.0,
-      "giant_risk_penalty": 0.0,
-      "paid_spike_penalty": 0.0
-    },
-    "opportunity_score": 62.65,
-    "risk_tags": [
-      "audience_uncertain",
-      "classifier_low_confidence",
-      "unknown_coverage",
-      "weak_rating_signal",
-      "weak_revenue_signal"
-    ],
-    "reason_codes": [
-      "diversified_apps",
-      "fresh_traction",
-      "low_giant_share",
-      "monetization_signal_present",
-      "multi_app_cluster",
-      "new_pattern_detected",
-      "strong_daily_installs"
-    ],
-    "severe_paid_spike_risk": false,
-    "candidate_id": "2026-06-04:9c2ba0fd186e96cc:core_mechanic_theme_meta",
-    "dedupe_key": "9c2ba0fd186e96cc",
-    "alert_instance_id": null,
-    "status": "NEAR_MISS",
-    "failed_alert_conditions": [
-      "low_score",
-      "low_mvp_feasibility"
-    ],
-    "llm_summary": null,
-    "send_regular_alert": false,
-    "initial_baseline_digest": false,
-    "would_be_status": "NEAR_MISS",
-    "exclude_from_cooldown": true,
-    "history_state": "FIRST_RUN_NO_HISTORY",
-    "first_run_without_history": true,
-    "confidence_level": "MEDIUM",
-    "alert_filter_reasons": [
-      "excluded_from_cooldown"
-    ]
-  },
-  {
-    "snapshot_date": "2026-06-04",
-    "score_version": "v1.3.2",
-    "platform": "google_play",
     "niche": "other",
     "normalized_niche": "other",
     "market_category": "puzzle",
@@ -49755,7 +49620,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -50034,7 +49899,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -50287,7 +50152,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -50550,7 +50415,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -50804,7 +50669,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -51051,7 +50916,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -51290,6 +51155,265 @@
     "platform": "google_play",
     "niche": "runner",
     "normalized_niche": "runner",
+    "market_category": "casual",
+    "core_mechanic": "physics",
+    "theme": "supermarket",
+    "meta": "levels",
+    "audience_summary": "unknown:8, broad:3, men_18_35:2",
+    "production_complexity": "medium",
+    "full_product_complexity": "medium",
+    "mvp_complexity": "medium",
+    "mvp_feasibility_score": 37.31,
+    "simplifiable": true,
+    "simplification_idea": "Focus the MVP on physics gameplay with a narrow supermarket theme and one progression loop.",
+    "group_key_type": "core_mechanic_theme_meta",
+    "group_key_value": "physics::supermarket::levels",
+    "group_key": "core_mechanic_theme_meta::physics::supermarket::levels",
+    "signal_signature": "runner::casual::physics::supermarket::levels",
+    "release_date_window": "last_180d",
+    "source_scope": "single_appstorespy_query_no_country_language",
+    "collection_sort": "-release_date",
+    "min_app_daily_installs": 500,
+    "source_query": {
+      "limit": 10000,
+      "page": 1,
+      "sort": "-release_date",
+      "release_date_days_back": 180,
+      "min_downloads_daily": 500,
+      "requested_country": null,
+      "requested_language": null,
+      "requested_active_countries": null
+    },
+    "coverage": {
+      "total_count": null,
+      "result_count": 4786,
+      "sample_truncated": "unknown",
+      "coverage_ratio": null,
+      "full_window_claim_allowed": false
+    },
+    "app_count": 13,
+    "app_ids": [
+      "com.ccs.tractor_farming_driver_simulator_game.Indian_Farming_Game_3D",
+      "com.drivingsimulator.truckgame",
+      "com.efgs.bus.game.city.coach.simulator",
+      "com.funbird.minivan.minicoach.driving.game",
+      "com.game.us.farming.tractor",
+      "com.gbs.ropehero.rescue.game",
+      "com.gc.aa.farm.culti.vation.farming.game",
+      "com.hoj.theif.simulator",
+      "com.kissing.time.match.love.oovbqk",
+      "com.nopegames.sandoutblitz",
+      "com.nxn.farming.life.game.simulator",
+      "com.pgs.aa.truck.reborn.trailer.game",
+      "com.sgs.indian.cargotruck.driving.truckgames"
+    ],
+    "total_daily_installs": 283375,
+    "avg_daily_installs": 21798.08,
+    "median_daily_installs": 5077.0,
+    "total_monthly_downloads": 420000,
+    "total_monthly_revenue": 0.0,
+    "avg_rating": 3.8,
+    "rating_count_total": 0,
+    "rating_confidence": 0.0,
+    "successful_new_apps_count": 13,
+    "traction_fresh_apps_count": 5,
+    "top_app_share": 0.5896,
+    "growth_by_one_app_share": 0.0,
+    "advertised_top_app_share": 0.0,
+    "giant_developer_share": 0.0,
+    "single_developer_share": 0.5896,
+    "classification_confidence_avg": 0.5534,
+    "unknown_or_new_pattern_cluster": true,
+    "top_apps": [
+      {
+        "app_id": "com.kissing.time.match.love.oovbqk",
+        "bundle": "com.kissing.time.match.love.oovbqk",
+        "name": "Kissing Time: Match Love",
+        "developer_name": "abcSTORE",
+        "developer_id": "8833897756729137484",
+        "downloads_daily": 167081,
+        "downloads_month": 0,
+        "revenue_month": 0.0,
+        "rating_avg": 0.0,
+        "rating_count": 0,
+        "review_count": 0,
+        "release_date": "2026-01-29",
+        "update_date": "2026-01-29",
+        "iap": false,
+        "advertised": false,
+        "ads": false,
+        "url_appstorespy": "https://appstorespy.com/android-google-play/com.kissing.time.match.love.oovbqk-trends-revenue-statistics-downloads-ratings",
+        "url": "https://play.google.com/store/apps/details?id=com.kissing.time.match.love.oovbqk",
+        "website": "http://fahdroid.com"
+      },
+      {
+        "app_id": "com.gc.aa.farm.culti.vation.farming.game",
+        "bundle": "com.gc.aa.farm.culti.vation.farming.game",
+        "name": "Farm Simulator 3D Farming Game",
+        "developer_name": "Games Carrier",
+        "developer_id": "7481674924179764867",
+        "downloads_daily": 33569,
+        "downloads_month": 0,
+        "revenue_month": 0.0,
+        "rating_avg": 0.0,
+        "rating_count": 0,
+        "review_count": 0,
+        "release_date": "2026-05-12",
+        "update_date": "2026-05-18",
+        "iap": false,
+        "advertised": false,
+        "ads": false,
+        "url_appstorespy": "https://appstorespy.com/android-google-play/com.gc.aa.farm.culti.vation.farming.game-trends-revenue-statistics-downloads-ratings",
+        "url": "https://play.google.com/store/apps/details?id=com.gc.aa.farm.culti.vation.farming.game",
+        "website": "https://gamescarrier-gaming.com"
+      },
+      {
+        "app_id": "com.game.us.farming.tractor",
+        "bundle": "com.game.us.farming.tractor",
+        "name": "US Farming Tractor Game 3D",
+        "developer_name": "Zippy Games",
+        "developer_id": "9061644148228411033",
+        "downloads_daily": 24993,
+        "downloads_month": 0,
+        "revenue_month": 0.0,
+        "rating_avg": 0.0,
+        "rating_count": 0,
+        "review_count": 0,
+        "release_date": "2026-04-13",
+        "update_date": "2026-05-14",
+        "iap": true,
+        "advertised": false,
+        "ads": false,
+        "url_appstorespy": "https://appstorespy.com/android-google-play/com.game.us.farming.tractor-trends-revenue-statistics-downloads-ratings",
+        "url": "https://play.google.com/store/apps/details?id=com.game.us.farming.tractor",
+        "website": "https://zippygames.net/"
+      },
+      {
+        "app_id": "com.sgs.indian.cargotruck.driving.truckgames",
+        "bundle": "com.sgs.indian.cargotruck.driving.truckgames",
+        "name": "Indian Cargo Truck sim 2026",
+        "developer_name": "Stranger Gamers",
+        "developer_id": "7779054810050589561",
+        "downloads_daily": 20575,
+        "downloads_month": 0,
+        "revenue_month": 0.0,
+        "rating_avg": 0.0,
+        "rating_count": 0,
+        "review_count": 0,
+        "release_date": "2026-04-09",
+        "update_date": "2026-06-03",
+        "iap": false,
+        "advertised": false,
+        "ads": false,
+        "url_appstorespy": "https://appstorespy.com/android-google-play/com.sgs.indian.cargotruck.driving.truckgames-trends-revenue-statistics-downloads-ratings",
+        "url": "https://play.google.com/store/apps/details?id=com.sgs.indian.cargotruck.driving.truckgames",
+        "website": "https://m6deee9b3.app-ads-txt.com/"
+      },
+      {
+        "app_id": "com.nxn.farming.life.game.simulator",
+        "bundle": "com.nxn.farming.life.game.simulator",
+        "name": "Indian Tractor Farming Life 3D",
+        "developer_name": "Nexon Studio",
+        "developer_id": "6155162840431925974",
+        "downloads_daily": 10357,
+        "downloads_month": 400000,
+        "revenue_month": 0.0,
+        "rating_avg": 3.2,
+        "rating_count": 0,
+        "review_count": 40,
+        "release_date": "2025-12-21",
+        "update_date": "2026-03-03",
+        "iap": false,
+        "advertised": false,
+        "ads": false,
+        "url_appstorespy": "https://appstorespy.com/android-google-play/com.nxn.farming.life.game.simulator-trends-revenue-statistics-downloads-ratings",
+        "url": "https://play.google.com/store/apps/details?id=com.nxn.farming.life.game.simulator",
+        "website": "https://nexons-studio.com"
+      }
+    ],
+    "has_history": false,
+    "history_depth_days": 0,
+    "weekly_growth_percent": 0.0,
+    "monthly_growth_percent": 0.0,
+    "previous_total_daily_installs": 0,
+    "data_quality_score": 68.47,
+    "data_quality_components": {
+      "field_completeness": 35.0,
+      "history_depth": 0.0,
+      "sample_size": 20.0,
+      "signal_diversity": 9.47,
+      "monetization_reliability": 6.0,
+      "fresh_success_reliability": 10.0,
+      "penalty": 12.0
+    },
+    "data_quality_reasons": [
+      "classifier_low_confidence",
+      "no_history",
+      "unknown_coverage",
+      "weak_revenue_signal"
+    ],
+    "monetization_signal": {
+      "iap_present": true,
+      "ads_present": false,
+      "revenue_month_available": false,
+      "revenue_confidence": "medium",
+      "monetization_model": "iap"
+    },
+    "score_components": {
+      "demand": 25,
+      "freshness": 15,
+      "revenue_monetization": 6.0,
+      "rating": 0.0,
+      "mvp_feasibility": 5.6,
+      "data_quality": 13.69,
+      "competition_penalty": 3.0,
+      "giant_risk_penalty": 0.0,
+      "paid_spike_penalty": 0.0
+    },
+    "opportunity_score": 62.29,
+    "risk_tags": [
+      "audience_uncertain",
+      "classifier_low_confidence",
+      "unknown_coverage",
+      "weak_rating_signal",
+      "weak_revenue_signal"
+    ],
+    "reason_codes": [
+      "diversified_apps",
+      "fresh_traction",
+      "low_giant_share",
+      "monetization_signal_present",
+      "multi_app_cluster",
+      "new_pattern_detected",
+      "strong_daily_installs"
+    ],
+    "severe_paid_spike_risk": false,
+    "candidate_id": "2026-06-04:9c2ba0fd186e96cc:core_mechanic_theme_meta",
+    "dedupe_key": "9c2ba0fd186e96cc",
+    "alert_instance_id": null,
+    "status": "NEAR_MISS",
+    "failed_alert_conditions": [
+      "low_score",
+      "low_mvp_feasibility"
+    ],
+    "llm_summary": null,
+    "send_regular_alert": false,
+    "initial_baseline_digest": false,
+    "would_be_status": "NEAR_MISS",
+    "exclude_from_cooldown": true,
+    "history_state": "FIRST_RUN_NO_HISTORY",
+    "first_run_without_history": true,
+    "confidence_level": "MEDIUM",
+    "alert_filter_reasons": [
+      "excluded_from_cooldown"
+    ]
+  },
+  {
+    "snapshot_date": "2026-06-04",
+    "score_version": "v1.3.2",
+    "platform": "google_play",
+    "niche": "runner",
+    "normalized_niche": "runner",
     "market_category": "simulation",
     "core_mechanic": "runner",
     "theme": "fashion",
@@ -51321,7 +51445,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -51571,7 +51695,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -51756,7 +51880,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -52007,7 +52131,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -52210,7 +52334,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -52464,7 +52588,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -52693,7 +52817,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -52945,7 +53069,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -53203,7 +53327,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -53410,7 +53534,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -53664,7 +53788,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -53892,7 +54016,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -54122,7 +54246,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -54326,7 +54450,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -54534,7 +54658,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -54737,7 +54861,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -54992,7 +55116,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -55181,7 +55305,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -55436,7 +55560,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -55666,7 +55790,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -55896,7 +56020,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -56151,7 +56275,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -56360,7 +56484,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -56397,8 +56521,8 @@
       "magic.push_titans.robot",
       "pogo.stick.obby"
     ],
-    "total_daily_installs": 100439,
-    "avg_daily_installs": 3463.41,
+    "total_daily_installs": 101213,
+    "avg_daily_installs": 3490.1,
     "median_daily_installs": 1093.0,
     "total_monthly_downloads": 783000,
     "total_monthly_revenue": 0.0,
@@ -56407,11 +56531,11 @@
     "rating_confidence": 0.0,
     "successful_new_apps_count": 29,
     "traction_fresh_apps_count": 6,
-    "top_app_share": 0.2856,
+    "top_app_share": 0.2835,
     "growth_by_one_app_share": 0.0,
     "advertised_top_app_share": 0.0,
-    "giant_developer_share": 0.1339,
-    "single_developer_share": 0.2856,
+    "giant_developer_share": 0.1329,
+    "single_developer_share": 0.2835,
     "classification_confidence_avg": 0.5966,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
@@ -56557,10 +56681,10 @@
       "mvp_feasibility": 6.08,
       "data_quality": 14.8,
       "competition_penalty": 3.0,
-      "giant_risk_penalty": 3.35,
+      "giant_risk_penalty": 3.32,
       "paid_spike_penalty": 0.0
     },
-    "opportunity_score": 60.53,
+    "opportunity_score": 60.56,
     "risk_tags": [
       "audience_uncertain",
       "classifier_low_confidence",
@@ -56637,7 +56761,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -56842,7 +56966,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -57095,7 +57219,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -57280,7 +57404,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -57487,7 +57611,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4788,
+      "result_count": 4786,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false

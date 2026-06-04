@@ -5,9 +5,13 @@ Window: releases from last 180 days
 History: no previous compatible snapshot
 Important: this is not a regular ALERT; confidence is capped at MEDIUM.
 
+LLM: source=fallback, model=gpt-4.1-mini, api_key_present=true, fallback_reason=openai_error
+LLM fallback_detail: HTTP Error 429: Too Many Requests
+
 ## Top Baseline Candidates
 1. word_puzzle - would_be_status=ALERT, score=79.99, installs=191918, reason_codes=diversified_apps, fresh_traction, low_giant_share, low_mvp_complexity, monetization_signal_present, multi_app_cluster, new_pattern_detected, small_team_fit, strong_daily_installs, INITIAL_BASELINE_NO_HISTORY
-   - Automated Review: recommendation=WATCH, confidence=medium, source=fallback
+   - Automated Review: recommendation=WATCH, confidence=medium, source=fallback, fallback_reason=openai_error
+     - fallback_detail: HTTP Error 429: Too Many Requests
      - why_interesting:
        - diversified_apps
        - fresh_traction
@@ -22,8 +26,9 @@ Important: this is not a regular ALERT; confidence is capped at MEDIUM.
        - Check top apps manually in AppStoreSpy and stores.
        - Separate organic traction from paid acquisition.
        - Review creatives and monetization signals before production.
-2. coloring - would_be_status=ALERT, score=79.87, installs=670376, reason_codes=diversified_apps, fresh_traction, low_giant_share, low_mvp_complexity, monetization_signal_present, multi_app_cluster, new_pattern_detected, small_team_fit, strong_daily_installs, INITIAL_BASELINE_NO_HISTORY
-   - Automated Review: recommendation=WATCH, confidence=medium, source=fallback
+2. coloring - would_be_status=ALERT, score=79.87, installs=671132, reason_codes=diversified_apps, fresh_traction, low_giant_share, low_mvp_complexity, monetization_signal_present, multi_app_cluster, new_pattern_detected, small_team_fit, strong_daily_installs, INITIAL_BASELINE_NO_HISTORY
+   - Automated Review: recommendation=WATCH, confidence=medium, source=fallback, fallback_reason=openai_error
+     - fallback_detail: HTTP Error 429: Too Many Requests
      - why_interesting:
        - diversified_apps
        - fresh_traction
@@ -39,7 +44,8 @@ Important: this is not a regular ALERT; confidence is capped at MEDIUM.
        - Separate organic traction from paid acquisition.
        - Review creatives and monetization signals before production.
 3. arrow_puzzle - would_be_status=ALERT, score=79.68, installs=28686, reason_codes=diversified_apps, fresh_traction, low_giant_share, low_mvp_complexity, monetization_signal_present, multi_app_cluster, new_pattern_detected, small_team_fit, strong_daily_installs, INITIAL_BASELINE_NO_HISTORY
-   - Automated Review: recommendation=WATCH, confidence=medium, source=fallback
+   - Automated Review: recommendation=WATCH, confidence=medium, source=fallback, fallback_reason=openai_error
+     - fallback_detail: HTTP Error 429: Too Many Requests
      - why_interesting:
        - diversified_apps
        - fresh_traction
@@ -55,8 +61,9 @@ Important: this is not a regular ALERT; confidence is capped at MEDIUM.
        - Check top apps manually in AppStoreSpy and stores.
        - Separate organic traction from paid acquisition.
        - Review creatives and monetization signals before production.
-4. sort_puzzle - would_be_status=ALERT, score=79.65, installs=58418, reason_codes=diversified_apps, fresh_traction, low_giant_share, low_mvp_complexity, monetization_signal_present, multi_app_cluster, new_pattern_detected, small_team_fit, strong_daily_installs, INITIAL_BASELINE_NO_HISTORY
-   - Automated Review: recommendation=WATCH, confidence=medium, source=fallback
+4. sort_puzzle - would_be_status=ALERT, score=79.65, installs=59303, reason_codes=diversified_apps, fresh_traction, low_giant_share, low_mvp_complexity, monetization_signal_present, multi_app_cluster, new_pattern_detected, small_team_fit, strong_daily_installs, INITIAL_BASELINE_NO_HISTORY
+   - Automated Review: recommendation=WATCH, confidence=medium, source=fallback, fallback_reason=openai_error
+     - fallback_detail: HTTP Error 429: Too Many Requests
      - why_interesting:
        - diversified_apps
        - fresh_traction
@@ -71,7 +78,8 @@ Important: this is not a regular ALERT; confidence is capped at MEDIUM.
        - Separate organic traction from paid acquisition.
        - Review creatives and monetization signals before production.
 5. block_puzzle - would_be_status=ALERT, score=79.42, installs=1236626, reason_codes=diversified_apps, fresh_traction, low_giant_share, low_mvp_complexity, multi_app_cluster, new_pattern_detected, small_team_fit, strong_daily_installs, INITIAL_BASELINE_NO_HISTORY
-   - Automated Review: recommendation=WATCH, confidence=medium, source=fallback
+   - Automated Review: recommendation=WATCH, confidence=medium, source=fallback, fallback_reason=openai_error
+     - fallback_detail: HTTP Error 429: Too Many Requests
      - why_interesting:
        - diversified_apps
        - fresh_traction
@@ -87,8 +95,9 @@ Important: this is not a regular ALERT; confidence is capped at MEDIUM.
        - Check top apps manually in AppStoreSpy and stores.
        - Separate organic traction from paid acquisition.
        - Review creatives and monetization signals before production.
-6. sort_puzzle - would_be_status=ALERT, score=79.32, installs=965051, reason_codes=diversified_apps, fresh_traction, low_giant_share, low_mvp_complexity, monetization_signal_present, multi_app_cluster, new_pattern_detected, small_team_fit, strong_daily_installs, INITIAL_BASELINE_NO_HISTORY
-   - Automated Review: recommendation=WATCH, confidence=medium, source=fallback
+6. sort_puzzle - would_be_status=ALERT, score=79.32, installs=966318, reason_codes=diversified_apps, fresh_traction, low_giant_share, low_mvp_complexity, monetization_signal_present, multi_app_cluster, new_pattern_detected, small_team_fit, strong_daily_installs, INITIAL_BASELINE_NO_HISTORY
+   - Automated Review: recommendation=WATCH, confidence=medium, source=fallback, fallback_reason=openai_error
+     - fallback_detail: HTTP Error 429: Too Many Requests
      - why_interesting:
        - diversified_apps
        - fresh_traction
@@ -103,8 +112,9 @@ Important: this is not a regular ALERT; confidence is capped at MEDIUM.
        - Check top apps manually in AppStoreSpy and stores.
        - Separate organic traction from paid acquisition.
        - Review creatives and monetization signals before production.
-7. arrow_puzzle - would_be_status=ALERT, score=79.25, installs=2749544, reason_codes=diversified_apps, fresh_traction, low_giant_share, low_mvp_complexity, monetization_signal_present, multi_app_cluster, new_pattern_detected, small_team_fit, strong_daily_installs, INITIAL_BASELINE_NO_HISTORY
-   - Automated Review: recommendation=WATCH, confidence=medium, source=fallback
+7. arrow_puzzle - would_be_status=ALERT, score=79.25, installs=2749758, reason_codes=diversified_apps, fresh_traction, low_giant_share, low_mvp_complexity, monetization_signal_present, multi_app_cluster, new_pattern_detected, small_team_fit, strong_daily_installs, INITIAL_BASELINE_NO_HISTORY
+   - Automated Review: recommendation=WATCH, confidence=medium, source=fallback, fallback_reason=openai_error
+     - fallback_detail: HTTP Error 429: Too Many Requests
      - why_interesting:
        - diversified_apps
        - fresh_traction
@@ -120,7 +130,8 @@ Important: this is not a regular ALERT; confidence is capped at MEDIUM.
        - Separate organic traction from paid acquisition.
        - Review creatives and monetization signals before production.
 8. sort_puzzle - would_be_status=ALERT, score=79.14, installs=69676, reason_codes=diversified_apps, fresh_traction, low_giant_share, low_mvp_complexity, monetization_signal_present, multi_app_cluster, new_pattern_detected, small_team_fit, strong_daily_installs, INITIAL_BASELINE_NO_HISTORY
-   - Automated Review: recommendation=WATCH, confidence=medium, source=fallback
+   - Automated Review: recommendation=WATCH, confidence=medium, source=fallback, fallback_reason=openai_error
+     - fallback_detail: HTTP Error 429: Too Many Requests
      - why_interesting:
        - diversified_apps
        - fresh_traction
@@ -135,7 +146,8 @@ Important: this is not a regular ALERT; confidence is capped at MEDIUM.
        - Separate organic traction from paid acquisition.
        - Review creatives and monetization signals before production.
 9. sort_puzzle - would_be_status=ALERT, score=79.08, installs=311295, reason_codes=diversified_apps, fresh_traction, low_giant_share, low_mvp_complexity, monetization_signal_present, multi_app_cluster, new_pattern_detected, small_team_fit, strong_daily_installs, INITIAL_BASELINE_NO_HISTORY
-   - Automated Review: recommendation=WATCH, confidence=medium, source=fallback
+   - Automated Review: recommendation=WATCH, confidence=medium, source=fallback, fallback_reason=openai_error
+     - fallback_detail: HTTP Error 429: Too Many Requests
      - why_interesting:
        - diversified_apps
        - fresh_traction
@@ -151,7 +163,8 @@ Important: this is not a regular ALERT; confidence is capped at MEDIUM.
        - Separate organic traction from paid acquisition.
        - Review creatives and monetization signals before production.
 10. tile_match - would_be_status=ALERT, score=79.02, installs=787547, reason_codes=diversified_apps, fresh_traction, low_giant_share, low_mvp_complexity, monetization_signal_present, multi_app_cluster, new_pattern_detected, small_team_fit, strong_daily_installs, INITIAL_BASELINE_NO_HISTORY
-   - Automated Review: recommendation=WATCH, confidence=medium, source=fallback
+   - Automated Review: recommendation=WATCH, confidence=medium, source=fallback, fallback_reason=openai_error
+     - fallback_detail: HTTP Error 429: Too Many Requests
      - why_interesting:
        - diversified_apps
        - fresh_traction
