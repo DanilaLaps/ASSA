@@ -1,0 +1,120 @@
+[
+  {
+    "snapshot_date": "2026-06-04",
+    "platform": "google_play",
+    "country": "sample",
+    "category": "sample",
+    "sort": "sample",
+    "page": 1,
+    "query": {
+      "mode": "dry-run",
+      "source": "/home/runner/work/ASSA/ASSA/data/sample/sample_apps.json"
+    },
+    "response": {
+      "apps": [
+        {
+          "id": "com.indie.goods.sort.market",
+          "name": "Goods Sort Market Puzzle",
+          "developer_name": "Tiny Loop Studio",
+          "category": "GAME_PUZZLE",
+          "description": "Sort supermarket goods across shelves, complete collections, and clear relaxing levels.",
+          "downloads_daily": 42000,
+          "downloads_month": 820000,
+          "revenue_month": 36000,
+          "rating_avg": 4.4,
+          "rating_count": 8400,
+          "release_date": "2026-03-12",
+          "update_date": "2026-05-30",
+          "iap": true,
+          "advertised": false,
+          "url_appstorespy": "https://appstorespy.example/apps/com.indie.goods.sort.market"
+        },
+        {
+          "id": "com.pocket.goods.sort.shop",
+          "name": "Supermarket Goods Sorting",
+          "developer_name": "Pocket Team Games",
+          "category": "GAME_CASUAL",
+          "description": "A casual goods sort game with store shelves, collection goals, and hundreds of levels.",
+          "downloads_daily": 25000,
+          "downloads_month": 510000,
+          "revenue_month": 18500,
+          "rating_avg": 4.35,
+          "rating_count": 4200,
+          "release_date": "2026-02-18",
+          "update_date": "2026-05-20",
+          "iap": true,
+          "advertised": true,
+          "url_appstorespy": "https://appstorespy.example/apps/com.pocket.goods.sort.shop"
+        },
+        {
+          "id": "com.bright.tile.master.home",
+          "name": "Tile Master Home Story",
+          "developer_name": "Bright Fox",
+          "category": "GAME_PUZZLE",
+          "description": "Match tiles, unlock home renovation chapters, and collect room decorations.",
+          "downloads_daily": 18000,
+          "downloads_month": 440000,
+          "revenue_month": 22500,
+          "rating_avg": 4.55,
+          "rating_count": 6200,
+          "release_date": "2025-12-20",
+          "update_date": "2026-05-10",
+          "iap": true,
+          "advertised": false,
+          "url_appstorespy": "https://appstorespy.example/apps/com.bright.tile.master.home"
+        },
+        {
+          "id": "com.word.daily.cross",
+          "name": "Daily Crossword Journey",
+          "developer_name": "Letter Nest",
+          "category": "GAME_WORD",
+          "description": "Relaxing word puzzle and crossword levels for daily brain training.",
+          "downloads_daily": 12000,
+          "downloads_month": 240000,
+          "revenue_month": 7000,
+          "rating_avg": 4.5,
+          "rating_count": 12000,
+          "release_date": "2025-08-05",
+          "update_date": "2026-05-25",
+          "iap": true,
+          "advertised": false,
+          "url_appstorespy": "https://appstorespy.example/apps/com.word.daily.cross"
+        },
+        {
+          "id": "com.giant.block.blast",
+          "name": "Block Blast Mega",
+          "developer_name": "Electronic Arts Mobile",
+          "category": "GAME_PUZZLE",
+          "description": "Block puzzle with daily events and leaderboard seasons.",
+          "downloads_daily": 60000,
+          "downloads_month": 1500000,
+          "revenue_month": 120000,
+          "rating_avg": 4.65,
+          "rating_count": 99000,
+          "release_date": "2023-01-15",
+          "update_date": "2026-05-29",
+          "iap": true,
+          "advertised": true,
+          "url_appstorespy": "https://appstorespy.example/apps/com.giant.block.blast"
+        },
+        {
+          "id": "com.indie.arrow.flow",
+          "name": "Arrow Flow Puzzle",
+          "developer_name": "North Star Play",
+          "category": "GAME_PUZZLE",
+          "description": "Draw arrows, solve abstract flow levels, and unlock new level packs.",
+          "downloads_daily": 9000,
+          "downloads_month": 170000,
+          "revenue_month": 4500,
+          "rating_avg": 4.25,
+          "rating_count": 2300,
+          "release_date": "2026-04-02",
+          "update_date": "2026-05-22",
+          "iap": true,
+          "advertised": false,
+          "url_appstorespy": "https://appstorespy.example/apps/com.indie.arrow.flow"
+        }
+      ]
+    }
+  }
+]
