@@ -1,0 +1,4 @@
+# Runtime intentionally uses Python standard library only.
+# Optional developer tools:
+# pytest>=8.0
+# PyYAML>=6.0

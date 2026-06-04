@@ -1,0 +1,224 @@
+{
+  "app": {
+    "name": "appstorespy_niche_monitor",
+    "mode": "dry-run",
+    "timezone": "UTC",
+    "sample_data_path": "data/sample/sample_apps.json"
+  },
+  "platforms": ["google_play"],
+  "countries": ["BR", "US", "MX", "IN", "ID", "PH", "TH", "VN", "TR"],
+  "languages": {
+    "BR": "pt_BR",
+    "US": "en_US",
+    "MX": "es_MX",
+    "IN": "en_IN",
+    "ID": "id_ID",
+    "PH": "en_PH",
+    "TH": "th_TH",
+    "VN": "vi_VN",
+    "TR": "tr_TR"
+  },
+  "categories": [
+    "GAME",
+    "GAME_PUZZLE",
+    "GAME_CASUAL",
+    "GAME_ARCADE",
+    "GAME_BOARD",
+    "GAME_WORD",
+    "GAME_SIMULATION",
+    "GAME_CARD"
+  ],
+  "sorts": ["-downloads_daily", "-downloads_month", "-revenue_month", "-release_date"],
+  "collection_limits": {
+    "apps_per_query": 200,
+    "max_pages_per_query": 2,
+    "request_pause_seconds": 0.5
+  },
+  "thresholds": {
+    "new_app_days": 180,
+    "recently_updated_days": 90,
+    "successful_new_app_daily_installs": 10000,
+    "top_app_dominance_share": 0.8
+  },
+  "alert_rules": {
+    "min_opportunity_score": 75,
+    "min_total_daily_installs": 50000,
+    "min_weekly_growth_percent": 25,
+    "min_apps_in_niche": 2,
+    "min_successful_new_apps": 1,
+    "max_giant_developer_share": 0.7,
+    "cooldown_days": 7,
+    "max_top_app_share": 0.75,
+    "max_growth_by_one_app_share": 0.6,
+    "min_data_quality_score": 70
+  },
+  "giant_developers": [
+    "Roblox",
+    "Garena",
+    "King",
+    "Supercell",
+    "Playrix",
+    "Tencent",
+    "Electronic Arts",
+    "EA",
+    "Zynga",
+    "Scopely",
+    "Moon Active",
+    "NetEase",
+    "Niantic",
+    "HoYoverse"
+  ],
+  "production_scores": {
+    "arrow puzzle": 15,
+    "block puzzle": 14,
+    "tile match": 13,
+    "mahjong": 13,
+    "sort puzzle": 14,
+    "word puzzle": 12,
+    "coloring": 12,
+    "hidden object": 10,
+    "merge": 9,
+    "ludo": 8,
+    "idle tycoon": 7,
+    "runner": 8,
+    "match-3": 6,
+    "shooter": 2,
+    "sandbox": 1,
+    "other": 3
+  },
+  "niche_rules": {
+    "arrow puzzle": {"keywords": ["arrow", "arrows", "arrow puzzle"]},
+    "block puzzle": {"keywords": ["block", "block blast", "block puzzle"]},
+    "tile match": {"keywords": ["tile", "triple match", "match tile", "tile master"]},
+    "mahjong": {"keywords": ["mahjong"]},
+    "sort puzzle": {"keywords": ["sort", "sorting", "water sort", "ball sort", "goods sort"]},
+    "word puzzle": {"keywords": ["word", "crossword", "word search"]},
+    "hidden object": {"keywords": ["hidden object", "find objects", "seek and find"]},
+    "coloring": {"keywords": ["coloring", "color by number", "paint"]},
+    "merge": {"keywords": ["merge"]},
+    "ludo": {"keywords": ["ludo"]},
+    "idle tycoon": {"keywords": ["idle", "tycoon"]},
+    "runner": {"keywords": ["runner", "run"]},
+    "sandbox": {"keywords": ["roblox", "sandbox", "craft", "minecraft"]},
+    "shooter": {"keywords": ["shooter", "gun", "battle royale", "fps"]},
+    "match-3": {"keywords": ["match-3", "match 3", "candy", "jewel"]}
+  },
+  "dimension_rules": {
+    "market_category": {
+      "puzzle": ["puzzle", "sort", "match", "mahjong", "word", "hidden object", "coloring"],
+      "casual": ["casual", "runner", "idle", "merge", "ludo"],
+      "arcade": ["arcade", "runner", "shooter"],
+      "simulation": ["simulation", "tycoon"],
+      "board": ["board", "ludo", "mahjong"],
+      "word": ["word", "crossword"],
+      "card": ["card"]
+    },
+    "core_mechanic": {
+      "sort": ["sort", "sorting", "water sort", "ball sort", "goods sort"],
+      "merge": ["merge"],
+      "match": ["match", "tile", "mahjong", "block", "candy", "jewel"],
+      "search": ["hidden object", "find objects", "seek and find"],
+      "decorate": ["decorate", "renovation", "home"],
+      "collect": ["collection", "collect"],
+      "idle": ["idle", "tycoon"],
+      "runner": ["runner", "run"],
+      "physics": ["physics", "ball"],
+      "trivia": ["trivia", "quiz"]
+    },
+    "theme": {
+      "supermarket": ["supermarket", "goods", "shop", "store"],
+      "home": ["home", "house", "renovation", "decor"],
+      "animals": ["animal", "pet", "cat", "dog"],
+      "cars": ["car", "racing", "parking"],
+      "food": ["food", "cooking", "restaurant"],
+      "fashion": ["fashion", "dress", "makeover"],
+      "fantasy": ["fantasy", "dragon", "magic"],
+      "social": ["social", "party", "friends"],
+      "meme": ["meme", "viral"],
+      "abstract": ["block", "tile", "arrow", "color"]
+    },
+    "meta": {
+      "renovation": ["renovation", "home", "decorate"],
+      "collection": ["collection", "collect", "album"],
+      "story": ["story", "chapter"],
+      "levels": ["level", "levels"],
+      "events": ["event", "season"],
+      "leaderboard": ["leaderboard", "rank"],
+      "customization": ["customize", "skin", "outfit"]
+    },
+    "audience": {
+      "kids": ["kids", "children", "baby"],
+      "teens": ["teen", "anime"],
+      "women_25_45": ["home", "fashion", "makeover", "coloring", "hidden object", "supermarket"],
+      "men_18_35": ["shooter", "battle", "racing", "sports"],
+      "seniors": ["word", "crossword", "mahjong"],
+      "broad": ["puzzle", "casual", "block", "tile", "sort"]
+    }
+  },
+  "classification_dimensions": {
+    "market_category": ["puzzle", "casual", "arcade", "simulation", "board", "word", "card", "other"],
+    "core_mechanic": ["sort", "merge", "match", "search", "decorate", "collect", "idle", "runner", "physics", "trivia", "other"],
+    "theme": ["supermarket", "home", "animals", "cars", "food", "fashion", "fantasy", "social", "meme", "abstract", "other"],
+    "meta": ["renovation", "collection", "story", "levels", "events", "leaderboard", "customization", "none"],
+    "audience": ["kids", "teens", "women_25_45", "men_18_35", "seniors", "broad", "unknown"],
+    "production_complexity": ["low", "medium", "high"]
+  },
+  "data_quality": {
+    "min_score_for_alert": 70,
+    "required_fields": [
+      "downloads_daily",
+      "downloads_month",
+      "revenue_month",
+      "release_date",
+      "update_date",
+      "developer_name"
+    ],
+    "penalize_missing_revenue": true,
+    "penalize_low_sample_size": true,
+    "min_apps_for_reliable_signal": 3,
+    "min_countries_for_strong_signal": 2,
+    "one_app_growth_penalty_threshold": 0.7
+  },
+  "feedback": {
+    "enabled": true,
+    "storage_path": "data/feedback.json",
+    "allowed_statuses": ["good", "maybe", "false_positive", "ignore", "built", "tested"],
+    "allowed_reasons": [
+      "paid_spike",
+      "one_app_growth",
+      "giant_dominated",
+      "too_complex",
+      "no_monetization",
+      "weak_data_quality",
+      "clone_market",
+      "not_a_gameplay_trend",
+      "other"
+    ]
+  },
+  "alert_limits": {
+    "max_alerts_per_run": 3,
+    "max_watch_items_per_digest": 10,
+    "max_alerts_per_country_per_run": 1
+  },
+  "llm": {
+    "enabled": true,
+    "model_env": "OPENAI_MODEL",
+    "default_model": "gpt-4.1-mini",
+    "timeout_seconds": 60
+  },
+  "telegram": {
+    "enabled": true,
+    "bot_token_env": "TELEGRAM_BOT_TOKEN",
+    "chat_id_env": "TELEGRAM_CHAT_ID",
+    "max_message_chars": 3900
+  },
+  "storage": {
+    "raw_dir": "data/raw",
+    "processed_dir": "data/processed",
+    "history_dir": "data/history",
+    "sent_alerts_path": "data/sent_alerts.json",
+    "feedback_path": "data/feedback.json",
+    "reports_alerts_dir": "reports/alerts",
+    "reports_weekly_dir": "reports/weekly"
+  }
+}

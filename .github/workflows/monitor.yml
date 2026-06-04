@@ -1,0 +1,65 @@
+name: AppStoreSpy niche monitor
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Run mode"
+        required: true
+        default: "dry-run"
+        type: choice
+        options:
+          - dry-run
+          - production
+      notify:
+        description: "Send Telegram alerts"
+        required: true
+        default: false
+        type: boolean
+  schedule:
+    - cron: "15 7 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    env:
+      APPSTORESPY_API_KEY: ${{ secrets.APPSTORESPY_API_KEY }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      PYTHONPATH: src
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run tests
+        run: python -m unittest discover -s tests
+
+      - name: Run monitor
+        run: |
+          MODE="${{ github.event.inputs.mode || 'production' }}"
+          NOTIFY="${{ github.event.inputs.notify || 'true' }}"
+          ARGS=(--mode "$MODE")
+          if [ "$NOTIFY" = "true" ]; then
+            ARGS+=(--notify)
+          fi
+          python -m appstorespy_niche_monitor "${ARGS[@]}"
+
+      - name: Commit generated history and reports
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/sent_alerts.json data/feedback.json
+          git add -f data/raw data/processed data/history reports
+          if git diff --cached --quiet; then
+            echo "No generated changes to commit."
+          else
+            git commit -m "Store AppStoreSpy monitor snapshot"
+            git push
+          fi
