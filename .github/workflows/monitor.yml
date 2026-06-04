@@ -54,6 +54,10 @@ jobs:
           echo "event_name=${{ github.event_name }}"
           echo "mode=$MODE"
           echo "notify=$NOTIFY"
+          if [ "$MODE" = "production" ] && [ -z "$OPENAI_API_KEY" ]; then
+            echo "::error::OPENAI_API_KEY secret is required for production AI baseline review."
+            exit 1
+          fi
           ARGS=(--mode "$MODE")
           if [ "$NOTIFY" = "true" ]; then
             ARGS+=(--notify)

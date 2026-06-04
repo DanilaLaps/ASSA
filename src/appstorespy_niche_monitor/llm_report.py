@@ -42,12 +42,62 @@ def analyze_candidate_pack(
 ) -> dict[str, Any]:
     pack_input = build_candidate_pack_input(candidates, config, coverage_summary, history_summary)
     fallback = generate_fallback_pack_analysis(pack_input)
-    if use_llm and config.get("llm", {}).get("enabled", True) and os.environ.get("OPENAI_API_KEY"):
-        try:
-            return generate_openai_pack_analysis(pack_input, config, fallback)
-        except Exception as exc:  # pragma: no cover - network fallback
-            fallback["llm_fallback_note"] = str(exc)
+    llm_status = build_llm_status(pack_input, config, use_llm=use_llm)
+    fallback["llm_status"] = llm_status
+    if llm_status.get("fallback_reason"):
+        fallback["llm_fallback_note"] = llm_status.get("fallback_reason")
+    if not llm_status.get("should_call_openai"):
+        return fallback
+    try:
+        return generate_openai_pack_analysis(pack_input, config, fallback, llm_status)
+    except Exception as exc:  # pragma: no cover - network fallback
+        llm_status = {
+            **llm_status,
+            "analysis_source": "fallback",
+            "fallback_reason": "openai_error",
+            "fallback_detail": str(exc),
+        }
+        fallback["llm_status"] = llm_status
+        fallback["llm_fallback_note"] = f"openai_error: {exc}"
     return fallback
+
+
+def build_llm_status(pack_input: dict[str, Any], config: dict[str, Any], *, use_llm: bool) -> dict[str, Any]:
+    llm_cfg = config.get("llm", {})
+    enabled = bool(llm_cfg.get("enabled", True))
+    model_env = str(llm_cfg.get("model_env", "OPENAI_MODEL"))
+    model = os.environ.get(model_env) or llm_cfg.get("default_model", "gpt-4.1-mini")
+    api_key_present = bool(os.environ.get("OPENAI_API_KEY"))
+    if not use_llm:
+        source = "fallback"
+        reason = "disabled_by_cli"
+    elif not enabled:
+        source = "fallback"
+        reason = "disabled_in_config"
+    elif not api_key_present:
+        source = "fallback"
+        reason = "missing_openai_api_key"
+    else:
+        source = "openai_pending"
+        reason = None
+    counts = {
+        "alerts": len(pack_input.get("alerts", [])),
+        "watch": len(pack_input.get("watch", [])),
+        "near_misses": len(pack_input.get("near_misses", [])),
+        "initial_baseline_digest": len(pack_input.get("initial_baseline_digest", [])),
+    }
+    return {
+        "analysis_source": source,
+        "should_call_openai": source == "openai_pending",
+        "fallback_reason": reason,
+        "requested": bool(use_llm),
+        "enabled": enabled,
+        "api_key_present": api_key_present,
+        "api_key_env": "OPENAI_API_KEY",
+        "model": model,
+        "model_env": model_env,
+        "candidate_counts": counts,
+    }
 
 
 def build_candidate_pack_input(
@@ -157,6 +207,9 @@ def generate_fallback_pack_analysis(pack_input: dict[str, Any]) -> dict[str, Any
     }
     return {
         "analysis_source": "fallback",
+        "candidate_analysis_sources": {
+            candidate_id: "fallback" for candidate_id in candidate_analyses
+        },
         "pack_input": pack_input,
         "candidate_analyses": candidate_analyses,
     }
@@ -213,10 +266,16 @@ def generate_openai_pack_analysis(
     pack_input: dict[str, Any],
     config: dict[str, Any],
     fallback: dict[str, Any],
+    llm_status: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     llm_cfg = config.get("llm", {})
     model = os.environ.get(llm_cfg.get("model_env", "OPENAI_MODEL")) or llm_cfg.get("default_model", "gpt-4.1-mini")
-    payload = {"model": model, "input": build_pack_prompt(pack_input)}
+    payload: dict[str, Any] = {
+        "model": model,
+        "input": build_pack_prompt(pack_input),
+    }
+    if llm_cfg.get("max_output_tokens") is not None:
+        payload["max_output_tokens"] = int(llm_cfg.get("max_output_tokens", 6000))
     request = urllib.request.Request(
         "https://api.openai.com/v1/responses",
         data=json.dumps(payload).encode("utf-8"),
@@ -229,24 +288,74 @@ def generate_openai_pack_analysis(
     with urllib.request.urlopen(request, timeout=int(llm_cfg.get("timeout_seconds", 60))) as response:
         data = json.loads(response.read().decode("utf-8"))
     parsed = parse_json_object(extract_response_text(data))
-    if not isinstance(parsed.get("candidate_analyses"), dict):
-        parsed["candidate_analyses"] = fallback.get("candidate_analyses", {})
+    raw_candidate_analyses = parsed.get("candidate_analyses")
+    fallback_analyses = fallback.get("candidate_analyses", {})
+    if not isinstance(raw_candidate_analyses, dict):
+        raise ValueError("OpenAI response missing candidate_analyses object.")
+    candidate_analyses = dict(fallback_analyses)
+    candidate_analysis_sources = {
+        candidate_id: "fallback_missing_from_openai"
+        for candidate_id in fallback_analyses
+    }
+    expected_ids = set(fallback_analyses)
+    openai_candidate_analyses_count = 0
+    for candidate_id, analysis in raw_candidate_analyses.items():
+        candidate_key = str(candidate_id)
+        if expected_ids and candidate_key not in expected_ids:
+            continue
+        if not isinstance(analysis, dict):
+            continue
+        candidate_analyses[candidate_key] = normalize_pack_item_analysis(
+            analysis,
+            fallback_analyses.get(candidate_key, {}),
+        )
+        candidate_analysis_sources[candidate_key] = "openai"
+        openai_candidate_analyses_count += 1
+    if expected_ids and openai_candidate_analyses_count == 0:
+        raise ValueError("OpenAI response contained no usable candidate analyses.")
+    parsed["candidate_analyses"] = candidate_analyses
+    parsed["candidate_analysis_sources"] = candidate_analysis_sources
     parsed["analysis_source"] = "openai"
+    parsed["llm_status"] = {
+        **(llm_status or {}),
+        "analysis_source": "openai",
+        "fallback_reason": None,
+        "openai_candidate_analyses_count": openai_candidate_analyses_count,
+        "fallback_filled_candidate_analyses_count": sum(
+            1 for source in candidate_analysis_sources.values() if source != "openai"
+        ),
+    }
     parsed["pack_input"] = pack_input
     return parsed
+
+
+def normalize_pack_item_analysis(value: dict[str, Any], fallback: dict[str, Any]) -> dict[str, Any]:
+    analysis = dict(fallback)
+    for field in PACK_ANALYSIS_FIELDS:
+        if field in value:
+            analysis[field] = value[field]
+    for legacy_field in ("summary", "signal", "evidence", "entry_realism", "mvp", "monetization", "risks", "checks"):
+        if legacy_field in value:
+            analysis[legacy_field] = value[legacy_field]
+    recommendation = str(analysis.get("recommendation", "WATCH")).upper()
+    analysis["recommendation"] = recommendation if recommendation in {"TEST", "WATCH", "AVOID"} else "WATCH"
+    confidence = str(analysis.get("confidence", "medium")).lower()
+    analysis["confidence"] = confidence if confidence in {"low", "medium", "high"} else "medium"
+    return analysis
 
 
 def build_pack_prompt(pack_input: dict[str, Any]) -> str:
     compact = json.dumps(pack_input, ensure_ascii=False, indent=2)
     return (
-        "Ты — аналитик рынка мобильных игр для маленькой команды.\n"
-        "Оцени свежие Google Play игры, найденные одним single-query AppStoreSpy запросом.\n"
-        "Не называй сигнал глобальным и не указывай страну, если страна не была явно запрошена.\n"
-        "Не отбрасывай ранний single-app breakout автоматически: помечай его как WATCH/manual validation.\n"
-        "Отделяй свежий спрос от paid traffic spike. Не предлагай конкурировать напрямую с гигантами.\n"
-        "Если это первый запуск без истории, не называй кандидатов подтвержденными alerts; "
-        "помечай их как INITIAL_BASELINE_NO_HISTORY и ограничивай confidence до medium.\n"
-        "Верни JSON object с ключом candidate_analyses, где ключи — candidate_id, а значения содержат "
+        "You are a mobile-game niche analyst for a small team.\n"
+        "Evaluate fresh Google Play games found by exactly one single-query AppStoreSpy request.\n"
+        "The source query has no country, language, or active_countries filters. Do not call the slice global "
+        "and do not make country-specific claims.\n"
+        "Separate fresh demand from paid traffic spikes. Do not recommend direct competition with giant developers.\n"
+        "Do not reject early single-app breakouts automatically; mark them as WATCH/manual validation when appropriate.\n"
+        "If this is the first run without compatible history, do not call candidates confirmed alerts. Treat them as "
+        "INITIAL_BASELINE_NO_HISTORY and cap confidence at medium.\n"
+        "Return only a JSON object with key candidate_analyses. Its keys must be candidate_id values. Each value must contain "
         "recommendation TEST/WATCH/AVOID, confidence, why_interesting, why_might_be_false_positive, "
         "mvp_hypothesis, simplified_mvp_scope, validation_steps, risk_notes, missing_data, manual_review_needed.\n\n"
         f"Candidate pack JSON:\n{compact}"

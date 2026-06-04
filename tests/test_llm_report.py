@@ -1,7 +1,14 @@
 import unittest
+from unittest.mock import patch
 
 from appstorespy_niche_monitor.llm_report import (
+    analyze_candidate_pack,
+    build_candidate_pack_input,
+    build_llm_status,
+    build_pack_prompt,
     generate_fallback_analysis,
+    generate_fallback_pack_analysis,
+    generate_openai_pack_analysis,
     parse_json_object,
     render_alert_report,
     validate_analysis,
@@ -41,6 +48,61 @@ def alert(**overrides):
     return row
 
 
+def pack_candidate(**overrides):
+    row = {
+        "candidate_id": "candidate-1",
+        "status": "ALERT",
+        "would_be_status": "ALERT",
+        "normalized_niche": "sort_puzzle",
+        "core_mechanic": "sort",
+        "theme": "supermarket",
+        "opportunity_score": 79.5,
+        "data_quality_score": 82,
+        "mvp_feasibility_score": 80,
+        "total_daily_installs": 50000,
+        "reason_codes": ["strong_daily_installs", "INITIAL_BASELINE_NO_HISTORY"],
+        "risk_tags": [],
+        "first_run_without_history": True,
+        "initial_baseline_digest": True,
+    }
+    row.update(overrides)
+    return row
+
+
+def llm_config(**overrides):
+    config = {
+        "alert_limits": {
+            "max_alerts_per_run": 3,
+            "max_watch_items_per_digest": 10,
+            "max_near_misses_in_report": 10,
+        },
+        "first_run_behavior": {"max_initial_digest_items": 10},
+        "llm": {
+            "enabled": True,
+            "model_env": "OPENAI_MODEL",
+            "default_model": "test-model",
+            "timeout_seconds": 5,
+            "max_output_tokens": 1000,
+        },
+    }
+    config.update(overrides)
+    return config
+
+
+class FakeOpenAIResponse:
+    def __init__(self, payload):
+        self.payload = payload
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc, tb):
+        return False
+
+    def read(self):
+        return self.payload
+
+
 class LlmReportTests(unittest.TestCase):
     def test_parse_json_object_from_fenced_response(self):
         parsed = parse_json_object('```json\n{"recommendation": "TEST"}\n```')
@@ -76,6 +138,54 @@ class LlmReportTests(unittest.TestCase):
 
         self.assertIn("single-query AppStoreSpy slice", analysis["summary"])
         self.assertNotIn("BR", analysis["summary"])
+
+    def test_analyze_candidate_pack_reports_missing_openai_key(self):
+        with patch.dict("os.environ", {}, clear=True):
+            analysis = analyze_candidate_pack([pack_candidate()], llm_config())
+
+        self.assertEqual(analysis["analysis_source"], "fallback")
+        self.assertEqual(analysis["llm_status"]["fallback_reason"], "missing_openai_api_key")
+        self.assertEqual(analysis["candidate_analysis_sources"]["candidate-1"], "fallback")
+
+    def test_analyze_candidate_pack_reports_cli_disabled(self):
+        analysis = analyze_candidate_pack([pack_candidate()], llm_config(), use_llm=False)
+
+        self.assertEqual(analysis["llm_status"]["fallback_reason"], "disabled_by_cli")
+
+    def test_analyze_candidate_pack_reports_config_disabled(self):
+        config = llm_config(llm={"enabled": False})
+
+        analysis = analyze_candidate_pack([pack_candidate()], config)
+
+        self.assertEqual(analysis["llm_status"]["fallback_reason"], "disabled_in_config")
+
+    def test_generate_openai_pack_analysis_marks_openai_candidate_sources(self):
+        config = llm_config()
+        pack_input = build_candidate_pack_input([pack_candidate()], config)
+        fallback = generate_fallback_pack_analysis(pack_input)
+        response_json = (
+            b'{"output_text":"{\\"candidate_analyses\\":{\\"candidate-1\\":'
+            b'{\\"recommendation\\":\\"WATCH\\",\\"confidence\\":\\"medium\\",'
+            b'\\"mvp_hypothesis\\":\\"Test a focused sorting MVP.\\"}}}"}'
+        )
+        with patch.dict("os.environ", {"OPENAI_API_KEY": "test-key"}, clear=True):
+            status = build_llm_status(pack_input, config, use_llm=True)
+            with patch(
+                "appstorespy_niche_monitor.llm_report.urllib.request.urlopen",
+                return_value=FakeOpenAIResponse(response_json),
+            ):
+                analysis = generate_openai_pack_analysis(pack_input, config, fallback, status)
+
+        self.assertEqual(analysis["analysis_source"], "openai")
+        self.assertEqual(analysis["candidate_analysis_sources"]["candidate-1"], "openai")
+        self.assertEqual(analysis["candidate_analyses"]["candidate-1"]["mvp_hypothesis"], "Test a focused sorting MVP.")
+
+    def test_pack_prompt_is_readable_and_requests_json(self):
+        prompt = build_pack_prompt({"alerts": [], "watch": [], "near_misses": [], "initial_baseline_digest": []})
+
+        self.assertIn("Return only a JSON object", prompt)
+        self.assertIn("single-query AppStoreSpy", prompt)
+        self.assertNotIn("Рў", prompt)
 
 
 if __name__ == "__main__":

@@ -326,6 +326,7 @@
     "enabled": true,
     "model_env": "OPENAI_MODEL",
     "default_model": "gpt-4.1-mini",
+    "max_output_tokens": 6000,
     "timeout_seconds": 60
   },
   "telegram": {

@@ -99,12 +99,25 @@ def run_pipeline(
         history_summary=history_summary,
     )
     candidate_analyses = pack_analysis.get("candidate_analyses", {})
+    candidate_analysis_sources = pack_analysis.get("candidate_analysis_sources", {})
+    llm_status = pack_analysis.get("llm_status", {})
     analysis_source = str(pack_analysis.get("analysis_source", "fallback"))
     for candidate in candidates:
-        analysis = candidate_analyses.get(candidate.get("candidate_id"))
+        candidate_id = str(candidate.get("candidate_id"))
+        analysis = candidate_analyses.get(candidate_id)
         if analysis:
             candidate["llm_analysis"] = analysis
-            candidate["llm_analysis_source"] = analysis_source
+            candidate_source = str(candidate_analysis_sources.get(candidate_id, analysis_source))
+            candidate["llm_analysis_source"] = candidate_source
+            if isinstance(llm_status, dict):
+                candidate["llm_status"] = llm_status
+                fallback_reason = llm_status.get("fallback_reason")
+                if candidate_source == "fallback_missing_from_openai" and not fallback_reason:
+                    fallback_reason = "missing_from_openai_response"
+                if fallback_reason:
+                    candidate["llm_fallback_reason"] = fallback_reason
+                if llm_status.get("fallback_detail"):
+                    candidate["llm_fallback_detail"] = llm_status.get("fallback_detail")
             candidate["llm_summary"] = analysis.get("mvp_hypothesis") or analysis.get("summary")
 
     urgent_alerts, watch, near_misses, rejected, alert_candidates = split_candidates(candidates)
@@ -151,6 +164,7 @@ def run_pipeline(
         "history_state": history_state,
         "report_paths": report_paths,
         "baseline_only": history_state == FIRST_RUN_NO_HISTORY,
+        "llm_status": llm_status,
     }
     result["completion_notification_sent"] = send_run_summary(result, config) if notify else False
     return result

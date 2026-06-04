@@ -53,6 +53,10 @@ class TelegramNotifyTests(unittest.TestCase):
                 "watch_count": 4,
                 "rejected_count": 33,
                 "baseline_only": False,
+                "llm_status": {
+                    "analysis_source": "openai",
+                    "model": "gpt-4.1-mini",
+                },
             }
         )
 
@@ -60,6 +64,7 @@ class TelegramNotifyTests(unittest.TestCase):
         self.assertIn("TEST alerts: 0", message)
         self.assertIn("No TEST alerts passed filters", message)
         self.assertIn("Scope: one AppStoreSpy query, no country/language filter", message)
+        self.assertIn("LLM review: source=openai", message)
 
     def test_format_initial_baseline_digest_includes_review(self):
         message = format_initial_baseline_digest_message(
@@ -70,6 +75,11 @@ class TelegramNotifyTests(unittest.TestCase):
                     "opportunity_score": 79.5,
                     "total_daily_installs": 50000,
                     "reason_codes": ["INITIAL_BASELINE_NO_HISTORY"],
+                    "llm_status": {
+                        "analysis_source": "openai",
+                        "model": "gpt-4.1-mini",
+                        "api_key_present": True,
+                    },
                     "llm_analysis_source": "openai",
                     "llm_analysis": {
                         "recommendation": "WATCH",
@@ -83,7 +93,37 @@ class TelegramNotifyTests(unittest.TestCase):
 
         self.assertIn("Review: recommendation=WATCH", message)
         self.assertIn("source=openai", message)
+        self.assertIn("LLM: source=openai", message)
         self.assertIn("MVP: Test a focused sorting MVP.", message)
+
+    def test_format_initial_baseline_digest_includes_fallback_reason(self):
+        message = format_initial_baseline_digest_message(
+            [
+                {
+                    "normalized_niche": "sort_puzzle",
+                    "would_be_status": "ALERT",
+                    "opportunity_score": 79.5,
+                    "total_daily_installs": 50000,
+                    "reason_codes": ["INITIAL_BASELINE_NO_HISTORY"],
+                    "llm_status": {
+                        "analysis_source": "fallback",
+                        "model": "gpt-4.1-mini",
+                        "api_key_present": False,
+                        "fallback_reason": "missing_openai_api_key",
+                    },
+                    "llm_analysis_source": "fallback",
+                    "llm_fallback_reason": "missing_openai_api_key",
+                    "llm_analysis": {
+                        "recommendation": "WATCH",
+                        "confidence": "medium",
+                        "mvp_hypothesis": "Test a focused sorting MVP.",
+                    },
+                }
+            ]
+        )
+
+        self.assertIn("LLM: source=fallback", message)
+        self.assertIn("fallback_reason=missing_openai_api_key", message)
 
 
 if __name__ == "__main__":

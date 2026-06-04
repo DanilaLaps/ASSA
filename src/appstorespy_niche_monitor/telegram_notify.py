@@ -68,9 +68,9 @@ def format_initial_baseline_digest_message(items: list[dict[str, Any]]) -> str:
         "Window: releases from last 180 days",
         "History: no previous compatible snapshot",
         "Important: this is not a regular ALERT; confidence is capped at MEDIUM.",
-        "",
-        "Top baseline candidates:",
     ]
+    lines.extend(format_initial_llm_status(items))
+    lines.extend(["", "Top baseline candidates:"])
     for index, item in enumerate(items, start=1):
         lines.append(
             f"{index}. {item.get('normalized_niche')} - would_be_status={item.get('would_be_status')}, "
@@ -80,9 +80,16 @@ def format_initial_baseline_digest_message(items: list[dict[str, Any]]) -> str:
         analysis = item.get("llm_analysis")
         if isinstance(analysis, dict) and analysis:
             source = item.get("llm_analysis_source", "fallback")
+            fallback_reason = item.get("llm_fallback_reason")
+            review_parts = [
+                f"recommendation={analysis.get('recommendation', 'WATCH')}",
+                f"confidence={analysis.get('confidence', item.get('confidence_level', 'MEDIUM'))}",
+                f"source={source}",
+            ]
+            if source != "openai" and fallback_reason:
+                review_parts.append(f"fallback_reason={fallback_reason}")
             lines.append(
-                f"   Review: recommendation={analysis.get('recommendation', 'WATCH')}, "
-                f"confidence={analysis.get('confidence', item.get('confidence_level', 'MEDIUM'))}, source={source}"
+                f"   Review: {', '.join(review_parts)}"
             )
             if analysis.get("mvp_hypothesis"):
                 lines.append(f"   MVP: {analysis.get('mvp_hypothesis')}")
@@ -100,6 +107,28 @@ def format_initial_baseline_digest_message(items: list[dict[str, Any]]) -> str:
         ]
     )
     return "\n".join(lines)
+
+
+def format_initial_llm_status(items: list[dict[str, Any]]) -> list[str]:
+    status: dict[str, Any] = {}
+    for item in items:
+        candidate_status = item.get("llm_status")
+        if isinstance(candidate_status, dict) and candidate_status:
+            status = candidate_status
+            break
+    if not status:
+        return []
+    parts = [
+        f"source={status.get('analysis_source', 'fallback')}",
+        f"model={status.get('model', 'unknown')}",
+        f"api_key_present={str(bool(status.get('api_key_present'))).lower()}",
+    ]
+    if status.get("fallback_reason"):
+        parts.append(f"fallback_reason={status.get('fallback_reason')}")
+    lines = ["", f"LLM: {', '.join(parts)}"]
+    if status.get("fallback_detail"):
+        lines.append(f"LLM fallback_detail: {status.get('fallback_detail')}")
+    return lines
 
 
 def send_initial_baseline_digest(items: list[dict[str, Any]], config: dict[str, Any]) -> bool:
@@ -126,6 +155,7 @@ def send_initial_baseline_digest(items: list[dict[str, Any]], config: dict[str, 
 
 def format_run_summary_message(result: dict[str, Any]) -> str:
     baseline = "yes" if result.get("baseline_only") else "no"
+    llm_line = format_result_llm_status(result)
     if int(result.get("sent_count", 0)) > 0:
         status = "TEST alerts passed filters and were sent separately."
     else:
@@ -142,9 +172,23 @@ def format_run_summary_message(result: dict[str, Any]) -> str:
         f"WATCH candidates: {result.get('watch_count')}\n"
         f"NEAR_MISS candidates: {result.get('near_miss_count')}\n"
         f"Rejected candidates: {result.get('rejected_count')}\n"
-        f"Baseline only: {baseline}\n\n"
+        f"Baseline only: {baseline}\n"
+        f"{llm_line}\n\n"
         f"{status}"
     )
+
+
+def format_result_llm_status(result: dict[str, Any]) -> str:
+    llm_status = result.get("llm_status")
+    if not isinstance(llm_status, dict) or not llm_status:
+        return "LLM review: unavailable"
+    parts = [
+        f"source={llm_status.get('analysis_source', 'fallback')}",
+        f"model={llm_status.get('model', 'unknown')}",
+    ]
+    if llm_status.get("fallback_reason"):
+        parts.append(f"fallback_reason={llm_status.get('fallback_reason')}")
+    return f"LLM review: {', '.join(parts)}"
 
 
 def send_run_summary(result: dict[str, Any], config: dict[str, Any]) -> bool:

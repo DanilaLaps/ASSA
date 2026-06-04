@@ -94,9 +94,9 @@ def render_initial_baseline_report(rows: list[dict[str, Any]], snapshot_date: st
         "Window: releases from last 180 days",
         "History: no previous compatible snapshot",
         "Important: this is not a regular ALERT; confidence is capped at MEDIUM.",
-        "",
-        "## Top Baseline Candidates",
     ]
+    lines.extend(format_initial_llm_status(rows))
+    lines.extend(["", "## Top Baseline Candidates"])
     for index, row in enumerate(rows, start=1):
         reason_codes = ", ".join(row.get("reason_codes", []))
         lines.append(
@@ -125,9 +125,20 @@ def format_initial_candidate_analysis(row: dict[str, Any]) -> list[str]:
     title = "AI Review" if source == "openai" else "Automated Review"
     recommendation = analysis.get("recommendation", "WATCH")
     confidence = analysis.get("confidence", row.get("confidence_level", "MEDIUM"))
-    lines = [
-        f"   - {title}: recommendation={recommendation}, confidence={confidence}, source={source}",
+    fallback_reason = row.get("llm_fallback_reason")
+    fallback_detail = row.get("llm_fallback_detail")
+    review_parts = [
+        f"recommendation={recommendation}",
+        f"confidence={confidence}",
+        f"source={source}",
     ]
+    if source != "openai" and fallback_reason:
+        review_parts.append(f"fallback_reason={fallback_reason}")
+    lines = [
+        f"   - {title}: {', '.join(review_parts)}",
+    ]
+    if source != "openai" and fallback_detail:
+        lines.append(f"     - fallback_detail: {fallback_detail}")
     lines.extend(format_indented_list("why_interesting", analysis.get("why_interesting"), indent="     "))
     lines.extend(
         format_indented_list(
@@ -144,6 +155,28 @@ def format_initial_candidate_analysis(row: dict[str, Any]) -> list[str]:
     missing_data = analysis.get("missing_data")
     if missing_data:
         lines.extend(format_indented_list("missing_data", missing_data, indent="     "))
+    return lines
+
+
+def format_initial_llm_status(rows: list[dict[str, Any]]) -> list[str]:
+    status: dict[str, Any] = {}
+    for row in rows:
+        candidate_status = row.get("llm_status")
+        if isinstance(candidate_status, dict) and candidate_status:
+            status = candidate_status
+            break
+    if not status:
+        return []
+    parts = [
+        f"source={status.get('analysis_source', 'fallback')}",
+        f"model={status.get('model', 'unknown')}",
+        f"api_key_present={str(bool(status.get('api_key_present'))).lower()}",
+    ]
+    if status.get("fallback_reason"):
+        parts.append(f"fallback_reason={status.get('fallback_reason')}")
+    lines = ["", f"LLM: {', '.join(parts)}"]
+    if status.get("fallback_detail"):
+        lines.append(f"LLM fallback_detail: {status.get('fallback_detail')}")
     return lines
 
 

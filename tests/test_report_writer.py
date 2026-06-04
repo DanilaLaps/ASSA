@@ -34,6 +34,38 @@ class ReportWriterTests(unittest.TestCase):
         self.assertIn("mvp_hypothesis: Test a focused goods sorting MVP.", markdown)
         self.assertIn("validation_steps", markdown)
 
+    def test_initial_baseline_report_includes_fallback_reason(self):
+        markdown = render_initial_baseline_report(
+            [
+                {
+                    "normalized_niche": "sort_puzzle",
+                    "would_be_status": "ALERT",
+                    "opportunity_score": 79.5,
+                    "total_daily_installs": 50000,
+                    "reason_codes": ["INITIAL_BASELINE_NO_HISTORY"],
+                    "confidence_level": "MEDIUM",
+                    "llm_status": {
+                        "analysis_source": "fallback",
+                        "model": "gpt-4.1-mini",
+                        "api_key_present": False,
+                        "fallback_reason": "missing_openai_api_key",
+                    },
+                    "llm_analysis_source": "fallback",
+                    "llm_fallback_reason": "missing_openai_api_key",
+                    "llm_analysis": {
+                        "recommendation": "WATCH",
+                        "confidence": "medium",
+                        "why_interesting": ["fresh traction"],
+                    },
+                }
+            ],
+            "2026-06-05",
+        )
+
+        self.assertIn("LLM: source=fallback", markdown)
+        self.assertIn("fallback_reason=missing_openai_api_key", markdown)
+        self.assertIn("Automated Review", markdown)
+
 
 if __name__ == "__main__":
     unittest.main()
