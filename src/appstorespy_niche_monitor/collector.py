@@ -5,8 +5,32 @@ import time
 from pathlib import Path
 from typing import Any
 
-from .appstorespy_client import AppStoreSpyClient
+from .appstorespy_client import AppStoreSpyClient, AppStoreSpyError
 from .config import resolve_path
+
+
+DEFAULT_PLAY_APP_FIELDS = [
+    "id",
+    "name",
+    "developer_name",
+    "category",
+    "category_type",
+    "downloads_daily",
+    "downloads_month",
+    "revenue_month",
+    "downloads_exact",
+    "rating_avg",
+    "rating_count",
+    "review_count",
+    "release_date",
+    "update_date",
+    "iap",
+    "advertised",
+    "ads",
+    "icon",
+    "screenshots",
+    "url_appstorespy",
+]
 
 
 def build_play_query(config: dict[str, Any], country: str, category: str, sort: str, page: int) -> dict[str, Any]:
@@ -17,29 +41,7 @@ def build_play_query(config: dict[str, Any], country: str, category: str, sort: 
         "sort": sort,
         "country": country,
         "language": config.get("languages", {}).get(country, "en_US"),
-        "fields": [
-            "id",
-            "name",
-            "developer_name",
-            "category",
-            "category_type",
-            "description",
-            "downloads_daily",
-            "downloads_month",
-            "revenue_month",
-            "downloads_exact",
-            "rating_avg",
-            "rating_count",
-            "review_count",
-            "release_date",
-            "update_date",
-            "iap",
-            "advertised",
-            "ads",
-            "icon",
-            "screenshots",
-            "url_appstorespy",
-        ],
+        "fields": list(config.get("appstore_fields", DEFAULT_PLAY_APP_FIELDS)),
         "filter": {"published": True, "category_type": "GAME"},
     }
     if category != "GAME":
@@ -69,7 +71,7 @@ def collect_apps(
             for sort in config.get("sorts", []):
                 for page in range(1, max_pages + 1):
                     query = build_play_query(config, country, category, sort, page)
-                    response = api_client.query_play_apps(query)
+                    response = query_play_apps_with_field_fallback(api_client, query)
                     records.append(
                         {
                             "snapshot_date": snapshot_date,
@@ -84,6 +86,38 @@ def collect_apps(
                     )
                     time.sleep(pause_seconds)
     return records
+
+
+def query_play_apps_with_field_fallback(api_client: AppStoreSpyClient, query: dict[str, Any]) -> dict[str, Any]:
+    try:
+        return api_client.query_play_apps(query)
+    except AppStoreSpyError as exc:
+        unknown_fields = parse_unknown_fields(str(exc))
+        fields = query.get("fields")
+        if not unknown_fields or not isinstance(fields, list):
+            raise
+        filtered_fields = [field for field in fields if field not in unknown_fields]
+        if len(filtered_fields) == len(fields):
+            raise
+        query["fields"] = filtered_fields
+        query["removed_unknown_fields"] = unknown_fields
+        return api_client.query_play_apps(query)
+
+
+def parse_unknown_fields(error_text: str) -> list[str]:
+    marker = "AppStoreSpy HTTP 400:"
+    if marker not in error_text or "Unknown fields" not in error_text:
+        return []
+    detail = error_text.split(marker, 1)[1].strip()
+    try:
+        parsed = json.loads(detail)
+    except json.JSONDecodeError:
+        return []
+    fields: list[str] = []
+    for error in parsed.get("errors", []):
+        if error.get("location") == "fields" and isinstance(error.get("value"), list):
+            fields.extend(str(value) for value in error["value"])
+    return sorted(set(fields))
 
 
 def collect_sample(config: dict[str, Any], config_dir: Path, *, snapshot_date: str) -> list[dict[str, Any]]:
