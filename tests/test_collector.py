@@ -2,7 +2,9 @@ import unittest
 
 from appstorespy_niche_monitor.appstorespy_client import AppStoreSpyError
 from appstorespy_niche_monitor.collector import (
+    APPSTORESPY_ALLOWED_LANGUAGES,
     build_play_query,
+    normalize_appstorespy_language,
     parse_unknown_fields,
     query_play_apps_with_field_fallback,
 )
@@ -30,6 +32,20 @@ class CollectorTests(unittest.TestCase):
 
         self.assertNotIn("description", query["fields"])
         self.assertIn("downloads_daily", query["fields"])
+
+    def test_configured_languages_are_valid_for_appstorespy(self):
+        config, _ = load_config("config.yaml")
+
+        for country in config["countries"]:
+            query = build_play_query(config, country, "GAME_PUZZLE", "-downloads_daily", 1)
+            self.assertIn(query["language"], APPSTORESPY_ALLOWED_LANGUAGES, country)
+
+    def test_language_aliases_match_appstorespy_enum(self):
+        self.assertEqual(normalize_appstorespy_language("es_MX"), "es_419")
+        self.assertEqual(normalize_appstorespy_language("en_IN"), "en_US")
+        self.assertEqual(normalize_appstorespy_language("id_ID"), "en_US")
+        self.assertEqual(normalize_appstorespy_language("th_TH"), "en_US")
+        self.assertEqual(normalize_appstorespy_language("vi_VN"), "vi")
 
     def test_parse_unknown_fields_from_appstorespy_error(self):
         fields = parse_unknown_fields(

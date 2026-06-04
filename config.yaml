@@ -10,12 +10,12 @@
   "languages": {
     "BR": "pt_BR",
     "US": "en_US",
-    "MX": "es_MX",
-    "IN": "en_IN",
-    "ID": "id_ID",
-    "PH": "en_PH",
-    "TH": "th_TH",
-    "VN": "vi_VN",
+    "MX": "es_419",
+    "IN": "en_US",
+    "ID": "en_US",
+    "PH": "en_US",
+    "TH": "en_US",
+    "VN": "vi",
     "TR": "tr_TR"
   },
   "categories": [

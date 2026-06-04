@@ -32,15 +32,42 @@ DEFAULT_PLAY_APP_FIELDS = [
     "url_appstorespy",
 ]
 
+APPSTORESPY_ALLOWED_LANGUAGES = {
+    "en_US",
+    "ar",
+    "en_GB",
+    "fr_FR",
+    "es_419",
+    "de_DE",
+    "pt_BR",
+    "it_IT",
+    "ja_JP",
+    "ko_KR",
+    "tr_TR",
+    "ru_RU",
+    "vi",
+}
+
+LANGUAGE_ALIASES = {
+    "es_MX": "es_419",
+    "es_ES": "es_419",
+    "en_IN": "en_US",
+    "en_PH": "en_US",
+    "id_ID": "en_US",
+    "th_TH": "en_US",
+    "vi_VN": "vi",
+}
+
 
 def build_play_query(config: dict[str, Any], country: str, category: str, sort: str, page: int) -> dict[str, Any]:
     limits = config.get("collection_limits", {})
+    configured_language = config.get("languages", {}).get(country, "en_US")
     payload: dict[str, Any] = {
         "limit": limits.get("apps_per_query", 200),
         "page": page,
         "sort": sort,
         "country": country,
-        "language": config.get("languages", {}).get(country, "en_US"),
+        "language": normalize_appstorespy_language(configured_language),
         "fields": list(config.get("appstore_fields", DEFAULT_PLAY_APP_FIELDS)),
         "filter": {"published": True, "category_type": "GAME"},
     }
@@ -118,6 +145,22 @@ def parse_unknown_fields(error_text: str) -> list[str]:
         if error.get("location") == "fields" and isinstance(error.get("value"), list):
             fields.extend(str(value) for value in error["value"])
     return sorted(set(fields))
+
+
+def normalize_appstorespy_language(language: Any) -> str:
+    value = str(language or "en_US")
+    value = LANGUAGE_ALIASES.get(value, value)
+    if value in APPSTORESPY_ALLOWED_LANGUAGES:
+        return value
+    if value.startswith("es_"):
+        return "es_419"
+    if value.startswith("pt_"):
+        return "pt_BR"
+    if value.startswith("tr_"):
+        return "tr_TR"
+    if value.startswith("vi"):
+        return "vi"
+    return "en_US"
 
 
 def collect_sample(config: dict[str, Any], config_dir: Path, *, snapshot_date: str) -> list[dict[str, Any]]:
