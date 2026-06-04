@@ -44,21 +44,27 @@ class AppStoreSpyClient:
             request = urllib.request.Request(url, data=body, method=method, headers=headers)
             try:
                 with urllib.request.urlopen(request, timeout=timeout) as response:
+                    if response.status == 202:
+                        return {"status": "crawling"}
                     if response.status == 204:
                         return None
                     raw = response.read().decode("utf-8")
                     return json.loads(raw) if raw else None
             except urllib.error.HTTPError as exc:
                 last_error = exc
-                if exc.code in (202, 429, 500, 502, 503, 504):
-                    time.sleep(2**attempt)
+                if exc.code == 202:
+                    return {"status": "crawling"}
+                if exc.code in (429, 500, 502, 503, 504):
+                    if attempt < 3:
+                        time.sleep(2**attempt)
                     continue
                 detail = exc.read().decode("utf-8", errors="replace")
-                raise AppStoreSpyError(f"AppStoreSpy HTTP {exc.code}: {detail}") from exc
+                raise AppStoreSpyError(f"AppStoreSpy HTTP {exc.code}: {redact_secret(detail, self.api_key)}") from exc
             except urllib.error.URLError as exc:
                 last_error = exc
-                time.sleep(2**attempt)
-        raise AppStoreSpyError(f"AppStoreSpy request failed after retries: {last_error}")
+                if attempt < 3:
+                    time.sleep(2**attempt)
+        raise AppStoreSpyError(f"AppStoreSpy request failed after retries: {redact_secret(last_error, self.api_key)}")
 
     def query_play_apps(self, payload: dict[str, Any]) -> dict[str, Any]:
         result = self._request("POST", "/play/apps/query", json_body=payload)
@@ -75,3 +81,10 @@ class AppStoreSpyClient:
         if not isinstance(result, dict):
             return {}
         return result
+
+
+def redact_secret(value: Any, secret: str | None) -> str:
+    text = str(value)
+    if secret:
+        text = text.replace(secret, "[REDACTED]")
+    return text

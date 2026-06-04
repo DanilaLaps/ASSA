@@ -14,6 +14,8 @@ The first run stores a baseline and does not send alerts. Alerts are allowed onl
 - Calculates growth, data quality, opportunity score, score components, and reason codes.
 - Filters noisy signals with cooldowns, concentration checks, giant developer share, and max-alert limits.
 - Saves markdown reports and can send Telegram alerts.
+- Generates structured alert analysis with `TEST`, `WATCH`, or `AVOID` recommendations.
+- Generates weekly feedback and calibration digests from history and manual labels.
 - Supports a dry-run mode with sample data and no API keys.
 
 ## Repository layout
@@ -29,7 +31,9 @@ src/appstorespy_niche_monitor/
   data_quality.py         Trust score and quality reasons
   scorer.py               Opportunity score and score components
   alert_filter.py         Alert rules, cooldown, anti-spam
-  llm_report.py           Optional OpenAI report generation
+  feedback.py             Manual feedback labels
+  weekly_digest.py        Weekly calibration report
+  llm_report.py           Structured OpenAI/fallback analysis and markdown reports
   telegram_notify.py      Telegram delivery
   storage.py              Raw, processed, history, reports
   main.py                 CLI and pipeline orchestration
@@ -55,6 +59,15 @@ $env:PYTHONPATH="src"
 $env:PYTHONPATH="src"
 python -m unittest discover -s tests
 ```
+
+## Weekly digest
+
+```powershell
+$env:PYTHONPATH="src"
+python -m appstorespy_niche_monitor --weekly-digest
+```
+
+The digest summarizes feedback labels, false-positive reasons, top WATCH candidates, `other` niches, and suspicious concentration or paid-spike risks.
 
 ## Production secrets
 

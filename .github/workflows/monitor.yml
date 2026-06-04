@@ -51,6 +51,15 @@ jobs:
           fi
           python -m appstorespy_niche_monitor "${ARGS[@]}"
 
+      - name: Generate weekly digest
+        if: github.event_name == 'schedule' && github.event.schedule == '15 7 * * *'
+        run: |
+          if [ "$(date -u +%u)" = "1" ]; then
+            python -m appstorespy_niche_monitor --weekly-digest
+          else
+            echo "Weekly digest is generated on Mondays only."
+          fi
+
       - name: Commit generated history and reports
         run: |
           git config user.name "github-actions[bot]"

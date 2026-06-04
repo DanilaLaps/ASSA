@@ -99,3 +99,9 @@ def write_alert_report(paths: dict[str, Path], alert: dict[str, Any], markdown: 
     path = paths["reports_alerts_dir"] / f"{alert_id}.md"
     path.write_text(markdown, encoding="utf-8")
     return path
+
+
+def write_weekly_report(paths: dict[str, Path], snapshot_date: str, markdown: str) -> Path:
+    path = paths["reports_weekly_dir"] / f"{snapshot_date}_weekly_digest.md"
+    path.write_text(markdown, encoding="utf-8")
+    return path

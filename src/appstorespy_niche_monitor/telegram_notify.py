@@ -8,12 +8,28 @@ from typing import Any
 
 
 def format_alert_message(alert: dict[str, Any]) -> str:
+    analysis = alert.get("llm_analysis", {})
+    evidence = format_list(analysis.get("evidence") or alert.get("reason_codes", []), limit=3)
+    risks = format_list(analysis.get("risks") or alert.get("data_quality_reasons", []), limit=2)
+    recommendation = analysis.get("recommendation", alert.get("alert_tier", "WATCH"))
+    mvp = analysis.get("mvp", "Validate the niche manually before starting production.")
     return (
-        f"AppStoreSpy alert: {alert.get('niche')} / {alert.get('country')}\n"
-        f"Score: {alert.get('opportunity_score')} | Quality: {alert.get('data_quality_score')}\n"
-        f"Growth: {alert.get('weekly_growth_percent')}% | Daily installs: {alert.get('total_daily_installs')}\n"
-        f"Mechanic: {alert.get('core_mechanic')} | Theme: {alert.get('theme')} | Audience: {alert.get('audience')}\n"
-        f"Reasons: {', '.join(alert.get('reason_codes', [])) or 'none'}\n"
+        f"New Niche Alert: {alert.get('niche')}\n\n"
+        f"Country: {alert.get('country')}\n"
+        "Platform: Google Play\n"
+        f"Score: {alert.get('opportunity_score')}/100\n"
+        f"Data quality: {alert.get('data_quality_score')}/100\n"
+        f"Growth: +{alert.get('weekly_growth_percent')}% in 7 days\n"
+        f"Daily installs: {alert.get('total_daily_installs')}\n"
+        f"Apps in niche: {alert.get('app_count')}\n"
+        f"New successful apps: {alert.get('successful_new_apps_count')}\n\n"
+        "Why interesting:\n"
+        f"{evidence}\n\n"
+        "MVP:\n"
+        f"{mvp}\n\n"
+        "Risks:\n"
+        f"{risks}\n\n"
+        f"Recommendation: {recommendation}\n"
         f"Alert ID: {alert.get('alert_id')}"
     )
 
@@ -57,3 +73,12 @@ def chunk_text(text: str, max_chars: int) -> list[str]:
         chunks.append(remaining[:max_chars])
         remaining = remaining[max_chars:]
     return chunks
+
+
+def format_list(items: Any, limit: int) -> str:
+    if not isinstance(items, list):
+        items = [items]
+    clean_items = [str(item).strip() for item in items if str(item).strip()]
+    if not clean_items:
+        return "- No details."
+    return "\n".join(f"- {item}" for item in clean_items[:limit])

@@ -10,7 +10,7 @@ from .cleaner import clean_apps
 from .collector import collect_apps
 from .config import load_config
 from .data_quality import enrich_data_quality
-from .llm_report import generate_alert_report
+from .llm_report import generate_alert_analysis, render_alert_report
 from .niche_classifier import classify_apps
 from .scorer import score_summaries
 from .storage import (
@@ -22,11 +22,14 @@ from .storage import (
     save_raw,
     write_alert_report,
     write_json,
+    write_weekly_report,
 )
 from .telegram_notify import send_alerts, send_message
 from .trend_detector import detect_trends
 from .utils import utc_today
 from .aggregator import aggregate_apps
+from .feedback import read_feedback
+from .weekly_digest import generate_weekly_digest
 
 
 def run_pipeline(
@@ -59,14 +62,17 @@ def run_pipeline(
 
     sent_alerts = read_json(paths["sent_alerts_path"], {})
     alerts, watch, rejected = filter_alerts(summaries, config, sent_alerts if isinstance(sent_alerts, dict) else {}, snapshot_date)
-    save_processed(paths, "alerts", alerts, snapshot_date)
-    save_processed(paths, "watch", watch, snapshot_date)
-    save_processed(paths, "rejected", rejected, snapshot_date)
 
     report_paths: list[str] = []
     for alert in alerts:
-        markdown = generate_alert_report(alert, config, use_llm=use_llm)
+        analysis = generate_alert_analysis(alert, config, use_llm=use_llm)
+        alert["llm_analysis"] = analysis
+        markdown = render_alert_report(alert, analysis)
         report_paths.append(str(write_alert_report(paths, alert, markdown)))
+
+    save_processed(paths, "alerts", alerts, snapshot_date)
+    save_processed(paths, "watch", watch, snapshot_date)
+    save_processed(paths, "rejected", rejected, snapshot_date)
 
     sent_count = 0
     if alerts and notify:
@@ -100,7 +106,22 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--notify", action="store_true", help="Send Telegram alerts if candidates pass filters.")
     parser.add_argument("--no-llm", action="store_true", help="Use deterministic markdown reports instead of OpenAI.")
     parser.add_argument("--test-telegram", action="store_true", help="Send a small Telegram test message and exit.")
+    parser.add_argument("--weekly-digest", action="store_true", help="Generate a weekly digest from history and feedback.")
     args = parser.parse_args(argv)
+
+    if args.weekly_digest:
+        config, config_dir = load_config(args.config)
+        paths = ensure_storage(config, config_dir)
+        snapshot_date = args.snapshot_date or utc_today()
+        markdown = generate_weekly_digest(
+            load_history_summaries(paths),
+            read_feedback(paths["feedback_path"]),
+            config,
+            snapshot_date=snapshot_date,
+        )
+        path = write_weekly_report(paths, snapshot_date, markdown)
+        print(json.dumps({"weekly_digest_path": str(path)}, ensure_ascii=False, indent=2))
+        return 0
 
     if args.test_telegram:
         config, _ = load_config(args.config)
