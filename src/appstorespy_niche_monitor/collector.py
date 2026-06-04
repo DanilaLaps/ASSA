@@ -123,7 +123,8 @@ def collect_apps(
 
 def collect_once(api_client: AppStoreSpyClient, config: dict[str, Any], snapshot_date: str) -> dict[str, Any]:
     payload = build_single_query_payload(config, snapshot_date)
-    response = api_client.query_play_apps(payload)
+    timeout = int(config.get("collection", {}).get("request_timeout_seconds", 60))
+    response = api_client.query_play_apps(payload, timeout=timeout)
     return {
         "snapshot_date": snapshot_date,
         "platform": config.get("collection", {}).get("platform", "google_play"),

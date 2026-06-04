@@ -7,7 +7,7 @@ The first run stores a baseline and does not send alerts. Alerts are allowed onl
 ## What it does
 
 - Collects AppStoreSpy `/play/apps/query` results with exactly one production API request per run.
-- Uses a single Google Play query: `page=1`, `sort=-release_date`, `published=true`, `category_type=GAME`, recent releases, and `downloads_daily >= 500`.
+- Uses a single Google Play query with `limit=10000`: `page=1`, `sort=-release_date`, `published=true`, `category_type=GAME`, recent releases, and `downloads_daily >= 500`.
 - Does not send `country`, `language`, or `active_countries` in the AppStoreSpy payload.
 - Stores raw responses so snapshots can be reprocessed later.
 - Normalizes app records into a consistent schema.
@@ -94,7 +94,7 @@ $env:PYTHONPATH="src"
 python -m appstorespy_niche_monitor --mode production --notify
 ```
 
-Production mode performs one AppStoreSpy request. If the API rejects a field, update `config.yaml` and rerun; the collector does not retry with a different field list because v1.2 requires one query per run.
+Production mode performs one AppStoreSpy request and asks for up to 10000 apps. If the API rejects a field or limit, update `config.yaml` and rerun; the collector does not retry with a different field list because v1.2 requires one query per run.
 With `--notify`, Telegram receives a completion summary for every finished run. If TEST alerts pass filters, alert messages are sent separately before the completion summary.
 
 ## Feedback loop

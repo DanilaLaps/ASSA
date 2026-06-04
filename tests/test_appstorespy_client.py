@@ -46,6 +46,13 @@ class AppStoreSpyClientTests(unittest.TestCase):
 
         self.assertEqual(result, {"apps": []})
 
+    def test_query_uses_custom_timeout(self):
+        client = AppStoreSpyClient(api_key="secret-token")
+        with patch("urllib.request.urlopen", return_value=FakeResponse(204)) as urlopen:
+            client.query_play_apps({"limit": 10000}, timeout=180)
+
+        self.assertEqual(urlopen.call_args.kwargs["timeout"], 180)
+
     def test_query_does_not_retry_429(self):
         client = AppStoreSpyClient(api_key="secret-token")
         with patch("urllib.request.urlopen", side_effect=http_error(429, "rate limit")):

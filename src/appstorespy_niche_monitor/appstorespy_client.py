@@ -69,8 +69,8 @@ class AppStoreSpyClient:
         noun = "attempt" if attempts == 1 else "attempts"
         raise AppStoreSpyError(f"AppStoreSpy request failed after {attempts} {noun}: {redact_secret(last_error, self.api_key)}")
 
-    def query_play_apps(self, payload: dict[str, Any]) -> dict[str, Any]:
-        result = self._request("POST", "/play/apps/query", json_body=payload, max_attempts=1)
+    def query_play_apps(self, payload: dict[str, Any], *, timeout: int = 60) -> dict[str, Any]:
+        result = self._request("POST", "/play/apps/query", json_body=payload, timeout=timeout, max_attempts=1)
         if not isinstance(result, dict):
             return {"apps": []}
         return result

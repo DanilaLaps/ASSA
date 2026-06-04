@@ -12,8 +12,8 @@ class FakeClient:
     def __init__(self):
         self.calls = []
 
-    def query_play_apps(self, query):
-        self.calls.append(query)
+    def query_play_apps(self, query, *, timeout=60):
+        self.calls.append({"query": query, "timeout": timeout})
         return {"apps": [{"id": "com.example.game", "name": "Example Game"}]}
 
 
@@ -23,7 +23,7 @@ class CollectorTests(unittest.TestCase):
 
         payload = build_single_query_payload(config, "2026-06-04")
 
-        self.assertEqual(payload["limit"], 250)
+        self.assertEqual(payload["limit"], 10000)
         self.assertEqual(payload["page"], 1)
         self.assertEqual(payload["sort"], "-release_date")
         self.assertNotIn("country", payload)
@@ -43,6 +43,7 @@ class CollectorTests(unittest.TestCase):
         records = collect_apps(config, config_dir, mode="production", snapshot_date="2026-06-04", client=client)
 
         self.assertEqual(len(client.calls), 1)
+        self.assertEqual(client.calls[0]["timeout"], 180)
         self.assertEqual(len(records), 1)
         self.assertEqual(records[0]["api_requests_count"], 1)
         self.assertEqual(records[0]["collection_mode"], "single_query")
