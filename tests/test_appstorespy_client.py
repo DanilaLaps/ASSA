@@ -1,5 +1,4 @@
 import io
-import json
 import unittest
 import urllib.error
 from unittest.mock import patch
@@ -47,15 +46,14 @@ class AppStoreSpyClientTests(unittest.TestCase):
 
         self.assertEqual(result, {"apps": []})
 
-    def test_429_retries_then_returns_json(self):
+    def test_query_does_not_retry_429(self):
         client = AppStoreSpyClient(api_key="secret-token")
-        response = FakeResponse(200, json.dumps({"apps": [{"id": "app"}]}))
-        with patch("urllib.request.urlopen", side_effect=[http_error(429, "rate limit"), response]):
+        with patch("urllib.request.urlopen", side_effect=http_error(429, "rate limit")):
             with patch("time.sleep") as sleep:
-                result = client.query_play_apps({"limit": 1})
+                with self.assertRaises(AppStoreSpyError):
+                    client.query_play_apps({"limit": 1})
 
-        self.assertEqual(result["apps"][0]["id"], "app")
-        sleep.assert_called_once()
+        sleep.assert_not_called()
 
     def test_403_raises_without_leaking_api_key(self):
         client = AppStoreSpyClient(api_key="secret-token")
@@ -66,14 +64,14 @@ class AppStoreSpyClientTests(unittest.TestCase):
         self.assertIn("[REDACTED]", str(ctx.exception))
         self.assertNotIn("secret-token", str(ctx.exception))
 
-    def test_5xx_retries_and_raises_after_limit(self):
+    def test_query_does_not_retry_5xx(self):
         client = AppStoreSpyClient(api_key="secret-token")
         with patch("urllib.request.urlopen", side_effect=http_error(503, "down")):
             with patch("time.sleep") as sleep:
                 with self.assertRaises(AppStoreSpyError):
                     client.query_play_apps({"limit": 1})
 
-        self.assertEqual(sleep.call_count, 3)
+        sleep.assert_not_called()
 
 
 if __name__ == "__main__":

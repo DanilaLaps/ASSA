@@ -14,12 +14,13 @@ def format_alert_message(alert: dict[str, Any]) -> str:
     recommendation = analysis.get("recommendation", alert.get("alert_tier", "WATCH"))
     mvp = analysis.get("mvp", "Validate the niche manually before starting production.")
     return (
-        f"New Niche Alert: {alert.get('niche')}\n\n"
-        f"Country: {alert.get('country')}\n"
+        f"Fresh Game Niche Alert: {alert.get('niche')}\n\n"
         "Platform: Google Play\n"
+        "Scope: one AppStoreSpy query, no country/language filter\n"
+        f"Window: {alert.get('release_date_window', 'last_180d')}; sort: {alert.get('collection_sort', '-release_date')}\n"
+        f"Min daily installs per app in source query: {alert.get('min_app_daily_installs', 500)}\n"
         f"Score: {alert.get('opportunity_score')}/100\n"
         f"Data quality: {alert.get('data_quality_score')}/100\n"
-        f"Growth: +{alert.get('weekly_growth_percent')}% in 7 days\n"
         f"Daily installs: {alert.get('total_daily_installs')}\n"
         f"Apps in niche: {alert.get('app_count')}\n"
         f"New successful apps: {alert.get('successful_new_apps_count')}\n\n"

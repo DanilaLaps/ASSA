@@ -1,4 +1,4 @@
-name: AppStoreSpy niche monitor
+name: AppStoreSpy Single Query Niche Monitor
 
 on:
   workflow_dispatch:
@@ -17,7 +17,7 @@ on:
         default: false
         type: boolean
   schedule:
-    - cron: "15 7 * * *"
+    - cron: "0 7 * * *"
 
 permissions:
   contents: write
@@ -25,6 +25,7 @@ permissions:
 jobs:
   monitor:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     env:
       APPSTORESPY_API_KEY: ${{ secrets.APPSTORESPY_API_KEY }}
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -60,7 +61,7 @@ jobs:
           python -m appstorespy_niche_monitor "${ARGS[@]}"
 
       - name: Generate weekly digest
-        if: github.event_name == 'schedule' && github.event.schedule == '15 7 * * *'
+        if: github.event_name == 'schedule' && github.event.schedule == '0 7 * * *'
         run: |
           if [ "$(date -u +%u)" = "1" ]; then
             python -m appstorespy_niche_monitor --weekly-digest

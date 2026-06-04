@@ -31,7 +31,7 @@ def searchable_text(app: dict[str, Any]) -> str:
     return normalize_text(
         " ".join(
             str(app.get(field, ""))
-            for field in ("name", "developer_name", "category", "description")
+            for field in ("name", "developer_name", "category", "description", "description_short", "description_full")
         )
     )
 

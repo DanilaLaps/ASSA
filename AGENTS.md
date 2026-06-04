@@ -8,8 +8,11 @@ Build an automated AppStoreSpy niche monitor for mobile games.
 
 - Never commit real API keys or tokens.
 - Read secrets only from environment variables.
+- Production collection must make exactly one AppStoreSpy `/play/apps/query` request per run.
+- Do not add `country`, `language`, `active_countries`, or pagination to the production AppStoreSpy query.
 - Keep scoring deterministic and explainable.
 - LLM analysis must receive alert candidates only, not raw full datasets.
+- LLM and Telegram text must describe the data as one AppStoreSpy query without country/language filters.
 - First run without history must not send alerts.
 - Every alert must include `reason_codes` and `score_components`.
 - Every alert must include `data_quality_score`.

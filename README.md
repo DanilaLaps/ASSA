@@ -2,15 +2,17 @@
 
 Automated monitor for mobile-game niches using AppStoreSpy data, deterministic Python scoring, optional OpenAI analysis, and Telegram alerts.
 
-The first run stores a baseline and does not send alerts. Alerts are allowed only after history exists and every candidate passes scoring, data quality, growth, concentration, cooldown, and anti-spam rules.
+The first run stores a baseline and does not send alerts. Alerts are allowed only after history exists and every candidate passes scoring, data quality, concentration, production-complexity, cooldown, and anti-spam rules.
 
 ## What it does
 
-- Collects AppStoreSpy `/play/apps/query` results for configured countries, game categories, and sorts.
+- Collects AppStoreSpy `/play/apps/query` results with exactly one production API request per run.
+- Uses a single Google Play query: `page=1`, `sort=-release_date`, `published=true`, `category_type=GAME`, recent releases, and `downloads_daily >= 500`.
+- Does not send `country`, `language`, or `active_countries` in the AppStoreSpy payload.
 - Stores raw responses so snapshots can be reprocessed later.
 - Normalizes app records into a consistent schema.
-- Classifies each app into a niche plus v1.1 dimensions: market category, core mechanic, theme, meta, audience, and production complexity.
-- Aggregates micro-niches by country and dimensions.
+- Classifies each app into a niche plus dimensions: market category, core mechanic, theme, meta, audience, and production complexity.
+- Aggregates micro-niches by platform, niche, and dimensions; country is not a grouping dimension.
 - Calculates growth, data quality, opportunity score, score components, and reason codes.
 - Filters noisy signals with cooldowns, concentration checks, giant developer share, and max-alert limits.
 - Saves markdown reports and can send Telegram alerts.
@@ -23,7 +25,7 @@ The first run stores a baseline and does not send alerts. Alerts are allowed onl
 ```text
 src/appstorespy_niche_monitor/
   appstorespy_client.py   AppStoreSpy HTTP client with retries
-  collector.py            Country/category/sort/page collection
+  collector.py            Single-query AppStoreSpy collection
   cleaner.py              Raw app normalization
   niche_classifier.py     Rule-based niche and dimension classifier
   aggregator.py           Micro-niche aggregation
@@ -90,6 +92,8 @@ $env:TELEGRAM_CHAT_ID="..."
 $env:PYTHONPATH="src"
 python -m appstorespy_niche_monitor --mode production --notify
 ```
+
+Production mode performs one AppStoreSpy request. If the API rejects a field, update `config.yaml` and rerun; the collector does not retry with a different field list because v1.2 requires one query per run.
 
 ## Feedback loop
 

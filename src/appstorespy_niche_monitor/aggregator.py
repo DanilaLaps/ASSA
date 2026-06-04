@@ -9,7 +9,6 @@ from .utils import age_days, safe_div
 
 GROUP_FIELDS = (
     "platform",
-    "country",
     "niche",
     "market_category",
     "core_mechanic",
@@ -39,7 +38,7 @@ def aggregate_apps(apps: list[dict[str, Any]], config: dict[str, Any], snapshot_
         for group_apps in grouped.values()
         if group_apps
     ]
-    return sorted(summaries, key=lambda row: (-row["total_daily_installs"], row["country"], row["niche"]))
+    return sorted(summaries, key=lambda row: (-row["total_daily_installs"], row["niche"], row["group_key"]))
 
 
 def aggregate_group(apps: list[dict[str, Any]], config: dict[str, Any], snapshot_date: str) -> dict[str, Any]:
@@ -54,6 +53,8 @@ def aggregate_group(apps: list[dict[str, Any]], config: dict[str, Any], snapshot
     ratings = [float(app.get("rating_avg", 0.0)) for app in apps if float(app.get("rating_avg", 0.0)) > 0]
     top_apps = sorted(apps, key=lambda app: int(app.get("downloads_daily", 0)), reverse=True)[:5]
     giant_share = calculate_giant_developer_share(apps, config)
+    collection = config.get("collection", {})
+    release_date_window = f"last_{int(collection.get('release_date_days_back', 180))}d"
 
     new_apps_count = 0
     recently_updated_count = 0
@@ -73,6 +74,10 @@ def aggregate_group(apps: list[dict[str, Any]], config: dict[str, Any], snapshot
         **{field: first.get(field, "") for field in GROUP_FIELDS},
         "group_key": stable_key(first),
         "signal_signature": signal_signature(first),
+        "release_date_window": release_date_window,
+        "source_scope": "single_appstorespy_query_no_country_language",
+        "collection_sort": collection.get("sort", "-release_date"),
+        "min_app_daily_installs": int(collection.get("min_downloads_daily", 500)),
         "app_count": len(apps),
         "total_daily_installs": total_daily,
         "avg_daily_installs": round(safe_div(total_daily, len(apps)), 2),
@@ -84,6 +89,7 @@ def aggregate_group(apps: list[dict[str, Any]], config: dict[str, Any], snapshot
         "successful_new_apps_count": successful_new_apps_count,
         "top_app_share": round(safe_div(int(top_apps[0].get("downloads_daily", 0)) if top_apps else 0, total_daily), 4),
         "growth_by_one_app_share": 0.0,
+        "advertised_top_app_share": round(advertised_top_app_share(top_apps, total_daily), 4),
         "giant_developer_share": round(giant_share, 4),
         "top_apps": [compact_app(app) for app in top_apps],
     }
@@ -93,14 +99,20 @@ def aggregate_group(apps: list[dict[str, Any]], config: dict[str, Any], snapshot
 def compact_app(app: dict[str, Any]) -> dict[str, Any]:
     return {
         "app_id": app.get("app_id", ""),
+        "bundle": app.get("bundle", ""),
         "name": app.get("name", ""),
         "developer_name": app.get("developer_name", ""),
+        "developer_id": app.get("developer_id", ""),
         "downloads_daily": int(app.get("downloads_daily", 0)),
         "downloads_month": int(app.get("downloads_month", 0)),
         "revenue_month": float(app.get("revenue_month", 0.0)),
         "release_date": app.get("release_date", ""),
         "update_date": app.get("update_date", ""),
+        "advertised": bool(app.get("advertised", False)),
+        "ads": bool(app.get("ads", False)),
         "url_appstorespy": app.get("url_appstorespy", ""),
+        "url": app.get("url", ""),
+        "website": app.get("website", ""),
     }
 
 
@@ -115,3 +127,14 @@ def calculate_giant_developer_share(apps: list[dict[str, Any]], config: dict[str
         if any(giant in developer for giant in giants):
             giant_daily += int(app.get("downloads_daily", 0))
     return safe_div(giant_daily, total_daily)
+
+
+def advertised_top_app_share(top_apps: list[dict[str, Any]], total_daily: int) -> float:
+    if total_daily <= 0:
+        return 0.0
+    advertised_daily = sum(
+        int(app.get("downloads_daily", 0))
+        for app in top_apps
+        if bool(app.get("advertised", False))
+    )
+    return safe_div(advertised_daily, total_daily)

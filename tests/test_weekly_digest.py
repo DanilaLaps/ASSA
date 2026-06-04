@@ -10,7 +10,6 @@ class WeeklyDigestTests(unittest.TestCase):
         summaries = [
             {
                 "snapshot_date": "2026-06-04",
-                "country": "BR",
                 "niche": "other",
                 "core_mechanic": "other",
                 "theme": "other",
@@ -29,8 +28,9 @@ class WeeklyDigestTests(unittest.TestCase):
 
         self.assertIn("Feedback summary", markdown)
         self.assertIn("false_positive", markdown)
-        self.assertIn("Review max_growth_by_one_app_share", markdown)
+        self.assertIn("Review paid-spike penalties", markdown)
         self.assertIn("Niches classified as other", markdown)
+        self.assertNotIn("BR /", markdown)
 
 
 if __name__ == "__main__":

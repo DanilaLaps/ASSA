@@ -63,11 +63,11 @@ def calibration_recommendations(
     reason_counts = Counter(str(row.get("reason", "")) for row in feedback_records)
     recommendations: list[str] = []
     if reason_counts.get("paid_spike", 0) or reason_counts.get("one_app_growth", 0) or suspicious_rows:
-        recommendations.append("Review max_growth_by_one_app_share and max_top_app_share before raising alert volume.")
+        recommendations.append("Review paid-spike penalties, data-quality reasons, and max_top_app_share before raising alert volume.")
     if reason_counts.get("giant_dominated", 0):
         recommendations.append("Expand giant_developers aliases and keep direct-competition alerts in AVOID/WATCH.")
     if reason_counts.get("weak_data_quality", 0):
-        recommendations.append("Audit missing AppStoreSpy fields and keep min_data_quality_score at 70 or higher.")
+        recommendations.append("Audit missing AppStoreSpy fields and keep min_data_quality_score at 65 or higher.")
     if other_rows:
         recommendations.append("Review top `other` rows and add niche_rules or dimension_rules for repeated patterns.")
     if not recommendations:
@@ -82,7 +82,7 @@ def format_summary_rows(rows: list[dict[str, Any]]) -> str:
     for row in rows:
         lines.append(
             "- "
-            f"{row.get('country')} / {row.get('niche')} / {row.get('core_mechanic')} + {row.get('theme')}: "
+            f"{row.get('niche')} / {row.get('core_mechanic')} + {row.get('theme')}: "
             f"score {row.get('opportunity_score')}, quality {row.get('data_quality_score')}, "
             f"growth {row.get('weekly_growth_percent')}%, daily installs {row.get('total_daily_installs')}"
         )

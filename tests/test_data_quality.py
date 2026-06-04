@@ -13,6 +13,8 @@ class DataQualityTests(unittest.TestCase):
             "total_monthly_revenue": 0,
             "history_depth_days": 0,
             "growth_by_one_app_share": 0.8,
+            "advertised_top_app_share": 0.8,
+            "successful_new_apps_count": 0,
         }
         apps = [
             {
@@ -24,12 +26,14 @@ class DataQualityTests(unittest.TestCase):
             }
         ]
 
-        quality = calculate_data_quality(summary, apps, config, countries_with_signal=1)
+        quality = calculate_data_quality(summary, apps, config)
 
         self.assertLess(quality["data_quality_score"], 70)
         self.assertIn("no_history", quality["data_quality_reasons"])
         self.assertIn("low_sample_size", quality["data_quality_reasons"])
         self.assertIn("one_app_growth", quality["data_quality_reasons"])
+        self.assertIn("paid_spike_risk", quality["data_quality_reasons"])
+        self.assertNotIn("single_country_signal", quality["data_quality_reasons"])
 
 
 if __name__ == "__main__":

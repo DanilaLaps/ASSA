@@ -15,7 +15,6 @@ def enrich_data_quality(
     apps_by_key: dict[str, list[dict[str, Any]]] = {}
     for app in apps:
         apps_by_key.setdefault(stable_key(app), []).append(app)
-    country_counts = country_count_by_signature(summaries)
     return [
         {
             **summary,
@@ -23,35 +22,25 @@ def enrich_data_quality(
                 summary,
                 apps_by_key.get(str(summary.get("group_key")), []),
                 config,
-                country_counts.get(str(summary.get("signal_signature")), 1),
             ),
         }
         for summary in summaries
     ]
 
 
-def country_count_by_signature(summaries: list[dict[str, Any]]) -> dict[str, int]:
-    countries: dict[str, set[str]] = {}
-    for summary in summaries:
-        signature = str(summary.get("signal_signature", ""))
-        countries.setdefault(signature, set()).add(str(summary.get("country", "")))
-    return {key: len(value) for key, value in countries.items()}
-
-
 def calculate_data_quality(
     summary: dict[str, Any],
     apps: list[dict[str, Any]],
     config: dict[str, Any],
-    countries_with_signal: int,
 ) -> dict[str, Any]:
     quality_cfg = config.get("data_quality", {})
     required_fields = quality_cfg.get("required_fields", [])
     reasons: list[str] = []
     field_completeness = field_completeness_ratio(apps, required_fields)
-    field_score = 30.0 * field_completeness
+    field_score = 35.0 * field_completeness
 
     history_depth = int(summary.get("history_depth_days", 0))
-    history_score = 15.0 if history_depth >= 7 else (8.0 if history_depth > 0 else 0.0)
+    history_score = 10.0 if history_depth >= 7 else (5.0 if history_depth > 0 else 0.0)
     if history_score == 0.0:
         reasons.append("no_history")
 
@@ -71,10 +60,9 @@ def calculate_data_quality(
     if revenue_value <= 0 and quality_cfg.get("penalize_missing_revenue", True):
         reasons.append("weak_monetization_data")
 
-    min_countries = int(quality_cfg.get("min_countries_for_strong_signal", 2))
-    geo_score = 10.0 * min(safe_div(countries_with_signal, min_countries), 1.0)
-    if countries_with_signal < min_countries:
-        reasons.append("single_country_signal")
+    freshness_score = 10.0 * min(safe_div(int(summary.get("successful_new_apps_count", 0)), 2), 1.0)
+    if int(summary.get("successful_new_apps_count", 0)) <= 0:
+        reasons.append("no_successful_new_apps")
 
     penalty = 0.0
     if field_completeness < 1.0:
@@ -86,7 +74,11 @@ def calculate_data_quality(
         penalty += 15.0
         reasons.append("one_app_growth")
 
-    score = clamp(field_score + history_score + sample_score + diversity_score + monetization_score + geo_score - penalty)
+    if float(summary.get("advertised_top_app_share", 0.0)) >= 0.7:
+        penalty += 10.0
+        reasons.append("paid_spike_risk")
+
+    score = clamp(field_score + history_score + sample_score + diversity_score + monetization_score + freshness_score - penalty)
     return {
         "data_quality_score": round(score, 2),
         "data_quality_components": {
@@ -95,7 +87,7 @@ def calculate_data_quality(
             "sample_size": round(sample_score, 2),
             "signal_diversity": round(diversity_score, 2),
             "monetization_reliability": round(monetization_score, 2),
-            "geo_confirmation": round(geo_score, 2),
+            "fresh_success_reliability": round(freshness_score, 2),
             "penalty": round(penalty, 2),
         },
         "data_quality_reasons": sorted(set(reasons)),

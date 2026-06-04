@@ -28,6 +28,7 @@ class AppStoreSpyClient:
         json_body: dict[str, Any] | None = None,
         params: dict[str, Any] | None = None,
         timeout: int = 60,
+        max_attempts: int = 4,
     ) -> Any:
         query = urllib.parse.urlencode(params or {}, doseq=True)
         url = f"{self.base_url}{path}"
@@ -40,7 +41,8 @@ class AppStoreSpyClient:
             "content-type": "application/json",
         }
         last_error: Exception | None = None
-        for attempt in range(4):
+        attempts = max(1, max_attempts)
+        for attempt in range(attempts):
             request = urllib.request.Request(url, data=body, method=method, headers=headers)
             try:
                 with urllib.request.urlopen(request, timeout=timeout) as response:
@@ -55,19 +57,20 @@ class AppStoreSpyClient:
                 if exc.code == 202:
                     return {"status": "crawling"}
                 if exc.code in (429, 500, 502, 503, 504):
-                    if attempt < 3:
+                    if attempt < attempts - 1:
                         time.sleep(2**attempt)
                     continue
                 detail = exc.read().decode("utf-8", errors="replace")
                 raise AppStoreSpyError(f"AppStoreSpy HTTP {exc.code}: {redact_secret(detail, self.api_key)}") from exc
             except urllib.error.URLError as exc:
                 last_error = exc
-                if attempt < 3:
+                if attempt < attempts - 1:
                     time.sleep(2**attempt)
-        raise AppStoreSpyError(f"AppStoreSpy request failed after retries: {redact_secret(last_error, self.api_key)}")
+        noun = "attempt" if attempts == 1 else "attempts"
+        raise AppStoreSpyError(f"AppStoreSpy request failed after {attempts} {noun}: {redact_secret(last_error, self.api_key)}")
 
     def query_play_apps(self, payload: dict[str, Any]) -> dict[str, Any]:
-        result = self._request("POST", "/play/apps/query", json_body=payload)
+        result = self._request("POST", "/play/apps/query", json_body=payload, max_attempts=1)
         if not isinstance(result, dict):
             return {"apps": []}
         return result

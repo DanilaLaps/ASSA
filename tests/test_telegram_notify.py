@@ -7,12 +7,13 @@ class TelegramNotifyTests(unittest.TestCase):
     def test_format_alert_message_uses_analysis_template(self):
         message = format_alert_message(
             {
-                "alert_id": "2026-06-04_BR_sort",
-                "country": "BR",
+                "alert_id": "2026-06-04:sort:abc:last_180d",
                 "niche": "sort puzzle",
                 "opportunity_score": 88,
                 "data_quality_score": 82,
-                "weekly_growth_percent": 35,
+                "release_date_window": "last_180d",
+                "collection_sort": "-release_date",
+                "min_app_daily_installs": 500,
                 "total_daily_installs": 90000,
                 "app_count": 3,
                 "successful_new_apps_count": 1,
@@ -25,7 +26,9 @@ class TelegramNotifyTests(unittest.TestCase):
             }
         )
 
-        self.assertIn("New Niche Alert: sort puzzle", message)
+        self.assertIn("Fresh Game Niche Alert: sort puzzle", message)
+        self.assertIn("Scope: one AppStoreSpy query, no country/language filter", message)
+        self.assertNotIn("Country:", message)
         self.assertIn("MVP:", message)
         self.assertIn("Recommendation: TEST", message)
 

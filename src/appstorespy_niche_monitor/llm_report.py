@@ -71,24 +71,27 @@ def extract_response_text(data: dict[str, Any]) -> str:
 def build_prompt(alert: dict[str, Any]) -> str:
     compact = json.dumps(alert, ensure_ascii=False, indent=2)
     return (
-        "Ты - аналитик рынка мобильных игр для маленькой команды.\n"
-        "Не предлагай конкурировать напрямую с гигантами. Не делай вывод только по installs.\n"
-        "Отделяй большой рынок от реалистичного входа. Если сигнал слабый или похож на paid traffic spike, "
-        "честно выбери WATCH или AVOID.\n\n"
-        "Проанализируй alert-кандидата из AppStoreSpy и верни только JSON object без markdown.\n"
+        "You are a mobile-game niche analyst for a small team.\n"
+        "The candidate below comes from exactly one AppStoreSpy Google Play /play/apps/query request.\n"
+        "The request intentionally has no country, language, or active_countries filters. Do not call this a global market "
+        "and do not make country-specific claims.\n"
+        "Do not recommend competing directly with giant developers. Do not infer opportunity from installs alone.\n"
+        "Separate a large noisy market from a realistic small-team entry. If the signal is weak, concentrated, "
+        "or resembles a paid traffic spike, choose WATCH or AVOID honestly.\n\n"
+        "Analyze the AppStoreSpy alert candidate and return only a JSON object, without markdown.\n"
         "JSON schema:\n"
         "{\n"
-        '  "summary": "краткий вывод",\n'
-        '  "signal": "почему это сигнал",\n'
-        '  "evidence": ["факт 1", "факт 2"],\n'
-        '  "entry_realism": "почему вход реалистичен или нереалистичен",\n'
-        '  "mvp": "MVP-концепт на 4-8 недель",\n'
-        '  "monetization": "монетизация",\n'
-        '  "risks": ["риск 1", "риск 2"],\n'
-        '  "checks": ["что проверить 1", "что проверить 2"],\n'
+        '  "summary": "brief conclusion",\n'
+        '  "signal": "why this is a signal",\n'
+        '  "evidence": ["fact 1", "fact 2"],\n'
+        '  "entry_realism": "why entry is realistic or unrealistic",\n'
+        '  "mvp": "4-8 week MVP concept",\n'
+        '  "monetization": "monetization angle",\n'
+        '  "risks": ["risk 1", "risk 2"],\n'
+        '  "checks": ["manual check 1", "manual check 2"],\n'
         '  "recommendation": "TEST|WATCH|AVOID"\n'
         "}\n"
-        "Не выдумывай метрики. Используй только JSON facts. Учитывай data_quality_score и false-positive risk.\n\n"
+        "Do not invent metrics. Use only the JSON facts. Consider data_quality_score and false-positive risk.\n\n"
         f"Alert JSON:\n{compact}"
     )
 
@@ -131,7 +134,7 @@ def generate_fallback_analysis(alert: dict[str, Any]) -> dict[str, Any]:
     score = float(alert.get("opportunity_score", 0.0))
     filter_reasons = set(alert.get("alert_filter_reasons", []))
     reason_codes = set(alert.get("reason_codes", []))
-    if alert.get("alert_tier") == "TEST" and quality >= 70 and score >= 75:
+    if alert.get("alert_tier") == "TEST" and quality >= 65 and score >= 70:
         recommendation = "TEST"
     elif "giant_dominated" in reason_codes or "top_app_concentration" in reason_codes:
         recommendation = "AVOID"
@@ -142,19 +145,25 @@ def generate_fallback_analysis(alert: dict[str, Any]) -> dict[str, Any]:
 
     top_apps = [str(app.get("name", "")) for app in alert.get("top_apps", []) if app.get("name")]
     evidence = [
-        f"Daily installs: {alert.get('total_daily_installs')}; app count: {alert.get('app_count')}.",
-        f"Weekly growth: {alert.get('weekly_growth_percent')}%; data quality: {alert.get('data_quality_score')}.",
+        (
+            "Source scope: one AppStoreSpy Google Play query, no country/language filters, "
+            f"release window {alert.get('release_date_window', 'last_180d')}."
+        ),
+        (
+            f"Daily installs: {alert.get('total_daily_installs')}; app count: {alert.get('app_count')}; "
+            f"data quality: {alert.get('data_quality_score')}."
+        ),
     ]
     if top_apps:
         evidence.append(f"Top confirming apps: {', '.join(top_apps[:3])}.")
     risks = list_risks(alert)
     return {
         "summary": (
-            f"{alert.get('niche')} in {alert.get('country')} looks like a {recommendation} candidate "
+            f"{alert.get('niche')} looks like a {recommendation} candidate in this single-query AppStoreSpy slice "
             f"with score {alert.get('opportunity_score')} and quality {alert.get('data_quality_score')}."
         ),
         "signal": (
-            f"The signal combines demand, growth, fresh app activity, and the micro-niche dimensions "
+            f"The signal combines demand, fresh app activity, monetization, data quality, and the micro-niche dimensions "
             f"{alert.get('core_mechanic')} + {alert.get('theme')} + {alert.get('meta')}."
         ),
         "evidence": evidence,
@@ -171,6 +180,7 @@ def generate_fallback_analysis(alert: dict[str, Any]) -> dict[str, Any]:
         "checks": [
             "Verify whether growth is organic or paid user acquisition.",
             "Check the top apps manually in AppStoreSpy and stores.",
+            "Do not treat the single-query slice as a country-specific or global market estimate.",
             "Confirm monetization per install before starting production.",
         ],
         "recommendation": recommendation,
@@ -179,14 +189,16 @@ def generate_fallback_analysis(alert: dict[str, Any]) -> dict[str, Any]:
 
 def list_risks(alert: dict[str, Any]) -> list[str]:
     risks: list[str] = []
-    if float(alert.get("growth_by_one_app_share", 0.0)) >= 0.6:
-        risks.append("Growth may be driven by one app or paid spike.")
+    if float(alert.get("growth_by_one_app_share", 0.0)) >= 0.7 or float(alert.get("advertised_top_app_share", 0.0)) >= 0.7:
+        risks.append("Growth or demand may be driven by one app or paid user acquisition.")
     if float(alert.get("top_app_share", 0.0)) >= 0.75:
         risks.append("Top app concentration is high.")
     if float(alert.get("giant_developer_share", 0.0)) >= 0.7:
         risks.append("Giant developer share is too high for direct competition.")
-    if float(alert.get("data_quality_score", 0.0)) < 70:
+    if float(alert.get("data_quality_score", 0.0)) < 65:
         risks.append("Data quality is below the alert threshold.")
+    if alert.get("production_complexity") == "high":
+        risks.append("Production complexity is too high for the target small-team entry.")
     if not risks:
         risks.append("Need manual validation of store creatives, UA pressure, and retention assumptions.")
     return risks
@@ -211,6 +223,11 @@ def render_alert_report(alert: dict[str, Any], analysis: dict[str, Any]) -> str:
         f"Market: {alert.get('market_category')}; mechanic: {alert.get('core_mechanic')}; "
         f"theme: {alert.get('theme')}; meta: {alert.get('meta')}; audience: {alert.get('audience')}; "
         f"complexity: {alert.get('production_complexity')}.\n\n"
+        "## Source Scope\n"
+        "One AppStoreSpy Google Play query; no country, language, or active_countries filter; "
+        f"release window: {alert.get('release_date_window', 'last_180d')}; "
+        f"sort: {alert.get('collection_sort', '-release_date')}; "
+        f"minimum app daily installs: {alert.get('min_app_daily_installs', 500)}.\n\n"
         "## Evidence\n"
         f"Total daily installs: {alert.get('total_daily_installs')}; monthly revenue: "
         f"{alert.get('total_monthly_revenue')}; app count: {alert.get('app_count')}; "

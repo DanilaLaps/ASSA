@@ -1,56 +1,74 @@
 {
   "app": {
     "name": "appstorespy_niche_monitor",
-    "mode": "dry-run",
+    "mode": "production",
     "timezone": "UTC",
     "sample_data_path": "data/sample/sample_apps.json"
   },
   "platforms": ["google_play"],
-  "countries": ["BR", "US", "MX", "IN", "ID", "PH", "TH", "VN", "TR"],
-  "languages": {
-    "BR": "pt_BR",
-    "US": "en_US",
-    "MX": "es_419",
-    "IN": "en_US",
-    "ID": "en_US",
-    "PH": "en_US",
-    "TH": "en_US",
-    "VN": "vi",
-    "TR": "tr_TR"
+  "collection": {
+    "mode": "single_query",
+    "platform": "google_play",
+    "endpoint": "/play/apps/query",
+    "limit": 250,
+    "page": 1,
+    "sort": "-release_date",
+    "release_date_days_back": 180,
+    "min_downloads_daily": 500,
+    "include_country": false,
+    "include_language": false,
+    "allow_pagination": false,
+    "max_api_requests_per_run": 1,
+    "fields": [
+      "id",
+      "name",
+      "bundle",
+      "developer_name",
+      "developer_id",
+      "category",
+      "category_type",
+      "downloads_daily",
+      "downloads_month",
+      "revenue_month",
+      "downloads_exact",
+      "downloads_mark",
+      "rating_avg",
+      "rating_count",
+      "review_count",
+      "release_date",
+      "update_date",
+      "iap",
+      "advertised",
+      "ads",
+      "icon",
+      "screenshots",
+      "description_short",
+      "description_full",
+      "url_appstorespy",
+      "url",
+      "website"
+    ]
   },
-  "categories": [
-    "GAME",
-    "GAME_PUZZLE",
-    "GAME_CASUAL",
-    "GAME_ARCADE",
-    "GAME_BOARD",
-    "GAME_WORD",
-    "GAME_SIMULATION",
-    "GAME_CARD"
-  ],
-  "sorts": ["-downloads_daily", "-downloads_month", "-revenue_month", "-release_date"],
-  "collection_limits": {
-    "apps_per_query": 200,
-    "max_pages_per_query": 2,
-    "request_pause_seconds": 0.5
+  "filters": {
+    "published": true,
+    "category_type": "GAME"
   },
   "thresholds": {
     "new_app_days": 180,
     "recently_updated_days": 90,
-    "successful_new_app_daily_installs": 10000,
+    "successful_new_app_daily_installs": 500,
     "top_app_dominance_share": 0.8
   },
   "alert_rules": {
-    "min_opportunity_score": 75,
-    "min_total_daily_installs": 50000,
-    "min_weekly_growth_percent": 25,
+    "min_opportunity_score": 70,
+    "min_total_daily_installs": 5000,
     "min_apps_in_niche": 2,
     "min_successful_new_apps": 1,
     "max_giant_developer_share": 0.7,
     "cooldown_days": 7,
     "max_top_app_share": 0.75,
-    "max_growth_by_one_app_share": 0.6,
-    "min_data_quality_score": 70
+    "min_data_quality_score": 65,
+    "disallow_high_production_complexity": true
   },
   "giant_developers": [
     "Roblox",
@@ -164,7 +182,7 @@
     "production_complexity": ["low", "medium", "high"]
   },
   "data_quality": {
-    "min_score_for_alert": 70,
+    "min_score_for_alert": 65,
     "required_fields": [
       "downloads_daily",
       "downloads_month",
@@ -176,7 +194,6 @@
     "penalize_missing_revenue": true,
     "penalize_low_sample_size": true,
     "min_apps_for_reliable_signal": 3,
-    "min_countries_for_strong_signal": 2,
     "one_app_growth_penalty_threshold": 0.7
   },
   "feedback": {
@@ -197,8 +214,7 @@
   },
   "alert_limits": {
     "max_alerts_per_run": 3,
-    "max_watch_items_per_digest": 10,
-    "max_alerts_per_country_per_run": 1
+    "max_watch_items_per_digest": 10
   },
   "llm": {
     "enabled": true,

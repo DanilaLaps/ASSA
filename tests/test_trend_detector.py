@@ -8,7 +8,7 @@ class TrendDetectorTests(unittest.TestCase):
         current = [
             {
                 "snapshot_date": "2026-06-04",
-                "group_key": "google_play::BR::sort puzzle::puzzle::sort::supermarket::collection::women_25_45::low",
+                "group_key": "google_play::sort puzzle::puzzle::sort::supermarket::collection::women_25_45::low",
                 "total_daily_installs": 90000,
                 "top_apps": [
                     {"app_id": "a", "downloads_daily": 40000},
@@ -20,7 +20,7 @@ class TrendDetectorTests(unittest.TestCase):
         history = [
             {
                 "snapshot_date": "2026-05-28",
-                "group_key": "google_play::BR::sort puzzle::puzzle::sort::supermarket::collection::women_25_45::low",
+                "group_key": "google_play::sort puzzle::puzzle::sort::supermarket::collection::women_25_45::low",
                 "total_daily_installs": 60000,
                 "top_apps": [
                     {"app_id": "a", "downloads_daily": 25000},

@@ -18,6 +18,7 @@ class ScorerTests(unittest.TestCase):
             "app_count": 4,
             "top_app_share": 0.42,
             "growth_by_one_app_share": 0.35,
+            "advertised_top_app_share": 0.0,
             "giant_developer_share": 0.0,
             "data_quality_score": 85,
         }
@@ -25,9 +26,11 @@ class ScorerTests(unittest.TestCase):
         scored = score_summary(summary, config)
 
         self.assertGreaterEqual(scored["opportunity_score"], 75)
-        self.assertIn("strong_growth", scored["reason_codes"])
+        self.assertIn("historical_growth", scored["reason_codes"])
         self.assertIn("small_team_fit", scored["reason_codes"])
         self.assertIn("score_components", scored)
+        self.assertIn("data_quality", scored["score_components"])
+        self.assertNotIn("growth", scored["score_components"])
 
 
 if __name__ == "__main__":
