@@ -7,6 +7,7 @@ from typing import Any
 
 from .appstorespy_client import AppStoreSpyClient
 from .config import resolve_path
+from .coverage import build_coverage_metadata, build_source_query_metadata
 from .utils import parse_date
 
 
@@ -89,6 +90,8 @@ def validate_single_query_payload(payload: dict[str, Any], config: dict[str, Any
         raise ValueError("Single-query mode requires include_country=false.")
     if collection.get("include_language", False):
         raise ValueError("Single-query mode requires include_language=false.")
+    if collection.get("include_active_countries", False):
+        raise ValueError("Single-query mode requires include_active_countries=false.")
     if payload.get("page") != 1:
         raise ValueError("Single-query payload must use page=1.")
     if payload.get("sort") != "-release_date":
@@ -125,6 +128,8 @@ def collect_once(api_client: AppStoreSpyClient, config: dict[str, Any], snapshot
     payload = build_single_query_payload(config, snapshot_date)
     timeout = int(config.get("collection", {}).get("request_timeout_seconds", 60))
     response = api_client.query_play_apps(payload, timeout=timeout)
+    source_query = build_source_query_metadata(payload, config)
+    coverage = build_coverage_metadata(response, payload, config)
     return {
         "snapshot_date": snapshot_date,
         "platform": config.get("collection", {}).get("platform", "google_play"),
@@ -133,6 +138,8 @@ def collect_once(api_client: AppStoreSpyClient, config: dict[str, Any], snapshot
         "api_request_index": 1,
         "api_requests_count": 1,
         "query": payload,
+        "source_query": source_query,
+        "coverage": coverage,
         "response": response,
     }
 
@@ -144,6 +151,7 @@ def collect_sample(config: dict[str, Any], config_dir: Path, *, snapshot_date: s
     if not isinstance(apps, list):
         raise ValueError(f"Sample data must contain a list of apps: {sample_path}")
     payload = build_single_query_payload(config, snapshot_date)
+    response = {"data": apps, "total_count": len(apps)}
     return [
         {
             "snapshot_date": snapshot_date,
@@ -153,6 +161,8 @@ def collect_sample(config: dict[str, Any], config_dir: Path, *, snapshot_date: s
             "api_request_index": 0,
             "api_requests_count": 0,
             "query": {**payload, "dry_run_source": str(sample_path)},
-            "response": {"data": apps, "total_count": len(apps)},
+            "source_query": build_source_query_metadata(payload, config),
+            "coverage": build_coverage_metadata(response, payload, config),
+            "response": response,
         }
     ]

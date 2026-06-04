@@ -3,6 +3,7 @@
     "name": "appstorespy_niche_monitor",
     "mode": "production",
     "timezone": "UTC",
+    "score_version": "v1.3.2",
     "sample_data_path": "data/sample/sample_apps.json"
   },
   "platforms": ["google_play"],
@@ -18,6 +19,7 @@
     "min_downloads_daily": 500,
     "include_country": false,
     "include_language": false,
+    "include_active_countries": false,
     "allow_pagination": false,
     "max_api_requests_per_run": 1,
     "fields": [
@@ -53,6 +55,74 @@
   "filters": {
     "published": true,
     "category_type": "GAME"
+  },
+  "coverage": {
+    "expected_full_window": true,
+    "warn_if_total_count_gt_limit": true,
+    "fail_if_total_count_gt_limit": false
+  },
+  "classification": {
+    "use_rule_based_classifier": true,
+    "use_llm_for_uncertain_apps": false,
+    "min_confidence_for_hard_label": 0.7,
+    "unknown_pattern_enabled": true,
+    "normalize_aliases": true,
+    "aliases": {
+      "sort_puzzle": {
+        "aliases": ["sorting", "color sort", "water sort", "goods sort", "shelf sort"],
+        "niche": "sort puzzle",
+        "core_mechanic": "sort"
+      }
+    }
+  },
+  "aggregation": {
+    "use_hierarchical_groups": true,
+    "group_keys": [
+      "normalized_niche",
+      "core_mechanic",
+      "core_mechanic_theme",
+      "core_mechanic_theme_meta",
+      "market_category_core_mechanic"
+    ],
+    "do_not_hard_group_by_audience": true
+  },
+  "scoring": {
+    "use_percentile_demand_after_snapshots": 7,
+    "min_snapshots_for_growth_score": 2,
+    "use_bayesian_rating": true,
+    "use_mvp_feasibility": true,
+    "data_quality_is_confidence_not_kill_switch": true,
+    "neutral_monetization_score": 6
+  },
+  "candidate_generation": {
+    "alert": {
+      "min_opportunity_score": 70,
+      "min_total_daily_installs": 5000,
+      "min_apps_in_niche": 2,
+      "min_successful_new_apps": 1,
+      "min_data_quality_score": 65,
+      "min_mvp_feasibility_score": 60,
+      "max_giant_developer_share": 0.7,
+      "block_severe_paid_spike": true
+    },
+    "watch": {
+      "min_opportunity_score": 50,
+      "min_total_daily_installs": 2000,
+      "min_apps_in_niche": 2,
+      "min_data_quality_score": 45,
+      "min_mvp_feasibility_score": 50
+    },
+    "single_app_watch": {
+      "min_top_app_daily_installs": 3000,
+      "min_data_quality_score": 40,
+      "min_mvp_feasibility_score": 50,
+      "allow_leader_dominated": true
+    },
+    "near_miss": {
+      "min_opportunity_score": 60,
+      "max_failed_alert_conditions": 2,
+      "include_in_report": true
+    }
   },
   "thresholds": {
     "new_app_days": 180,
@@ -175,12 +245,12 @@
     }
   },
   "classification_dimensions": {
-    "market_category": ["puzzle", "casual", "arcade", "simulation", "board", "word", "card", "other"],
+    "market_category": ["puzzle", "casual", "arcade", "simulation", "board", "word", "card", "action", "other"],
     "core_mechanic": ["sort", "merge", "match", "search", "decorate", "collect", "idle", "runner", "physics", "trivia", "other"],
     "theme": ["supermarket", "home", "animals", "cars", "food", "fashion", "fantasy", "social", "meme", "abstract", "other"],
     "meta": ["renovation", "collection", "story", "levels", "events", "leaderboard", "customization", "none"],
     "audience": ["kids", "teens", "women_25_45", "men_18_35", "seniors", "broad", "unknown"],
-    "production_complexity": ["low", "medium", "high"]
+    "production_complexity": ["low", "medium", "high", "unknown"]
   },
   "data_quality": {
     "min_score_for_alert": 65,
@@ -199,8 +269,28 @@
   },
   "feedback": {
     "enabled": true,
-    "storage_path": "data/feedback.json",
-    "allowed_statuses": ["good", "maybe", "false_positive", "ignore", "built", "tested"],
+    "canonical_format": "jsonl",
+    "path": "data/feedback.jsonl",
+    "legacy_path": "data/feedback.json",
+    "migration": {
+      "enabled": true,
+      "strategy": "one_time_legacy_json_to_jsonl",
+      "read_legacy_json_only_for_migration": true,
+      "read_legacy_json_during_normal_runtime": false,
+      "support_dual_runtime_formats": false,
+      "auto_migrate_legacy_json_to_jsonl": true,
+      "write_legacy_json": false,
+      "create_backup_before_migration": true,
+      "backup_path_template": "data/feedback.migrated.{timestamp}.json",
+      "migration_state_path": "data/feedback_migration_state.json",
+      "deduplicate_on_migration": true,
+      "fail_on_invalid_legacy_json": false,
+      "log_invalid_legacy_entries": true
+    },
+    "apply_weight_adjustments": true,
+    "max_weight_adjustment_abs": 0.2,
+    "allowed_statuses": ["good", "maybe", "false_positive", "already_known", "too_complex", "too_competitive", "paid_spike"],
+    "allowed_verdicts": ["good", "maybe", "false_positive", "already_known", "too_complex", "too_competitive", "paid_spike"],
     "allowed_reasons": [
       "paid_spike",
       "one_app_growth",
@@ -215,7 +305,22 @@
   },
   "alert_limits": {
     "max_alerts_per_run": 3,
-    "max_watch_items_per_digest": 10
+    "max_watch_items_per_digest": 10,
+    "max_single_app_watch_items": 5,
+    "max_near_misses_in_report": 20,
+    "cooldown_days": 7
+  },
+  "first_run_behavior": {
+    "save_baseline_snapshot": true,
+    "send_regular_alerts": false,
+    "send_initial_baseline_digest": true,
+    "max_initial_digest_items": 10,
+    "include_statuses_in_initial_digest": ["ALERT", "WATCH", "SINGLE_APP_WATCH", "NEAR_MISS"],
+    "required_reason_code": "INITIAL_BASELINE_NO_HISTORY",
+    "max_confidence_level": "MEDIUM",
+    "write_initial_digest_items_to_sent_alerts": false,
+    "allow_regular_alerts_from_second_run": true,
+    "allow_growth_based_alerts_after_snapshots": 7
   },
   "llm": {
     "enabled": true,
@@ -235,8 +340,9 @@
     "processed_dir": "data/processed",
     "history_dir": "data/history",
     "sent_alerts_path": "data/sent_alerts.json",
-    "feedback_path": "data/feedback.json",
+    "feedback_path": "data/feedback.jsonl",
     "reports_alerts_dir": "reports/alerts",
+    "reports_daily_dir": "reports/daily",
     "reports_weekly_dir": "reports/weekly"
   }
 }

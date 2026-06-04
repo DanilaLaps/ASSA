@@ -1,6 +1,6 @@
 # Improve scoring prompt
 
-Review the latest files in `data/history`, `data/processed`, `reports/alerts`, and `data/feedback.json`.
+Review the latest files in `data/history`, `data/processed`, `reports/alerts`, and `data/feedback.jsonl`.
 
 Identify:
 

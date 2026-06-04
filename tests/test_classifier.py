@@ -23,6 +23,10 @@ class ClassifierTests(unittest.TestCase):
         self.assertEqual(classified["meta"], "collection")
         self.assertEqual(classified["audience"], "women_25_45")
         self.assertEqual(classified["production_complexity"], "low")
+        self.assertEqual(classified["normalized_niche"], "sort_puzzle")
+        self.assertIn("niche_confidence", classified)
+        self.assertIn("mvp_feasibility_score", classified)
+        self.assertIn("is_unknown_or_new_pattern", classified)
 
 
 if __name__ == "__main__":

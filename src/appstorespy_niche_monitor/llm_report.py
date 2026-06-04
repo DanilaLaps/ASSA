@@ -18,6 +18,238 @@ ANALYSIS_FIELDS = (
     "recommendation",
 )
 
+PACK_ANALYSIS_FIELDS = (
+    "recommendation",
+    "confidence",
+    "why_interesting",
+    "why_might_be_false_positive",
+    "mvp_hypothesis",
+    "simplified_mvp_scope",
+    "validation_steps",
+    "risk_notes",
+    "missing_data",
+    "manual_review_needed",
+)
+
+
+def analyze_candidate_pack(
+    candidates: list[dict[str, Any]],
+    config: dict[str, Any],
+    *,
+    use_llm: bool = True,
+    coverage_summary: dict[str, Any] | None = None,
+    history_summary: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    pack_input = build_candidate_pack_input(candidates, config, coverage_summary, history_summary)
+    fallback = generate_fallback_pack_analysis(pack_input)
+    if use_llm and config.get("llm", {}).get("enabled", True) and os.environ.get("OPENAI_API_KEY"):
+        try:
+            return generate_openai_pack_analysis(pack_input, config, fallback)
+        except Exception as exc:  # pragma: no cover - network fallback
+            fallback["llm_fallback_note"] = str(exc)
+    return fallback
+
+
+def build_candidate_pack_input(
+    candidates: list[dict[str, Any]],
+    config: dict[str, Any],
+    coverage_summary: dict[str, Any] | None = None,
+    history_summary: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    limits = config.get("alert_limits", {})
+    alerts = [item for item in candidates if item.get("status") == "ALERT"][: int(limits.get("max_alerts_per_run", 3))]
+    watch = [
+        item
+        for item in candidates
+        if item.get("status") in {"WATCH", "SINGLE_APP_WATCH"}
+    ][: int(limits.get("max_watch_items_per_digest", 10))]
+    near_misses = [
+        item for item in candidates if item.get("status") == "NEAR_MISS"
+    ][: int(limits.get("max_near_misses_in_report", 10))]
+    initial = [
+        item for item in candidates if item.get("initial_baseline_digest")
+    ][: int(config.get("first_run_behavior", {}).get("max_initial_digest_items", 10))]
+    return {
+        "alerts": [compact_candidate_for_llm(item) for item in alerts],
+        "watch": [compact_candidate_for_llm(item) for item in watch],
+        "near_misses": [compact_candidate_for_llm(item) for item in near_misses],
+        "initial_baseline_digest": [compact_candidate_for_llm(item) for item in initial],
+        "coverage_summary": coverage_summary or coverage_from_candidates(candidates),
+        "history_summary": history_summary or {},
+        "rules_summary": {
+            "candidate_generation": config.get("candidate_generation", {}),
+            "alert_limits": config.get("alert_limits", {}),
+            "important_risk_tags": [
+                "leader_dominated",
+                "possible_paid_spike",
+                "severe_paid_spike",
+                "giant_developer_risk",
+                "weak_revenue_signal",
+                "sample_truncated",
+                "unknown_coverage",
+            ],
+        },
+    }
+
+
+def compact_candidate_for_llm(candidate: dict[str, Any]) -> dict[str, Any]:
+    fields = (
+        "candidate_id",
+        "dedupe_key",
+        "status",
+        "would_be_status",
+        "normalized_niche",
+        "group_key_type",
+        "group_key_value",
+        "market_category",
+        "core_mechanic",
+        "theme",
+        "meta",
+        "audience_summary",
+        "app_count",
+        "total_daily_installs",
+        "opportunity_score",
+        "score_components",
+        "data_quality_score",
+        "mvp_feasibility_score",
+        "risk_tags",
+        "reason_codes",
+        "failed_alert_conditions",
+        "confidence_level",
+        "first_run_without_history",
+    )
+    compact = {field: candidate.get(field) for field in fields if field in candidate}
+    compact["top_apps"] = [
+        {
+            "app_id": app.get("app_id"),
+            "name": app.get("name"),
+            "developer_name": app.get("developer_name"),
+            "downloads_daily": app.get("downloads_daily"),
+            "release_date": app.get("release_date"),
+            "advertised": app.get("advertised"),
+            "ads": app.get("ads"),
+            "iap": app.get("iap"),
+        }
+        for app in candidate.get("top_apps", [])[:5]
+    ]
+    return compact
+
+
+def coverage_from_candidates(candidates: list[dict[str, Any]]) -> dict[str, Any]:
+    for candidate in candidates:
+        coverage = candidate.get("coverage")
+        if isinstance(coverage, dict) and coverage:
+            return coverage
+    return {}
+
+
+def generate_fallback_pack_analysis(pack_input: dict[str, Any]) -> dict[str, Any]:
+    all_candidates = (
+        pack_input.get("alerts", [])
+        + pack_input.get("watch", [])
+        + pack_input.get("near_misses", [])
+        + pack_input.get("initial_baseline_digest", [])
+    )
+    candidate_analyses = {
+        str(item.get("candidate_id")): generate_pack_item_fallback(item)
+        for item in all_candidates
+        if item.get("candidate_id")
+    }
+    return {
+        "pack_input": pack_input,
+        "candidate_analyses": candidate_analyses,
+    }
+
+
+def generate_pack_item_fallback(candidate: dict[str, Any]) -> dict[str, Any]:
+    status = candidate.get("status")
+    first_run = bool(candidate.get("first_run_without_history"))
+    severe = "severe_paid_spike" in candidate.get("risk_tags", [])
+    if severe or "giant_developer_risk" in candidate.get("risk_tags", []):
+        recommendation = "AVOID"
+    elif status == "ALERT" and not first_run:
+        recommendation = "TEST"
+    else:
+        recommendation = "WATCH"
+    confidence = "medium" if first_run else ("high" if float(candidate.get("data_quality_score", 0.0)) >= 75 else "medium")
+    if float(candidate.get("data_quality_score", 0.0)) < 45:
+        confidence = "low"
+    why_interesting = candidate.get("reason_codes", [])[:3]
+    risk_notes = candidate.get("risk_tags", [])
+    mvp_hypothesis = f"Test a scoped {candidate.get('core_mechanic')} game with {candidate.get('theme')} presentation."
+    return {
+        "recommendation": recommendation,
+        "confidence": confidence,
+        "why_interesting": why_interesting,
+        "why_might_be_false_positive": risk_notes[:4],
+        "mvp_hypothesis": mvp_hypothesis,
+        "simplified_mvp_scope": "One core loop, one content theme, lightweight meta progression.",
+        "validation_steps": [
+            "Check top apps manually in AppStoreSpy and stores.",
+            "Separate organic traction from paid acquisition.",
+            "Review creatives and monetization signals before production.",
+        ],
+        "risk_notes": risk_notes,
+        "missing_data": candidate.get("failed_alert_conditions", []),
+        "manual_review_needed": status in {"WATCH", "SINGLE_APP_WATCH", "NEAR_MISS"} or first_run,
+        "summary": (
+            f"{candidate.get('normalized_niche')} is a {recommendation} candidate in this single-query AppStoreSpy slice."
+        ),
+        "signal": ", ".join(why_interesting) or "Candidate passed deterministic scoring signals.",
+        "evidence": why_interesting,
+        "entry_realism": f"MVP feasibility score is {candidate.get('mvp_feasibility_score')}.",
+        "mvp": mvp_hypothesis,
+        "monetization": "Validate ads/IAP/revenue signals before production.",
+        "risks": risk_notes or ["Need manual validation."],
+        "checks": [
+            "Check top apps manually in AppStoreSpy and stores.",
+            "Confirm the signal is not paid traffic.",
+        ],
+    }
+
+
+def generate_openai_pack_analysis(
+    pack_input: dict[str, Any],
+    config: dict[str, Any],
+    fallback: dict[str, Any],
+) -> dict[str, Any]:
+    llm_cfg = config.get("llm", {})
+    model = os.environ.get(llm_cfg.get("model_env", "OPENAI_MODEL")) or llm_cfg.get("default_model", "gpt-4.1-mini")
+    payload = {"model": model, "input": build_pack_prompt(pack_input)}
+    request = urllib.request.Request(
+        "https://api.openai.com/v1/responses",
+        data=json.dumps(payload).encode("utf-8"),
+        method="POST",
+        headers={
+            "Authorization": f"Bearer {os.environ['OPENAI_API_KEY']}",
+            "Content-Type": "application/json",
+        },
+    )
+    with urllib.request.urlopen(request, timeout=int(llm_cfg.get("timeout_seconds", 60))) as response:
+        data = json.loads(response.read().decode("utf-8"))
+    parsed = parse_json_object(extract_response_text(data))
+    if not isinstance(parsed.get("candidate_analyses"), dict):
+        parsed["candidate_analyses"] = fallback.get("candidate_analyses", {})
+    parsed["pack_input"] = pack_input
+    return parsed
+
+
+def build_pack_prompt(pack_input: dict[str, Any]) -> str:
+    compact = json.dumps(pack_input, ensure_ascii=False, indent=2)
+    return (
+        "Ты — аналитик рынка мобильных игр для маленькой команды.\n"
+        "Оцени свежие Google Play игры, найденные одним single-query AppStoreSpy запросом.\n"
+        "Не называй сигнал глобальным и не указывай страну, если страна не была явно запрошена.\n"
+        "Не отбрасывай ранний single-app breakout автоматически: помечай его как WATCH/manual validation.\n"
+        "Отделяй свежий спрос от paid traffic spike. Не предлагай конкурировать напрямую с гигантами.\n"
+        "Если это первый запуск без истории, не называй кандидатов подтвержденными alerts; "
+        "помечай их как INITIAL_BASELINE_NO_HISTORY и ограничивай confidence до medium.\n"
+        "Верни JSON object с ключом candidate_analyses, где ключи — candidate_id, а значения содержат "
+        "recommendation TEST/WATCH/AVOID, confidence, why_interesting, why_might_be_false_positive, "
+        "mvp_hypothesis, simplified_mvp_scope, validation_steps, risk_notes, missing_data, manual_review_needed.\n\n"
+        f"Candidate pack JSON:\n{compact}"
+    )
+
 
 def generate_alert_report(alert: dict[str, Any], config: dict[str, Any], *, use_llm: bool = True) -> str:
     analysis = generate_alert_analysis(alert, config, use_llm=use_llm)

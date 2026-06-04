@@ -13,10 +13,14 @@ data/raw/*.json
 data/processed/*.json
 data/processed/*.csv
 data/history/*.json
+data/feedback.migrated.*.json
 reports/alerts/*.md
+reports/daily/*.md
+reports/daily/*.json
 reports/weekly/*.md
 !data/raw/.gitkeep
 !data/processed/.gitkeep
 !data/history/.gitkeep
 !reports/alerts/.gitkeep
+!reports/daily/.gitkeep
 !reports/weekly/.gitkeep

@@ -28,6 +28,7 @@ class CollectorTests(unittest.TestCase):
         self.assertEqual(payload["sort"], "-release_date")
         self.assertNotIn("country", payload)
         self.assertNotIn("language", payload)
+        self.assertNotIn("active_countries", payload)
         self.assertNotIn("active_countries", payload.get("filter", {}))
         self.assertEqual(payload["filter"]["published"], True)
         self.assertEqual(payload["filter"]["category_type"], "GAME")
@@ -64,6 +65,7 @@ class CollectorTests(unittest.TestCase):
         self.assertEqual(config["collection"]["mode"], "single_query")
         self.assertFalse(config["collection"]["include_country"])
         self.assertFalse(config["collection"]["include_language"])
+        self.assertFalse(config["collection"]["include_active_countries"])
         self.assertFalse(config["collection"]["allow_pagination"])
         self.assertEqual(config["collection"]["max_api_requests_per_run"], 1)
 

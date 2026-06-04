@@ -16,8 +16,9 @@ def storage_paths(config: dict[str, Any], config_dir: Path) -> dict[str, Path]:
         "processed_dir": resolve_path(config_dir, storage.get("processed_dir", "data/processed")),
         "history_dir": resolve_path(config_dir, storage.get("history_dir", "data/history")),
         "sent_alerts_path": resolve_path(config_dir, storage.get("sent_alerts_path", "data/sent_alerts.json")),
-        "feedback_path": resolve_path(config_dir, storage.get("feedback_path", "data/feedback.json")),
+        "feedback_path": resolve_path(config_dir, storage.get("feedback_path", config.get("feedback", {}).get("path", "data/feedback.jsonl"))),
         "reports_alerts_dir": resolve_path(config_dir, storage.get("reports_alerts_dir", "reports/alerts")),
+        "reports_daily_dir": resolve_path(config_dir, storage.get("reports_daily_dir", "reports/daily")),
         "reports_weekly_dir": resolve_path(config_dir, storage.get("reports_weekly_dir", "reports/weekly")),
     }
 
@@ -31,8 +32,10 @@ def ensure_storage(config: dict[str, Any], config_dir: Path) -> dict[str, Path]:
             path.parent.mkdir(parents=True, exist_ok=True)
     if not paths["sent_alerts_path"].exists():
         write_json(paths["sent_alerts_path"], {})
-    if not paths["feedback_path"].exists():
+    if not paths["feedback_path"].exists() and paths["feedback_path"].suffix == ".json":
         write_json(paths["feedback_path"], [])
+    elif not paths["feedback_path"].exists():
+        paths["feedback_path"].write_text("", encoding="utf-8")
     return paths
 
 
@@ -95,7 +98,7 @@ def save_history_summaries(paths: dict[str, Path], summaries: list[dict[str, Any
 
 
 def write_alert_report(paths: dict[str, Path], alert: dict[str, Any], markdown: str) -> Path:
-    alert_id = slugify(alert.get("alert_id", "alert"), max_length=120)
+    alert_id = slugify(alert.get("alert_instance_id") or alert.get("alert_id") or alert.get("candidate_id", "alert"), max_length=120)
     path = paths["reports_alerts_dir"] / f"{alert_id}.md"
     path.write_text(markdown, encoding="utf-8")
     return path

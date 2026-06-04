@@ -1,0 +1,10 @@
+{
+  "migration": "completed",
+  "source_sha256": "37517e5f3dc66819",
+  "migrated_count": 0,
+  "skipped_duplicates_count": 0,
+  "backup_path": null,
+  "migrated_at": "2026-06-04T20:59:27.491266+00:00",
+  "jsonl_path": "C:\\Users\\Danila\\Documents\\AppstoreSpy_analyze\\data\\feedback.jsonl",
+  "legacy_path": "C:\\Users\\Danila\\Documents\\AppstoreSpy_analyze\\data\\feedback.json"
+}

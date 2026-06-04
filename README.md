@@ -2,7 +2,7 @@
 
 Automated monitor for mobile-game niches using AppStoreSpy data, deterministic Python scoring, optional OpenAI analysis, and Telegram alerts.
 
-The first run stores a baseline and does not send alerts. Alerts are allowed only after history exists and every candidate passes scoring, data quality, concentration, production-complexity, cooldown, and anti-spam rules.
+The first run stores a baseline and does not send regular alerts. If candidates are found, it writes an Initial Baseline Discovery Report; with `--notify` in production and Telegram credentials present, that report can be sent as a digest that does not start cooldown.
 
 ## What it does
 
@@ -14,10 +14,10 @@ The first run stores a baseline and does not send alerts. Alerts are allowed onl
 - Classifies each app into a niche plus dimensions: market category, core mechanic, theme, meta, audience, and production complexity.
 - Aggregates micro-niches by platform, niche, and dimensions; country is not a grouping dimension.
 - Calculates growth, data quality, opportunity score, score components, and reason codes.
-- Filters noisy signals with cooldowns, concentration checks, giant developer share, and max-alert limits.
+- Preserves `ALERT`, `WATCH`, `SINGLE_APP_WATCH`, `NEAR_MISS`, and `REJECT` candidates before applying cooldown and max-alert send limits.
 - Saves markdown reports and can send Telegram alerts.
-- Sends a Telegram completion summary when notifications are enabled, even if no TEST alerts passed filters.
-- Generates structured alert analysis with `TEST`, `WATCH`, or `AVOID` recommendations.
+- Sends a Telegram completion summary when notifications are enabled, even if no regular ALERT messages were sent.
+- Generates structured candidate-pack analysis with `TEST`, `WATCH`, or `AVOID` recommendations.
 - Generates weekly feedback and calibration digests from history and manual labels.
 - Supports a dry-run mode with sample data and no API keys.
 
@@ -95,18 +95,30 @@ python -m appstorespy_niche_monitor --mode production --notify
 ```
 
 Production mode performs one AppStoreSpy request and asks for up to 10000 apps. If the API rejects a field or limit, update `config.yaml` and rerun; the collector does not retry with a different field list because v1.2 requires one query per run.
-With `--notify`, Telegram receives a completion summary for every finished run. If TEST alerts pass filters, alert messages are sent separately before the completion summary.
+With `--notify`, Telegram receives a completion summary for every finished run. If regular ALERT candidates pass cooldown and send limits, alert messages are sent separately before the completion summary.
+
+## Feedback migration
+
+Canonical feedback storage is `data/feedback.jsonl`. Legacy `data/feedback.json` is used only for one-time migration and is not read during normal scoring after migration.
+
+```powershell
+$env:PYTHONPATH="src"
+python -m appstorespy_niche_monitor --migrate-feedback
+```
+
+The migration command imports missing legacy records into JSONL, creates backup/state files, and exits without running collector, scoring, LLM, or Telegram.
 
 ## Feedback loop
 
-Manual feedback is stored in `data/feedback.json`. Valid statuses are:
+Manual feedback is stored in `data/feedback.jsonl`. Valid verdicts are:
 
 - `good`
 - `maybe`
 - `false_positive`
-- `ignore`
-- `built`
-- `tested`
+- `already_known`
+- `too_complex`
+- `too_competitive`
+- `paid_spike`
 
 Valid reasons are configured in `config.yaml`. Use this data weekly to tune thresholds, `niche_rules`, dimension rules, and anti-spam checks.
 

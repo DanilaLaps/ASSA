@@ -5,12 +5,16 @@ import json
 from pathlib import Path
 from typing import Any
 
-from .alert_filter import filter_alerts, mark_sent
+from .alert_filter import apply_cooldown_and_alert_limits, mark_sent, split_candidates
+from .candidate_generator import generate_candidates
 from .cleaner import clean_apps
 from .collector import collect_apps
 from .config import load_config
 from .data_quality import enrich_data_quality
-from .llm_report import generate_alert_analysis, render_alert_report
+from .feedback import feedback_adjustments, load_feedback, migrate_legacy_feedback_to_jsonl_once, read_feedback
+from .first_run_handler import FIRST_RUN_NO_HISTORY, apply_initial_baseline_rules, detect_history_state
+from .llm_report import analyze_candidate_pack, render_alert_report
+from .report_writer import write_daily_reports
 from .niche_classifier import classify_apps
 from .scorer import score_summaries
 from .storage import (
@@ -24,11 +28,10 @@ from .storage import (
     write_json,
     write_weekly_report,
 )
-from .telegram_notify import send_alerts, send_message, send_run_summary
+from .telegram_notify import send_alerts, send_initial_baseline_digest, send_message, send_run_summary
 from .trend_detector import detect_trends
 from .utils import utc_today
 from .aggregator import aggregate_apps
-from .feedback import read_feedback
 from .weekly_digest import generate_weekly_digest
 
 
@@ -46,40 +49,86 @@ def run_pipeline(
     mode = mode or config.get("app", {}).get("mode", "dry-run")
     notify = (mode != "dry-run") if notify is None else notify
 
+    if config.get("feedback", {}).get("migration", {}).get("auto_migrate_legacy_json_to_jsonl", True):
+        migrate_legacy_feedback_to_jsonl_once(config, config_dir)
+    feedback_records = load_feedback(config, config_dir)
+    config = {**config, "_feedback_adjustments": feedback_adjustments(feedback_records, config)}
+
     raw_records = collect_apps(config, config_dir, mode=mode, snapshot_date=snapshot_date)
     raw_path = save_raw(paths, raw_records, snapshot_date)
+    coverage_summary = raw_records[0].get("coverage", {}) if raw_records else {}
 
     apps = classify_apps(clean_apps(raw_records, snapshot_date), config)
     save_processed(paths, "apps", apps, snapshot_date)
 
-    summaries = aggregate_apps(apps, config, snapshot_date)
+    clusters = aggregate_apps(apps, config, snapshot_date)
     history = load_history_summaries(paths)
-    summaries = detect_trends(summaries, history, snapshot_date)
+    history_state = detect_history_state(history, config, snapshot_date)
+    compatible_history = [
+        item
+        for item in history
+        if item.get("score_version") == config.get("app", {}).get("score_version", "v1.3.2")
+    ]
+    summaries = detect_trends(clusters, compatible_history, snapshot_date)
     summaries = enrich_data_quality(summaries, apps, config)
     summaries = score_summaries(summaries, config)
 
+    save_processed(paths, "clusters", summaries, snapshot_date)
     save_processed(paths, "summaries", summaries, snapshot_date)
 
     sent_alerts = read_json(paths["sent_alerts_path"], {})
-    alerts, watch, rejected = filter_alerts(summaries, config, sent_alerts if isinstance(sent_alerts, dict) else {}, snapshot_date)
+    candidates = generate_candidates(summaries, config, snapshot_date)
+    candidates = apply_initial_baseline_rules(candidates, config, history_state)
+    candidates = apply_cooldown_and_alert_limits(
+        candidates,
+        config,
+        sent_alerts if isinstance(sent_alerts, dict) else {},
+        snapshot_date,
+    )
 
+    history_summary = {
+        "history_state": history_state,
+        "first_run_without_history": history_state == FIRST_RUN_NO_HISTORY,
+        "history_records_count": len(history),
+    }
+    pack_analysis = analyze_candidate_pack(
+        candidates,
+        config,
+        use_llm=use_llm,
+        coverage_summary=coverage_summary,
+        history_summary=history_summary,
+    )
+    candidate_analyses = pack_analysis.get("candidate_analyses", {})
+    for candidate in candidates:
+        analysis = candidate_analyses.get(candidate.get("candidate_id"))
+        if analysis:
+            candidate["llm_analysis"] = analysis
+            candidate["llm_summary"] = analysis.get("mvp_hypothesis") or analysis.get("summary")
+
+    urgent_alerts, watch, near_misses, rejected, alert_candidates = split_candidates(candidates)
     report_paths: list[str] = []
-    for alert in alerts:
-        analysis = generate_alert_analysis(alert, config, use_llm=use_llm)
-        alert["llm_analysis"] = analysis
+    report_paths.extend(write_daily_reports(paths, candidates, snapshot_date))
+    for alert in urgent_alerts:
+        analysis = alert.get("llm_analysis", {})
         markdown = render_alert_report(alert, analysis)
         report_paths.append(str(write_alert_report(paths, alert, markdown)))
 
-    save_processed(paths, "alerts", alerts, snapshot_date)
+    save_processed(paths, "candidates", candidates, snapshot_date)
+    save_processed(paths, "alerts", alert_candidates, snapshot_date)
     save_processed(paths, "watch", watch, snapshot_date)
+    save_processed(paths, "near_misses", near_misses, snapshot_date)
     save_processed(paths, "rejected", rejected, snapshot_date)
 
     sent_count = 0
-    if alerts and notify:
-        sent = send_alerts(alerts, config)
+    initial_digest_sent = False
+    if urgent_alerts and notify:
+        sent = send_alerts(urgent_alerts, config)
         sent_count = len(sent)
         updated_sent_alerts = mark_sent(sent_alerts if isinstance(sent_alerts, dict) else {}, sent, snapshot_date)
         write_json(paths["sent_alerts_path"], updated_sent_alerts)
+    initial_digest_items = [item for item in candidates if item.get("initial_baseline_digest")]
+    if notify and mode == "production" and initial_digest_items:
+        initial_digest_sent = send_initial_baseline_digest(initial_digest_items, config)
 
     history_path = save_history_summaries(paths, summaries, snapshot_date)
     result = {
@@ -89,12 +138,17 @@ def run_pipeline(
         "history_path": str(history_path),
         "apps_count": len(apps),
         "summaries_count": len(summaries),
-        "alerts_count": len(alerts),
+        "candidates_count": len(candidates),
+        "alerts_count": len(alert_candidates),
         "watch_count": len(watch),
+        "near_miss_count": len(near_misses),
         "rejected_count": len(rejected),
         "sent_count": sent_count,
+        "initial_baseline_digest_count": len(initial_digest_items),
+        "initial_baseline_digest_sent": initial_digest_sent,
+        "history_state": history_state,
         "report_paths": report_paths,
-        "baseline_only": not any(item.get("has_history") for item in summaries),
+        "baseline_only": history_state == FIRST_RUN_NO_HISTORY,
     }
     result["completion_notification_sent"] = send_run_summary(result, config) if notify else False
     return result
@@ -109,7 +163,18 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--no-llm", action="store_true", help="Use deterministic markdown reports instead of OpenAI.")
     parser.add_argument("--test-telegram", action="store_true", help="Send a small Telegram test message and exit.")
     parser.add_argument("--weekly-digest", action="store_true", help="Generate a weekly digest from history and feedback.")
+    parser.add_argument(
+        "--migrate-feedback",
+        action="store_true",
+        help="One-time migrate data/feedback.json to data/feedback.jsonl and exit.",
+    )
     args = parser.parse_args(argv)
+
+    if args.migrate_feedback:
+        config, config_dir = load_config(args.config)
+        result = migrate_legacy_feedback_to_jsonl_once(config, config_dir)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 0
 
     if args.weekly_digest:
         config, config_dir = load_config(args.config)

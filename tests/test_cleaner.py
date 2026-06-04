@@ -33,7 +33,7 @@ class CleanerTests(unittest.TestCase):
 
         self.assertEqual(len(apps), 1)
         self.assertEqual(apps[0]["downloads_daily"], 900)
-        self.assertEqual(apps[0]["country"], "US")
+        self.assertEqual(apps[0]["response_country"], "US")
 
     def test_normalizes_single_query_fields(self):
         raw_records = [
@@ -68,6 +68,7 @@ class CleanerTests(unittest.TestCase):
         self.assertTrue(app["ads"])
         self.assertIn("play.google.com", app["url"])
         self.assertEqual(app["website"], "https://example.com")
+        self.assertIn("raw_source_fields_json", app)
 
 
 if __name__ == "__main__":

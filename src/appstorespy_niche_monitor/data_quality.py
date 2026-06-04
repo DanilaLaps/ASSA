@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections import Counter
 from typing import Any
 
-from .aggregator import stable_key
+from .coverage import coverage_risk_tags
 from .utils import clamp, safe_div
 
 
@@ -12,15 +12,17 @@ def enrich_data_quality(
     apps: list[dict[str, Any]],
     config: dict[str, Any],
 ) -> list[dict[str, Any]]:
-    apps_by_key: dict[str, list[dict[str, Any]]] = {}
+    apps_by_id: dict[str, dict[str, Any]] = {}
     for app in apps:
-        apps_by_key.setdefault(stable_key(app), []).append(app)
+        for key in (app.get("app_id"), app.get("bundle"), app.get("name")):
+            if key:
+                apps_by_id[str(key)] = app
     return [
         {
             **summary,
             **calculate_data_quality(
                 summary,
-                apps_by_key.get(str(summary.get("group_key")), []),
+                [apps_by_id[item] for item in summary.get("app_ids", []) if item in apps_by_id],
                 config,
             ),
         }
@@ -56,9 +58,16 @@ def calculate_data_quality(
 
     revenue_present_ratio = field_completeness_ratio(apps, ["revenue_month"])
     revenue_value = float(summary.get("total_monthly_revenue", 0.0))
-    monetization_score = 10.0 if revenue_value > 0 else 4.0 * revenue_present_ratio
-    if revenue_value <= 0 and quality_cfg.get("penalize_missing_revenue", True):
-        reasons.append("weak_monetization_data")
+    has_ads_or_iap = any(app.get("ads") or app.get("iap") for app in apps)
+    if revenue_value > 0:
+        monetization_score = 10.0
+    elif has_ads_or_iap:
+        monetization_score = 6.0
+        reasons.append("weak_revenue_signal")
+    else:
+        monetization_score = 4.0 * revenue_present_ratio
+        if quality_cfg.get("penalize_missing_revenue", True):
+            reasons.append("weak_monetization_signal")
 
     freshness_score = 10.0 * min(safe_div(int(summary.get("successful_new_apps_count", 0)), 2), 1.0)
     if int(summary.get("successful_new_apps_count", 0)) <= 0:
@@ -77,6 +86,15 @@ def calculate_data_quality(
     if float(summary.get("advertised_top_app_share", 0.0)) >= 0.7:
         penalty += 10.0
         reasons.append("paid_spike_risk")
+
+    if float(summary.get("classification_confidence_avg", 1.0)) < 0.7:
+        penalty += 7.0
+        reasons.append("classifier_low_confidence")
+
+    coverage = summary.get("coverage", {})
+    for tag in coverage_risk_tags(coverage if isinstance(coverage, dict) else {}):
+        reasons.append(tag)
+        penalty += 8.0 if tag == "sample_truncated" else 5.0
 
     score = clamp(field_score + history_score + sample_score + diversity_score + monetization_score + freshness_score - penalty)
     return {

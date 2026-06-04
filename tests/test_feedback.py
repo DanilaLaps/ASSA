@@ -10,7 +10,7 @@ class FeedbackTests(unittest.TestCase):
     def test_feedback_record_round_trip(self):
         config, _ = load_config("config.yaml")
         with tempfile.TemporaryDirectory() as tmpdir:
-            path = Path(tmpdir) / "feedback.json"
+            path = Path(tmpdir) / "feedback.jsonl"
 
             add_feedback(
                 path,
@@ -24,6 +24,7 @@ class FeedbackTests(unittest.TestCase):
             records = read_feedback(path)
 
             self.assertEqual(len(records), 1)
+            self.assertEqual(records[0]["verdict"], "false_positive")
             self.assertEqual(records[0]["status"], "false_positive")
             self.assertEqual(feedback_summary(records), {"false_positive": 1})
 

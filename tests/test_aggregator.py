@@ -16,6 +16,7 @@ def app(**overrides):
         "developer_id": "dev1",
         "category": "GAME_PUZZLE",
         "niche": "sort puzzle",
+        "normalized_niche": "sort_puzzle",
         "market_category": "puzzle",
         "core_mechanic": "sort",
         "theme": "supermarket",
@@ -57,9 +58,11 @@ class AggregatorTests(unittest.TestCase):
 
         self.assertEqual(summary["app_count"], 2)
         self.assertEqual(summary["total_daily_installs"], 5500)
+        self.assertIn(summary["group_key_type"], config["aggregation"]["group_keys"])
         self.assertEqual(summary["release_date_window"], "last_180d")
         self.assertEqual(summary["source_scope"], "single_appstorespy_query_no_country_language")
         self.assertNotIn("country", summary["group_key"])
+        self.assertNotIn("women_25_45", summary["group_key"])
         self.assertEqual(summary["top_apps"][0]["bundle"], "a")
         self.assertGreater(summary["advertised_top_app_share"], 0)
 
