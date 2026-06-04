@@ -156,6 +156,7 @@ def generate_fallback_pack_analysis(pack_input: dict[str, Any]) -> dict[str, Any
         if item.get("candidate_id")
     }
     return {
+        "analysis_source": "fallback",
         "pack_input": pack_input,
         "candidate_analyses": candidate_analyses,
     }
@@ -230,6 +231,7 @@ def generate_openai_pack_analysis(
     parsed = parse_json_object(extract_response_text(data))
     if not isinstance(parsed.get("candidate_analyses"), dict):
         parsed["candidate_analyses"] = fallback.get("candidate_analyses", {})
+    parsed["analysis_source"] = "openai"
     parsed["pack_input"] = pack_input
     return parsed
 

@@ -104,6 +104,7 @@ def render_initial_baseline_report(rows: list[dict[str, Any]], snapshot_date: st
             f"score={row.get('opportunity_score')}, installs={row.get('total_daily_installs')}, "
             f"reason_codes={reason_codes}"
         )
+        lines.extend(format_initial_candidate_analysis(row))
     lines.extend(
         [
             "",
@@ -114,6 +115,48 @@ def render_initial_baseline_report(rows: list[dict[str, Any]], snapshot_date: st
         ]
     )
     return "\n".join(lines) + "\n"
+
+
+def format_initial_candidate_analysis(row: dict[str, Any]) -> list[str]:
+    analysis = row.get("llm_analysis")
+    if not isinstance(analysis, dict) or not analysis:
+        return []
+    source = str(row.get("llm_analysis_source") or "fallback")
+    title = "AI Review" if source == "openai" else "Automated Review"
+    recommendation = analysis.get("recommendation", "WATCH")
+    confidence = analysis.get("confidence", row.get("confidence_level", "MEDIUM"))
+    lines = [
+        f"   - {title}: recommendation={recommendation}, confidence={confidence}, source={source}",
+    ]
+    lines.extend(format_indented_list("why_interesting", analysis.get("why_interesting"), indent="     "))
+    lines.extend(
+        format_indented_list(
+            "false_positive_risks",
+            analysis.get("why_might_be_false_positive") or analysis.get("risk_notes"),
+            indent="     ",
+        )
+    )
+    if analysis.get("mvp_hypothesis"):
+        lines.append(f"     - mvp_hypothesis: {analysis.get('mvp_hypothesis')}")
+    if analysis.get("simplified_mvp_scope"):
+        lines.append(f"     - simplified_mvp_scope: {analysis.get('simplified_mvp_scope')}")
+    lines.extend(format_indented_list("validation_steps", analysis.get("validation_steps"), indent="     "))
+    missing_data = analysis.get("missing_data")
+    if missing_data:
+        lines.extend(format_indented_list("missing_data", missing_data, indent="     "))
+    return lines
+
+
+def format_indented_list(label: str, items: Any, *, indent: str) -> list[str]:
+    if not items:
+        return []
+    values = items if isinstance(items, list) else [items]
+    clean_values = [str(item).strip() for item in values if str(item).strip()]
+    if not clean_values:
+        return []
+    lines = [f"{indent}- {label}:"]
+    lines.extend(f"{indent}  - {item}" for item in clean_values[:4])
+    return lines
 
 
 def format_candidate_rows(rows: list[dict[str, Any]]) -> str:

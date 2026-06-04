@@ -1,6 +1,11 @@
 import unittest
 
-from appstorespy_niche_monitor.telegram_notify import chunk_text, format_alert_message, format_run_summary_message
+from appstorespy_niche_monitor.telegram_notify import (
+    chunk_text,
+    format_alert_message,
+    format_initial_baseline_digest_message,
+    format_run_summary_message,
+)
 
 
 class TelegramNotifyTests(unittest.TestCase):
@@ -55,6 +60,30 @@ class TelegramNotifyTests(unittest.TestCase):
         self.assertIn("TEST alerts: 0", message)
         self.assertIn("No TEST alerts passed filters", message)
         self.assertIn("Scope: one AppStoreSpy query, no country/language filter", message)
+
+    def test_format_initial_baseline_digest_includes_review(self):
+        message = format_initial_baseline_digest_message(
+            [
+                {
+                    "normalized_niche": "sort_puzzle",
+                    "would_be_status": "ALERT",
+                    "opportunity_score": 79.5,
+                    "total_daily_installs": 50000,
+                    "reason_codes": ["INITIAL_BASELINE_NO_HISTORY"],
+                    "llm_analysis_source": "openai",
+                    "llm_analysis": {
+                        "recommendation": "WATCH",
+                        "confidence": "medium",
+                        "mvp_hypothesis": "Test a focused sorting MVP.",
+                        "why_might_be_false_positive": ["possible paid spike"],
+                    },
+                }
+            ]
+        )
+
+        self.assertIn("Review: recommendation=WATCH", message)
+        self.assertIn("source=openai", message)
+        self.assertIn("MVP: Test a focused sorting MVP.", message)
 
 
 if __name__ == "__main__":

@@ -99,10 +99,12 @@ def run_pipeline(
         history_summary=history_summary,
     )
     candidate_analyses = pack_analysis.get("candidate_analyses", {})
+    analysis_source = str(pack_analysis.get("analysis_source", "fallback"))
     for candidate in candidates:
         analysis = candidate_analyses.get(candidate.get("candidate_id"))
         if analysis:
             candidate["llm_analysis"] = analysis
+            candidate["llm_analysis_source"] = analysis_source
             candidate["llm_summary"] = analysis.get("mvp_hypothesis") or analysis.get("summary")
 
     urgent_alerts, watch, near_misses, rejected, alert_candidates = split_candidates(candidates)

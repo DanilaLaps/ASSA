@@ -77,6 +77,19 @@ def format_initial_baseline_digest_message(items: list[dict[str, Any]]) -> str:
             f"score={item.get('opportunity_score')}, installs={item.get('total_daily_installs')}, "
             f"reason_codes={', '.join(item.get('reason_codes', []))}"
         )
+        analysis = item.get("llm_analysis")
+        if isinstance(analysis, dict) and analysis:
+            source = item.get("llm_analysis_source", "fallback")
+            lines.append(
+                f"   Review: recommendation={analysis.get('recommendation', 'WATCH')}, "
+                f"confidence={analysis.get('confidence', item.get('confidence_level', 'MEDIUM'))}, source={source}"
+            )
+            if analysis.get("mvp_hypothesis"):
+                lines.append(f"   MVP: {analysis.get('mvp_hypothesis')}")
+            risks = analysis.get("why_might_be_false_positive") or analysis.get("risk_notes") or []
+            if risks:
+                risk_text = "; ".join(str(risk) for risk in risks[:3])
+                lines.append(f"   Risks: {risk_text}")
     lines.extend(
         [
             "",
