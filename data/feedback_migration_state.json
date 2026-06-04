@@ -4,7 +4,7 @@
   "migrated_count": 0,
   "skipped_duplicates_count": 0,
   "backup_path": null,
-  "migrated_at": "2026-06-04T20:59:27.491266+00:00",
-  "jsonl_path": "C:\\Users\\Danila\\Documents\\AppstoreSpy_analyze\\data\\feedback.jsonl",
-  "legacy_path": "C:\\Users\\Danila\\Documents\\AppstoreSpy_analyze\\data\\feedback.json"
+  "migrated_at": "2026-06-04T21:19:56.480006+00:00",
+  "jsonl_path": "/home/runner/work/ASSA/ASSA/data/feedback.jsonl",
+  "legacy_path": "/home/runner/work/ASSA/ASSA/data/feedback.json"
 }
