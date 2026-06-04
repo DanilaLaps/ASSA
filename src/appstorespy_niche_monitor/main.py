@@ -24,7 +24,7 @@ from .storage import (
     write_json,
     write_weekly_report,
 )
-from .telegram_notify import send_alerts, send_message
+from .telegram_notify import send_alerts, send_message, send_run_summary
 from .trend_detector import detect_trends
 from .utils import utc_today
 from .aggregator import aggregate_apps
@@ -82,7 +82,7 @@ def run_pipeline(
         write_json(paths["sent_alerts_path"], updated_sent_alerts)
 
     history_path = save_history_summaries(paths, summaries, snapshot_date)
-    return {
+    result = {
         "mode": mode,
         "snapshot_date": snapshot_date,
         "raw_path": str(raw_path),
@@ -96,6 +96,8 @@ def run_pipeline(
         "report_paths": report_paths,
         "baseline_only": not any(item.get("has_history") for item in summaries),
     }
+    result["completion_notification_sent"] = send_run_summary(result, config) if notify else False
+    return result
 
 
 def main(argv: list[str] | None = None) -> int:

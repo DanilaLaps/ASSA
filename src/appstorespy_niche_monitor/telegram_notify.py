@@ -50,6 +50,41 @@ def send_alerts(alerts: list[dict[str, Any]], config: dict[str, Any]) -> list[di
     return sent
 
 
+def format_run_summary_message(result: dict[str, Any]) -> str:
+    baseline = "yes" if result.get("baseline_only") else "no"
+    if int(result.get("alerts_count", 0)) > 0:
+        status = "TEST alerts passed filters and were sent separately."
+    else:
+        status = "No TEST alerts passed filters in this run."
+    return (
+        "AppStoreSpy check completed\n\n"
+        f"Mode: {result.get('mode')}\n"
+        f"Snapshot date: {result.get('snapshot_date')}\n"
+        "Scope: one AppStoreSpy query, no country/language filter\n"
+        f"Apps checked: {result.get('apps_count')}\n"
+        f"Niche summaries: {result.get('summaries_count')}\n"
+        f"TEST alerts: {result.get('alerts_count')}\n"
+        f"WATCH candidates: {result.get('watch_count')}\n"
+        f"Rejected candidates: {result.get('rejected_count')}\n"
+        f"Baseline only: {baseline}\n\n"
+        f"{status}"
+    )
+
+
+def send_run_summary(result: dict[str, Any], config: dict[str, Any]) -> bool:
+    telegram_cfg = config.get("telegram", {})
+    if not telegram_cfg.get("enabled", True):
+        return False
+    if not telegram_cfg.get("notify_on_completion", True):
+        return False
+    token = os.environ.get(telegram_cfg.get("bot_token_env", "TELEGRAM_BOT_TOKEN"))
+    chat_id = os.environ.get(telegram_cfg.get("chat_id_env", "TELEGRAM_CHAT_ID"))
+    if not token or not chat_id:
+        raise RuntimeError("TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID are required to send notifications.")
+    send_message(token, chat_id, format_run_summary_message(result), int(telegram_cfg.get("max_message_chars", 3900)))
+    return True
+
+
 def send_message(token: str, chat_id: str, text: str, max_chars: int = 3900) -> None:
     for chunk in chunk_text(text, max_chars):
         payload = urllib.parse.urlencode({"chat_id": chat_id, "text": chunk}).encode("utf-8")

@@ -16,6 +16,7 @@ The first run stores a baseline and does not send alerts. Alerts are allowed onl
 - Calculates growth, data quality, opportunity score, score components, and reason codes.
 - Filters noisy signals with cooldowns, concentration checks, giant developer share, and max-alert limits.
 - Saves markdown reports and can send Telegram alerts.
+- Sends a Telegram completion summary when notifications are enabled, even if no TEST alerts passed filters.
 - Generates structured alert analysis with `TEST`, `WATCH`, or `AVOID` recommendations.
 - Generates weekly feedback and calibration digests from history and manual labels.
 - Supports a dry-run mode with sample data and no API keys.
@@ -94,6 +95,7 @@ python -m appstorespy_niche_monitor --mode production --notify
 ```
 
 Production mode performs one AppStoreSpy request. If the API rejects a field, update `config.yaml` and rerun; the collector does not retry with a different field list because v1.2 requires one query per run.
+With `--notify`, Telegram receives a completion summary for every finished run. If TEST alerts pass filters, alert messages are sent separately before the completion summary.
 
 ## Feedback loop
 

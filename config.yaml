@@ -224,6 +224,7 @@
   },
   "telegram": {
     "enabled": true,
+    "notify_on_completion": true,
     "bot_token_env": "TELEGRAM_BOT_TOKEN",
     "chat_id_env": "TELEGRAM_CHAT_ID",
     "max_message_chars": 3900

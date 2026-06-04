@@ -1,6 +1,6 @@
 import unittest
 
-from appstorespy_niche_monitor.telegram_notify import chunk_text, format_alert_message
+from appstorespy_niche_monitor.telegram_notify import chunk_text, format_alert_message, format_run_summary_message
 
 
 class TelegramNotifyTests(unittest.TestCase):
@@ -36,6 +36,25 @@ class TelegramNotifyTests(unittest.TestCase):
         chunks = chunk_text("abcdef", 2)
 
         self.assertEqual(chunks, ["ab", "cd", "ef"])
+
+    def test_format_run_summary_message_reports_no_alerts(self):
+        message = format_run_summary_message(
+            {
+                "mode": "production",
+                "snapshot_date": "2026-06-04",
+                "apps_count": 250,
+                "summaries_count": 37,
+                "alerts_count": 0,
+                "watch_count": 4,
+                "rejected_count": 33,
+                "baseline_only": False,
+            }
+        )
+
+        self.assertIn("AppStoreSpy check completed", message)
+        self.assertIn("TEST alerts: 0", message)
+        self.assertIn("No TEST alerts passed filters", message)
+        self.assertIn("Scope: one AppStoreSpy query, no country/language filter", message)
 
 
 if __name__ == "__main__":
