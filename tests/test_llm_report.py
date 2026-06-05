@@ -177,6 +177,7 @@ class LlmReportTests(unittest.TestCase):
         urlopen.assert_not_called()
         self.assertEqual(analysis["analysis_source"], "fallback")
         self.assertEqual(analysis["llm_status"]["fallback_reason"], "no_sendable_alerts")
+        self.assertFalse(analysis["llm_status"]["should_call_openai"])
 
     def test_generate_openai_pack_analysis_marks_openai_candidate_sources(self):
         config = llm_config()

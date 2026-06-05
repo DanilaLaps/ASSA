@@ -130,6 +130,31 @@ class AlertRankerTests(unittest.TestCase):
         self.assertEqual(enriched["first_blocking_failure"], "unknown_pattern_blocker_active")
         self.assertIn("classification_confidence_for_unknown_blocker", enriched["sendable_threshold_margins"])
 
+    def test_hard_and_soft_blockers_are_separated(self):
+        config, _ = load_config("config.yaml")
+        enriched = enrich_sendable_alert_fields(
+            [
+                candidate(
+                    data_quality_score=58,
+                    top_app_share=0.7,
+                    risk_tags=["weak_revenue_signal"],
+                )
+            ],
+            config,
+        )[0]
+
+        self.assertIn("data_quality_below_hard_min", enriched["hard_blockers"])
+        self.assertIn("top_app_too_dominant", enriched["soft_blockers"])
+        self.assertIn("weak_revenue_signal", enriched["soft_blockers"])
+        self.assertGreater(enriched["hard_blockers_count"], 0)
+        self.assertGreater(enriched["soft_blockers_count"], 0)
+
+    def test_alert_strength_strong_candidate(self):
+        config, _ = load_config("config.yaml")
+        enriched = enrich_sendable_alert_fields([candidate()], config)[0]
+
+        self.assertEqual(enriched["alert_strength"], "STRONG_ALERT")
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,6 +1,6 @@
 import unittest
 
-from appstorespy_niche_monitor.alert_filter import apply_cooldown_and_alert_limits, split_candidates
+from appstorespy_niche_monitor.alert_filter import apply_cooldown_and_alert_limits, mark_sent, split_candidates
 from appstorespy_niche_monitor.config import load_config
 
 
@@ -80,6 +80,65 @@ class SendableAlertFilterTests(unittest.TestCase):
 
         self.assertTrue(all(item["send_regular_alert"] is False for item in filtered))
         self.assertTrue(all(item["alert_stage"] != "SENDABLE_ALERT" for item in filtered))
+
+    def test_promote_best_clean_alert_when_no_sendable(self):
+        config, _ = load_config("config.yaml")
+        config["alert_limits"]["max_alerts_per_run"] = 3
+        filtered = apply_cooldown_and_alert_limits(
+            [
+                alert_candidate(
+                    1,
+                    opportunity_score=78,
+                    top_app_share=0.62,
+                    sendable_alert_reasons=[],
+                )
+            ],
+            config,
+            {},
+            "2026-06-04",
+        )
+        urgent_alerts, *_ = split_candidates(filtered)
+
+        self.assertEqual(len(urgent_alerts), 1)
+        self.assertTrue(urgent_alerts[0]["calibrated_promotion"])
+        self.assertIn("promoted_best_clean_alert_when_no_sendable", urgent_alerts[0]["sendable_alert_reasons"])
+        self.assertEqual(urgent_alerts[0]["hard_blockers_count"], 0)
+
+    def test_no_promotion_with_hard_blocker(self):
+        config, _ = load_config("config.yaml")
+        filtered = apply_cooldown_and_alert_limits(
+            [
+                alert_candidate(
+                    1,
+                    data_quality_score=40,
+                    top_app_share=0.62,
+                )
+            ],
+            config,
+            {},
+            "2026-06-04",
+        )
+        urgent_alerts, *_ = split_candidates(filtered)
+        blocked = filtered[0]
+
+        self.assertEqual(len(urgent_alerts), 0)
+        self.assertIn("data_quality_below_hard_min", blocked["hard_blockers"])
+
+    def test_manual_review_digest_does_not_mark_sent(self):
+        updated = mark_sent(
+            {},
+            [
+                {
+                    "dedupe_key": "manual-only",
+                    "normalized_niche": "sort_puzzle",
+                    "send_regular_alert": False,
+                    "alert_stage": "MANUAL_REVIEW_ONLY",
+                }
+            ],
+            "2026-06-04",
+        )
+
+        self.assertEqual(updated, {})
 
 
 if __name__ == "__main__":

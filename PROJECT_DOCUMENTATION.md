@@ -17,6 +17,7 @@ The system is intentionally conservative:
 - The first run without compatible history must not send regular alerts.
 - Unknown/new-pattern handling is ratio-based at cluster level and must remain discriminative.
 - App-level unknown classification must not mark the whole market unknown because of one weak secondary dimension or an unlisted combo.
+- Calibrated promotion may select at most one clean `ALERT` when normal sendable count is zero, and only if it has no hard blockers.
 
 ## 2. Primary Users and Use Cases
 
@@ -685,6 +686,7 @@ Broad new-pattern reason code:
 Candidate sendable funnel fields:
 
 - `alert_stage`: one of `QUALIFIED_CANDIDATE`, `QUALIFIED_CANDIDATE_ONLY`, `SENDABLE_ALERT`, `COOLDOWN_BLOCKED`, `INITIAL_BASELINE_DIGEST`, `EXCLUDED_FROM_COOLDOWN`, or `NONE`
+- `alert_strength`: `WEAK_ALERT`, `MEDIUM_ALERT`, `STRONG_ALERT`, or `NONE`
 - `send_regular_alert`: true only for final regular Telegram alerts
 - `telegram_delivery_channel`: `regular_alert`, `daily_digest_only`, `initial_baseline_digest`, or `none`
 - `sendable_alert_score`
@@ -696,6 +698,10 @@ Candidate sendable funnel fields:
 - `sendable_alert_reasons`
 - `sendable_alert_failures`
 - `first_blocking_failure`
+- `hard_blockers`
+- `soft_blockers`
+- `hard_blockers_count`
+- `soft_blockers_count`
 - `market_signal_key`
 - `market_signal_label`
 - `duplicate_of_candidate_id`
@@ -704,6 +710,20 @@ Candidate sendable funnel fields:
 `sendable_threshold_margins` stores signed distance from each hard threshold. Positive values mean the candidate cleared a minimum threshold or stayed below a maximum concentration threshold. Negative values show by how much it missed.
 
 `first_blocking_failure` is set for blocked candidates to make the first practical blocker visible in reports without scanning the full failure list.
+
+`alert_strength` is an intermediate diagnostic field for `ALERT` longlist calibration:
+
+- `STRONG_ALERT` requires opportunity score >= 75, data quality >= 60, classification confidence >= 0.55, at least 3 apps, at least 2 successful fresh apps, at least 2 unique developers, organic confidence not LOW, no unknown blocker, no severe paid spike, top app share <= 0.75, and growth-by-one-app share <= 0.80.
+- `MEDIUM_ALERT` is a weaker but still useful alert longlist item.
+- `WEAK_ALERT` is an internal alert that needs more evidence before it should become sendable.
+- Non-alert statuses use `NONE`.
+
+Blocker classification:
+
+- `hard_blockers` are safety or trust blockers. They include severe paid spike, duplicate market signal, cooldown, active unknown blocker, LOW organic confidence, top-app/growth concentration above hard max, data quality below hard min, classification confidence below hard min, and MVP feasibility below hard min.
+- `soft_blockers` are calibration misses. They include below sendable score, below opportunity/trend/team-fit thresholds, breadth misses, moderate concentration, weak monetization/revenue, possible paid spike, and mixed unknown clusters.
+- A candidate can have several soft blockers and still be useful for diagnostics.
+- A candidate with any hard blocker must not be promoted by calibration.
 
 ## 14. Alert Filtering, Cooldown, and Sending
 
@@ -788,6 +808,35 @@ Blocked sendable diagnostics:
 - Every enriched candidate has `sendable_threshold_margins`.
 - Blocked candidates should expose `first_blocking_failure`.
 - Reports should make the first blocker and unknown shares visible, because a candidate can fail many thresholds at once.
+
+Sendable calibration:
+
+- Implemented in `alert_filter.maybe_promote_best_alert`.
+- Controlled by `sendable_alert_calibration`.
+- Runs only after the normal sendable selection has produced zero sendable alerts.
+- Does not run for baseline-only first runs.
+- Promotes at most one `ALERT` candidate.
+- Promotion requires `hard_blockers_count == 0`.
+- Promotion must still respect `alert_limits.max_alerts_per_run`.
+- Promotion must not override severe paid spike, LOW organic confidence, unknown-pattern blocker, market-signal duplicate, cooldown, hard data-quality miss, hard classification-confidence miss, or hard MVP-feasibility miss.
+- Promotion uses separate `promote_*` thresholds so the strict normal sendable thresholds remain visible.
+
+Promoted candidates:
+
+- keep `status=ALERT`
+- get `send_regular_alert=True`
+- get `alert_stage=SENDABLE_ALERT`
+- get `telegram_delivery_channel=regular_alert`
+- get `calibrated_promotion=true`
+- add `promoted_best_clean_alert_when_no_sendable`, `no_hard_blockers`, and `closest_to_sendable_thresholds` to sendable reasons
+- keep only remaining soft blockers in `sendable_alert_failures`
+
+Manual review alternative:
+
+- If `allow_promote_best_alert_if_no_sendable=false` and `enable_manual_review_digest_when_no_sendable=true`, no regular alert is sent.
+- The pipeline writes a manual-review digest titled `No strong SENDABLE alerts today. Closest candidates for manual review only.`
+- Manual-review candidates are not `SENDABLE_ALERT`.
+- Manual-review candidates are not written to `sent_alerts.json`.
 
 Output sets:
 
@@ -969,6 +1018,13 @@ Telegram send behavior:
 - Chunks long messages using `telegram.max_message_chars`.
 - Sends completion summary if `telegram.notify_on_completion=true`.
 - Completion summary reports `SENDABLE alerts`, `LLM TEST recommendations among sendable alerts`, and `Separate TEST messages sent: 0`.
+- Completion summary reports `SINGLE_APP_WATCH candidates` separately so visible status counts can reconcile.
+- Completion summary reports candidates before and after market-signal dedupe.
+- Completion summary reports status counts before and after dedupe.
+- Completion summary reports sendable hard-filter pass/fail counts.
+- Completion summary reports `STRONG_ALERT candidates`.
+- Completion summary reports calibrated promotion count.
+- Completion summary reports the top first sendable blockers.
 - Completion summary also reports unknown diagnostics:
   - `Mixed unknown clusters`
   - `Unknown-dominant clusters`
@@ -999,6 +1055,7 @@ data/processed/<date>_candidates.json
 data/processed/<date>_alerts.json
 data/processed/<date>_sendable_alerts.json
 data/processed/<date>_alert_funnel.json
+data/processed/<date>_no_sendable_diagnostics.json
 data/processed/<date>_watch.json
 data/processed/<date>_near_misses.json
 data/processed/<date>_rejected.json
@@ -1008,6 +1065,8 @@ reports/daily/<date>_candidates.md
 reports/daily/<date>_sendable_alerts.md
 reports/daily/<date>_alert_funnel.md
 reports/daily/<date>_unknown_diagnostics.md
+reports/daily/<date>_no_sendable_diagnostics.md
+reports/daily/<date>_manual_review_digest.md
 reports/daily/<date>_watch.md
 reports/daily/<date>_near_misses.md
 reports/daily/<date>_rejected_summary.md
@@ -1026,6 +1085,19 @@ Processed alert artifacts:
 - `<date>_sendable_alerts.json` contains only `status == ALERT`, `send_regular_alert == true`, and `alert_stage == SENDABLE_ALERT`.
 - `<date>_alert_funnel.json` summarizes total candidates, alert candidates, sendable alerts, watch/near-miss/reject counts, duplicate market signals suppressed, cooldown blocks, limit blocks, and sendable failure distributions.
 - `<date>_unknown_diagnostics.md` summarizes mixed unknown clusters, unknown-dominant clusters, active unknown blockers, and top blocked candidates by `unknown_app_share` and `unknown_installs_share`.
+- `<date>_no_sendable_diagnostics.json` and `.md` are written when the run is not baseline-only, there are ALERT candidates, and final SENDABLE count is zero.
+- `<date>_manual_review_digest.md` is written only when no-sendable manual review mode is enabled instead of calibrated promotion.
+
+`<date>_alert_funnel.json` includes:
+
+- status counts before and after market-signal dedupe
+- candidate counts before and after market-signal dedupe
+- strong-alert counts
+- sendable hard-filter pass/fail counts
+- first-blocking-failure distribution for blocked ALERT candidates
+- all sendable failure distribution for blocked ALERT candidates
+- average and p50/p75/p90 stats for numeric sendable metrics
+- organic confidence distribution and numeric proxy stats
 
 Daily markdown reports include:
 
@@ -1161,6 +1233,7 @@ Important `config.yaml` sections:
 - `thresholds`: freshness and dominance thresholds.
 - `alert_rules`: legacy/compatibility alert thresholds used by tests and helper functions.
 - `sendable_alert_rules`: strict shortlist thresholds, sendable hard filters, per-niche/mechanic/market-signal limits, and duplicate-overlap threshold.
+- `sendable_alert_calibration`: deterministic fallback promotion and manual-review settings for no-sendable runs.
 - `giant_developers`: aliases for large developers.
 - `production_scores`: small-team feasibility by niche.
 - `niche_rules`: keyword-to-niche mapping.
@@ -1200,6 +1273,26 @@ Important `sendable_alert_rules` keys:
 - `market_signal_overlap_threshold`: top-app overlap threshold for duplicate market signals.
 - `unknown_pattern_alert_min_classification_confidence`, `unknown_pattern_alert_min_app_count`, `unknown_pattern_alert_min_successful_new_apps`, `unknown_pattern_alert_min_data_quality_score`: elevated requirements used only when `unknown_pattern_blocker_active=true`.
 
+Important `sendable_alert_calibration` keys:
+
+- `enabled`: master switch for calibration behavior.
+- `target_min_sendable_per_run`: intended lower bound for calibration diagnostics.
+- `target_max_sendable_per_run`: intended upper bound; final Telegram sends still respect `alert_limits.max_alerts_per_run`.
+- `allow_promote_best_alert_if_no_sendable`: whether one clean best alert may be promoted when normal sendable count is zero.
+- `promote_only_if_no_hard_blockers`: requires `hard_blockers_count == 0`.
+- `promote_min_sendable_alert_score`: lower sendable score floor for calibrated promotion.
+- `promote_min_opportunity_score`: opportunity score floor.
+- `promote_min_data_quality_score`: data quality floor; values `0..1` are treated as percentages.
+- `promote_min_classification_confidence_avg`: classification confidence floor.
+- `promote_min_trend_confidence_score`: trend confidence floor.
+- `promote_min_team_fit_score`: team fit floor.
+- `promote_max_top_app_share`: promotion concentration ceiling.
+- `promote_max_growth_by_one_app_share`: promotion one-app-growth ceiling.
+- `promote_requires_organic_confidence_not_low`: blocks LOW organic confidence.
+- `enable_manual_review_digest_when_no_sendable`: writes manual-review digest if promotion is disabled and no sendable alerts exist.
+- `promoted_alert_stage`: normally `SENDABLE_ALERT`.
+- `promoted_reason_code`: reason marker added to promoted candidates.
+
 Config file format:
 
 - The file is JSON-compatible YAML.
@@ -1232,15 +1325,16 @@ Test coverage by file:
 - `test_scorer.py`: opportunity scoring, components, reason codes.
 - `test_alert_ranker.py`: sendable score, components, hard filters, threshold margins, unknown blocker behavior, deterministic behavior.
 - `test_candidate_generator.py`: status generation, candidate preservation, mixed/dominant unknown tags, broad new-pattern reason logic.
-- `test_alert_filter.py`: alert rules, sendable limits, IDs.
+- `test_alert_filter.py`: alert rules, sendable limits, IDs, strict helper behavior.
+- `test_alert_funnel.py`: status reconciliation, first-blocker distributions, sendable failure distributions, blocked metric stats.
 - `test_alert_dedupe.py`: cooldown and dedupe stability.
-- `test_sendable_alert_filter.py`: strict Telegram budget and non-alert status blocking.
+- `test_sendable_alert_filter.py`: strict Telegram budget, non-alert status blocking, calibrated promotion, no-promotion with hard blockers, sent-alert marking.
 - `test_market_signal_dedupe.py`: duplicate market signal suppression and cleaner duplicate preference over unknown-heavy duplicates.
 - `test_first_run_behavior.py`: baseline-only logic.
 - `test_llm_input.py`: LLM pack restrictions and raw-data exclusion.
 - `test_llm_report.py`: OpenAI/fallback parsing, prompt contract, and no-LLM-call behavior when sendable alert count is zero.
-- `test_telegram_notify.py`: Telegram formatting and chunking.
-- `test_report_writer.py`: daily/baseline report content.
+- `test_telegram_notify.py`: Telegram formatting, chunking, run summary, regular-alert stage assertions.
+- `test_report_writer.py`: daily/baseline report content and no-sendable diagnostics.
 - `test_feedback.py`: feedback round trip.
 - `test_feedback_migration.py`: legacy migration.
 - `test_feedback_migration_cli.py`: migration CLI exits without pipeline.
@@ -1259,6 +1353,13 @@ Unknown/new-pattern regression tests should cover:
 - cleaner duplicate beats unknown-heavy duplicate in market-signal dedupe
 - valid short classifier keywords do not make an app unknown
 - OpenAI is skipped when there are zero sendable alerts
+- status counts reconcile with `SINGLE_APP_WATCH`
+- no-sendable diagnostics files are written
+- hard and soft blockers are separated
+- calibrated promotion sends at most one clean alert when normal sendable count is zero
+- candidates with hard blockers are not promoted
+- manual-review-only candidates are not marked sent
+- regular Telegram send requires `SENDABLE_ALERT`
 
 ## 24. Safe Change Guide for Humans and AI Agents
 
@@ -1335,6 +1436,17 @@ Common reasons:
 - weak data quality, classification confidence, trend confidence, or MVP feasibility
 - duplicate market signal suppression
 - top-app, top-3, one-app-growth, advertised-top-app, giant-developer, or single-developer concentration
+
+If `ALERT candidates > 0` and `SENDABLE alerts == 0`:
+
+- Open `reports/daily/<date>_no_sendable_diagnostics.md`.
+- Check `top_alert_candidates_closest_to_sendable`.
+- Check `top_candidates_blocked_by_exactly_one_condition`.
+- Inspect `hard_blockers_count` first. Hard blockers should not be bypassed.
+- Inspect `soft_blockers` and threshold margins to decide whether thresholds need calibration.
+- Check whether `sendable_alert_calibration.allow_promote_best_alert_if_no_sendable` is enabled.
+- If promotion is enabled but no candidate is promoted, the closest candidates likely have hard blockers or missed promotion thresholds.
+- If promotion is disabled and manual review is enabled, inspect `reports/daily/<date>_manual_review_digest.md`.
 
 ### Telegram says fallback or no AI review
 
@@ -1492,5 +1604,10 @@ Before finalizing any change, verify:
 - LLM and Telegram wording still says one AppStoreSpy query without country/language filters.
 - Alerts still include reason codes, score components, data quality, and classification dimensions.
 - Candidates still include sendable funnel fields and explainable sendable failures.
+- Candidates include `hard_blockers`, `soft_blockers`, blocker counts, `alert_strength`, and threshold margins.
+- Calibrated promotion cannot promote candidates with hard blockers.
+- Manual-review digests do not mark `sent_alerts.json`.
+- Completion status counts include `SINGLE_APP_WATCH` and reconcile with candidate totals.
+- No-sendable diagnostics are written when non-baseline ALERTs exist but final SENDABLE count is zero.
 - Unknown diagnostics are ratio-based and app-level unknown is not triggered by one weak secondary dimension or a tiny combo whitelist.
 - Relevant tests were updated and run.

@@ -1,6 +1,8 @@
 import unittest
+from pathlib import Path
+from tempfile import TemporaryDirectory
 
-from appstorespy_niche_monitor.report_writer import render_initial_baseline_report
+from appstorespy_niche_monitor.report_writer import render_initial_baseline_report, write_no_sendable_diagnostics
 
 
 class ReportWriterTests(unittest.TestCase):
@@ -65,6 +67,61 @@ class ReportWriterTests(unittest.TestCase):
         self.assertIn("LLM: source=fallback", markdown)
         self.assertIn("fallback_reason=missing_openai_api_key", markdown)
         self.assertIn("Automated Review", markdown)
+
+    def test_no_sendable_diagnostics_written_when_alerts_exist(self):
+        with TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            paths = {
+                "processed_dir": root / "data" / "processed",
+                "reports_daily_dir": root / "reports" / "daily",
+            }
+            for path in paths.values():
+                path.mkdir(parents=True, exist_ok=True)
+
+            written = write_no_sendable_diagnostics(
+                paths,
+                [
+                    {
+                        "candidate_id": "candidate-1",
+                        "status": "ALERT",
+                        "normalized_niche": "sort_puzzle",
+                        "group_key_type": "normalized_niche",
+                        "market_signal_key": "signal",
+                        "opportunity_score": 74,
+                        "sendable_alert_score": 69,
+                        "trend_confidence_score": 55,
+                        "team_fit_score": 60,
+                        "data_quality_score": 70,
+                        "classification_confidence_avg": 0.7,
+                        "mvp_feasibility_score": 85,
+                        "organic_confidence": "MEDIUM",
+                        "hard_blockers_count": 0,
+                        "soft_blockers_count": 1,
+                        "first_blocking_failure": "below_sendable_alert_score",
+                        "sendable_alert_failures": ["below_sendable_alert_score"],
+                        "sendable_threshold_margins": {"sendable_alert_score": -11},
+                        "top_apps": [
+                            {
+                                "name": "Goods Sort",
+                                "developer_name": "Tiny Team",
+                                "downloads_daily": 1000,
+                                "rating_avg": 4.5,
+                                "advertised": False,
+                                "release_date": "2026-05-01",
+                            }
+                        ],
+                    }
+                ],
+                "2026-06-05",
+            )
+
+            for path in written:
+                self.assertTrue(Path(path).exists())
+            markdown = (paths["reports_daily_dir"] / "2026-06-05_no_sendable_diagnostics.md").read_text(
+                encoding="utf-8"
+            )
+            self.assertIn("Top ALERT Candidates Closest To SENDABLE", markdown)
+            self.assertIn("below_sendable_alert_score", markdown)
 
 
 if __name__ == "__main__":

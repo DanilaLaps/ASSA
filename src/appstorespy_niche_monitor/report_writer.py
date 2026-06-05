@@ -231,6 +231,200 @@ def render_unknown_diagnostics_report(
     ) + "\n"
 
 
+def write_no_sendable_diagnostics(
+    paths: dict[str, Path],
+    candidates: list[dict[str, Any]],
+    snapshot_date: str,
+) -> list[str]:
+    diagnostics = build_no_sendable_diagnostics(candidates)
+    json_path = paths["processed_dir"] / f"{snapshot_date}_no_sendable_diagnostics.json"
+    markdown_path = paths["reports_daily_dir"] / f"{snapshot_date}_no_sendable_diagnostics.md"
+    write_json(json_path, diagnostics)
+    markdown_path.write_text(render_no_sendable_diagnostics_report(diagnostics, snapshot_date), encoding="utf-8")
+    return [str(json_path), str(markdown_path)]
+
+
+def write_manual_review_digest(
+    paths: dict[str, Path],
+    candidates: list[dict[str, Any]],
+    snapshot_date: str,
+) -> str:
+    diagnostics = build_no_sendable_diagnostics(candidates)
+    path = paths["reports_daily_dir"] / f"{snapshot_date}_manual_review_digest.md"
+    path.write_text(render_manual_review_digest(diagnostics, snapshot_date), encoding="utf-8")
+    return str(path)
+
+
+def build_no_sendable_diagnostics(candidates: list[dict[str, Any]], limit: int = 20) -> dict[str, Any]:
+    non_sendable_alerts = [
+        item
+        for item in candidates
+        if item.get("status") == "ALERT"
+        and not (item.get("send_regular_alert") is True and item.get("alert_stage") == "SENDABLE_ALERT")
+    ]
+    watch_candidates = [item for item in candidates if item.get("status") == "WATCH"]
+    blocked_by_one = [
+        item
+        for item in candidates
+        if not (item.get("send_regular_alert") is True and item.get("alert_stage") == "SENDABLE_ALERT")
+        and int(item.get("hard_blockers_count", 0)) + int(item.get("soft_blockers_count", 0)) == 1
+    ]
+    return {
+        "top_alert_candidates_closest_to_sendable": [
+            compact_no_sendable_candidate(item)
+            for item in sorted(
+                non_sendable_alerts,
+                key=lambda row: (
+                    int(row.get("hard_blockers_count", 0)),
+                    -float(row.get("sendable_alert_score", 0.0)),
+                    -float(row.get("opportunity_score", 0.0)),
+                ),
+            )[:limit]
+        ],
+        "top_watch_candidates_closest_to_alert_or_sendable": [
+            compact_no_sendable_candidate(item)
+            for item in sorted(
+                watch_candidates,
+                key=lambda row: (
+                    -float(row.get("opportunity_score", 0.0)),
+                    -float(row.get("sendable_alert_score", 0.0)),
+                ),
+            )[:limit]
+        ],
+        "top_candidates_blocked_by_exactly_one_condition": [
+            compact_no_sendable_candidate(item)
+            for item in sorted(
+                blocked_by_one,
+                key=lambda row: (
+                    int(row.get("hard_blockers_count", 0)),
+                    -float(row.get("sendable_alert_score", 0.0)),
+                    -float(row.get("opportunity_score", 0.0)),
+                ),
+            )[:limit]
+        ],
+    }
+
+
+def compact_no_sendable_candidate(candidate: dict[str, Any]) -> dict[str, Any]:
+    fields = (
+        "candidate_id",
+        "normalized_niche",
+        "group_key_type",
+        "market_signal_key",
+        "status",
+        "alert_strength",
+        "opportunity_score",
+        "sendable_alert_score",
+        "trend_confidence_score",
+        "team_fit_score",
+        "data_quality_score",
+        "classification_confidence_avg",
+        "mvp_feasibility_score",
+        "organic_confidence",
+        "app_count",
+        "successful_new_apps_count",
+        "unique_developer_count",
+        "total_daily_installs",
+        "top_app_share",
+        "top3_app_share",
+        "growth_by_one_app_share",
+        "advertised_top_app_share",
+        "giant_developer_share",
+        "single_developer_share",
+        "unknown_app_share",
+        "unknown_installs_share",
+        "unknown_pattern_blocker_active",
+        "risk_tags",
+        "reason_codes",
+        "first_blocking_failure",
+        "sendable_alert_failures",
+        "sendable_threshold_margins",
+        "hard_blockers",
+        "soft_blockers",
+        "hard_blockers_count",
+        "soft_blockers_count",
+        "calibrated_promotion",
+    )
+    compact = {field: candidate.get(field) for field in fields if field in candidate}
+    compact["top_apps"] = [
+        {
+            "name": app.get("name"),
+            "developer": app.get("developer_name"),
+            "downloads_daily": app.get("downloads_daily"),
+            "rating": app.get("rating_avg"),
+            "advertised": app.get("advertised"),
+            "release_date": app.get("release_date"),
+        }
+        for app in candidate.get("top_apps", [])[:5]
+        if isinstance(app, dict)
+    ]
+    return compact
+
+
+def render_no_sendable_diagnostics_report(diagnostics: dict[str, Any], snapshot_date: str) -> str:
+    return "\n".join(
+        [
+            f"# No Sendable Diagnostics - {snapshot_date}",
+            "",
+            "Source: single AppStoreSpy query without country/language filters.",
+            "",
+            "## Top ALERT Candidates Closest To SENDABLE",
+            format_no_sendable_rows(diagnostics.get("top_alert_candidates_closest_to_sendable", [])),
+            "",
+            "## Top WATCH Candidates Closest To ALERT/SENDABLE",
+            format_no_sendable_rows(diagnostics.get("top_watch_candidates_closest_to_alert_or_sendable", [])),
+            "",
+            "## Top Candidates Blocked By Exactly One Condition",
+            format_no_sendable_rows(diagnostics.get("top_candidates_blocked_by_exactly_one_condition", [])),
+        ]
+    ) + "\n"
+
+
+def render_manual_review_digest(diagnostics: dict[str, Any], snapshot_date: str) -> str:
+    return "\n".join(
+        [
+            f"# No strong SENDABLE alerts today. Closest candidates for manual review only. - {snapshot_date}",
+            "",
+            "These candidates are not regular Telegram alerts and must not be written to sent_alerts.",
+            "",
+            "## Closest ALERT Candidates",
+            format_no_sendable_rows(diagnostics.get("top_alert_candidates_closest_to_sendable", [])[:10]),
+            "",
+            "## One-Condition Calibration Set",
+            format_no_sendable_rows(diagnostics.get("top_candidates_blocked_by_exactly_one_condition", [])[:10]),
+        ]
+    ) + "\n"
+
+
+def format_no_sendable_rows(rows: list[dict[str, Any]]) -> str:
+    if not rows:
+        return "- None."
+    lines: list[str] = []
+    for row in rows:
+        lines.append(
+            "- "
+            f"{row.get('status')} {row.get('normalized_niche')} "
+            f"strength={row.get('alert_strength')} "
+            f"sendable={row.get('sendable_alert_score')} "
+            f"opportunity={row.get('opportunity_score')} "
+            f"hard={row.get('hard_blockers_count', 0)} "
+            f"soft={row.get('soft_blockers_count', 0)} "
+            f"first_blocking={row.get('first_blocking_failure') or 'none'} "
+            f"organic={row.get('organic_confidence')}"
+        )
+        blockers = row.get("hard_blockers") or row.get("soft_blockers") or row.get("sendable_alert_failures") or []
+        if blockers:
+            lines.append(f"  - blockers: {', '.join(str(item) for item in blockers)}")
+        top_apps = row.get("top_apps") or []
+        if top_apps:
+            app_bits = [
+                f"{app.get('name')} ({app.get('developer')}): {app.get('downloads_daily')}"
+                for app in top_apps[:3]
+            ]
+            lines.append(f"  - top_apps: {'; '.join(app_bits)}")
+    return "\n".join(lines)
+
+
 def format_unknown_counts(rows: list[dict[str, Any]]) -> str:
     counter = Counter(
         {

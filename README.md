@@ -26,7 +26,7 @@ The project is intentionally conservative. It collects one production `/play/app
 - Computes data quality, trend confidence, team fit, opportunity score, score components, reason codes, and risk tags.
 - Produces `ALERT`, `WATCH`, `SINGLE_APP_WATCH`, `NEAR_MISS`, and `REJECT` candidates.
 - Applies sendable hard filters, market-signal dedupe, cooldown, per-niche/per-mechanic/per-signal limits, and max-alert budget.
-- Writes daily reports, alert funnel diagnostics, sendable reports, rejected/watch/near-miss reports, and unknown-pattern diagnostics.
+- Writes daily reports, alert funnel diagnostics, sendable reports, no-sendable diagnostics, rejected/watch/near-miss reports, and unknown-pattern diagnostics.
 - Sends Telegram regular alerts only for final `SENDABLE_ALERT` candidates.
 - Sends a Telegram completion summary for production notification runs, even when there are zero sendable alerts.
 - Generates weekly feedback/calibration digests from history and manual labels.
@@ -71,6 +71,47 @@ If a run shows every summary as unknown-dominant, inspect app-level classificati
 - `Limit blocked`: otherwise sendable candidates blocked by per-run/per-niche/per-mechanic/per-signal caps.
 
 If `SENDABLE alerts` is `0`, OpenAI is skipped and LLM status becomes `source=fallback, fallback_reason=no_sendable_alerts`. That is expected: there is no final alert pack for OpenAI to review.
+
+## Sendable Calibration
+
+The normal sendable gate remains strict. A candidate must pass deterministic scoring, hard filters, dedupe, cooldown, and send limits before it becomes a regular Telegram alert.
+
+The optional calibration layer exists for the case where the base `ALERT` longlist has candidates but the strict shortlist is empty. When `sendable_alert_calibration.allow_promote_best_alert_if_no_sendable=true`, the pipeline may promote exactly one clean `ALERT` candidate if:
+
+- this is not a baseline-only run
+- normal sendable count is zero
+- the candidate has `hard_blockers_count == 0`
+- the candidate passes the configured `promote_*` thresholds
+- the candidate is not a severe paid spike, duplicate market signal, cooldown block, unknown-pattern blocker, or low-organic-confidence signal
+- promotion still respects `alert_limits.max_alerts_per_run`
+
+Promoted alerts are marked with:
+
+- `calibrated_promotion=true`
+- `promoted_best_clean_alert_when_no_sendable`
+- `no_hard_blockers`
+- `closest_to_sendable_thresholds`
+
+If promotion is disabled and `enable_manual_review_digest_when_no_sendable=true`, the run writes a manual-review digest instead. Manual-review items are not `SENDABLE_ALERT`, are not regular Telegram alerts, and are not written to `sent_alerts.json`.
+
+## Diagnostics
+
+Every candidate now carries:
+
+- `alert_strength`: `WEAK_ALERT`, `MEDIUM_ALERT`, `STRONG_ALERT`, or `NONE`
+- `hard_blockers`
+- `soft_blockers`
+- `hard_blockers_count`
+- `soft_blockers_count`
+- `first_blocking_failure`
+- `sendable_threshold_margins`
+
+When `baseline_only=false`, `ALERT candidates > 0`, and `SENDABLE alerts == 0`, the pipeline writes:
+
+- `data/processed/<date>_no_sendable_diagnostics.json`
+- `reports/daily/<date>_no_sendable_diagnostics.md`
+
+The completion summary includes `SINGLE_APP_WATCH`, pre/post market-signal dedupe status counts, strong alert count, sendable hard-filter pass/fail counts, calibrated promotions, and top first blockers.
 
 ## Repository Layout
 

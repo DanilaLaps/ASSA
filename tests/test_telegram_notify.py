@@ -1,10 +1,12 @@
 import unittest
+from unittest.mock import patch
 
 from appstorespy_niche_monitor.telegram_notify import (
     chunk_text,
     format_alert_message,
     format_initial_baseline_digest_message,
     format_run_summary_message,
+    send_alerts,
 )
 
 
@@ -170,6 +172,27 @@ class TelegramNotifyTests(unittest.TestCase):
 
         self.assertIn("LLM: source=fallback", message)
         self.assertIn("fallback_reason=missing_openai_api_key", message)
+
+    def test_regular_telegram_requires_sendable_alert_stage(self):
+        with patch.dict(
+            "os.environ",
+            {"TELEGRAM_BOT_TOKEN": "token", "TELEGRAM_CHAT_ID": "chat"},
+            clear=True,
+        ):
+            with patch("appstorespy_niche_monitor.telegram_notify.send_message") as send_message:
+                with self.assertRaises(AssertionError):
+                    send_alerts(
+                        [
+                            {
+                                "status": "ALERT",
+                                "send_regular_alert": True,
+                                "alert_stage": "QUALIFIED_CANDIDATE_ONLY",
+                            }
+                        ],
+                        {"telegram": {"enabled": True}},
+                    )
+
+        send_message.assert_not_called()
 
 
 if __name__ == "__main__":

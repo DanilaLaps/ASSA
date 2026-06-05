@@ -41,6 +41,15 @@ DEFAULT_SENDABLE_RULES = {
     "max_sendable_per_normalized_niche": 1,
     "max_sendable_per_core_mechanic": 2,
     "max_sendable_per_market_signal_key": 1,
+    "hard_alert_max_top_app_share": 0.75,
+    "hard_alert_max_growth_by_one_app_share": 0.75,
+    "hard_alert_min_classification_confidence": 0.50,
+    "hard_alert_min_data_quality_score": 60.0,
+    "hard_alert_min_mvp_feasibility_score": 50.0,
+    "unknown_pattern_alert_min_classification_confidence": 0.70,
+    "unknown_pattern_alert_min_app_count": 4,
+    "unknown_pattern_alert_min_successful_new_apps": 2,
+    "unknown_pattern_alert_min_data_quality_score": 75.0,
 }
 
 
@@ -417,8 +426,156 @@ def enrich_sendable_alert_fields(candidates: list[dict[str, Any]], config: dict[
 
         item["sendable_alert_reasons"] = sorted(set(str(reason) for reason in reasons))
         item["sendable_alert_failures"] = sorted(set(str(reason) for reason in failures))
+        assign_blocker_fields(item, config)
+        item["alert_strength"] = calculate_alert_strength(item, config)
         enriched.append(item)
     return enriched
+
+
+def assign_blocker_fields(candidate: dict[str, Any], config: dict[str, Any]) -> None:
+    hard_blockers, soft_blockers = classify_blockers(candidate, config)
+    candidate["hard_blockers"] = hard_blockers
+    candidate["soft_blockers"] = soft_blockers
+    candidate["hard_blockers_count"] = len(hard_blockers)
+    candidate["soft_blockers_count"] = len(soft_blockers)
+
+
+def classify_blockers(candidate: dict[str, Any], config: dict[str, Any]) -> tuple[list[str], list[str]]:
+    rules = sendable_rules(config)
+    failures = set(str(failure) for failure in candidate.get("sendable_alert_failures", []))
+    risk_tags = set(str(tag) for tag in candidate.get("risk_tags", []))
+    hard: set[str] = set()
+    soft: set[str] = set()
+
+    quality = score_100(candidate, "data_quality_score")
+    confidence = ratio_metric(candidate, "classification_confidence_avg", default=0.0)
+    mvp_feasibility = score_100(candidate, "mvp_feasibility_score")
+    top_app_share = ratio_metric(candidate, "top_app_share")
+    growth_by_one_app_share = ratio_metric(candidate, "growth_by_one_app_share")
+
+    hard_quality_min = normalized_threshold_100(rules.get("hard_alert_min_data_quality_score", 60.0))
+    hard_confidence_min = float(rules.get("hard_alert_min_classification_confidence", 0.50))
+    hard_mvp_min = normalized_threshold_100(rules.get("hard_alert_min_mvp_feasibility_score", 50.0))
+    hard_top_app_max = float(rules.get("hard_alert_max_top_app_share", 0.75))
+    hard_growth_max = float(rules.get("hard_alert_max_growth_by_one_app_share", 0.75))
+
+    for code in (
+        "severe_paid_spike",
+        "duplicate_market_signal",
+        "market_signal_duplicate",
+        "cooldown_exact_dedupe_key",
+        "cooldown_normalized_niche",
+        "unknown_pattern_blocker_active",
+        "organic_confidence_low",
+        "sendable_hard_filter_failed",
+    ):
+        if code in failures:
+            hard.add(code)
+    if "blocked_risk_tag" in failures:
+        hard.add("blocked_risk_tag")
+    if "severe_paid_spike" in risk_tags or bool(candidate.get("severe_paid_spike_risk")):
+        hard.add("severe_paid_spike")
+    if bool(candidate.get("unknown_pattern_blocker_active")):
+        hard.add("unknown_pattern_blocker_active")
+    if str(candidate.get("organic_confidence") or "").upper() == "LOW":
+        hard.add("organic_confidence_low")
+    if top_app_share > hard_top_app_max:
+        hard.add("top_app_share_above_hard_max")
+    if growth_by_one_app_share > hard_growth_max:
+        hard.add("growth_by_one_app_share_above_hard_max")
+    if quality < hard_quality_min:
+        hard.add("data_quality_below_hard_min")
+    if confidence < hard_confidence_min:
+        hard.add("classification_confidence_below_hard_min")
+    if mvp_feasibility < hard_mvp_min:
+        hard.add("mvp_feasibility_below_hard_min")
+
+    for code in (
+        "below_sendable_alert_score",
+        "below_opportunity_score",
+        "below_trend_confidence_score",
+        "below_team_fit_score",
+        "too_few_apps_for_sendable",
+        "too_few_successful_new_apps",
+        "too_few_unique_developers",
+        "low_total_daily_installs",
+        "top3_too_dominant",
+        "advertised_top_app_too_high",
+        "giant_share_too_high",
+        "single_developer_share_too_high",
+        "single_app_breakout_not_regular_alert",
+        "other_niche_low_confidence",
+        "no_growth_history",
+        "below_data_quality_for_trend_confidence",
+        "low_classification_confidence",
+        "low_mvp_feasibility",
+    ):
+        if code in failures:
+            soft.add(code)
+    if "below_data_quality_score" in failures:
+        if quality < hard_quality_min:
+            hard.add("data_quality_below_hard_min")
+        else:
+            soft.add("below_data_quality_score")
+    if "below_classification_confidence" in failures:
+        if confidence < hard_confidence_min:
+            hard.add("classification_confidence_below_hard_min")
+        else:
+            soft.add("below_classification_confidence")
+    if "below_mvp_feasibility" in failures:
+        if mvp_feasibility < hard_mvp_min:
+            hard.add("mvp_feasibility_below_hard_min")
+        else:
+            soft.add("below_mvp_feasibility")
+    if "top_app_too_dominant" in failures:
+        if top_app_share > hard_top_app_max:
+            hard.add("top_app_share_above_hard_max")
+        else:
+            soft.add("top_app_too_dominant")
+    if "growth_by_one_app_too_high" in failures:
+        if growth_by_one_app_share > hard_growth_max:
+            hard.add("growth_by_one_app_share_above_hard_max")
+        else:
+            soft.add("growth_by_one_app_too_high")
+
+    if "weak_revenue_signal" in risk_tags:
+        soft.add("weak_revenue_signal")
+    if "weak_monetization_signal" in risk_tags:
+        soft.add("weak_monetization_signal")
+    if "possible_paid_spike" in risk_tags:
+        soft.add("possible_paid_spike")
+    if "mixed_unknown_cluster" in risk_tags and "unknown_pattern_blocker_active" not in hard:
+        soft.add("mixed_unknown_cluster")
+
+    soft.difference_update(hard)
+    return sorted(hard), sorted(soft)
+
+
+def calculate_alert_strength(candidate: dict[str, Any], config: dict[str, Any]) -> str:
+    if candidate.get("status") != "ALERT":
+        return "NONE"
+    risk_tags = set(str(tag) for tag in candidate.get("risk_tags", []))
+    if (
+        score_100(candidate, "opportunity_score") >= 75.0
+        and score_100(candidate, "data_quality_score") >= 60.0
+        and ratio_metric(candidate, "classification_confidence_avg", default=0.0) >= 0.55
+        and int_metric(candidate, "app_count") >= 3
+        and successful_new_apps_count(candidate) >= 2
+        and unique_developer_count(candidate) >= 2
+        and str(candidate.get("organic_confidence") or "").upper() != "LOW"
+        and not bool(candidate.get("unknown_pattern_blocker_active"))
+        and "severe_paid_spike" not in risk_tags
+        and ratio_metric(candidate, "top_app_share") <= 0.75
+        and ratio_metric(candidate, "growth_by_one_app_share") <= 0.80
+    ):
+        return "STRONG_ALERT"
+    if (
+        score_100(candidate, "opportunity_score") >= 70.0
+        and score_100(candidate, "data_quality_score") >= 55.0
+        and ratio_metric(candidate, "classification_confidence_avg", default=0.0) >= 0.50
+    ):
+        return "MEDIUM_ALERT"
+    return "WEAK_ALERT"
 
 
 def calculate_sendable_score_with_inputs(

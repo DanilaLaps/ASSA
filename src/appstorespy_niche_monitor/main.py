@@ -2,10 +2,11 @@ from __future__ import annotations
 
 import argparse
 import json
+from collections import Counter
 from pathlib import Path
 from typing import Any
 
-from .alert_filter import apply_cooldown_and_alert_limits, mark_sent, split_candidates
+from .alert_filter import apply_cooldown_and_alert_limits_with_diagnostics, calibration_rules, mark_sent, split_candidates
 from .candidate_generator import generate_candidates
 from .cleaner import clean_apps
 from .collector import collect_apps
@@ -14,7 +15,7 @@ from .data_quality import enrich_data_quality
 from .feedback import feedback_adjustments, load_feedback, migrate_legacy_feedback_to_jsonl_once, read_feedback
 from .first_run_handler import FIRST_RUN_NO_HISTORY, apply_initial_baseline_rules, detect_history_state
 from .llm_report import analyze_candidate_pack, render_alert_report
-from .report_writer import write_daily_reports
+from .report_writer import write_daily_reports, write_manual_review_digest, write_no_sendable_diagnostics
 from .niche_classifier import classify_apps
 from .scorer import score_summaries
 from .storage import (
@@ -79,11 +80,12 @@ def run_pipeline(
     sent_alerts = read_json(paths["sent_alerts_path"], {})
     candidates = generate_candidates(summaries, config, snapshot_date)
     candidates = apply_initial_baseline_rules(candidates, config, history_state)
-    candidates = apply_cooldown_and_alert_limits(
+    candidates, filter_diagnostics = apply_cooldown_and_alert_limits_with_diagnostics(
         candidates,
         config,
         sent_alerts if isinstance(sent_alerts, dict) else {},
         snapshot_date,
+        baseline_only=history_state == FIRST_RUN_NO_HISTORY,
     )
 
     history_summary = {
@@ -128,6 +130,19 @@ def run_pipeline(
     )
     report_paths: list[str] = []
     report_paths.extend(write_daily_reports(paths, candidates, snapshot_date, summaries))
+    no_sendable_condition = (
+        history_state != FIRST_RUN_NO_HISTORY
+        and len(alert_candidates) > 0
+        and len(urgent_alerts) == 0
+    )
+    if no_sendable_condition:
+        report_paths.extend(write_no_sendable_diagnostics(paths, candidates, snapshot_date))
+        calibration = calibration_rules(config)
+        if (
+            not bool(calibration.get("allow_promote_best_alert_if_no_sendable", True))
+            and bool(calibration.get("enable_manual_review_digest_when_no_sendable", False))
+        ):
+            report_paths.append(write_manual_review_digest(paths, candidates, snapshot_date))
     for alert in urgent_alerts:
         analysis = alert.get("llm_analysis", {})
         markdown = render_alert_report(alert, analysis)
@@ -139,7 +154,15 @@ def run_pipeline(
     save_processed(paths, "watch", watch, snapshot_date)
     save_processed(paths, "near_misses", near_misses, snapshot_date)
     save_processed(paths, "rejected", rejected, snapshot_date)
-    alert_funnel = build_alert_funnel(candidates, urgent_alerts, watch, near_misses, rejected, summaries)
+    alert_funnel = build_alert_funnel(
+        candidates,
+        urgent_alerts,
+        watch,
+        near_misses,
+        rejected,
+        summaries,
+        filter_diagnostics,
+    )
     write_json(paths["processed_dir"] / f"{snapshot_date}_alert_funnel.json", alert_funnel)
 
     sent_count = 0
@@ -165,7 +188,8 @@ def run_pipeline(
         "alerts_count": len(alert_candidates),
         "alert_candidates_count": len(alert_candidates),
         "sendable_alerts_count": len(urgent_alerts),
-        "watch_count": len(watch),
+        "watch_count": sum(1 for item in candidates if item.get("status") == "WATCH"),
+        "watch_like_count": len(watch),
         "single_app_watch_count": sum(1 for item in candidates if item.get("status") == "SINGLE_APP_WATCH"),
         "near_miss_count": len(near_misses),
         "rejected_count": len(rejected),
@@ -177,6 +201,20 @@ def run_pipeline(
         "duplicate_market_signals_suppressed": alert_funnel["duplicate_market_signals_suppressed"],
         "cooldown_blocked_count": alert_funnel["cooldown_blocked_count"],
         "limit_blocked_count": alert_funnel["limit_blocked_count"],
+        "candidates_before_market_signal_dedupe": alert_funnel["candidates_before_market_signal_dedupe"],
+        "candidates_after_market_signal_dedupe": alert_funnel["candidates_after_market_signal_dedupe"],
+        "status_counts_before_dedupe": alert_funnel["status_counts_before_dedupe"],
+        "status_counts_after_dedupe": alert_funnel["status_counts_after_dedupe"],
+        "sendable_hard_filter_pass_count": alert_funnel["sendable_hard_filter_pass_count"],
+        "sendable_hard_filter_fail_count": alert_funnel["sendable_hard_filter_fail_count"],
+        "strong_alert_candidates_count": alert_funnel["strong_alert_candidates_count"],
+        "calibrated_promotions_count": alert_funnel["calibrated_promotions_count"],
+        "top_first_blocking_failures": dict(
+            sorted(
+                alert_funnel["blocked_alert_first_blocking_failure_counts"].items(),
+                key=lambda item: (-int(item[1]), str(item[0])),
+            )[:10]
+        ),
         "mixed_unknown_clusters_count": alert_funnel["mixed_unknown_clusters_count"],
         "unknown_dominant_clusters_count": alert_funnel["unknown_dominant_clusters_count"],
         "unknown_blocker_active_count": alert_funnel["unknown_blocker_active_count"],
@@ -189,6 +227,10 @@ def run_pipeline(
         "report_paths": report_paths,
         "baseline_only": history_state == FIRST_RUN_NO_HISTORY,
         "llm_status": llm_status,
+        "openai_called": llm_status.get("analysis_source") == "openai" if isinstance(llm_status, dict) else False,
+        "llm_fallback_reason": llm_status.get("fallback_reason") if isinstance(llm_status, dict) else None,
+        "manual_review_digest_written": any(path.endswith("_manual_review_digest.md") for path in report_paths),
+        "no_sendable_diagnostics_written": any(path.endswith("_no_sendable_diagnostics.md") for path in report_paths),
     }
     result["completion_notification_sent"] = send_run_summary(result, config) if notify else False
     return result
@@ -201,16 +243,36 @@ def build_alert_funnel(
     near_misses: list[dict[str, Any]],
     rejected: list[dict[str, Any]],
     summaries: list[dict[str, Any]] | None = None,
+    filter_diagnostics: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     unknown_rows = summaries or candidates
+    filter_diagnostics = filter_diagnostics or {}
+    blocker_diagnostics = sendable_blocker_diagnostics(candidates)
     return {
         "candidates_count": len(candidates),
         "alert_candidates_count": sum(1 for item in candidates if item.get("status") == "ALERT"),
         "sendable_alerts_count": len(urgent_alerts),
-        "watch_count": len(watch),
+        "watch_count": sum(1 for item in candidates if item.get("status") == "WATCH"),
+        "watch_like_count": len(watch),
         "single_app_watch_count": sum(1 for item in candidates if item.get("status") == "SINGLE_APP_WATCH"),
         "near_miss_count": len(near_misses),
         "rejected_count": len(rejected),
+        "status_counts": status_counts_for(candidates),
+        "alert_strength_counts": status_counts_for(candidates, field="alert_strength"),
+        "strong_alert_candidates_count": sum(1 for item in candidates if item.get("alert_strength") == "STRONG_ALERT"),
+        "candidates_before_market_signal_dedupe": int(
+            filter_diagnostics.get("candidates_before_market_signal_dedupe", len(candidates))
+        ),
+        "candidates_after_market_signal_dedupe": int(
+            filter_diagnostics.get("candidates_after_market_signal_dedupe", len(candidates))
+        ),
+        "status_counts_before_dedupe": filter_diagnostics.get("status_counts_before_dedupe", status_counts_for(candidates)),
+        "status_counts_after_dedupe": filter_diagnostics.get("status_counts_after_dedupe", status_counts_for(candidates)),
+        "sendable_hard_filter_pass_count": int(filter_diagnostics.get("sendable_hard_filter_pass_count", 0)),
+        "sendable_hard_filter_fail_count": int(filter_diagnostics.get("sendable_hard_filter_fail_count", 0)),
+        "sendable_hard_filter_denominator": int(filter_diagnostics.get("sendable_hard_filter_denominator", 0)),
+        "original_sendable_alerts_count": int(filter_diagnostics.get("original_sendable_alerts_count", len(urgent_alerts))),
+        "calibrated_promotions_count": int(filter_diagnostics.get("calibrated_promotions_count", 0)),
         "duplicate_market_signals_suppressed": sum(
             1 for item in candidates if item.get("duplicate_reason") == "market_signal_duplicate"
         ),
@@ -243,7 +305,82 @@ def build_alert_funnel(
             or "unknown_pattern_blocker_active" in item.get("failed_alert_conditions", [])
         ),
         "failure_counts": count_sendable_failures(candidates),
+        "blocked_alert_first_blocking_failure_counts": blocker_diagnostics["first_blocking_failure_counts"],
+        "blocked_alert_sendable_failure_counts": blocker_diagnostics["sendable_alert_failure_counts"],
+        "blocked_alert_metric_stats": blocker_diagnostics["metric_stats"],
+        "blocked_alert_organic_confidence_distribution": blocker_diagnostics[
+            "organic_confidence_distribution"
+        ],
     }
+
+
+def status_counts_for(rows: list[dict[str, Any]], *, field: str = "status") -> dict[str, int]:
+    return dict(sorted(Counter(str(item.get(field, "UNKNOWN")) for item in rows).items()))
+
+
+def sendable_blocker_diagnostics(candidates: list[dict[str, Any]]) -> dict[str, Any]:
+    blocked_alerts = [
+        item
+        for item in candidates
+        if item.get("status") == "ALERT"
+        and not (item.get("send_regular_alert") is True and item.get("alert_stage") == "SENDABLE_ALERT")
+    ]
+    first_counts = Counter(str(item.get("first_blocking_failure") or "none") for item in blocked_alerts)
+    failure_counts = Counter(
+        str(failure)
+        for item in blocked_alerts
+        for failure in item.get("sendable_alert_failures", [])
+    )
+    organic_counts = Counter(str(item.get("organic_confidence") or "unknown") for item in blocked_alerts)
+    metric_fields = (
+        "sendable_alert_score",
+        "opportunity_score",
+        "trend_confidence_score",
+        "team_fit_score",
+        "data_quality_score",
+        "classification_confidence_avg",
+        "mvp_feasibility_score",
+        "top_app_share",
+        "top3_app_share",
+        "growth_by_one_app_share",
+        "advertised_top_app_share",
+    )
+    result = {
+        "first_blocking_failure_counts": dict(sorted(first_counts.items())),
+        "sendable_alert_failure_counts": dict(sorted(failure_counts.items())),
+        "organic_confidence_distribution": dict(sorted(organic_counts.items())),
+        "metric_stats": {
+            field: metric_stats([float(item.get(field, 0.0)) for item in blocked_alerts if item.get(field) not in (None, "")])
+            for field in metric_fields
+        },
+    }
+    result["metric_stats"]["organic_confidence_numeric"] = metric_stats(
+        [organic_confidence_numeric(item.get("organic_confidence")) for item in blocked_alerts]
+    )
+    return result
+
+
+def organic_confidence_numeric(value: Any) -> float:
+    return {"LOW": 0.0, "MEDIUM": 50.0, "HIGH": 100.0}.get(str(value or "").upper(), 0.0)
+
+
+def metric_stats(values: list[float]) -> dict[str, float | None]:
+    if not values:
+        return {"avg": None, "p50": None, "p75": None, "p90": None}
+    ordered = sorted(values)
+    return {
+        "avg": round(sum(ordered) / len(ordered), 4),
+        "p50": round(percentile(ordered, 0.50), 4),
+        "p75": round(percentile(ordered, 0.75), 4),
+        "p90": round(percentile(ordered, 0.90), 4),
+    }
+
+
+def percentile(ordered_values: list[float], fraction: float) -> float:
+    if not ordered_values:
+        return 0.0
+    index = min(max(int(round((len(ordered_values) - 1) * fraction)), 0), len(ordered_values) - 1)
+    return ordered_values[index]
 
 
 def count_sendable_failures(candidates: list[dict[str, Any]]) -> dict[str, int]:

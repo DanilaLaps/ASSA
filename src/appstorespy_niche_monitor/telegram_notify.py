@@ -224,18 +224,29 @@ def format_run_summary_message(result: dict[str, Any]) -> str:
         f"Apps checked: {result.get('apps_count')}\n"
         f"Niche summaries: {result.get('summaries_count')}\n"
         f"ALERT candidates: {result.get('alerts_count')}\n"
+        f"STRONG_ALERT candidates: {result.get('strong_alert_candidates_count', 0)}\n"
         f"SENDABLE alerts: {result.get('sendable_alerts_count', result.get('sent_count', 0))}\n"
         f"WATCH candidates: {result.get('watch_count')}\n"
+        f"SINGLE_APP_WATCH candidates: {result.get('single_app_watch_count', 0)}\n"
         f"NEAR_MISS candidates: {result.get('near_miss_count')}\n"
         f"Rejected candidates: {result.get('rejected_count')}\n"
+        f"Candidates before market-signal dedupe: {result.get('candidates_before_market_signal_dedupe', 0)}\n"
+        f"Candidates after market-signal dedupe: {result.get('candidates_after_market_signal_dedupe', 0)}\n"
+        f"Status counts before dedupe: {format_compact_counts(result.get('status_counts_before_dedupe', {}))}\n"
+        f"Status counts after dedupe: {format_compact_counts(result.get('status_counts_after_dedupe', {}))}\n"
         f"Duplicate market signals suppressed: {result.get('duplicate_market_signals_suppressed', 0)}\n"
         f"Cooldown blocked: {result.get('cooldown_blocked_count', 0)}\n"
         f"Limit blocked: {result.get('limit_blocked_count', 0)}\n"
+        "Sendable hard-filter pass/fail: "
+        f"{result.get('sendable_hard_filter_pass_count', 0)}/"
+        f"{result.get('sendable_hard_filter_fail_count', 0)}\n"
+        f"Calibrated promotions: {result.get('calibrated_promotions_count', 0)}\n"
         f"Mixed unknown clusters: {result.get('mixed_unknown_clusters_count', 0)}\n"
         f"Unknown-dominant clusters: {result.get('unknown_dominant_clusters_count', 0)}\n"
         f"Unknown blocker active: {result.get('unknown_blocker_active_count', 0)}\n"
         "Candidates blocked by unknown_pattern_blocker_active: "
         f"{result.get('unknown_pattern_blocker_active_blocked_count', 0)}\n"
+        f"Sendable blockers: {format_top_counts(result.get('top_first_blocking_failures', {}), limit=10)}\n"
         f"Baseline only: {baseline}\n"
         f"{llm_line}\n\n"
         f"{status}"
@@ -253,6 +264,19 @@ def format_result_llm_status(result: dict[str, Any]) -> str:
     if llm_status.get("fallback_reason"):
         parts.append(f"fallback_reason={llm_status.get('fallback_reason')}")
     return f"LLM review: {', '.join(parts)}"
+
+
+def format_compact_counts(value: Any) -> str:
+    if not isinstance(value, dict) or not value:
+        return "none"
+    return ", ".join(f"{key}={value[key]}" for key in sorted(value))
+
+
+def format_top_counts(value: Any, *, limit: int) -> str:
+    if not isinstance(value, dict) or not value:
+        return "none"
+    items = sorted(value.items(), key=lambda item: (-int(item[1]), str(item[0])))[:limit]
+    return ", ".join(f"{key}={count}" for key, count in items)
 
 
 def send_run_summary(result: dict[str, Any], config: dict[str, Any]) -> bool:
