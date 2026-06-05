@@ -1906,7 +1906,7 @@
     "total_daily_installs": 1318423,
     "avg_daily_installs": 4019.58,
     "median_daily_installs": 1477.5,
-    "total_monthly_downloads": 12213000,
+    "total_monthly_downloads": 12243000,
     "total_monthly_revenue": 6616000.0,
     "avg_rating": 4.26,
     "rating_count_total": 0,
@@ -2279,8 +2279,8 @@
     "total_daily_installs": 337269,
     "avg_daily_installs": 3747.43,
     "median_daily_installs": 1334.0,
-    "total_monthly_downloads": 4577000,
-    "total_monthly_revenue": 176000.0,
+    "total_monthly_downloads": 4607000,
+    "total_monthly_revenue": 186000.0,
     "avg_rating": 4.36,
     "rating_count_total": 0,
     "rating_confidence": 0.0,
@@ -3730,7 +3730,7 @@
     "total_daily_installs": 3234026,
     "avg_daily_installs": 7366.8,
     "median_daily_installs": 1673.0,
-    "total_monthly_downloads": 43101000,
+    "total_monthly_downloads": 43102000,
     "total_monthly_revenue": 652000.0,
     "avg_rating": 4.31,
     "rating_count_total": 0,
@@ -4391,7 +4391,7 @@
     "total_daily_installs": 3037142,
     "avg_daily_installs": 8034.77,
     "median_daily_installs": 1695.0,
-    "total_monthly_downloads": 47910000,
+    "total_monthly_downloads": 47911000,
     "total_monthly_revenue": 7263000.0,
     "avg_rating": 4.32,
     "rating_count_total": 0,
@@ -6132,8 +6132,8 @@
     "alert_instance_id": "2026-06-05:b05499cb302c2a81",
     "status": "ALERT",
     "failed_alert_conditions": [],
-    "llm_summary": "A MVP focused on classic tile matching with simple, large clear tiles, calming UX for seniors, and a single progression loop with levels. Incorporate offline play and gentle supportive power-ups (hints/shuffles) to reduce frustration.",
-    "send_regular_alert": true,
+    "llm_summary": null,
+    "send_regular_alert": false,
     "initial_baseline_digest": false,
     "would_be_status": null,
     "exclude_from_cooldown": false,
@@ -6141,63 +6141,8 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "passed"
-    ],
-    "llm_analysis": {
-      "recommendation": "WATCH",
-      "confidence": "medium",
-      "why_interesting": "The Mahjong niche on Google Play shows strong fresh demand with a cluster of 51 new apps releasing within the last 180 days. Top apps achieve solid daily installs (avg ~6k), and the niche features a low MVP complexity fitting small teams. Notably, competition is diversified with low giant developer share (10%), indicating opportunity for smaller studios. Apps show no ads or IAPs in top listings, suggesting opportunity for better monetization strategies.",
-      "why_might_be_false_positive": "Data quality is moderate (83%), but rating signals are weak, likely due to low review counts. The classification confidence is only around 0.69 with some low-confidence risk tags. There is no strong proven monetization or paid traffic spikes, so traction may be organic but early. Some top apps have no monetization, which might limit revenue potential. Mahjong has many existing apps, so standing out can be hard.",
-      "mvp_hypothesis": "A MVP focused on classic tile matching with simple, large clear tiles, calming UX for seniors, and a single progression loop with levels. Incorporate offline play and gentle supportive power-ups (hints/shuffles) to reduce frustration.",
-      "simplified_mvp_scope": "Classic Mahjong solitaire with 100-200 hand-crafted levels, offline play, large tile art for older players, hint and shuffle mechanics, with no multiplayer or heavy monetization initially.",
-      "competitor_takeaways": "Top competitors avoid ads and IAPs; focus on calm and easy gameplay targeted at seniors and casual puzzle players. Monetization is negligible, which may indicate user preference for ad-free experience or weak monetization. A clear, pleasant UI and strong daily challenge systems are used for retention.",
-      "entry_angle": "Focus on accessibility (senior-friendly UI), offline capabilities, and clean, calming visuals. Potentially explore light monetization via optional hints or mild IAPs. Partnering with brain training or wellness positioning could add differentiation.",
-      "differentiation_idea": "Add soft ambient sounds, themed daily challenges, or mood-based puzzles (day/night modes) tailored for stress relief; integrate light brain training elements and a progression story themed on cultural Mahjong tales.",
-      "why_top_products_validate_or_weaken_signal": "Top products validate steady downloads but lack monetization, weakening strong revenue potential. Their strong fresh installs and no ads/IAP approach support a need for a focused, calm Mahjong experience.",
-      "validation_steps": "Manual UX review of top apps, player retention metrics, study monetization performance in similar titles, A/B test monetization on minimal viable versions. Survey target seniors about UX preferences.",
-      "risk_notes": "Low rating confidence, uncertain monetization, moderate to high competitive density, risk of stagnant audience growth if not differentiated, low data on actual player engagement.",
-      "missing_data": "Rating counts and detailed monetization revenue, retention and session length data, ASO/title analysis, player sentiment from reviews.",
-      "manual_review_needed": true,
-      "summary": "mahjong is a TEST candidate in this single-query AppStoreSpy slice.",
-      "signal": "diversified_apps, fresh_traction, growing_vs_previous_snapshot",
-      "evidence": [
-        "diversified_apps",
-        "fresh_traction",
-        "growing_vs_previous_snapshot"
-      ],
-      "entry_realism": "MVP feasibility score is 85.0.",
-      "mvp": "Test a scoped match game with abstract presentation.",
-      "monetization": "Validate ads/IAP/revenue signals before production.",
-      "risks": [
-        "classifier_low_confidence",
-        "unknown_coverage",
-        "weak_rating_signal"
-      ],
-      "checks": [
-        "Check top apps manually in AppStoreSpy and stores.",
-        "Confirm the signal is not paid traffic."
-      ]
-    },
-    "llm_analysis_source": "openai",
-    "llm_status": {
-      "analysis_source": "openai",
-      "should_call_openai": true,
-      "fallback_reason": null,
-      "requested": true,
-      "enabled": true,
-      "api_key_present": true,
-      "api_key_env": "OPENAI_API_KEY",
-      "model": "gpt-4.1-mini",
-      "model_env": "OPENAI_MODEL",
-      "candidate_counts": {
-        "alerts": 3,
-        "watch": 10,
-        "near_misses": 20,
-        "initial_baseline_digest": 0
-      },
-      "openai_candidate_analyses_count": 8,
-      "fallback_filled_candidate_analyses_count": 25
-    }
+      "cooldown"
+    ]
   },
   {
     "snapshot_date": "2026-06-05",
@@ -6485,7 +6430,7 @@
     "total_daily_installs": 1357184,
     "avg_daily_installs": 5726.51,
     "median_daily_installs": 1575.0,
-    "total_monthly_downloads": 15882000,
+    "total_monthly_downloads": 15932000,
     "total_monthly_revenue": 3594000.0,
     "avg_rating": 4.21,
     "rating_count_total": 0,
@@ -6707,7 +6652,295 @@
     "alert_instance_id": "2026-06-05:f6765f8ba920dcf1",
     "status": "ALERT",
     "failed_alert_conditions": [],
-    "llm_summary": "Test a scoped collect game with abstract presentation.",
+    "llm_summary": null,
+    "send_regular_alert": false,
+    "initial_baseline_digest": false,
+    "would_be_status": null,
+    "exclude_from_cooldown": false,
+    "history_state": "HISTORY_AVAILABLE",
+    "first_run_without_history": false,
+    "confidence_level": "MEDIUM",
+    "alert_filter_reasons": [
+      "cooldown"
+    ]
+  },
+  {
+    "snapshot_date": "2026-06-05",
+    "score_version": "v1.3.2",
+    "platform": "google_play",
+    "niche": "idle tycoon",
+    "normalized_niche": "idle_tycoon",
+    "market_category": "simulation",
+    "core_mechanic": "idle",
+    "theme": "home",
+    "meta": "none",
+    "audience": "unknown",
+    "audience_summary": "unknown:3, broad:1, women_25_45:1",
+    "production_complexity": "medium",
+    "full_product_complexity": "medium",
+    "mvp_complexity": "medium",
+    "mvp_feasibility_score": 65.0,
+    "simplifiable": true,
+    "simplification_idea": "Focus the MVP on idle gameplay with a narrow home theme and one progression loop.",
+    "group_key_type": "core_mechanic_theme",
+    "group_key_value": "idle::home",
+    "group_key": "core_mechanic_theme::idle::home",
+    "signal_signature": "idle_tycoon::simulation::idle::home::none",
+    "release_date_window": "last_180d",
+    "source_scope": "single_appstorespy_query_no_country_language",
+    "collection_sort": "-release_date",
+    "min_app_daily_installs": 500,
+    "source_query": {
+      "limit": 10000,
+      "page": 1,
+      "sort": "-release_date",
+      "release_date_days_back": 180,
+      "min_downloads_daily": 500,
+      "requested_country": null,
+      "requested_language": null,
+      "requested_active_countries": null
+    },
+    "coverage": {
+      "total_count": null,
+      "result_count": 4867,
+      "sample_truncated": "unknown",
+      "coverage_ratio": null,
+      "full_window_claim_allowed": false
+    },
+    "app_count": 5,
+    "app_ids": [
+      "com.lumberjack.driver",
+      "com.n2pge.wm",
+      "com.redveilone.vardian",
+      "com.waterpark.empire.fun.simulator.game",
+      "com.weup.bad.monkey.house.prankster"
+    ],
+    "total_daily_installs": 36237,
+    "avg_daily_installs": 7247.4,
+    "median_daily_installs": 8875.0,
+    "total_monthly_downloads": 406000,
+    "total_monthly_revenue": 39000.0,
+    "avg_rating": 3.9,
+    "rating_count_total": 0,
+    "rating_confidence": 0.0,
+    "successful_new_apps_count": 5,
+    "traction_fresh_apps_count": 1,
+    "top_app_share": 0.4158,
+    "growth_by_one_app_share": 0.6423,
+    "advertised_top_app_share": 0.0,
+    "giant_developer_share": 0.0,
+    "single_developer_share": 0.4158,
+    "classification_confidence_avg": 0.628,
+    "unknown_or_new_pattern_cluster": true,
+    "top_apps": [
+      {
+        "app_id": "com.lumberjack.driver",
+        "bundle": "com.lumberjack.driver",
+        "name": "Lumberjack Driver",
+        "developer_name": "Skyloft Yazılım Bilişim ve Anonim Şirketi",
+        "developer_id": "7183118085303419603",
+        "category": "GAME_SIMULATION",
+        "category_type": "GAME",
+        "downloads_daily": 15066,
+        "downloads_month": 200000,
+        "downloads_exact": 514323,
+        "downloads_mark": "500000",
+        "revenue_month": 9000.0,
+        "rating_avg": 4.2,
+        "rating_count": 0,
+        "review_count": 102,
+        "release_date": "2026-03-19",
+        "update_date": "2026-05-14",
+        "iap": true,
+        "advertised": false,
+        "ads": false,
+        "icon": "https://lh3.googleusercontent.com/guD8QdoBgtjLhhXKKV5LbsfyhVOsOqMvMnCUp8PxgpkyhRzCjeU-eAFIF8GYKRBH7x0p8mLn5XtJ_zOtFj4S=h300",
+        "screenshots": [],
+        "description_short": "Build your lumber empire! Cut, process wood, and deliver logs.",
+        "description_excerpt": "Welcome to Lumberjack Driver — a unique simulation and tycoon game where you cut trees, transport logs, and help build entire towns.<br><br>Step into the role of a lumberjack driver and take control of your growing wood business. Cut trees in the forest, load logs onto your vehicle, and deliver them to sawmills, construction sites, and nearby settlements.<br><br>Process raw timber into useful materials and support the development of expanding towns. Your deliveries are essential — wood is needed to build houses, upgrade infrastructure, and unlock new areas.<br><br>Take on a variety of jobs and contracts. From simple log deliveries to complex supply chains, each mission helps you grow your business and progress further. Manage your time, plan routes, and optimize logistics to maximize efficiency.<br><br>Earn money, upgrade your vehicles, and improve your production systems. Unlock new tools, automate parts of your workflow, and scale your operation into a powerful lumber tycoon empire.<br><br>Lumberjack Driver combines woodcutting, transport, and business management into one satisfying gameplay loop: cut, process, deliver, and build.<br><br>Features:<br>Cut trees and manage your...",
+        "url_appstorespy": "https://appstorespy.com/android-google-play/com.lumberjack.driver-trends-revenue-statistics-downloads-ratings",
+        "url": "https://play.google.com/store/apps/details?id=com.lumberjack.driver",
+        "website": "https://skyloftgaming.com/"
+      },
+      {
+        "app_id": "com.weup.bad.monkey.house.prankster",
+        "bundle": "com.weup.bad.monkey.house.prankster",
+        "name": "Tricky Monkey: House Prankster",
+        "developer_name": "IDLERO",
+        "developer_id": "5777267680343953517",
+        "category": "GAME_SIMULATION",
+        "category_type": "GAME",
+        "downloads_daily": 10679,
+        "downloads_month": 200000,
+        "downloads_exact": 1422388,
+        "downloads_mark": "1000000",
+        "revenue_month": 0.0,
+        "rating_avg": 3.6,
+        "rating_count": 0,
+        "review_count": 7,
+        "release_date": "2026-02-09",
+        "update_date": "2026-05-29",
+        "iap": false,
+        "advertised": false,
+        "ads": false,
+        "icon": "https://lh3.googleusercontent.com/foiP7a7ZPaQ_KiFdBQocizMZnR5eyf0mXypM_Pml-JgeFScTr7fYu90f7h26IcT8eG8KHzfhTEs90gCRs0AgtQ=h300",
+        "screenshots": [],
+        "description_short": "Be the naughty monkey who loves messing up and playing prank!",
+        "description_excerpt": "Tricky Monkey: House Prankster is a hilarious simulator where you play as a naughty monkey causing chaos around the house. <br>Climb walls, fences, and furniture, 🥊 punch and kick humans, 🖍️mess up with every objects, and knock things over just for fun. Every area is packed with playful interactions waiting to be messed with.<br><br>GAMEPLAY:<br>🐾 Move around the house and explore different rooms<br>🎯 Choose objects and set up funny pranks <br>👀 Watch out for humans and avoid their sight<br>🫣 Run fast to escape when they get close<br>⭐ Unlock new tricks, upgrades, and prank-skill levels as you progress<br><br>GAME FEATURES:<br>🐒 Play as a chaotic, prank-loving monkey<br>🏠 Large interactive areas from outdoor yard to indoor rooms<br>😂 Funny reactions and cartoon-style animations<br>🎮 Stunning graphics and animation: Deliver an extraordinary experience<br>🕹️ Smooth controls and easy gameplay <br><br>Ready to become the naughtiest monkey in the town? <br>Download Tricky Monkey: House Prankster and enjoy laugh-out-loud moments as the ultimate prank-loving monkey now!",
+        "url_appstorespy": "https://appstorespy.com/android-google-play/com.weup.bad.monkey.house.prankster-trends-revenue-statistics-downloads-ratings",
+        "url": "https://play.google.com/store/apps/details?id=com.weup.bad.monkey.house.prankster",
+        "website": "https://bazooka.vn"
+      },
+      {
+        "app_id": "com.n2pge.wm",
+        "bundle": "com.n2pge.wm",
+        "name": "Wrestling Manager",
+        "developer_name": "Now to Play Game Entertainment S.L.",
+        "developer_id": "7769756869851676105",
+        "category": "GAME_ROLE_PLAYING",
+        "category_type": "GAME",
+        "downloads_daily": 8875,
+        "downloads_month": 0,
+        "downloads_exact": 25997,
+        "downloads_mark": "10000",
+        "revenue_month": 0.0,
+        "rating_avg": 0.0,
+        "rating_count": 0,
+        "review_count": 0,
+        "release_date": "2026-05-27",
+        "update_date": "2026-05-27",
+        "iap": true,
+        "advertised": false,
+        "ads": false,
+        "icon": "https://lh3.googleusercontent.com/RuygIS0Avitv-WRAmRwN8WUxPu3XjXaTleDPv9jG1805hjOlNzhlmmGLh4kKU2PP7UhMEdxQg5lEQ_Ma1a8D2Ys=h300",
+        "screenshots": [],
+        "description_short": "Manage your wrestling promotion, train stars, and host epic matches!",
+        "description_excerpt": "Manage Your Wrestling Promotion and Become a Wrestling Tycoon!<br><br>Step into the world of high-energy wrestling entertainment! Build your own wrestling promotion from the ground up—recruit powerful fighters, train rising stars, and host electrifying matches that draw massive crowds. Grow your fanbase, maximize your profits, and dominate the wrestling business!<br><br>-GAME FEATURE-<br>▸Manage Your Wrestling Promotion<br>Build and expand your wrestling business. Upgrade facilities, plan events, and turn your promotion into a global powerhouse.<br><br>▸Recruit Top Wrestlers<br>Sign elite wrestlers from around the world. Each fighter brings unique strength and style—assemble your ultimate roster.<br><br>▸Train Your Stars<br>Develop your wrestlers with intense training. Improve strength, speed, and skills to create unstoppable champions.<br><br>▸Host Epic Matches<br>Book thrilling matches and entertain the crowd. The bigger the show, the higher your rewards!<br><br>▸Upgrade Your Arena<br>Enhance your arena with futuristic tech, neon lights, and advanced facilities to boost revenue and fan engagement.<br><br>The ring is calling. The crowd is waiting.<br>Build your empire, create l...",
+        "url_appstorespy": "https://appstorespy.com/android-google-play/com.n2pge.wm-trends-revenue-statistics-downloads-ratings",
+        "url": "https://play.google.com/store/apps/details?id=com.n2pge.wm",
+        "website": "http://wmm.gamehollywood.com"
+      },
+      {
+        "app_id": "com.waterpark.empire.fun.simulator.game",
+        "bundle": "com.waterpark.empire.fun.simulator.game",
+        "name": "Water Park: Empire Simulator",
+        "developer_name": "SMD LINKS",
+        "developer_id": "5454756663307141058",
+        "category": "GAME_SIMULATION",
+        "category_type": "GAME",
+        "downloads_daily": 1091,
+        "downloads_month": 0,
+        "downloads_exact": 492057,
+        "downloads_mark": "100000",
+        "revenue_month": 0.0,
+        "rating_avg": 0.0,
+        "rating_count": 0,
+        "review_count": 0,
+        "release_date": "2026-02-13",
+        "update_date": "2026-05-11",
+        "iap": true,
+        "advertised": false,
+        "ads": false,
+        "icon": "https://lh3.googleusercontent.com/IqbCzYv35aAYAbSqAEGSG54Zw5sedDVh2c2AaIkfPgKCQz7JDohK0nL1vJfpIaWQUGZc_R7_c2QNqsKAFeiv=h300",
+        "screenshots": [],
+        "description_short": "Park: Empire Simulator – Build epic slides, thrill guests, and grow your empire.",
+        "description_excerpt": "Water Park: Empire Simulator — Build, Manage & Rule Your Ultimate Water Park!<br><br>Welcome to Water Park: Empire Simulator, the most exciting and addictive park-building simulation game! Design and manage your very own water park empire from the ground up. Build thrilling slides, awesome pools, and fun attractions that keep visitors coming back for more!<br><br>In this immersive simulation experience, you’ll:<br><br>🏖️ Design Your Dream Water Park — Place rides, pools, walkways, and decorations to create the perfect attraction land.<br>👨‍👩‍👧‍👦 Attract Happy Guests — Keep your customers smiling by providing amazing experiences, flattering scenery, and smooth park flow.<br>💧 Build Incredible Rides — Unlock and upgrade water slides, lazy rivers, splash pads, wave pools, and more!<br>💼 Manage & Expand — Balance your budget, hire staff, set prices, and grow your park into a world-class destination.<br>🎯 Complete Fun Missions — Take on daily challenges and special tasks to earn rewards and unlock premium features.<br>🚀 Grow Your Empire — Expand into new areas, improve your facilities, and become the top water park tycoon!<br><br>Whether you’re a fan of sim games, tycoon games, or ca...",
+        "url_appstorespy": "https://appstorespy.com/android-google-play/com.waterpark.empire.fun.simulator.game-trends-revenue-statistics-downloads-ratings",
+        "url": "https://play.google.com/store/apps/details?id=com.waterpark.empire.fun.simulator.game",
+        "website": "https://theplaymaxgroup.com/"
+      },
+      {
+        "app_id": "com.redveilone.vardian",
+        "bundle": "com.redveilone.vardian",
+        "name": "바르디안: Vardian",
+        "developer_name": "REDVEILONE",
+        "developer_id": "7466937539825175847",
+        "category": "GAME_ROLE_PLAYING",
+        "category_type": "GAME",
+        "downloads_daily": 526,
+        "downloads_month": 6000,
+        "downloads_exact": 10385,
+        "downloads_mark": "10000",
+        "revenue_month": 30000.0,
+        "rating_avg": 0.0,
+        "rating_count": 0,
+        "review_count": 0,
+        "release_date": "2026-05-21",
+        "update_date": "2026-06-04",
+        "iap": true,
+        "advertised": false,
+        "ads": false,
+        "icon": "https://lh3.googleusercontent.com/eDBGDu3LB8XJ_V0r8kF1WdpXrhHgmXVPBy4hHNEjzcSTXVRAXiPg7j2BO1bxr4iUPkfhzZP6TxyxfLtu6kX8Hg=h300",
+        "screenshots": [],
+        "description_short": "A pixel idle RPG with console-like immersion",
+        "description_excerpt": "아무도 끝을 보지 못한 툼 대륙의 미궁.<br>미궁을 탐사하는 당신에게 예측할 수 없는 사건들과 숨겨진 진실이 드러난다!<br><br>✨ 게임 특징 ✨<br><br>📖 콘솔 감성 스토리!<br>툼 대륙을 무대로 펼쳐지는, 뻔하지 않은 몰입감 넘치는 서사.<br>방치형 게임의 한계를 넘어선 진한 여운과 감동을 레트로 픽셀 그래픽으로 만나보세요.<br><br>⚔️ 극강의 컨트롤 재미!<br>거대 보스의 패턴을 박살 내는 수동 컨트롤의 쾌감을 느껴보세요.<br>무기와 스킬을 조합하여 나만의 공략을 만들어 보세요.<br><br>🗺️ 늘 짜릿하고 새로운 지하 미궁!<br>숨겨진 방, 비밀 보물상자, 그리고 긴장의 끈을 놓을 수 없는 돌발 상황까지!<br>진짜 모험을 즐겨보세요.<br><br>📈 쉽고 빠른 방치 성장!<br>복잡하고 피곤한 조작 없이도 성장은 빠르고 시원하게!<br>게임에 접속하지 않고 있어도 보상이 쌓입니다.<br>바쁜 일상 속에서도 쉽고 빠른 캐릭터 육성의 재미를 느껴보세요.<br><br>🏰 공식 커뮤니티<br>공식 라운지 : https://game.naver.com/lounge/Vardian/home <br><br>방치형의 재미와 스토리의 감동을 모두 담은 '바르디안'을 지금 다운로드하고,<br>전설적인 이야기를 직접 써내려가 보세요!<br>----<br>개발자 연락처 :<br>(주)레드베일원 대한민국 서울특별시 성동구<br>성동구 아차산로 38, 2층 219호(성수동1가, 개풍빌딩)<br>04779 233-88-03565 제2026-서울성동-0592호 서울특별시 성동구청",
+        "url_appstorespy": "https://appstorespy.com/android-google-play/com.redveilone.vardian-trends-revenue-statistics-downloads-ratings",
+        "url": "https://play.google.com/store/apps/details?id=com.redveilone.vardian",
+        "website": "https://redveilone.com/"
+      }
+    ],
+    "has_history": true,
+    "history_depth_days": 1,
+    "weekly_growth_percent": 38.91,
+    "monthly_growth_percent": 38.91,
+    "previous_total_daily_installs": 26086,
+    "data_quality_score": 81.48,
+    "data_quality_components": {
+      "field_completeness": 35.0,
+      "history_depth": 5.0,
+      "sample_size": 20.0,
+      "signal_diversity": 13.48,
+      "monetization_reliability": 10.0,
+      "fresh_success_reliability": 10.0,
+      "penalty": 12.0
+    },
+    "data_quality_reasons": [
+      "classifier_low_confidence",
+      "unknown_coverage"
+    ],
+    "monetization_signal": {
+      "iap_present": true,
+      "ads_present": false,
+      "revenue_month_available": true,
+      "revenue_confidence": "high",
+      "monetization_model": "iap"
+    },
+    "score_components": {
+      "demand": 25,
+      "freshness": 15,
+      "revenue_monetization": 13.77,
+      "rating": 0.0,
+      "mvp_feasibility": 9.75,
+      "data_quality": 16.3,
+      "competition_penalty": 1.25,
+      "giant_risk_penalty": 0.0,
+      "paid_spike_penalty": 0.0
+    },
+    "opportunity_score": 78.57,
+    "risk_tags": [
+      "audience_uncertain",
+      "classifier_low_confidence",
+      "unknown_coverage",
+      "weak_rating_signal"
+    ],
+    "reason_codes": [
+      "diversified_apps",
+      "fresh_traction",
+      "growing_vs_previous_snapshot",
+      "historical_growth",
+      "low_giant_share",
+      "monetization_signal_present",
+      "multi_app_cluster",
+      "new_pattern_detected",
+      "strong_daily_installs"
+    ],
+    "severe_paid_spike_risk": false,
+    "candidate_id": "2026-06-05:e4c7fbc08bd97b5b:core_mechanic_theme",
+    "dedupe_key": "e4c7fbc08bd97b5b",
+    "alert_instance_id": "2026-06-05:e4c7fbc08bd97b5b",
+    "status": "ALERT",
+    "failed_alert_conditions": [],
+    "llm_summary": "Focus on one idle gameplay loop centered around home-related resource generation/upgrading, without complex multi-loop systems, allowing for simplification and faster development.",
     "send_regular_alert": true,
     "initial_baseline_digest": false,
     "would_be_status": null,
@@ -6719,53 +6952,33 @@
       "passed"
     ],
     "llm_analysis": {
-      "recommendation": "TEST",
-      "confidence": "high",
-      "why_interesting": [
-        "diversified_apps",
-        "fresh_traction",
-        "growing_vs_previous_snapshot"
-      ],
-      "why_might_be_false_positive": [
-        "classifier_low_confidence",
-        "high_full_complexity",
-        "unknown_coverage",
-        "weak_rating_signal"
-      ],
-      "mvp_hypothesis": "Test a scoped collect game with abstract presentation.",
-      "simplified_mvp_scope": "One core loop, one content theme, lightweight meta progression.",
-      "competitor_takeaways": [
-        "Top products captured in the niche: God of Cricket, Tricky Story 2: Brain Twist, Car Driving City: StreetPro."
-      ],
-      "entry_angle": "Use the same validated collect demand but narrow scope, theme, and content depth.",
-      "differentiation_idea": "Differentiate with clearer first-session UX, lighter content production, and distinct store creatives.",
+      "recommendation": "WATCH",
+      "confidence": "medium",
+      "why_interesting": "Strong fresh demand in idle tycoon niche with a home theme, good daily installs (~36k total, top app 15k daily), no giant developer share, and monetization signals present. Top apps like Lumberjack Driver show solid engagement and revenue (~$9k/month). The theme has medium production complexity and is simplifiable for MVP focus on idle gameplay and one progression loop.",
+      "why_might_be_false_positive": "Audience is unknown/uncertain with weak rating signals (no rating counts for top apps). Classification confidence is moderate, and no direct user reviews or revenue history that fully confirms sustainability. Some apps lack ads but have IAPs only.",
+      "mvp_hypothesis": "Focus on one idle gameplay loop centered around home-related resource generation/upgrading, without complex multi-loop systems, allowing for simplification and faster development.",
+      "simplified_mvp_scope": "Idle mechanics for home-themed progression loop with basic resource upgrades and automation features only.",
+      "competitor_takeaways": "Top apps avoid ads, rely on IAPs; focus on specific themes (lumber, prankster monkey as house chaos) shows theme diversity; competing apps use well-optimized idle sim mechanics mixing task management and incremental growth.",
+      "entry_angle": "Narrow home-themed idle tycoon focusing on unique resource or story element missing from Lumberjack Driver or Tricky Monkey (e.g., deeper home customization or different home-related business).",
+      "differentiation_idea": "Blend idle tycoon mechanics with a subtle narrative or unique automation/strategy element (e.g., logistic challenges, home tech upgrades) to stand out without direct clash with existing top apps.",
       "why_top_products_validate_or_weaken_signal": "The top products help validate demand, but concentration, ads, and giant-developer exposure still need manual checks.",
-      "validation_steps": [
-        "Check top apps manually in AppStoreSpy and stores.",
-        "Separate organic traction from paid acquisition.",
-        "Review creatives and monetization signals before production."
-      ],
-      "risk_notes": [
-        "classifier_low_confidence",
-        "high_full_complexity",
-        "unknown_coverage",
-        "weak_rating_signal"
-      ],
-      "missing_data": [],
-      "manual_review_needed": false,
-      "summary": "other is a TEST candidate in this single-query AppStoreSpy slice.",
+      "validation_steps": "Manual check actual rating reviews, gameplay videos, and community feedback; assess monetization sustainability and user retention; track daily install trends over next 1-2 weeks to confirm stability.",
+      "risk_notes": "Audience uncertainty and weak rating signals confer risk; potential niche saturation with 5 active apps; moderate complexity may delay MVP.",
+      "missing_data": "No detailed user rating counts at scale to confirm player sentiment; limited demographic data on audience preferences.",
+      "manual_review_needed": true,
+      "summary": "idle_tycoon is a TEST candidate in this single-query AppStoreSpy slice.",
       "signal": "diversified_apps, fresh_traction, growing_vs_previous_snapshot",
       "evidence": [
         "diversified_apps",
         "fresh_traction",
         "growing_vs_previous_snapshot"
       ],
-      "entry_realism": "MVP feasibility score is 70.02.",
-      "mvp": "Test a scoped collect game with abstract presentation.",
+      "entry_realism": "MVP feasibility score is 65.0.",
+      "mvp": "Test a scoped idle game with home presentation.",
       "monetization": "Validate ads/IAP/revenue signals before production.",
       "risks": [
+        "audience_uncertain",
         "classifier_low_confidence",
-        "high_full_complexity",
         "unknown_coverage",
         "weak_rating_signal"
       ],
@@ -6774,7 +6987,7 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback_missing_from_openai",
+    "llm_analysis_source": "openai",
     "llm_status": {
       "analysis_source": "openai",
       "should_call_openai": true,
@@ -6787,14 +7000,13 @@
       "model_env": "OPENAI_MODEL",
       "candidate_counts": {
         "alerts": 3,
-        "watch": 10,
-        "near_misses": 20,
+        "watch": 0,
+        "near_misses": 0,
         "initial_baseline_digest": 0
       },
-      "openai_candidate_analyses_count": 8,
-      "fallback_filled_candidate_analyses_count": 25
-    },
-    "llm_fallback_reason": "missing_from_openai_response"
+      "openai_candidate_analyses_count": 3,
+      "fallback_filled_candidate_analyses_count": 0
+    }
   },
   {
     "snapshot_date": "2026-06-05",
@@ -7495,8 +7707,8 @@
     "alert_instance_id": "2026-06-05:c77b7569345fa87e",
     "status": "ALERT",
     "failed_alert_conditions": [],
-    "llm_summary": "Test a scoped match game with home presentation.",
-    "send_regular_alert": true,
+    "llm_summary": null,
+    "send_regular_alert": false,
     "initial_baseline_digest": false,
     "would_be_status": null,
     "exclude_from_cooldown": false,
@@ -7504,87 +7716,8 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "passed"
-    ],
-    "llm_analysis": {
-      "recommendation": "TEST",
-      "confidence": "medium",
-      "why_interesting": [
-        "fresh_traction",
-        "growing_vs_previous_snapshot",
-        "low_giant_share"
-      ],
-      "why_might_be_false_positive": [
-        "classifier_low_confidence",
-        "high_full_complexity",
-        "leader_dominated",
-        "unknown_coverage"
-      ],
-      "mvp_hypothesis": "Test a scoped match game with home presentation.",
-      "simplified_mvp_scope": "One core loop, one content theme, lightweight meta progression.",
-      "competitor_takeaways": [
-        "Top products captured in the niche: Village Craft: Block Building, Evil Doll: Chapter Two, Hello Angry Neighbor Stories 3."
-      ],
-      "entry_angle": "Use the same validated match demand but narrow scope, theme, and content depth.",
-      "differentiation_idea": "Differentiate with clearer first-session UX, lighter content production, and distinct store creatives.",
-      "why_top_products_validate_or_weaken_signal": "The top products help validate demand, but concentration, ads, and giant-developer exposure still need manual checks.",
-      "validation_steps": [
-        "Check top apps manually in AppStoreSpy and stores.",
-        "Separate organic traction from paid acquisition.",
-        "Review creatives and monetization signals before production."
-      ],
-      "risk_notes": [
-        "classifier_low_confidence",
-        "high_full_complexity",
-        "leader_dominated",
-        "unknown_coverage",
-        "weak_rating_signal"
-      ],
-      "missing_data": [],
-      "manual_review_needed": false,
-      "summary": "sandbox is a TEST candidate in this single-query AppStoreSpy slice.",
-      "signal": "fresh_traction, growing_vs_previous_snapshot, low_giant_share",
-      "evidence": [
-        "fresh_traction",
-        "growing_vs_previous_snapshot",
-        "low_giant_share"
-      ],
-      "entry_realism": "MVP feasibility score is 68.8.",
-      "mvp": "Test a scoped match game with home presentation.",
-      "monetization": "Validate ads/IAP/revenue signals before production.",
-      "risks": [
-        "classifier_low_confidence",
-        "high_full_complexity",
-        "leader_dominated",
-        "unknown_coverage",
-        "weak_rating_signal"
-      ],
-      "checks": [
-        "Check top apps manually in AppStoreSpy and stores.",
-        "Confirm the signal is not paid traffic."
-      ]
-    },
-    "llm_analysis_source": "fallback_missing_from_openai",
-    "llm_status": {
-      "analysis_source": "openai",
-      "should_call_openai": true,
-      "fallback_reason": null,
-      "requested": true,
-      "enabled": true,
-      "api_key_present": true,
-      "api_key_env": "OPENAI_API_KEY",
-      "model": "gpt-4.1-mini",
-      "model_env": "OPENAI_MODEL",
-      "candidate_counts": {
-        "alerts": 3,
-        "watch": 10,
-        "near_misses": 20,
-        "initial_baseline_digest": 0
-      },
-      "openai_candidate_analyses_count": 8,
-      "fallback_filled_candidate_analyses_count": 25
-    },
-    "llm_fallback_reason": "missing_from_openai_response"
+      "cooldown"
+    ]
   },
   {
     "snapshot_date": "2026-06-05",
@@ -7908,7 +8041,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -8203,8 +8336,8 @@
     "alert_instance_id": "2026-06-05:b87b66cc43196d0b",
     "status": "ALERT",
     "failed_alert_conditions": [],
-    "llm_summary": null,
-    "send_regular_alert": false,
+    "llm_summary": "Deliver a core match-3 gameplay experience focused on a narrow social environment with a clear, single progression loop of levels and social features.",
+    "send_regular_alert": true,
     "initial_baseline_digest": false,
     "would_be_status": null,
     "exclude_from_cooldown": false,
@@ -8212,8 +8345,64 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
-    ]
+      "passed"
+    ],
+    "llm_analysis": {
+      "recommendation": "WATCH",
+      "confidence": "medium",
+      "why_interesting": "High demand niche with match-3 core mechanic combined with social and level progression meta. Total daily installs solid (~69k total), multiple fresh successful apps (21), and decent monetization signals with $100k total revenue monthly. Simplifiable MVP possible focusing on core match mechanics and social theme.",
+      "why_might_be_false_positive": "High production complexity and only medium MVP feasibility score. Weaker rating signals (no confirmed rating counts). Moderate competition penalty present. Possible classification uncertainty and new pattern detection flags. No giant developers but some competition.",
+      "mvp_hypothesis": "Deliver a core match-3 gameplay experience focused on a narrow social environment with a clear, single progression loop of levels and social features.",
+      "simplified_mvp_scope": "Core match-3 board and level progression only, minimal social features (e.g., friend leaderboards), exclude complex monetization layers.",
+      "competitor_takeaways": "Top apps like Sweety Crush show strong daily installs (~31k) with no ads or IAPs, suggesting viral potential with simple gameplay. Others like Jalsat add social and multi-game elements, indicating opportunity for social matchmaking or combined casual games.",
+      "entry_angle": "Simplified core match-3 with innovative, bite-sized social features or unique theming to differentiate from mature Candy Crush-like games.",
+      "differentiation_idea": "Use distinctive art style or social interaction mechanics (e.g., cooperative challenges, buddy systems) over standard match-3 formula or incorporate trending themes (pets, food, travel) tied with social progress.",
+      "why_top_products_validate_or_weaken_signal": "The top products help validate demand, but concentration, ads, and giant-developer exposure still need manual checks.",
+      "validation_steps": "Validate traction by monitoring install trends and any monetization attempts; review user ratings and retention metrics; analyze competitor positioning and player acquisition strategies.",
+      "risk_notes": "High full product complexity increases development risk; crowded niche with 21 apps; unknown user reception to new social meta.",
+      "missing_data": "Lack of consolidated user review feedback and no direct revenue breakdown per app; detailed feature comparison missing.",
+      "manual_review_needed": true,
+      "summary": "match_3 is a TEST candidate in this single-query AppStoreSpy slice.",
+      "signal": "diversified_apps, fresh_traction, growing_vs_previous_snapshot",
+      "evidence": [
+        "diversified_apps",
+        "fresh_traction",
+        "growing_vs_previous_snapshot"
+      ],
+      "entry_realism": "MVP feasibility score is 68.29.",
+      "mvp": "Test a scoped match game with social presentation.",
+      "monetization": "Validate ads/IAP/revenue signals before production.",
+      "risks": [
+        "classifier_low_confidence",
+        "high_full_complexity",
+        "unknown_coverage",
+        "weak_rating_signal"
+      ],
+      "checks": [
+        "Check top apps manually in AppStoreSpy and stores.",
+        "Confirm the signal is not paid traffic."
+      ]
+    },
+    "llm_analysis_source": "openai",
+    "llm_status": {
+      "analysis_source": "openai",
+      "should_call_openai": true,
+      "fallback_reason": null,
+      "requested": true,
+      "enabled": true,
+      "api_key_present": true,
+      "api_key_env": "OPENAI_API_KEY",
+      "model": "gpt-4.1-mini",
+      "model_env": "OPENAI_MODEL",
+      "candidate_counts": {
+        "alerts": 3,
+        "watch": 0,
+        "near_misses": 0,
+        "initial_baseline_digest": 0
+      },
+      "openai_candidate_analyses_count": 3,
+      "fallback_filled_candidate_analyses_count": 0
+    }
   },
   {
     "snapshot_date": "2026-06-05",
@@ -8864,7 +9053,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -9188,7 +9377,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -9375,7 +9564,7 @@
     "total_daily_installs": 609067,
     "avg_daily_installs": 4511.61,
     "median_daily_installs": 1598.0,
-    "total_monthly_downloads": 7796000,
+    "total_monthly_downloads": 7806000,
     "total_monthly_revenue": 3815000.0,
     "avg_rating": 4.16,
     "rating_count_total": 0,
@@ -10209,7 +10398,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -10801,8 +10990,8 @@
     "alert_instance_id": "2026-06-05:59dd5f85525fecb6",
     "status": "ALERT",
     "failed_alert_conditions": [],
-    "llm_summary": null,
-    "send_regular_alert": false,
+    "llm_summary": "Create an idle tycoon focused on animal/zoo theme with a narrow gameplay loop and limited progression mechanisms for better focus and MVP feasibility.",
+    "send_regular_alert": true,
     "initial_baseline_digest": false,
     "would_be_status": null,
     "exclude_from_cooldown": false,
@@ -10810,8 +10999,64 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
-    ]
+      "passed"
+    ],
+    "llm_analysis": {
+      "recommendation": "WATCH",
+      "confidence": "medium",
+      "why_interesting": "Strong fresh demand in idle tycoon with animals theme, showing healthy installs (~56k total daily), 12 apps active with fresh traction (3 new apps). High average rating (~4.5) typical of strong player satisfaction. Monetization present (~$90k total monthly revenue), no giant developers, and MVP scope is medium but simplifiable.",
+      "why_might_be_false_positive": "Uncertain audience composition with weak rating signal (no broad rating counts per app). Classification confidence moderate, and unknown coverage flagged. Could be niche saturation with 12 apps.",
+      "mvp_hypothesis": "Create an idle tycoon focused on animal/zoo theme with a narrow gameplay loop and limited progression mechanisms for better focus and MVP feasibility.",
+      "simplified_mvp_scope": "Idle gameplay loop with basic zoo building, animal adoption, and voice/interaction mechanics limited for initial release.",
+      "competitor_takeaways": "Top products like My Voice Zoo apps use voice and sound mechanics as unique hooks, with varying monetization models (mostly IAP, no ads), indicating innovation drive in theme. Other simulations like Car Sales Dealer diversify the niche.",
+      "entry_angle": "Leverage a novel interaction (e.g., voice or AR) or strong narrative elements within animal idle tycoon to differentiate from My Voice Zoo clones.",
+      "differentiation_idea": "Introduce new mechanics around animal behaviors, environment interaction, or customization depth that top players have not explored extensively.",
+      "why_top_products_validate_or_weaken_signal": "The top products help validate demand, but concentration, ads, and giant-developer exposure still need manual checks.",
+      "validation_steps": "Manual check on user feedback, gameplay videos, retention and revenue trends; assess competition intensity; test thematic and mechanic innovation appeal.",
+      "risk_notes": "Uncertain demographics and mixed app categories may dilute niche focus; moderate complexity and likely overlap with existing titles increase risk.",
+      "missing_data": "User ratings quantitatively sparse for top apps; detailed audience segmentation missing.",
+      "manual_review_needed": true,
+      "summary": "idle_tycoon is a TEST candidate in this single-query AppStoreSpy slice.",
+      "signal": "diversified_apps, fresh_traction, growing_vs_previous_snapshot",
+      "evidence": [
+        "diversified_apps",
+        "fresh_traction",
+        "growing_vs_previous_snapshot"
+      ],
+      "entry_realism": "MVP feasibility score is 65.0.",
+      "mvp": "Test a scoped idle game with animals presentation.",
+      "monetization": "Validate ads/IAP/revenue signals before production.",
+      "risks": [
+        "audience_uncertain",
+        "classifier_low_confidence",
+        "unknown_coverage",
+        "weak_rating_signal"
+      ],
+      "checks": [
+        "Check top apps manually in AppStoreSpy and stores.",
+        "Confirm the signal is not paid traffic."
+      ]
+    },
+    "llm_analysis_source": "openai",
+    "llm_status": {
+      "analysis_source": "openai",
+      "should_call_openai": true,
+      "fallback_reason": null,
+      "requested": true,
+      "enabled": true,
+      "api_key_present": true,
+      "api_key_env": "OPENAI_API_KEY",
+      "model": "gpt-4.1-mini",
+      "model_env": "OPENAI_MODEL",
+      "candidate_counts": {
+        "alerts": 3,
+        "watch": 0,
+        "near_misses": 0,
+        "initial_baseline_digest": 0
+      },
+      "openai_candidate_analyses_count": 3,
+      "fallback_filled_candidate_analyses_count": 0
+    }
   },
   {
     "snapshot_date": "2026-06-05",
@@ -11114,7 +11359,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -11479,7 +11724,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -11772,7 +12017,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -11943,7 +12188,7 @@
     "total_daily_installs": 1412816,
     "avg_daily_installs": 11872.4,
     "median_daily_installs": 1622.0,
-    "total_monthly_downloads": 14067000,
+    "total_monthly_downloads": 14077000,
     "total_monthly_revenue": 1974000.0,
     "avg_rating": 4.16,
     "rating_count_total": 0,
@@ -12175,7 +12420,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -12643,7 +12888,7 @@
     "total_daily_installs": 2461977,
     "avg_daily_installs": 5918.21,
     "median_daily_installs": 1715.5,
-    "total_monthly_downloads": 29442000,
+    "total_monthly_downloads": 29448000,
     "total_monthly_revenue": 1909000.0,
     "avg_rating": 4.08,
     "rating_count_total": 0,
@@ -12874,7 +13119,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -13064,7 +13309,7 @@
     "total_daily_installs": 679873,
     "avg_daily_installs": 4926.62,
     "median_daily_installs": 2158.0,
-    "total_monthly_downloads": 5963000,
+    "total_monthly_downloads": 6013000,
     "total_monthly_revenue": 516000.0,
     "avg_rating": 4.06,
     "rating_count_total": 0,
@@ -13296,7 +13541,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -13566,8 +13811,8 @@
     "total_daily_installs": 1058286,
     "avg_daily_installs": 4854.52,
     "median_daily_installs": 1497.5,
-    "total_monthly_downloads": 18498000,
-    "total_monthly_revenue": 522000.0,
+    "total_monthly_downloads": 18499000,
+    "total_monthly_revenue": 532000.0,
     "avg_rating": 4.38,
     "rating_count_total": 0,
     "rating_confidence": 0.0,
@@ -15091,8 +15336,8 @@
     "total_daily_installs": 543457,
     "avg_daily_installs": 3827.16,
     "median_daily_installs": 1541.5,
-    "total_monthly_downloads": 7888000,
-    "total_monthly_revenue": 1978000.0,
+    "total_monthly_downloads": 7885000,
+    "total_monthly_revenue": 2027000.0,
     "avg_rating": 4.18,
     "rating_count_total": 0,
     "rating_confidence": 0.0,
@@ -16046,7 +16291,7 @@
     "total_daily_installs": 2484522,
     "avg_daily_installs": 6590.24,
     "median_daily_installs": 1924.0,
-    "total_monthly_downloads": 16034000,
+    "total_monthly_downloads": 16039000,
     "total_monthly_revenue": 3256000.0,
     "avg_rating": 3.93,
     "rating_count_total": 0,
@@ -16458,7 +16703,7 @@
     "total_daily_installs": 979486,
     "avg_daily_installs": 7534.51,
     "median_daily_installs": 1152.0,
-    "total_monthly_downloads": 15468000,
+    "total_monthly_downloads": 15474000,
     "total_monthly_revenue": 105000.0,
     "avg_rating": 4.13,
     "rating_count_total": 0,
@@ -16689,7 +16934,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -17422,7 +17667,7 @@
     "total_daily_installs": 402600,
     "avg_daily_installs": 7894.12,
     "median_daily_installs": 1217.0,
-    "total_monthly_downloads": 3759000,
+    "total_monthly_downloads": 3760000,
     "total_monthly_revenue": 138000.0,
     "avg_rating": 4.54,
     "rating_count_total": 0,
@@ -18000,294 +18245,6 @@
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
       "cooldown"
-    ]
-  },
-  {
-    "snapshot_date": "2026-06-05",
-    "score_version": "v1.3.2",
-    "platform": "google_play",
-    "niche": "idle tycoon",
-    "normalized_niche": "idle_tycoon",
-    "market_category": "simulation",
-    "core_mechanic": "idle",
-    "theme": "home",
-    "meta": "none",
-    "audience": "unknown",
-    "audience_summary": "unknown:3, broad:1, women_25_45:1",
-    "production_complexity": "medium",
-    "full_product_complexity": "medium",
-    "mvp_complexity": "medium",
-    "mvp_feasibility_score": 65.0,
-    "simplifiable": true,
-    "simplification_idea": "Focus the MVP on idle gameplay with a narrow home theme and one progression loop.",
-    "group_key_type": "core_mechanic_theme",
-    "group_key_value": "idle::home",
-    "group_key": "core_mechanic_theme::idle::home",
-    "signal_signature": "idle_tycoon::simulation::idle::home::none",
-    "release_date_window": "last_180d",
-    "source_scope": "single_appstorespy_query_no_country_language",
-    "collection_sort": "-release_date",
-    "min_app_daily_installs": 500,
-    "source_query": {
-      "limit": 10000,
-      "page": 1,
-      "sort": "-release_date",
-      "release_date_days_back": 180,
-      "min_downloads_daily": 500,
-      "requested_country": null,
-      "requested_language": null,
-      "requested_active_countries": null
-    },
-    "coverage": {
-      "total_count": null,
-      "result_count": 4867,
-      "sample_truncated": "unknown",
-      "coverage_ratio": null,
-      "full_window_claim_allowed": false
-    },
-    "app_count": 5,
-    "app_ids": [
-      "com.lumberjack.driver",
-      "com.n2pge.wm",
-      "com.redveilone.vardian",
-      "com.waterpark.empire.fun.simulator.game",
-      "com.weup.bad.monkey.house.prankster"
-    ],
-    "total_daily_installs": 36237,
-    "avg_daily_installs": 7247.4,
-    "median_daily_installs": 8875.0,
-    "total_monthly_downloads": 400000,
-    "total_monthly_revenue": 9000.0,
-    "avg_rating": 3.9,
-    "rating_count_total": 0,
-    "rating_confidence": 0.0,
-    "successful_new_apps_count": 5,
-    "traction_fresh_apps_count": 1,
-    "top_app_share": 0.4158,
-    "growth_by_one_app_share": 0.6423,
-    "advertised_top_app_share": 0.0,
-    "giant_developer_share": 0.0,
-    "single_developer_share": 0.4158,
-    "classification_confidence_avg": 0.628,
-    "unknown_or_new_pattern_cluster": true,
-    "top_apps": [
-      {
-        "app_id": "com.lumberjack.driver",
-        "bundle": "com.lumberjack.driver",
-        "name": "Lumberjack Driver",
-        "developer_name": "Skyloft Yazılım Bilişim ve Anonim Şirketi",
-        "developer_id": "7183118085303419603",
-        "category": "GAME_SIMULATION",
-        "category_type": "GAME",
-        "downloads_daily": 15066,
-        "downloads_month": 200000,
-        "downloads_exact": 514323,
-        "downloads_mark": "500000",
-        "revenue_month": 9000.0,
-        "rating_avg": 4.2,
-        "rating_count": 0,
-        "review_count": 102,
-        "release_date": "2026-03-19",
-        "update_date": "2026-05-14",
-        "iap": true,
-        "advertised": false,
-        "ads": false,
-        "icon": "https://lh3.googleusercontent.com/guD8QdoBgtjLhhXKKV5LbsfyhVOsOqMvMnCUp8PxgpkyhRzCjeU-eAFIF8GYKRBH7x0p8mLn5XtJ_zOtFj4S=h300",
-        "screenshots": [],
-        "description_short": "Build your lumber empire! Cut, process wood, and deliver logs.",
-        "description_excerpt": "Welcome to Lumberjack Driver — a unique simulation and tycoon game where you cut trees, transport logs, and help build entire towns.<br><br>Step into the role of a lumberjack driver and take control of your growing wood business. Cut trees in the forest, load logs onto your vehicle, and deliver them to sawmills, construction sites, and nearby settlements.<br><br>Process raw timber into useful materials and support the development of expanding towns. Your deliveries are essential — wood is needed to build houses, upgrade infrastructure, and unlock new areas.<br><br>Take on a variety of jobs and contracts. From simple log deliveries to complex supply chains, each mission helps you grow your business and progress further. Manage your time, plan routes, and optimize logistics to maximize efficiency.<br><br>Earn money, upgrade your vehicles, and improve your production systems. Unlock new tools, automate parts of your workflow, and scale your operation into a powerful lumber tycoon empire.<br><br>Lumberjack Driver combines woodcutting, transport, and business management into one satisfying gameplay loop: cut, process, deliver, and build.<br><br>Features:<br>Cut trees and manage your...",
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.lumberjack.driver-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.lumberjack.driver",
-        "website": "https://skyloftgaming.com/"
-      },
-      {
-        "app_id": "com.weup.bad.monkey.house.prankster",
-        "bundle": "com.weup.bad.monkey.house.prankster",
-        "name": "Tricky Monkey: House Prankster",
-        "developer_name": "IDLERO",
-        "developer_id": "5777267680343953517",
-        "category": "GAME_SIMULATION",
-        "category_type": "GAME",
-        "downloads_daily": 10679,
-        "downloads_month": 200000,
-        "downloads_exact": 1422388,
-        "downloads_mark": "1000000",
-        "revenue_month": 0.0,
-        "rating_avg": 3.6,
-        "rating_count": 0,
-        "review_count": 7,
-        "release_date": "2026-02-09",
-        "update_date": "2026-05-29",
-        "iap": false,
-        "advertised": false,
-        "ads": false,
-        "icon": "https://lh3.googleusercontent.com/foiP7a7ZPaQ_KiFdBQocizMZnR5eyf0mXypM_Pml-JgeFScTr7fYu90f7h26IcT8eG8KHzfhTEs90gCRs0AgtQ=h300",
-        "screenshots": [],
-        "description_short": "Be the naughty monkey who loves messing up and playing prank!",
-        "description_excerpt": "Tricky Monkey: House Prankster is a hilarious simulator where you play as a naughty monkey causing chaos around the house. <br>Climb walls, fences, and furniture, 🥊 punch and kick humans, 🖍️mess up with every objects, and knock things over just for fun. Every area is packed with playful interactions waiting to be messed with.<br><br>GAMEPLAY:<br>🐾 Move around the house and explore different rooms<br>🎯 Choose objects and set up funny pranks <br>👀 Watch out for humans and avoid their sight<br>🫣 Run fast to escape when they get close<br>⭐ Unlock new tricks, upgrades, and prank-skill levels as you progress<br><br>GAME FEATURES:<br>🐒 Play as a chaotic, prank-loving monkey<br>🏠 Large interactive areas from outdoor yard to indoor rooms<br>😂 Funny reactions and cartoon-style animations<br>🎮 Stunning graphics and animation: Deliver an extraordinary experience<br>🕹️ Smooth controls and easy gameplay <br><br>Ready to become the naughtiest monkey in the town? <br>Download Tricky Monkey: House Prankster and enjoy laugh-out-loud moments as the ultimate prank-loving monkey now!",
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.weup.bad.monkey.house.prankster-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.weup.bad.monkey.house.prankster",
-        "website": "https://bazooka.vn"
-      },
-      {
-        "app_id": "com.n2pge.wm",
-        "bundle": "com.n2pge.wm",
-        "name": "Wrestling Manager",
-        "developer_name": "Now to Play Game Entertainment S.L.",
-        "developer_id": "7769756869851676105",
-        "category": "GAME_ROLE_PLAYING",
-        "category_type": "GAME",
-        "downloads_daily": 8875,
-        "downloads_month": 0,
-        "downloads_exact": 25997,
-        "downloads_mark": "10000",
-        "revenue_month": 0.0,
-        "rating_avg": 0.0,
-        "rating_count": 0,
-        "review_count": 0,
-        "release_date": "2026-05-27",
-        "update_date": "2026-05-27",
-        "iap": true,
-        "advertised": false,
-        "ads": false,
-        "icon": "https://lh3.googleusercontent.com/RuygIS0Avitv-WRAmRwN8WUxPu3XjXaTleDPv9jG1805hjOlNzhlmmGLh4kKU2PP7UhMEdxQg5lEQ_Ma1a8D2Ys=h300",
-        "screenshots": [],
-        "description_short": "Manage your wrestling promotion, train stars, and host epic matches!",
-        "description_excerpt": "Manage Your Wrestling Promotion and Become a Wrestling Tycoon!<br><br>Step into the world of high-energy wrestling entertainment! Build your own wrestling promotion from the ground up—recruit powerful fighters, train rising stars, and host electrifying matches that draw massive crowds. Grow your fanbase, maximize your profits, and dominate the wrestling business!<br><br>-GAME FEATURE-<br>▸Manage Your Wrestling Promotion<br>Build and expand your wrestling business. Upgrade facilities, plan events, and turn your promotion into a global powerhouse.<br><br>▸Recruit Top Wrestlers<br>Sign elite wrestlers from around the world. Each fighter brings unique strength and style—assemble your ultimate roster.<br><br>▸Train Your Stars<br>Develop your wrestlers with intense training. Improve strength, speed, and skills to create unstoppable champions.<br><br>▸Host Epic Matches<br>Book thrilling matches and entertain the crowd. The bigger the show, the higher your rewards!<br><br>▸Upgrade Your Arena<br>Enhance your arena with futuristic tech, neon lights, and advanced facilities to boost revenue and fan engagement.<br><br>The ring is calling. The crowd is waiting.<br>Build your empire, create l...",
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.n2pge.wm-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.n2pge.wm",
-        "website": "http://wmm.gamehollywood.com"
-      },
-      {
-        "app_id": "com.waterpark.empire.fun.simulator.game",
-        "bundle": "com.waterpark.empire.fun.simulator.game",
-        "name": "Water Park: Empire Simulator",
-        "developer_name": "SMD LINKS",
-        "developer_id": "5454756663307141058",
-        "category": "GAME_SIMULATION",
-        "category_type": "GAME",
-        "downloads_daily": 1091,
-        "downloads_month": 0,
-        "downloads_exact": 492057,
-        "downloads_mark": "100000",
-        "revenue_month": 0.0,
-        "rating_avg": 0.0,
-        "rating_count": 0,
-        "review_count": 0,
-        "release_date": "2026-02-13",
-        "update_date": "2026-05-11",
-        "iap": true,
-        "advertised": false,
-        "ads": false,
-        "icon": "https://lh3.googleusercontent.com/IqbCzYv35aAYAbSqAEGSG54Zw5sedDVh2c2AaIkfPgKCQz7JDohK0nL1vJfpIaWQUGZc_R7_c2QNqsKAFeiv=h300",
-        "screenshots": [],
-        "description_short": "Park: Empire Simulator – Build epic slides, thrill guests, and grow your empire.",
-        "description_excerpt": "Water Park: Empire Simulator — Build, Manage & Rule Your Ultimate Water Park!<br><br>Welcome to Water Park: Empire Simulator, the most exciting and addictive park-building simulation game! Design and manage your very own water park empire from the ground up. Build thrilling slides, awesome pools, and fun attractions that keep visitors coming back for more!<br><br>In this immersive simulation experience, you’ll:<br><br>🏖️ Design Your Dream Water Park — Place rides, pools, walkways, and decorations to create the perfect attraction land.<br>👨‍👩‍👧‍👦 Attract Happy Guests — Keep your customers smiling by providing amazing experiences, flattering scenery, and smooth park flow.<br>💧 Build Incredible Rides — Unlock and upgrade water slides, lazy rivers, splash pads, wave pools, and more!<br>💼 Manage & Expand — Balance your budget, hire staff, set prices, and grow your park into a world-class destination.<br>🎯 Complete Fun Missions — Take on daily challenges and special tasks to earn rewards and unlock premium features.<br>🚀 Grow Your Empire — Expand into new areas, improve your facilities, and become the top water park tycoon!<br><br>Whether you’re a fan of sim games, tycoon games, or ca...",
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.waterpark.empire.fun.simulator.game-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.waterpark.empire.fun.simulator.game",
-        "website": "https://theplaymaxgroup.com/"
-      },
-      {
-        "app_id": "com.redveilone.vardian",
-        "bundle": "com.redveilone.vardian",
-        "name": "바르디안: Vardian",
-        "developer_name": "REDVEILONE",
-        "developer_id": "7466937539825175847",
-        "category": "GAME_ROLE_PLAYING",
-        "category_type": "GAME",
-        "downloads_daily": 526,
-        "downloads_month": 0,
-        "downloads_exact": 10385,
-        "downloads_mark": "10000",
-        "revenue_month": 0.0,
-        "rating_avg": 0.0,
-        "rating_count": 0,
-        "review_count": 0,
-        "release_date": "2026-05-21",
-        "update_date": "2026-06-04",
-        "iap": true,
-        "advertised": false,
-        "ads": false,
-        "icon": "https://lh3.googleusercontent.com/eDBGDu3LB8XJ_V0r8kF1WdpXrhHgmXVPBy4hHNEjzcSTXVRAXiPg7j2BO1bxr4iUPkfhzZP6TxyxfLtu6kX8Hg=h300",
-        "screenshots": [],
-        "description_short": "A pixel idle RPG with console-like immersion",
-        "description_excerpt": "아무도 끝을 보지 못한 툼 대륙의 미궁.<br>미궁을 탐사하는 당신에게 예측할 수 없는 사건들과 숨겨진 진실이 드러난다!<br><br>✨ 게임 특징 ✨<br><br>📖 콘솔 감성 스토리!<br>툼 대륙을 무대로 펼쳐지는, 뻔하지 않은 몰입감 넘치는 서사.<br>방치형 게임의 한계를 넘어선 진한 여운과 감동을 레트로 픽셀 그래픽으로 만나보세요.<br><br>⚔️ 극강의 컨트롤 재미!<br>거대 보스의 패턴을 박살 내는 수동 컨트롤의 쾌감을 느껴보세요.<br>무기와 스킬을 조합하여 나만의 공략을 만들어 보세요.<br><br>🗺️ 늘 짜릿하고 새로운 지하 미궁!<br>숨겨진 방, 비밀 보물상자, 그리고 긴장의 끈을 놓을 수 없는 돌발 상황까지!<br>진짜 모험을 즐겨보세요.<br><br>📈 쉽고 빠른 방치 성장!<br>복잡하고 피곤한 조작 없이도 성장은 빠르고 시원하게!<br>게임에 접속하지 않고 있어도 보상이 쌓입니다.<br>바쁜 일상 속에서도 쉽고 빠른 캐릭터 육성의 재미를 느껴보세요.<br><br>🏰 공식 커뮤니티<br>공식 라운지 : https://game.naver.com/lounge/Vardian/home <br><br>방치형의 재미와 스토리의 감동을 모두 담은 '바르디안'을 지금 다운로드하고,<br>전설적인 이야기를 직접 써내려가 보세요!<br>----<br>개발자 연락처 :<br>(주)레드베일원 대한민국 서울특별시 성동구<br>성동구 아차산로 38, 2층 219호(성수동1가, 개풍빌딩)<br>04779 233-88-03565 제2026-서울성동-0592호 서울특별시 성동구청",
-        "url_appstorespy": "https://appstorespy.com/android-google-play/com.redveilone.vardian-trends-revenue-statistics-downloads-ratings",
-        "url": "https://play.google.com/store/apps/details?id=com.redveilone.vardian",
-        "website": "https://redveilone.com/"
-      }
-    ],
-    "has_history": true,
-    "history_depth_days": 1,
-    "weekly_growth_percent": 38.91,
-    "monthly_growth_percent": 38.91,
-    "previous_total_daily_installs": 26086,
-    "data_quality_score": 81.48,
-    "data_quality_components": {
-      "field_completeness": 35.0,
-      "history_depth": 5.0,
-      "sample_size": 20.0,
-      "signal_diversity": 13.48,
-      "monetization_reliability": 10.0,
-      "fresh_success_reliability": 10.0,
-      "penalty": 12.0
-    },
-    "data_quality_reasons": [
-      "classifier_low_confidence",
-      "unknown_coverage"
-    ],
-    "monetization_signal": {
-      "iap_present": true,
-      "ads_present": false,
-      "revenue_month_available": true,
-      "revenue_confidence": "high",
-      "monetization_model": "iap"
-    },
-    "score_components": {
-      "demand": 25,
-      "freshness": 15,
-      "revenue_monetization": 11.86,
-      "rating": 0.0,
-      "mvp_feasibility": 9.75,
-      "data_quality": 16.3,
-      "competition_penalty": 1.25,
-      "giant_risk_penalty": 0.0,
-      "paid_spike_penalty": 0.0
-    },
-    "opportunity_score": 76.66,
-    "risk_tags": [
-      "audience_uncertain",
-      "classifier_low_confidence",
-      "unknown_coverage",
-      "weak_rating_signal"
-    ],
-    "reason_codes": [
-      "diversified_apps",
-      "fresh_traction",
-      "growing_vs_previous_snapshot",
-      "historical_growth",
-      "low_giant_share",
-      "monetization_signal_present",
-      "multi_app_cluster",
-      "new_pattern_detected",
-      "strong_daily_installs"
-    ],
-    "severe_paid_spike_risk": false,
-    "candidate_id": "2026-06-05:e4c7fbc08bd97b5b:core_mechanic_theme",
-    "dedupe_key": "e4c7fbc08bd97b5b",
-    "alert_instance_id": "2026-06-05:e4c7fbc08bd97b5b",
-    "status": "ALERT",
-    "failed_alert_conditions": [],
-    "llm_summary": null,
-    "send_regular_alert": false,
-    "initial_baseline_digest": false,
-    "would_be_status": null,
-    "exclude_from_cooldown": false,
-    "history_state": "HISTORY_AVAILABLE",
-    "first_run_without_history": false,
-    "confidence_level": "MEDIUM",
-    "alert_filter_reasons": [
-      "alert_limit"
     ]
   },
   {
@@ -18893,7 +18850,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -18969,8 +18926,8 @@
     "total_daily_installs": 84645,
     "avg_daily_installs": 3526.88,
     "median_daily_installs": 1821.0,
-    "total_monthly_downloads": 1673000,
-    "total_monthly_revenue": 480000.0,
+    "total_monthly_downloads": 1663000,
+    "total_monthly_revenue": 489000.0,
     "avg_rating": 4.48,
     "rating_count_total": 0,
     "rating_confidence": 0.0,
@@ -19022,7 +18979,7 @@
         "category": "GAME_SIMULATION",
         "category_type": "GAME",
         "downloads_daily": 12740,
-        "downloads_month": 70000,
+        "downloads_month": 60000,
         "downloads_exact": 118750,
         "downloads_mark": "100000",
         "revenue_month": 40000.0,
@@ -20257,7 +20214,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -20923,7 +20880,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -22242,7 +22199,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -22307,7 +22264,7 @@
     "total_daily_installs": 67079,
     "avg_daily_installs": 5159.92,
     "median_daily_installs": 1917.0,
-    "total_monthly_downloads": 1456000,
+    "total_monthly_downloads": 1446000,
     "total_monthly_revenue": 130000.0,
     "avg_rating": 4.35,
     "rating_count_total": 0,
@@ -22360,7 +22317,7 @@
         "category": "GAME_SIMULATION",
         "category_type": "GAME",
         "downloads_daily": 12740,
-        "downloads_month": 70000,
+        "downloads_month": 60000,
         "downloads_exact": 118750,
         "downloads_mark": "100000",
         "revenue_month": 40000.0,
@@ -22830,7 +22787,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -22920,7 +22877,7 @@
     "total_daily_installs": 295221,
     "avg_daily_installs": 7768.97,
     "median_daily_installs": 1120.5,
-    "total_monthly_downloads": 3669000,
+    "total_monthly_downloads": 3670000,
     "total_monthly_revenue": 138000.0,
     "avg_rating": 4.62,
     "rating_count_total": 0,
@@ -25191,7 +25148,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -25600,7 +25557,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -25724,7 +25681,7 @@
     "total_daily_installs": 307866,
     "avg_daily_installs": 4275.92,
     "median_daily_installs": 1314.5,
-    "total_monthly_downloads": 2640000,
+    "total_monthly_downloads": 2540000,
     "total_monthly_revenue": 30000.0,
     "avg_rating": 4.26,
     "rating_count_total": 0,
@@ -25864,7 +25821,7 @@
         "category": "GAME_ARCADE",
         "category_type": "GAME",
         "downloads_daily": 9793,
-        "downloads_month": 400000,
+        "downloads_month": 300000,
         "downloads_exact": 4291546,
         "downloads_mark": "1000000",
         "revenue_month": 0.0,
@@ -25956,7 +25913,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -26261,7 +26218,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -28624,11 +28581,11 @@
       "triumph.free.cash.real.game",
       "uniqo.imposter"
     ],
-    "total_daily_installs": 7351608,
-    "avg_daily_installs": 6756.99,
+    "total_daily_installs": 7351549,
+    "avg_daily_installs": 6756.94,
     "median_daily_installs": 1797.5,
-    "total_monthly_downloads": 72633000,
-    "total_monthly_revenue": 8563000.0,
+    "total_monthly_downloads": 72600000,
+    "total_monthly_revenue": 8573000.0,
     "avg_rating": 4.12,
     "rating_count_total": 0,
     "rating_confidence": 0.0,
@@ -28860,7 +28817,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -29447,10 +29404,10 @@
       "vn.vplay.batluongnhan.t030a",
       "vn.zoneplay.gp01"
     ],
-    "total_daily_installs": 3389846,
-    "avg_daily_installs": 6300.83,
+    "total_daily_installs": 3389787,
+    "avg_daily_installs": 6300.72,
     "median_daily_installs": 1890.0,
-    "total_monthly_downloads": 19173000,
+    "total_monthly_downloads": 19178000,
     "total_monthly_revenue": 3468000.0,
     "avg_rating": 3.99,
     "rating_count_total": 0,
@@ -29613,8 +29570,8 @@
     ],
     "has_history": true,
     "history_depth_days": 1,
-    "weekly_growth_percent": 3.76,
-    "monthly_growth_percent": 3.76,
+    "weekly_growth_percent": 3.75,
+    "monthly_growth_percent": 3.75,
     "previous_total_daily_installs": 3267114,
     "data_quality_score": 68.0,
     "data_quality_components": {
@@ -30934,7 +30891,7 @@
     "avg_daily_installs": 1946.25,
     "median_daily_installs": 1687.5,
     "total_monthly_downloads": 100000,
-    "total_monthly_revenue": 100000.0,
+    "total_monthly_revenue": 109000.0,
     "avg_rating": 5.0,
     "rating_count_total": 0,
     "rating_confidence": 0.0,
@@ -31047,7 +31004,7 @@
         "downloads_month": 0,
         "downloads_exact": 8014,
         "downloads_mark": "5000",
-        "revenue_month": 0.0,
+        "revenue_month": 9000.0,
         "rating_avg": 0.0,
         "rating_count": 0,
         "review_count": 0,
@@ -31814,7 +31771,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -33736,7 +33693,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -34048,7 +34005,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {

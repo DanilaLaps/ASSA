@@ -29,10 +29,10 @@ Source: single AppStoreSpy query without country/language filters.
 - ALERT tile_match score=78.86 quality=83.0 mvp=73.0 installs=80545 risks=classifier_low_confidence, unknown_coverage, weak_rating_signal
 - ALERT mahjong score=78.84 quality=83.0 mvp=85.0 installs=313101 risks=classifier_low_confidence, unknown_coverage, weak_rating_signal
 - ALERT other score=78.63 quality=83.0 mvp=70.02 installs=1357184 risks=classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
+- ALERT idle_tycoon score=78.57 quality=81.48 mvp=65.0 installs=36237 risks=audience_uncertain, classifier_low_confidence, unknown_coverage, weak_rating_signal
 - ALERT block_puzzle score=78.49 quality=83.0 mvp=76.12 installs=665114 risks=classifier_low_confidence, unknown_coverage, weak_monetization_signal, weak_rating_signal
 - ALERT sandbox score=78.49 quality=73.31 mvp=68.8 installs=24571 risks=classifier_low_confidence, high_full_complexity, leader_dominated, unknown_coverage, weak_rating_signal
 - ALERT other score=78.42 quality=83.0 mvp=68.76 installs=234527 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
-- ALERT match_3 score=78.38 quality=80.69 mvp=68.29 installs=69263 risks=classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
 
 ## Rejected Reason Distribution
 - giant_dominated: 9

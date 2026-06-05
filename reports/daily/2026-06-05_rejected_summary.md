@@ -39,6 +39,7 @@
 - REJECT match_3 score=29.77 quality=43.6 mvp=71.5 installs=5691 risks=classifier_low_confidence, growth_by_one_app, high_full_complexity, leader_dominated, low_data_quality, severe_paid_spike, single_developer_cluster, unknown_coverage, weak_monetization_signal, weak_rating_signal, weak_revenue_signal
 - REJECT sandbox score=29.3 quality=45.73 mvp=58.0 installs=6854 risks=classifier_low_confidence, growth_by_one_app, high_full_complexity, leader_dominated, severe_paid_spike, unknown_coverage, weak_monetization_signal, weak_rating_signal, weak_revenue_signal
 - REJECT block_puzzle score=29.03 quality=37.67 mvp=85.0 installs=14979 risks=growth_by_one_app, leader_dominated, low_data_quality, severe_paid_spike, single_developer_cluster, unknown_coverage, weak_rating_signal, weak_revenue_signal
+- REJECT idle_tycoon score=28.87 quality=49.67 mvp=65.0 installs=526 risks=classifier_low_confidence, leader_dominated, single_developer_cluster, unknown_coverage, weak_rating_signal
 - REJECT hidden_object score=28.83 quality=56.67 mvp=65.0 installs=568 risks=leader_dominated, single_developer_cluster, unknown_coverage, weak_rating_signal
 - REJECT merge score=28.63 quality=45.67 mvp=65.0 installs=1049 risks=audience_uncertain, classifier_low_confidence, leader_dominated, single_developer_cluster, unknown_coverage, weak_rating_signal, weak_revenue_signal
 - REJECT other score=27.58 quality=45.67 mvp=58.0 installs=1389 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, leader_dominated, single_developer_cluster, unknown_coverage, weak_rating_signal, weak_revenue_signal
@@ -77,7 +78,6 @@
 - REJECT idle_tycoon score=20.63 quality=45.67 mvp=65.0 installs=865 risks=classifier_low_confidence, leader_dominated, single_developer_cluster, unknown_coverage, weak_rating_signal, weak_revenue_signal
 - REJECT idle_tycoon score=20.63 quality=45.67 mvp=65.0 installs=608 risks=audience_uncertain, classifier_low_confidence, leader_dominated, single_developer_cluster, unknown_coverage, weak_rating_signal, weak_revenue_signal
 - REJECT idle_tycoon score=20.63 quality=30.67 mvp=65.0 installs=2648 risks=classifier_low_confidence, growth_by_one_app, leader_dominated, low_data_quality, severe_paid_spike, single_developer_cluster, unknown_coverage, weak_rating_signal, weak_revenue_signal
-- REJECT idle_tycoon score=20.63 quality=45.67 mvp=65.0 installs=526 risks=classifier_low_confidence, leader_dominated, single_developer_cluster, unknown_coverage, weak_rating_signal, weak_revenue_signal
 - REJECT idle_tycoon score=20.63 quality=45.67 mvp=65.0 installs=503 risks=classifier_low_confidence, leader_dominated, single_developer_cluster, unknown_coverage, weak_rating_signal, weak_revenue_signal
 - REJECT merge score=20.63 quality=45.67 mvp=65.0 installs=933 risks=classifier_low_confidence, leader_dominated, single_developer_cluster, unknown_coverage, weak_rating_signal, weak_revenue_signal
 - REJECT merge score=20.63 quality=45.67 mvp=65.0 installs=865 risks=classifier_low_confidence, leader_dominated, single_developer_cluster, unknown_coverage, weak_rating_signal, weak_revenue_signal

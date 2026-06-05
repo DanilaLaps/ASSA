@@ -154,5 +154,44 @@
     "last_status": "ALERT",
     "opportunity_score": 78.49,
     "updated_at": "2026-06-05T11:34:12.788421+00:00"
+  },
+  "e4c7fbc08bd97b5b": {
+    "normalized_niche": "idle_tycoon",
+    "last_sent_at": "2026-06-05T12:12:59.166745+00:00",
+    "last_alert_instance_id": "2026-06-05:e4c7fbc08bd97b5b",
+    "top_app_ids": [
+      "com.lumberjack.driver",
+      "com.n2pge.wm",
+      "com.redveilone.vardian"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 78.57,
+    "updated_at": "2026-06-05T12:12:59.166745+00:00"
+  },
+  "b87b66cc43196d0b": {
+    "normalized_niche": "match_3",
+    "last_sent_at": "2026-06-05T12:12:59.166745+00:00",
+    "last_alert_instance_id": "2026-06-05:b87b66cc43196d0b",
+    "top_app_ids": [
+      "com.fg.soccer.party",
+      "com.inhigame.callbreak.rush",
+      "com.kazancligorev.sweetycrush"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 78.38,
+    "updated_at": "2026-06-05T12:12:59.166745+00:00"
+  },
+  "59dd5f85525fecb6": {
+    "normalized_niche": "idle_tycoon",
+    "last_sent_at": "2026-06-05T12:12:59.166745+00:00",
+    "last_alert_instance_id": "2026-06-05:59dd5f85525fecb6",
+    "top_app_ids": [
+      "com.am.brooktopia.haven.rp.life.game",
+      "com.car.sale.dealer.sim.game",
+      "com.fm.animalfun.voicezoo"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 77.71,
+    "updated_at": "2026-06-05T12:12:59.166745+00:00"
   }
 }
