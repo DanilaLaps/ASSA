@@ -65,7 +65,9 @@
     "use_rule_based_classifier": true,
     "use_llm_for_uncertain_apps": false,
     "min_confidence_for_hard_label": 0.7,
+    "min_primary_confidence_for_unknown_pattern": 0.5,
     "unknown_pattern_enabled": true,
+    "detect_unlisted_pattern_combos": false,
     "normalize_aliases": true,
     "aliases": {
       "sort_puzzle": {

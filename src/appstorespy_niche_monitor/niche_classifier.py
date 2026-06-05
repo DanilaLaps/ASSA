@@ -13,6 +13,15 @@ DIMENSION_DEFAULTS = {
     "audience": "unknown",
 }
 
+DEFAULT_KNOWN_PATTERN_COMBOS = {
+    ("sort", "supermarket", "collection"),
+    ("sort", "abstract", "levels"),
+    ("match", "abstract", "levels"),
+    ("merge", "home", "renovation"),
+    ("search", "home", "levels"),
+    ("idle", "food", "levels"),
+}
+
 
 def classify_niche(app: dict[str, Any], config: dict[str, Any]) -> str:
     return match_niche(app, config)[0]
@@ -151,23 +160,64 @@ def is_unknown_or_new_pattern(
     confidences: dict[str, float],
     config: dict[str, Any],
 ) -> bool:
-    min_confidence = float(config.get("classification", {}).get("min_confidence_for_hard_label", 0.7))
+    classification_cfg = config.get("classification", {})
+    if not bool(classification_cfg.get("unknown_pattern_enabled", True)):
+        return False
+
+    min_primary_confidence = float(classification_cfg.get("min_primary_confidence_for_unknown_pattern", 0.5))
     mechanic = dimensions.get("core_mechanic", "other")
     theme = dimensions.get("theme", "other")
     meta = dimensions.get("meta", "none")
-    unknown_combo = mechanic == "other" or theme == "other" or niche == "other"
-    low_confidence = min(confidences.values() or [1.0]) < min_confidence
-    new_combo = (mechanic, theme, meta) not in {
-        ("sort", "supermarket", "collection"),
-        ("sort", "abstract", "levels"),
-        ("match", "abstract", "levels"),
-        ("merge", "home", "renovation"),
-        ("search", "home", "levels"),
-        ("idle", "food", "levels"),
-    }
-    return bool(config.get("classification", {}).get("unknown_pattern_enabled", True)) and (
-        unknown_combo or low_confidence or new_combo
+    niche_unclassified = is_unknown_label(niche) or confidence_below(
+        confidences,
+        "niche_confidence",
+        min_primary_confidence,
     )
+    mechanic_unclassified = is_unknown_label(mechanic) or confidence_below(
+        confidences,
+        "core_mechanic_confidence",
+        min_primary_confidence,
+    )
+    if niche_unclassified and mechanic_unclassified:
+        return True
+
+    if not bool(classification_cfg.get("detect_unlisted_pattern_combos", False)):
+        return False
+
+    known_combos = configured_known_pattern_combos(classification_cfg)
+    return (
+        not is_unknown_label(niche)
+        and not is_unknown_label(mechanic)
+        and not is_unknown_label(theme)
+        and (mechanic, theme, meta) not in known_combos
+    )
+
+
+def is_unknown_label(value: Any) -> bool:
+    return str(value or "").strip().lower() in {"", "other", "unknown"}
+
+
+def confidence_below(confidences: dict[str, float], key: str, threshold: float) -> bool:
+    try:
+        return float(confidences.get(key, 1.0)) < threshold
+    except (TypeError, ValueError):
+        return True
+
+
+def configured_known_pattern_combos(classification_cfg: dict[str, Any]) -> set[tuple[str, str, str]]:
+    raw_combos = classification_cfg.get("known_pattern_combos")
+    if not raw_combos:
+        return DEFAULT_KNOWN_PATTERN_COMBOS
+    combos: set[tuple[str, str, str]] = set()
+    for combo in raw_combos:
+        if isinstance(combo, dict):
+            mechanic = str(combo.get("core_mechanic", "other"))
+            theme = str(combo.get("theme", "other"))
+            meta = str(combo.get("meta", "none"))
+            combos.add((mechanic, theme, meta))
+        elif isinstance(combo, (list, tuple)) and len(combo) == 3:
+            combos.add((str(combo[0]), str(combo[1]), str(combo[2])))
+    return combos or DEFAULT_KNOWN_PATTERN_COMBOS
 
 
 def validate_dimension(config: dict[str, Any], dimension: str, value: str) -> str:
