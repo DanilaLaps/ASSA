@@ -115,5 +115,44 @@
     "last_status": "ALERT",
     "opportunity_score": 78.87,
     "updated_at": "2026-06-05T11:10:13.508188+00:00"
+  },
+  "b05499cb302c2a81": {
+    "normalized_niche": "mahjong",
+    "last_sent_at": "2026-06-05T11:34:12.788421+00:00",
+    "last_alert_instance_id": "2026-06-05:b05499cb302c2a81",
+    "top_app_ids": [
+      "com.cool.adult.tile.mahjongcrush",
+      "com.heartsnet.clickwood.gp",
+      "com.mahjong.master.solitaire.match.puzzle"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 78.84,
+    "updated_at": "2026-06-05T11:34:12.788421+00:00"
+  },
+  "f6765f8ba920dcf1": {
+    "normalized_niche": "other",
+    "last_sent_at": "2026-06-05T11:34:12.788421+00:00",
+    "last_alert_instance_id": "2026-06-05:f6765f8ba920dcf1",
+    "top_app_ids": [
+      "com.brain.twist.tricky.story",
+      "com.et.ultimate.bear.running.game",
+      "com.streetpro.real3d.cardriving"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 78.63,
+    "updated_at": "2026-06-05T11:34:12.788421+00:00"
+  },
+  "c77b7569345fa87e": {
+    "normalized_niche": "sandbox",
+    "last_sent_at": "2026-06-05T11:34:12.788421+00:00",
+    "last_alert_instance_id": "2026-06-05:c77b7569345fa87e",
+    "top_app_ids": [
+      "com.BonoboGames.EvilDoll2",
+      "com.craft.block.buildingcraft.simulation",
+      "com.lazyastronaut.AngryNeighbor3"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 78.49,
+    "updated_at": "2026-06-05T11:34:12.788421+00:00"
   }
 }

@@ -13,7 +13,7 @@ Source: single AppStoreSpy query without country/language filters.
 - unknown_coverage
 
 ## Top Candidates
-- ALERT coloring score=80.88 quality=83.0 mvp=85.0 installs=683387 risks=classifier_low_confidence, unknown_coverage, weak_rating_signal
+- ALERT coloring score=80.88 quality=83.0 mvp=85.0 installs=684104 risks=classifier_low_confidence, unknown_coverage, weak_rating_signal
 - ALERT sort_puzzle score=80.68 quality=83.0 mvp=82.92 installs=80100 risks=classifier_low_confidence, unknown_coverage, weak_rating_signal
 - ALERT sort_puzzle score=80.43 quality=90.0 mvp=85.0 installs=74010 risks=unknown_coverage, weak_rating_signal
 - ALERT arrow_puzzle score=80.39 quality=82.23 mvp=85.0 installs=2757606 risks=classifier_low_confidence, unknown_coverage, weak_rating_signal
