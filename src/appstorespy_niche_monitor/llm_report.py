@@ -72,24 +72,27 @@ def build_llm_status(pack_input: dict[str, Any], config: dict[str, Any], *, use_
     model_env = str(llm_cfg.get("model_env", "OPENAI_MODEL"))
     model = os.environ.get(model_env) or llm_cfg.get("default_model", "gpt-4.1-mini")
     api_key_present = bool(os.environ.get("OPENAI_API_KEY"))
-    if not use_llm:
-        source = "fallback"
-        reason = "disabled_by_cli"
-    elif not enabled:
-        source = "fallback"
-        reason = "disabled_in_config"
-    elif not api_key_present:
-        source = "fallback"
-        reason = "missing_openai_api_key"
-    else:
-        source = "openai_pending"
-        reason = None
     counts = {
         "alerts": len(pack_input.get("alerts", [])),
         "watch": len(pack_input.get("watch", [])),
         "near_misses": len(pack_input.get("near_misses", [])),
         "initial_baseline_digest": len(pack_input.get("initial_baseline_digest", [])),
     }
+    if not use_llm:
+        source = "fallback"
+        reason = "disabled_by_cli"
+    elif not enabled:
+        source = "fallback"
+        reason = "disabled_in_config"
+    elif counts["alerts"] <= 0:
+        source = "fallback"
+        reason = "no_sendable_alerts"
+    elif not api_key_present:
+        source = "fallback"
+        reason = "missing_openai_api_key"
+    else:
+        source = "openai_pending"
+        reason = None
     return {
         "analysis_source": source,
         "should_call_openai": source == "openai_pending",
@@ -198,8 +201,10 @@ def compact_candidate_for_llm(candidate: dict[str, Any]) -> dict[str, Any]:
         "sendable_alert_score",
         "sendable_alert_rank",
         "sendable_score_components",
+        "sendable_threshold_margins",
         "sendable_alert_reasons",
         "sendable_alert_failures",
+        "first_blocking_failure",
         "alert_stage",
         "telegram_delivery_channel",
         "market_signal_key",
@@ -210,6 +215,15 @@ def compact_candidate_for_llm(candidate: dict[str, Any]) -> dict[str, Any]:
         "alert_filter_reasons",
         "confidence_level",
         "classification_confidence_avg",
+        "unknown_app_count",
+        "unknown_app_share",
+        "unknown_installs_share",
+        "top_app_unknown",
+        "top3_unknown_app_share",
+        "mixed_unknown_cluster",
+        "unknown_dominant_cluster",
+        "unknown_pattern_blocker_active",
+        "cluster_pattern_status",
         "unknown_or_new_pattern_cluster",
         "first_run_without_history",
         "send_regular_alert",
@@ -254,6 +268,7 @@ def compact_top_product_for_llm(app: dict[str, Any]) -> dict[str, Any]:
         "url_appstorespy": app.get("url_appstorespy"),
         "url": app.get("url"),
         "website": app.get("website"),
+        "is_unknown_or_new_pattern": app.get("is_unknown_or_new_pattern"),
     }
 
 

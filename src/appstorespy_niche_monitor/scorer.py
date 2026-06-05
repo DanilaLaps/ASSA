@@ -231,7 +231,12 @@ def reason_codes(summary: dict[str, Any]) -> list[str]:
         reasons.append("monetization_signal_present")
     if float(summary.get("rating_confidence", 0.0)) >= 0.5:
         reasons.append("good_rating_confidence")
-    if summary.get("unknown_or_new_pattern_cluster"):
+    if (
+        summary.get("unknown_or_new_pattern_cluster")
+        and int(summary.get("app_count", 0)) >= 3
+        and int(summary.get("successful_new_apps_count", 0)) >= 2
+        and int(summary.get("unique_developer_count", 0)) >= 2
+    ):
         reasons.append("new_pattern_detected")
     if int(summary.get("app_count", 0)) == 1 and float(summary.get("total_daily_installs", 0.0)) >= 3000:
         reasons.append("single_app_breakout")
@@ -268,6 +273,10 @@ def risk_tags(summary: dict[str, Any]) -> list[str]:
         risks.append("low_data_quality")
     if float(summary.get("classification_confidence_avg", 1.0)) < 0.7:
         risks.append("classifier_low_confidence")
+    if summary.get("mixed_unknown_cluster"):
+        risks.append("mixed_unknown_cluster")
+    if summary.get("unknown_dominant_cluster"):
+        risks.append("unknown_dominant_cluster")
     coverage = summary.get("coverage", {})
     if isinstance(coverage, dict):
         risks.extend(coverage_risk_tags(coverage))

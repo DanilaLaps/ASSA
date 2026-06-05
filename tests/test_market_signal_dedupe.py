@@ -108,6 +108,39 @@ class MarketSignalDedupeTests(unittest.TestCase):
         duplicate = next(item for item in rows if item["candidate_id"] == "weaker")
         self.assertEqual(duplicate["duplicate_reason"], "market_signal_duplicate")
 
+    def test_cleaner_duplicate_beats_unknown_heavy_duplicate(self):
+        config, _ = load_config("config.yaml")
+
+        rows = dedupe_market_signals(
+            [
+                candidate(
+                    "unknown-heavy",
+                    94,
+                    "core_mechanic_theme_meta",
+                    sendable_alert_score=90,
+                    unknown_pattern_blocker_active=True,
+                    unknown_app_share=0.8,
+                    unknown_installs_share=0.82,
+                    classification_confidence_avg=0.62,
+                ),
+                candidate(
+                    "cleaner",
+                    91,
+                    "normalized_niche",
+                    sendable_alert_score=85,
+                    unknown_pattern_blocker_active=False,
+                    unknown_app_share=0.0,
+                    unknown_installs_share=0.0,
+                    classification_confidence_avg=0.82,
+                ),
+            ],
+            config,
+        )
+
+        duplicate = next(item for item in rows if item["candidate_id"] == "unknown-heavy")
+        self.assertEqual(duplicate["duplicate_of_candidate_id"], "cleaner")
+        self.assertEqual(duplicate["duplicate_reason"], "market_signal_duplicate")
+
 
 if __name__ == "__main__":
     unittest.main()

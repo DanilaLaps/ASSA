@@ -114,7 +114,7 @@ def with_market_signal_defaults(candidate: dict[str, Any]) -> dict[str, Any]:
     return item
 
 
-def market_signal_rank(candidate: dict[str, Any]) -> tuple[int, float, float, int, float, int, float]:
+def market_signal_rank(candidate: dict[str, Any]) -> tuple[int, float, float, int, float, float, float, float, int, float, float]:
     status_rank = {"ALERT": 5, "WATCH": 4, "SINGLE_APP_WATCH": 3, "NEAR_MISS": 2, "REJECT": 1}
     specificity_rank = {
         "core_mechanic_theme_meta": 5,
@@ -123,12 +123,18 @@ def market_signal_rank(candidate: dict[str, Any]) -> tuple[int, float, float, in
         "market_category_core_mechanic": 2,
         "core_mechanic": 1,
     }
+    unknown_blocker_penalty = 10.0 if bool(candidate.get("unknown_pattern_blocker_active")) else 0.0
+    opportunity_blocker_penalty = 5.0 if bool(candidate.get("unknown_pattern_blocker_active")) else 0.0
     return (
         status_rank.get(str(candidate.get("status")), 0),
-        float(candidate.get("sendable_alert_score", 0.0)),
-        float(candidate.get("opportunity_score", 0.0)),
+        float(candidate.get("sendable_alert_score", 0.0)) - unknown_blocker_penalty,
+        float(candidate.get("opportunity_score", 0.0)) - opportunity_blocker_penalty,
         specificity_rank.get(str(candidate.get("group_key_type")), 0),
+        -float(candidate.get("unknown_app_share", 0.0)),
+        -float(candidate.get("unknown_installs_share", 0.0)),
+        float(candidate.get("classification_confidence_avg", 0.0)),
         float(candidate.get("data_quality_score", 0.0)),
         int(candidate.get("app_count", 0)),
-        float(candidate.get("classification_confidence_avg", 0.0)),
+        float(candidate.get("sendable_alert_score", 0.0)),
+        float(candidate.get("opportunity_score", 0.0)),
     )

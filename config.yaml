@@ -343,7 +343,8 @@
       "classifier_low_confidence",
       "weak_revenue_signal",
       "weak_monetization_signal",
-      "audience_uncertain"
+      "audience_uncertain",
+      "mixed_unknown_cluster"
     ],
     "max_sendable_per_normalized_niche": 1,
     "max_sendable_per_core_mechanic": 2,

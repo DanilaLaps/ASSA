@@ -36,6 +36,7 @@ DEFAULT_SENDABLE_RULES = {
         "weak_revenue_signal",
         "weak_monetization_signal",
         "audience_uncertain",
+        "mixed_unknown_cluster",
     ],
     "max_sendable_per_normalized_niche": 1,
     "max_sendable_per_core_mechanic": 2,
@@ -328,10 +329,15 @@ def passes_sendable_hard_filters(candidate: dict[str, Any], config: dict[str, An
             failures.append("single_app_breakout_not_regular_alert")
 
     normalized_niche = str(candidate.get("normalized_niche") or candidate.get("niche") or "other").lower()
-    is_unknown = bool(candidate.get("unknown_or_new_pattern_cluster")) or normalized_niche in {"unknown", "other"}
-    if bool(rules.get("block_unknown_or_new_pattern_if_low_confidence", True)) and is_unknown and confidence < 0.70:
-        failures.append("unknown_pattern_low_confidence")
-    if bool(rules.get("block_other_niche_if_low_confidence", True)) and normalized_niche == "other" and confidence < 0.70:
+    unknown_pattern_blocker_active = bool(candidate.get("unknown_pattern_blocker_active"))
+    if bool(rules.get("block_unknown_or_new_pattern_if_low_confidence", True)) and unknown_pattern_blocker_active:
+        failures.append("unknown_pattern_blocker_active")
+    if (
+        bool(rules.get("block_other_niche_if_low_confidence", True))
+        and normalized_niche == "other"
+        and unknown_pattern_blocker_active
+        and confidence < 0.70
+    ):
         failures.append("other_niche_low_confidence")
 
     risk_tags = set(str(tag) for tag in candidate.get("risk_tags", []))
@@ -378,6 +384,15 @@ def enrich_sendable_alert_fields(candidates: list[dict[str, Any]], config: dict[
         item["team_fit_score"] = team_score
         item["sendable_alert_score"] = sendable_score
         item["sendable_score_components"] = components
+        item["sendable_threshold_margins"] = calculate_sendable_threshold_margins(
+            {
+                **item,
+                "trend_confidence_score": trend_score,
+                "team_fit_score": team_score,
+                "sendable_alert_score": sendable_score,
+            },
+            config,
+        )
         item.setdefault("sendable_alert_rank", None)
         item.setdefault("send_regular_alert", False)
         item.setdefault("telegram_delivery_channel", "none")
@@ -386,7 +401,12 @@ def enrich_sendable_alert_fields(candidates: list[dict[str, Any]], config: dict[
         reasons = list(item.get("sendable_alert_reasons", []))
         failures = list(item.get("sendable_alert_failures", []))
         reasons.extend(score_reasons + trend_reasons + team_reasons)
-        failures.extend(score_failures + trend_failures + team_failures + hard_failures)
+        new_failures = score_failures + trend_failures + team_failures + hard_failures
+        failures.extend(new_failures)
+        if new_failures and not item.get("first_blocking_failure"):
+            item["first_blocking_failure"] = str(new_failures[0])
+        else:
+            item.setdefault("first_blocking_failure", None)
         if item.get("status") == "ALERT":
             reasons.append("qualified_alert_candidate")
             item.setdefault("alert_stage", "QUALIFIED_CANDIDATE")
@@ -416,6 +436,8 @@ def calculate_sendable_score_with_inputs(
     top_app_share = ratio_metric(candidate, "top_app_share")
     growth_by_one_app_share = ratio_metric(candidate, "growth_by_one_app_share")
     advertised_top_app_share = ratio_metric(candidate, "advertised_top_app_share")
+    unknown_app_share = ratio_metric(candidate, "unknown_app_share")
+    unknown_installs_share = ratio_metric(candidate, "unknown_installs_share")
     risk_tags = set(str(tag) for tag in candidate.get("risk_tags", []))
 
     opportunity_component = opportunity_score * 0.40
@@ -463,9 +485,71 @@ def calculate_sendable_score_with_inputs(
         "paid_spike_penalty": round(paid_spike_penalty, 2),
         "classifier_penalty": round(classifier_penalty, 2),
         "risk_penalty": round(risk_penalty, 2),
+        "unknown_app_share": round(unknown_app_share, 4),
+        "unknown_installs_share": round(unknown_installs_share, 4),
         "final": round(final, 2),
     }
     return round(final, 2), reasons, failures, components
+
+
+def calculate_sendable_threshold_margins(
+    candidate: dict[str, Any],
+    config: dict[str, Any],
+) -> dict[str, float]:
+    rules = sendable_rules(config)
+    opportunity_score = score_100(candidate, "opportunity_score")
+    sendable_score = float_metric(candidate, "sendable_alert_score")
+    trend_score = float_metric(candidate, "trend_confidence_score")
+    team_score = float_metric(candidate, "team_fit_score")
+    quality = score_100(candidate, "data_quality_score")
+    confidence = ratio_metric(candidate, "classification_confidence_avg", default=0.0)
+    mvp_feasibility = score_100(candidate, "mvp_feasibility_score")
+    app_count = int_metric(candidate, "app_count")
+    successful_new_apps = successful_new_apps_count(candidate)
+    unique_developers = unique_developer_count(candidate)
+    total_daily = int_metric(candidate, "total_daily_installs")
+    top_app_share = ratio_metric(candidate, "top_app_share")
+    top3_app_share = ratio_metric(candidate, "top3_app_share", default=top_app_share)
+    growth_by_one_app_share = ratio_metric(candidate, "growth_by_one_app_share")
+    advertised_top_app_share = ratio_metric(candidate, "advertised_top_app_share")
+    giant_developer_share = ratio_metric(candidate, "giant_developer_share")
+    single_developer_share = ratio_metric(candidate, "single_developer_share")
+    unknown_app_share = ratio_metric(candidate, "unknown_app_share")
+    unknown_installs_share = ratio_metric(candidate, "unknown_installs_share")
+    return {
+        "sendable_alert_score": round(sendable_score - float(rules.get("min_sendable_alert_score", 80.0)), 4),
+        "opportunity_score": round(opportunity_score - float(rules.get("min_opportunity_score", 75.0)), 4),
+        "trend_confidence_score": round(trend_score - float(rules.get("min_trend_confidence_score", 65.0)), 4),
+        "team_fit_score": round(team_score - float(rules.get("min_team_fit_score", 60.0)), 4),
+        "data_quality_score": round(quality - normalized_threshold_100(rules.get("min_data_quality_score", 70.0)), 4),
+        "classification_confidence_avg": round(
+            confidence - float(rules.get("min_classification_confidence_avg", 0.60)),
+            4,
+        ),
+        "mvp_feasibility_score": round(mvp_feasibility - float(rules.get("min_mvp_feasibility_score", 60.0)), 4),
+        "app_count": round(app_count - int(rules.get("min_app_count", 3)), 4),
+        "successful_new_apps_count": round(successful_new_apps - int(rules.get("min_successful_new_apps", 2)), 4),
+        "unique_developer_count": round(unique_developers - int(rules.get("min_unique_developers", 2)), 4),
+        "total_daily_installs": round(total_daily - int(rules.get("min_total_daily_installs", 3000)), 4),
+        "top_app_share": round(float(rules.get("max_top_app_share", 0.60)) - top_app_share, 4),
+        "top3_app_share": round(float(rules.get("max_top3_app_share", 0.85)) - top3_app_share, 4),
+        "growth_by_one_app_share": round(
+            float(rules.get("max_growth_by_one_app_share", 0.65)) - growth_by_one_app_share,
+            4,
+        ),
+        "advertised_top_app_share": round(
+            float(rules.get("max_advertised_top_app_share", 0.60)) - advertised_top_app_share,
+            4,
+        ),
+        "giant_developer_share": round(float(rules.get("max_giant_developer_share", 0.50)) - giant_developer_share, 4),
+        "single_developer_share": round(
+            float(rules.get("max_single_developer_share", 0.70)) - single_developer_share,
+            4,
+        ),
+        "unknown_app_share_to_dominance": round(0.50 - unknown_app_share, 4),
+        "unknown_installs_share_to_dominance": round(0.60 - unknown_installs_share, 4),
+        "classification_confidence_for_unknown_blocker": round(confidence - 0.70, 4),
+    }
 
 
 def calculate_organic_confidence(candidate: dict[str, Any]) -> tuple[str, float, list[str]]:

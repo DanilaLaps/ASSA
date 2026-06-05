@@ -12,6 +12,7 @@ def write_daily_reports(
     paths: dict[str, Path],
     candidates: list[dict[str, Any]],
     snapshot_date: str,
+    summaries: list[dict[str, Any]] | None = None,
 ) -> list[str]:
     reports_dir = paths["reports_daily_dir"]
     reports_dir.mkdir(parents=True, exist_ok=True)
@@ -19,7 +20,7 @@ def write_daily_reports(
     candidates_json = reports_dir / f"{snapshot_date}_candidates.json"
     candidates_md = reports_dir / f"{snapshot_date}_candidates.md"
     write_json(candidates_json, candidates)
-    candidates_md.write_text(render_candidates_report(candidates, snapshot_date), encoding="utf-8")
+    candidates_md.write_text(render_candidates_report(candidates, snapshot_date, summaries), encoding="utf-8")
     report_paths.extend([str(candidates_json), str(candidates_md)])
 
     sendable_path = reports_dir / f"{snapshot_date}_sendable_alerts.md"
@@ -27,8 +28,15 @@ def write_daily_reports(
     report_paths.append(str(sendable_path))
 
     funnel_path = reports_dir / f"{snapshot_date}_alert_funnel.md"
-    funnel_path.write_text(render_alert_funnel_report(candidates, snapshot_date), encoding="utf-8")
+    funnel_path.write_text(render_alert_funnel_report(candidates, snapshot_date, summaries), encoding="utf-8")
     report_paths.append(str(funnel_path))
+
+    unknown_path = reports_dir / f"{snapshot_date}_unknown_diagnostics.md"
+    unknown_path.write_text(
+        render_unknown_diagnostics_report(candidates, snapshot_date, summaries),
+        encoding="utf-8",
+    )
+    report_paths.append(str(unknown_path))
 
     status_files = {
         "watch": [item for item in candidates if item.get("status") in {"WATCH", "SINGLE_APP_WATCH"}],
@@ -48,7 +56,11 @@ def write_daily_reports(
     return report_paths
 
 
-def render_candidates_report(candidates: list[dict[str, Any]], snapshot_date: str) -> str:
+def render_candidates_report(
+    candidates: list[dict[str, Any]],
+    snapshot_date: str,
+    summaries: list[dict[str, Any]] | None = None,
+) -> str:
     counts = Counter(str(item.get("status", "UNKNOWN")) for item in candidates)
     stage_counts = Counter(str(item.get("alert_stage", "NONE")) for item in candidates)
     rejected_reasons = Counter(
@@ -79,6 +91,9 @@ def render_candidates_report(candidates: list[dict[str, Any]], snapshot_date: st
         "## Coverage",
         format_bullets(coverage_warnings or ["coverage_ok"]),
         "",
+        "## Unknown Diagnostics",
+        format_unknown_counts(summaries or candidates),
+        "",
         "## Top Candidates",
         format_candidate_rows([item for item in candidates if item.get("status") != "REJECT"][:20]),
         "",
@@ -107,7 +122,11 @@ def render_sendable_alerts_report(candidates: list[dict[str, Any]], snapshot_dat
     ) + "\n"
 
 
-def render_alert_funnel_report(candidates: list[dict[str, Any]], snapshot_date: str) -> str:
+def render_alert_funnel_report(
+    candidates: list[dict[str, Any]],
+    snapshot_date: str,
+    summaries: list[dict[str, Any]] | None = None,
+) -> str:
     status_counts = Counter(str(item.get("status", "UNKNOWN")) for item in candidates)
     stage_counts = Counter(str(item.get("alert_stage", "NONE")) for item in candidates)
     failure_counts = Counter(
@@ -157,6 +176,9 @@ def render_alert_funnel_report(candidates: list[dict[str, Any]], snapshot_date: 
             )
         ),
         "",
+        "## Unknown Diagnostics",
+        format_unknown_counts(summaries or candidates),
+        "",
         "## Sendable Failure Distribution",
         format_counter(failure_counts),
         "",
@@ -170,6 +192,54 @@ def render_alert_funnel_report(candidates: list[dict[str, Any]], snapshot_date: 
         ),
     ]
     return "\n".join(lines) + "\n"
+
+
+def render_unknown_diagnostics_report(
+    candidates: list[dict[str, Any]],
+    snapshot_date: str,
+    summaries: list[dict[str, Any]] | None = None,
+) -> str:
+    summary_rows = summaries or candidates
+    blocked = [
+        item
+        for item in candidates
+        if (
+            item.get("unknown_pattern_blocker_active")
+            or "unknown_pattern_blocker_active" in item.get("sendable_alert_failures", [])
+            or "unknown_pattern_blocker_active" in item.get("failed_alert_conditions", [])
+        )
+    ]
+    return "\n".join(
+        [
+            f"# Unknown Diagnostics - {snapshot_date}",
+            "",
+            "Source: single AppStoreSpy query without country/language filters.",
+            "",
+            "## Summary Counts",
+            format_unknown_counts(summary_rows),
+            "",
+            "## Top Blocked By Unknown App Share",
+            format_candidate_rows(
+                sorted(blocked, key=lambda item: float(item.get("unknown_app_share", 0.0)), reverse=True)[:20]
+            ),
+            "",
+            "## Top Blocked By Unknown Installs Share",
+            format_candidate_rows(
+                sorted(blocked, key=lambda item: float(item.get("unknown_installs_share", 0.0)), reverse=True)[:20]
+            ),
+        ]
+    ) + "\n"
+
+
+def format_unknown_counts(rows: list[dict[str, Any]]) -> str:
+    counter = Counter(
+        {
+            "mixed_unknown_cluster": sum(1 for item in rows if item.get("mixed_unknown_cluster")),
+            "unknown_dominant_cluster": sum(1 for item in rows if item.get("unknown_dominant_cluster")),
+            "unknown_pattern_blocker_active": sum(1 for item in rows if item.get("unknown_pattern_blocker_active")),
+        }
+    )
+    return format_counter(counter)
 
 
 def render_status_report(name: str, rows: list[dict[str, Any]], snapshot_date: str) -> str:
@@ -299,6 +369,9 @@ def format_candidate_rows(rows: list[dict[str, Any]]) -> str:
             f"score={row.get('opportunity_score')} sendable={row.get('sendable_alert_score')} "
             f"stage={row.get('alert_stage')} quality={row.get('data_quality_score')} "
             f"mvp={row.get('mvp_feasibility_score')} installs={row.get('total_daily_installs')} "
+            f"unknown_app_share={row.get('unknown_app_share', 0)} "
+            f"unknown_installs_share={row.get('unknown_installs_share', 0)} "
+            f"first_blocking={row.get('first_blocking_failure') or 'none'} "
             f"risks={', '.join(row.get('risk_tags', [])) or 'none'}"
         )
     return "\n".join(lines)

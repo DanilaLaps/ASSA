@@ -89,6 +89,10 @@ class TelegramNotifyTests(unittest.TestCase):
                 "watch_count": 4,
                 "near_miss_count": 0,
                 "rejected_count": 33,
+                "mixed_unknown_clusters_count": 5,
+                "unknown_dominant_clusters_count": 2,
+                "unknown_blocker_active_count": 1,
+                "unknown_pattern_blocker_active_blocked_count": 1,
                 "baseline_only": False,
                 "llm_status": {
                     "analysis_source": "openai",
@@ -103,6 +107,10 @@ class TelegramNotifyTests(unittest.TestCase):
         self.assertIn("Separate TEST messages sent: 0", message)
         self.assertIn("Scope: one AppStoreSpy query, no country/language filter", message)
         self.assertIn("LLM review: source=openai", message)
+        self.assertIn("Mixed unknown clusters: 5", message)
+        self.assertIn("Unknown-dominant clusters: 2", message)
+        self.assertIn("Unknown blocker active: 1", message)
+        self.assertIn("Candidates blocked by unknown_pattern_blocker_active: 1", message)
 
     def test_format_initial_baseline_digest_includes_review(self):
         message = format_initial_baseline_digest_message(

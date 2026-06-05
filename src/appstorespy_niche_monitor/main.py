@@ -127,7 +127,7 @@ def run_pipeline(
         if str((alert.get("llm_analysis") or {}).get("recommendation", "")).upper() == "TEST"
     )
     report_paths: list[str] = []
-    report_paths.extend(write_daily_reports(paths, candidates, snapshot_date))
+    report_paths.extend(write_daily_reports(paths, candidates, snapshot_date, summaries))
     for alert in urgent_alerts:
         analysis = alert.get("llm_analysis", {})
         markdown = render_alert_report(alert, analysis)
@@ -139,7 +139,7 @@ def run_pipeline(
     save_processed(paths, "watch", watch, snapshot_date)
     save_processed(paths, "near_misses", near_misses, snapshot_date)
     save_processed(paths, "rejected", rejected, snapshot_date)
-    alert_funnel = build_alert_funnel(candidates, urgent_alerts, watch, near_misses, rejected)
+    alert_funnel = build_alert_funnel(candidates, urgent_alerts, watch, near_misses, rejected, summaries)
     write_json(paths["processed_dir"] / f"{snapshot_date}_alert_funnel.json", alert_funnel)
 
     sent_count = 0
@@ -177,6 +177,12 @@ def run_pipeline(
         "duplicate_market_signals_suppressed": alert_funnel["duplicate_market_signals_suppressed"],
         "cooldown_blocked_count": alert_funnel["cooldown_blocked_count"],
         "limit_blocked_count": alert_funnel["limit_blocked_count"],
+        "mixed_unknown_clusters_count": alert_funnel["mixed_unknown_clusters_count"],
+        "unknown_dominant_clusters_count": alert_funnel["unknown_dominant_clusters_count"],
+        "unknown_blocker_active_count": alert_funnel["unknown_blocker_active_count"],
+        "unknown_pattern_blocker_active_blocked_count": alert_funnel[
+            "unknown_pattern_blocker_active_blocked_count"
+        ],
         "initial_baseline_digest_count": len(initial_digest_items),
         "initial_baseline_digest_sent": initial_digest_sent,
         "history_state": history_state,
@@ -194,7 +200,9 @@ def build_alert_funnel(
     watch: list[dict[str, Any]],
     near_misses: list[dict[str, Any]],
     rejected: list[dict[str, Any]],
+    summaries: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
+    unknown_rows = summaries or candidates
     return {
         "candidates_count": len(candidates),
         "alert_candidates_count": sum(1 for item in candidates if item.get("status") == "ALERT"),
@@ -224,6 +232,15 @@ def build_alert_funnel(
                     "telegram_budget_blocked",
                 )
             )
+        ),
+        "mixed_unknown_clusters_count": sum(1 for item in unknown_rows if item.get("mixed_unknown_cluster")),
+        "unknown_dominant_clusters_count": sum(1 for item in unknown_rows if item.get("unknown_dominant_cluster")),
+        "unknown_blocker_active_count": sum(1 for item in unknown_rows if item.get("unknown_pattern_blocker_active")),
+        "unknown_pattern_blocker_active_blocked_count": sum(
+            1
+            for item in candidates
+            if "unknown_pattern_blocker_active" in item.get("sendable_alert_failures", [])
+            or "unknown_pattern_blocker_active" in item.get("failed_alert_conditions", [])
         ),
         "failure_counts": count_sendable_failures(candidates),
     }

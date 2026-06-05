@@ -161,6 +161,23 @@ class LlmReportTests(unittest.TestCase):
 
         self.assertEqual(analysis["llm_status"]["fallback_reason"], "disabled_in_config")
 
+    def test_analyze_candidate_pack_skips_openai_when_no_sendable_alerts(self):
+        with patch.dict("os.environ", {"OPENAI_API_KEY": "test-key"}, clear=True):
+            with patch("appstorespy_niche_monitor.llm_report.urllib.request.urlopen") as urlopen:
+                analysis = analyze_candidate_pack(
+                    [
+                        pack_candidate(
+                            send_regular_alert=False,
+                            alert_stage="QUALIFIED_CANDIDATE_ONLY",
+                        )
+                    ],
+                    llm_config(),
+                )
+
+        urlopen.assert_not_called()
+        self.assertEqual(analysis["analysis_source"], "fallback")
+        self.assertEqual(analysis["llm_status"]["fallback_reason"], "no_sendable_alerts")
+
     def test_generate_openai_pack_analysis_marks_openai_candidate_sources(self):
         config = llm_config()
         pack_input = build_candidate_pack_input([pack_candidate()], config)

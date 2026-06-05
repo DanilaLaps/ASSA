@@ -104,6 +104,7 @@ def aggregate_group(
     }
     unique_developer_count = len(developer_ids)
     top3_daily = sum(int(app.get("downloads_daily", 0)) for app in top_apps[:3])
+    unknown_diagnostics = calculate_unknown_pattern_diagnostics(apps, top_apps, total_daily)
 
     successful_new_apps_count = 0
     traction_fresh_apps_count = 0
@@ -190,10 +191,71 @@ def aggregate_group(
             4,
         ),
         "classification_confidence_avg": round(mean(classification_confidences), 4) if classification_confidences else 0.0,
-        "unknown_or_new_pattern_cluster": any(bool(app.get("is_unknown_or_new_pattern")) for app in apps),
         "top_apps": [compact_app(app) for app in top_apps],
     }
+    summary.update(
+        finalize_unknown_pattern_diagnostics(
+            unknown_diagnostics,
+            float(summary["classification_confidence_avg"]),
+            float(summary["top_app_share"]),
+        )
+    )
     return summary
+
+
+def calculate_unknown_pattern_diagnostics(
+    apps: list[dict[str, Any]],
+    top_apps: list[dict[str, Any]],
+    total_daily_installs: int,
+) -> dict[str, Any]:
+    unknown_apps = [app for app in apps if bool(app.get("is_unknown_or_new_pattern"))]
+    unknown_app_count = len(unknown_apps)
+    unknown_daily = sum(int(app.get("downloads_daily", 0)) for app in unknown_apps)
+    top_app = top_apps[0] if top_apps else {}
+    top3 = top_apps[:3]
+    top3_unknown_count = sum(1 for app in top3 if bool(app.get("is_unknown_or_new_pattern")))
+    return {
+        "unknown_app_count": unknown_app_count,
+        "unknown_app_share": round(safe_div(unknown_app_count, len(apps)), 4) if apps else 0.0,
+        "unknown_installs_share": round(safe_div(unknown_daily, total_daily_installs), 4)
+        if total_daily_installs > 0
+        else 0.0,
+        "top_app_unknown": bool(top_app.get("is_unknown_or_new_pattern")),
+        "top3_unknown_app_share": round(safe_div(top3_unknown_count, len(top3)), 4) if top3 else 0.0,
+    }
+
+
+def finalize_unknown_pattern_diagnostics(
+    diagnostics: dict[str, Any],
+    classification_confidence_avg: float,
+    top_app_share: float,
+) -> dict[str, Any]:
+    mixed_unknown_cluster = int(diagnostics.get("unknown_app_count", 0)) > 0
+    unknown_app_share = float(diagnostics.get("unknown_app_share", 0.0))
+    unknown_installs_share = float(diagnostics.get("unknown_installs_share", 0.0))
+    top_app_unknown = bool(diagnostics.get("top_app_unknown", False))
+    unknown_dominant_cluster = (
+        unknown_app_share >= 0.50
+        or unknown_installs_share >= 0.60
+        or (top_app_unknown and top_app_share >= 0.55)
+    )
+    unknown_pattern_blocker_active = unknown_dominant_cluster and classification_confidence_avg < 0.70
+    if unknown_pattern_blocker_active:
+        cluster_pattern_status = "unknown_blocker_active"
+    elif unknown_dominant_cluster:
+        cluster_pattern_status = "unknown_dominant"
+    elif mixed_unknown_cluster:
+        cluster_pattern_status = "mixed_unknown"
+    else:
+        cluster_pattern_status = "known"
+    return {
+        **diagnostics,
+        "mixed_unknown_cluster": mixed_unknown_cluster,
+        "unknown_dominant_cluster": unknown_dominant_cluster,
+        "unknown_pattern_blocker_active": unknown_pattern_blocker_active,
+        "cluster_pattern_status": cluster_pattern_status,
+        "unknown_or_new_pattern_cluster": unknown_dominant_cluster,
+    }
 
 
 def compact_app(app: dict[str, Any]) -> dict[str, Any]:
@@ -225,6 +287,7 @@ def compact_app(app: dict[str, Any]) -> dict[str, Any]:
         "url_appstorespy": app.get("url_appstorespy", ""),
         "url": app.get("url", ""),
         "website": app.get("website", ""),
+        "is_unknown_or_new_pattern": bool(app.get("is_unknown_or_new_pattern", False)),
     }
 
 

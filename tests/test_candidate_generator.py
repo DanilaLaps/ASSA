@@ -97,6 +97,61 @@ class CandidateGeneratorTests(unittest.TestCase):
 
         self.assertEqual(candidates[0]["status"], "REJECT")
 
+    def test_mixed_unknown_cluster_does_not_block_alert_candidate(self):
+        config, _ = load_config("config.yaml")
+
+        candidates = generate_candidates(
+            [
+                summary(
+                    mixed_unknown_cluster=True,
+                    unknown_dominant_cluster=False,
+                    unknown_pattern_blocker_active=False,
+                    unknown_or_new_pattern_cluster=False,
+                    unknown_app_count=1,
+                    unknown_app_share=0.1,
+                    unknown_installs_share=0.08,
+                    reason_codes=["multi_app_cluster", "new_pattern_detected"],
+                )
+            ],
+            config,
+            "2026-06-04",
+        )
+
+        self.assertEqual(candidates[0]["status"], "ALERT")
+        self.assertIn("mixed_unknown_cluster", candidates[0]["risk_tags"])
+        self.assertNotIn("unknown_pattern_blocker_active", candidates[0]["failed_alert_conditions"])
+        self.assertNotIn("new_pattern_detected", candidates[0]["reason_codes"])
+
+    def test_unknown_pattern_blocker_active_blocks_alert_candidate(self):
+        config, _ = load_config("config.yaml")
+
+        candidates = generate_candidates(
+            [
+                summary(
+                    app_count=4,
+                    total_daily_installs=12000,
+                    successful_new_apps_count=2,
+                    unique_developer_count=2,
+                    opportunity_score=82,
+                    data_quality_score=82,
+                    mixed_unknown_cluster=True,
+                    unknown_dominant_cluster=True,
+                    unknown_pattern_blocker_active=True,
+                    unknown_or_new_pattern_cluster=True,
+                    unknown_app_count=3,
+                    unknown_app_share=0.75,
+                    unknown_installs_share=0.72,
+                    classification_confidence_avg=0.62,
+                )
+            ],
+            config,
+            "2026-06-04",
+        )
+
+        self.assertNotEqual(candidates[0]["status"], "ALERT")
+        self.assertIn("unknown_dominant_cluster", candidates[0]["risk_tags"])
+        self.assertIn("unknown_pattern_blocker_active", candidates[0]["failed_alert_conditions"])
+
 
 if __name__ == "__main__":
     unittest.main()

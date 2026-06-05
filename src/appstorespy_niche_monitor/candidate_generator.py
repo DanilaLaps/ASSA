@@ -42,7 +42,8 @@ def build_candidate(summary: dict[str, Any], config: dict[str, Any], snapshot_da
     failed_alert_conditions = alert_failed_conditions(summary, config)
     severe_risk = bool(summary.get("severe_paid_spike_risk")) or "severe_paid_spike" in summary.get("risk_tags", [])
     status = determine_status(summary, config, failed_alert_conditions, severe_risk)
-    reason_codes = list(summary.get("reason_codes", []))
+    reason_codes = candidate_reason_codes(summary)
+    risk_tags = candidate_risk_tags(summary)
     if status == "SINGLE_APP_WATCH":
         for reason in ("single_app_breakout", "needs_manual_validation"):
             if reason not in reason_codes:
@@ -56,7 +57,7 @@ def build_candidate(summary: dict[str, Any], config: dict[str, Any], snapshot_da
         "mvp_feasibility_score": candidate_mvp_feasibility(summary),
         "failed_alert_conditions": failed_alert_conditions,
         "reason_codes": sorted(set(reason_codes)),
-        "risk_tags": sorted(set(summary.get("risk_tags", []))),
+        "risk_tags": sorted(set(risk_tags)),
         "llm_summary": None,
         "send_regular_alert": False,
         "alert_stage": "QUALIFIED_CANDIDATE" if status == "ALERT" else "NONE",
@@ -65,8 +66,10 @@ def build_candidate(summary: dict[str, Any], config: dict[str, Any], snapshot_da
         "trend_confidence_score": 0.0,
         "team_fit_score": 0.0,
         "sendable_score_components": {},
+        "sendable_threshold_margins": {},
         "sendable_alert_reasons": ["qualified_alert_candidate"] if status == "ALERT" else [],
         "sendable_alert_failures": [],
+        "first_blocking_failure": None,
         "telegram_delivery_channel": "daily_digest_only" if status in {"WATCH", "SINGLE_APP_WATCH", "NEAR_MISS"} else "none",
         "market_signal_key": "",
         "market_signal_label": "",
@@ -77,6 +80,40 @@ def build_candidate(summary: dict[str, Any], config: dict[str, Any], snapshot_da
         "exclude_from_cooldown": False,
     }
     return candidate
+
+
+def candidate_reason_codes(summary: dict[str, Any]) -> list[str]:
+    reason_codes = [str(reason) for reason in summary.get("reason_codes", [])]
+    if "new_pattern_detected" in reason_codes and not broad_new_pattern_signal(summary):
+        reason_codes = [reason for reason in reason_codes if reason != "new_pattern_detected"]
+    if unknown_pattern_signal(summary) and broad_new_pattern_signal(summary) and "new_pattern_detected" not in reason_codes:
+        reason_codes.append("new_pattern_detected")
+    return reason_codes
+
+
+def candidate_risk_tags(summary: dict[str, Any]) -> list[str]:
+    risk_tags = [str(tag) for tag in summary.get("risk_tags", [])]
+    if bool(summary.get("mixed_unknown_cluster")) and "mixed_unknown_cluster" not in risk_tags:
+        risk_tags.append("mixed_unknown_cluster")
+    if bool(summary.get("unknown_dominant_cluster")) and "unknown_dominant_cluster" not in risk_tags:
+        risk_tags.append("unknown_dominant_cluster")
+    return risk_tags
+
+
+def unknown_pattern_signal(summary: dict[str, Any]) -> bool:
+    return bool(
+        summary.get("unknown_pattern_blocker_active")
+        or summary.get("unknown_dominant_cluster")
+        or summary.get("unknown_or_new_pattern_cluster")
+    )
+
+
+def broad_new_pattern_signal(summary: dict[str, Any]) -> bool:
+    return (
+        int(summary.get("app_count", 0)) >= 3
+        and int(summary.get("successful_new_apps_count") or summary.get("successful_new_apps") or 0) >= 2
+        and int(summary.get("unique_developer_count", 0)) >= 2
+    )
 
 
 def alert_failed_conditions(summary: dict[str, Any], config: dict[str, Any]) -> list[str]:
@@ -136,8 +173,7 @@ def strict_alert_blockers(summary: dict[str, Any], config: dict[str, Any]) -> li
         data_quality_score *= 100.0
     top_app_share = ratio_metric(summary, "top_app_share")
     growth_by_one_app_share = ratio_metric(summary, "growth_by_one_app_share")
-    normalized_niche = str(summary.get("normalized_niche") or summary.get("niche") or "other").lower()
-    is_unknown_or_other = normalized_niche in {"other", "unknown"} or bool(summary.get("unknown_or_new_pattern_cluster"))
+    unknown_pattern_blocker_active = bool(summary.get("unknown_pattern_blocker_active"))
 
     if "severe_paid_spike" in risk_tags or bool(summary.get("severe_paid_spike_risk")):
         failures.append("severe_paid_spike")
@@ -149,7 +185,7 @@ def strict_alert_blockers(summary: dict[str, Any], config: dict[str, Any]) -> li
         failures.append("classifier_low_confidence")
     if data_quality_score < normalized_threshold_100(rules.get("hard_alert_min_data_quality_score", 60.0)):
         failures.append("weak_data_quality")
-    if is_unknown_or_other:
+    if unknown_pattern_blocker_active:
         unknown_min_confidence = float(rules.get("unknown_pattern_alert_min_classification_confidence", 0.70))
         unknown_min_quality = normalized_threshold_100(rules.get("unknown_pattern_alert_min_data_quality_score", 75.0))
         if (
@@ -158,7 +194,7 @@ def strict_alert_blockers(summary: dict[str, Any], config: dict[str, Any]) -> li
             or successful_new_apps < int(rules.get("unknown_pattern_alert_min_successful_new_apps", 2))
             or data_quality_score < unknown_min_quality
         ):
-            failures.append("unknown_pattern_low_confidence")
+            failures.append("unknown_pattern_blocker_active")
     return failures
 
 

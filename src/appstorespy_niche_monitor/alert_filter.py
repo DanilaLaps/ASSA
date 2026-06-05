@@ -98,6 +98,7 @@ def apply_cooldown_and_alert_limits(
         item["send_regular_alert"] = True
         item["alert_stage"] = "SENDABLE_ALERT"
         item["telegram_delivery_channel"] = "regular_alert"
+        item["first_blocking_failure"] = None
         add_filter_reasons(item, ["passed"])
         add_sendable_reasons(item, ["sendable_alert_selected", "telegram_budget_available"])
         sent_count += 1
@@ -161,6 +162,8 @@ def add_filter_reasons(item: dict[str, Any], reasons: list[str]) -> None:
 def add_sendable_failures(item: dict[str, Any], failures: list[str]) -> None:
     values = list(item.get("sendable_alert_failures", []))
     for failure in failures:
+        if failure and not item.get("first_blocking_failure"):
+            item["first_blocking_failure"] = failure
         values = append_reason(values, failure)
     item["sendable_alert_failures"] = sorted(set(values))
 

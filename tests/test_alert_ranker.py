@@ -83,6 +83,53 @@ class AlertRankerTests(unittest.TestCase):
         self.assertIn("blocked_risk_tag", failures)
         self.assertIn("organic_confidence_low", failures)
 
+    def test_mixed_unknown_cluster_is_soft_penalty_not_hard_blocker(self):
+        config, _ = load_config("config.yaml")
+        enriched = enrich_sendable_alert_fields(
+            [
+                candidate(
+                    mixed_unknown_cluster=True,
+                    unknown_dominant_cluster=False,
+                    unknown_pattern_blocker_active=False,
+                    unknown_app_share=0.1,
+                    unknown_installs_share=0.08,
+                    risk_tags=["mixed_unknown_cluster"],
+                )
+            ],
+            config,
+        )[0]
+
+        passed, failures = passes_sendable_hard_filters(enriched, config)
+
+        self.assertTrue(passed)
+        self.assertNotIn("unknown_pattern_blocker_active", failures)
+        self.assertEqual(enriched["sendable_score_components"]["unknown_app_share"], 0.1)
+        self.assertEqual(enriched["sendable_score_components"]["unknown_installs_share"], 0.08)
+
+    def test_unknown_pattern_blocker_active_blocks_sendable_alert(self):
+        config, _ = load_config("config.yaml")
+        enriched = enrich_sendable_alert_fields(
+            [
+                candidate(
+                    unknown_dominant_cluster=True,
+                    unknown_pattern_blocker_active=True,
+                    unknown_or_new_pattern_cluster=True,
+                    unknown_app_share=0.7,
+                    unknown_installs_share=0.72,
+                    classification_confidence_avg=0.62,
+                    risk_tags=["unknown_dominant_cluster"],
+                )
+            ],
+            config,
+        )[0]
+
+        passed, failures = passes_sendable_hard_filters(enriched, config)
+
+        self.assertFalse(passed)
+        self.assertIn("unknown_pattern_blocker_active", failures)
+        self.assertEqual(enriched["first_blocking_failure"], "unknown_pattern_blocker_active")
+        self.assertIn("classification_confidence_for_unknown_blocker", enriched["sendable_threshold_margins"])
+
 
 if __name__ == "__main__":
     unittest.main()

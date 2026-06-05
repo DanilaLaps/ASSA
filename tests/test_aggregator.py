@@ -41,6 +41,18 @@ def app(**overrides):
     return row
 
 
+def confident_app(**overrides):
+    row = app(
+        niche_confidence=0.8,
+        mechanic_confidence=0.8,
+        theme_confidence=0.8,
+        audience_confidence=0.8,
+        complexity_confidence=0.8,
+    )
+    row.update(overrides)
+    return row
+
+
 class AggregatorTests(unittest.TestCase):
     def test_group_key_excludes_country(self):
         base = app(country="BR")
@@ -74,6 +86,93 @@ class AggregatorTests(unittest.TestCase):
         self.assertEqual(summary["top_apps"][0]["description_short"], "Sort goods on supermarket shelves.")
         self.assertEqual(summary["top_apps"][0]["screenshots"], ["one.png", "two.png", "three.png"])
         self.assertGreater(summary["advertised_top_app_share"], 0)
+
+    def test_one_unknown_app_in_known_cluster_does_not_activate_unknown_blocker(self):
+        config, _ = load_config("config.yaml")
+        apps = [
+            confident_app(
+                app_id=f"app-{index}",
+                bundle=f"app-{index}",
+                developer_id=f"dev-{index}",
+                downloads_daily=1000,
+                is_unknown_or_new_pattern=index == 0,
+            )
+            for index in range(10)
+        ]
+
+        summary = next(
+            item
+            for item in aggregate_apps(apps, config, "2026-06-04")
+            if item["group_key_type"] == "normalized_niche"
+        )
+
+        self.assertEqual(summary["unknown_app_count"], 1)
+        self.assertEqual(summary["unknown_app_share"], 0.1)
+        self.assertTrue(summary["mixed_unknown_cluster"])
+        self.assertFalse(summary["unknown_dominant_cluster"])
+        self.assertFalse(summary["unknown_pattern_blocker_active"])
+        self.assertFalse(summary["unknown_or_new_pattern_cluster"])
+        self.assertEqual(summary["cluster_pattern_status"], "mixed_unknown")
+
+    def test_majority_unknown_apps_set_unknown_dominant_cluster(self):
+        config, _ = load_config("config.yaml")
+        apps = [
+            confident_app(
+                app_id=f"app-{index}",
+                bundle=f"app-{index}",
+                developer_id=f"dev-{index}",
+                downloads_daily=1000,
+                is_unknown_or_new_pattern=index < 6,
+            )
+            for index in range(10)
+        ]
+
+        summary = next(
+            item
+            for item in aggregate_apps(apps, config, "2026-06-04")
+            if item["group_key_type"] == "normalized_niche"
+        )
+
+        self.assertEqual(summary["unknown_app_count"], 6)
+        self.assertEqual(summary["unknown_app_share"], 0.6)
+        self.assertTrue(summary["unknown_dominant_cluster"])
+        self.assertFalse(summary["unknown_pattern_blocker_active"])
+        self.assertTrue(summary["unknown_or_new_pattern_cluster"])
+        self.assertEqual(summary["cluster_pattern_status"], "unknown_dominant")
+
+    def test_unknown_top_app_with_high_share_sets_unknown_dominant_cluster(self):
+        config, _ = load_config("config.yaml")
+        apps = [
+            confident_app(
+                app_id="unknown-leader",
+                bundle="unknown-leader",
+                developer_id="dev-leader",
+                downloads_daily=5600,
+                is_unknown_or_new_pattern=True,
+            ),
+            *[
+                confident_app(
+                    app_id=f"known-{index}",
+                    bundle=f"known-{index}",
+                    developer_id=f"dev-{index}",
+                    downloads_daily=489 if index < 8 else 488,
+                    is_unknown_or_new_pattern=False,
+                )
+                for index in range(9)
+            ],
+        ]
+
+        summary = next(
+            item
+            for item in aggregate_apps(apps, config, "2026-06-04")
+            if item["group_key_type"] == "normalized_niche"
+        )
+
+        self.assertEqual(summary["unknown_app_share"], 0.1)
+        self.assertLess(summary["unknown_installs_share"], 0.6)
+        self.assertTrue(summary["top_app_unknown"])
+        self.assertGreaterEqual(summary["top_app_share"], 0.55)
+        self.assertTrue(summary["unknown_dominant_cluster"])
 
 
 if __name__ == "__main__":
