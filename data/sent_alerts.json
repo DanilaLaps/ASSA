@@ -1,1 +1,41 @@
-{}
+{
+  "ca925a1324b0a43e": {
+    "normalized_niche": "coloring",
+    "last_sent_at": "2026-06-05T10:44:17.628398+00:00",
+    "last_alert_instance_id": "2026-06-05:ca925a1324b0a43e",
+    "top_app_ids": [
+      "color.number.paint.pixle.art.sort.jigsaw",
+      "com.dogbytegames.otrnext",
+      "com.oakever.paintbynumber"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 80.88,
+    "updated_at": "2026-06-05T10:44:17.628398+00:00"
+  },
+  "e7ef7baaa86aa83f": {
+    "normalized_niche": "sort_puzzle",
+    "last_sent_at": "2026-06-05T10:44:17.628398+00:00",
+    "last_alert_instance_id": "2026-06-05:e7ef7baaa86aa83f",
+    "top_app_ids": [
+      "com.ants.box",
+      "com.losttemplegames.wordsolitaire",
+      "com.lumosplay.colorfit.gp"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 80.68,
+    "updated_at": "2026-06-05T10:44:17.628398+00:00"
+  },
+  "d58c48113e39182a": {
+    "normalized_niche": "sort_puzzle",
+    "last_sent_at": "2026-06-05T10:44:17.628398+00:00",
+    "last_alert_instance_id": "2026-06-05:d58c48113e39182a",
+    "top_app_ids": [
+      "com.game.bubblematch.connect.puzzle",
+      "com.magic.relaxing.water.sort.colorgame.puzzle",
+      "com.puzzle.water.sort.color.jam"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 80.43,
+    "updated_at": "2026-06-05T10:44:17.628398+00:00"
+  }
+}
