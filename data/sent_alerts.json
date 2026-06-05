@@ -76,5 +76,44 @@
     "last_status": "ALERT",
     "opportunity_score": 79.91,
     "updated_at": "2026-06-05T11:05:56.975373+00:00"
+  },
+  "0457e0ffe94d9f6f": {
+    "normalized_niche": "word_puzzle",
+    "last_sent_at": "2026-06-05T11:10:13.508188+00:00",
+    "last_alert_instance_id": "2026-06-05:0457e0ffe94d9f6f",
+    "top_app_ids": [
+      "com.fmglobal.engg",
+      "com.furywing.survival.defense",
+      "com.sixwaves.ffmascot"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 79.06,
+    "updated_at": "2026-06-05T11:10:13.508188+00:00"
+  },
+  "523df34e35118c8e": {
+    "normalized_niche": "runner",
+    "last_sent_at": "2026-06-05T11:10:13.508188+00:00",
+    "last_alert_instance_id": "2026-06-05:523df34e35118c8e",
+    "top_app_ids": [
+      "com.cns.bear.adventure.game",
+      "com.happy.kraken.slots",
+      "com.lavalabs.dungeonrush"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 79.01,
+    "updated_at": "2026-06-05T11:10:13.508188+00:00"
+  },
+  "4317d10975bbceea": {
+    "normalized_niche": "merge",
+    "last_sent_at": "2026-06-05T11:10:13.508188+00:00",
+    "last_alert_instance_id": "2026-06-05:4317d10975bbceea",
+    "top_app_ids": [
+      "astrum.ent.m2alyona",
+      "com.bible.jigsaw.art.story.card.puzzle.game",
+      "com.blastplus.gungodtdm"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 78.87,
+    "updated_at": "2026-06-05T11:10:13.508188+00:00"
   }
 }

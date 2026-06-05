@@ -36,7 +36,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -333,7 +333,7 @@
     "alert_instance_id": "2026-06-05:ca925a1324b0a43e",
     "status": "ALERT",
     "failed_alert_conditions": [],
-    "llm_summary": "Test a scoped collect game with abstract presentation.",
+    "llm_summary": "A simplified abstract-themed collecting coloring puzzle game targeting women 25-45 and kids.",
     "send_regular_alert": false,
     "initial_baseline_digest": false,
     "would_be_status": null,
@@ -346,30 +346,14 @@
     ],
     "llm_analysis": {
       "recommendation": "TEST",
-      "confidence": "high",
-      "why_interesting": [
-        "diversified_apps",
-        "fresh_traction",
-        "growing_vs_previous_snapshot"
-      ],
-      "why_might_be_false_positive": [
-        "classifier_low_confidence",
-        "unknown_coverage",
-        "weak_rating_signal"
-      ],
-      "mvp_hypothesis": "Test a scoped collect game with abstract presentation.",
-      "simplified_mvp_scope": "One core loop, one content theme, lightweight meta progression.",
-      "validation_steps": [
-        "Check top apps manually in AppStoreSpy and stores.",
-        "Separate organic traction from paid acquisition.",
-        "Review creatives and monetization signals before production."
-      ],
-      "risk_notes": [
-        "classifier_low_confidence",
-        "unknown_coverage",
-        "weak_rating_signal"
-      ],
-      "missing_data": [],
+      "confidence": "medium",
+      "why_interesting": "The coloring niche shows strong fresh traction with 104 diversified apps and significant daily installs (683k+). MVP feasibility is high (85), monetization signals exist, and competition by giants is low.",
+      "why_might_be_false_positive": "Weak rating signals and classifier confidence are low. The niche is crowded (104 apps) but overall monetization and data quality are strong.",
+      "mvp_hypothesis": "A simplified abstract-themed collecting coloring puzzle game targeting women 25-45 and kids.",
+      "simplified_mvp_scope": "Basic coloring mechanics with a collect feature, no ads or IAP initially needed but possible later.",
+      "validation_steps": "Validate player retention, test monetization on IAP or ads, compare with top apps (e.g., Jewel Coloring).",
+      "risk_notes": "Moderate risk of low rating impact and classifier misclassification. No paid spike risk but crowded niche.",
+      "missing_data": "User retention and engagement metrics, detailed competitor monetization breakdown.",
       "manual_review_needed": false,
       "summary": "coloring is a TEST candidate in this single-query AppStoreSpy slice.",
       "signal": "diversified_apps, fresh_traction, growing_vs_previous_snapshot",
@@ -391,11 +375,11 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback",
+    "llm_analysis_source": "openai",
     "llm_status": {
-      "analysis_source": "fallback",
+      "analysis_source": "openai",
       "should_call_openai": true,
-      "fallback_reason": "openai_error",
+      "fallback_reason": null,
       "requested": true,
       "enabled": true,
       "api_key_present": true,
@@ -408,10 +392,9 @@
         "near_misses": 20,
         "initial_baseline_digest": 0
       },
-      "fallback_detail": "HTTP Error 429: Too Many Requests"
-    },
-    "llm_fallback_reason": "openai_error",
-    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
+      "openai_candidate_analyses_count": 13,
+      "fallback_filled_candidate_analyses_count": 20
+    }
   },
   {
     "snapshot_date": "2026-06-05",
@@ -450,7 +433,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -656,7 +639,7 @@
     "alert_instance_id": "2026-06-05:e7ef7baaa86aa83f",
     "status": "ALERT",
     "failed_alert_conditions": [],
-    "llm_summary": "Test a scoped sort game with animals presentation.",
+    "llm_summary": "Create a simple animal-themed sorting puzzle game with levels and monetization potential targeting broad audience incl. women 25-45 and men 18-35.",
     "send_regular_alert": false,
     "initial_baseline_digest": false,
     "would_be_status": null,
@@ -669,30 +652,14 @@
     ],
     "llm_analysis": {
       "recommendation": "TEST",
-      "confidence": "high",
-      "why_interesting": [
-        "diversified_apps",
-        "fresh_traction",
-        "growing_vs_previous_snapshot"
-      ],
-      "why_might_be_false_positive": [
-        "classifier_low_confidence",
-        "unknown_coverage",
-        "weak_rating_signal"
-      ],
-      "mvp_hypothesis": "Test a scoped sort game with animals presentation.",
-      "simplified_mvp_scope": "One core loop, one content theme, lightweight meta progression.",
-      "validation_steps": [
-        "Check top apps manually in AppStoreSpy and stores.",
-        "Separate organic traction from paid acquisition.",
-        "Review creatives and monetization signals before production."
-      ],
-      "risk_notes": [
-        "classifier_low_confidence",
-        "unknown_coverage",
-        "weak_rating_signal"
-      ],
-      "missing_data": [],
+      "confidence": "medium",
+      "why_interesting": "Sort-puzzle niche with animal theme shows solid installs (~80k daily total) across 13 apps. MVP feasibility is good with monetization signals present and low giant developer risk.",
+      "why_might_be_false_positive": "Weak rating and classification confidence along with only medium data quality. Moderate competition penalty applied.",
+      "mvp_hypothesis": "Create a simple animal-themed sorting puzzle game with levels and monetization potential targeting broad audience incl. women 25-45 and men 18-35.",
+      "simplified_mvp_scope": "Core sorting mechanic with animal graphics and level progression; starter monetization via ads or IAP.",
+      "validation_steps": "Check user engagement by prototype, test IAP/ads with small user base, analyze competitor features.",
+      "risk_notes": "Potential classification errors and weak rating signal; moderate competition.",
+      "missing_data": "Engagement cohorts, player lifetime value, competitor retention stats.",
       "manual_review_needed": false,
       "summary": "sort_puzzle is a TEST candidate in this single-query AppStoreSpy slice.",
       "signal": "diversified_apps, fresh_traction, growing_vs_previous_snapshot",
@@ -714,11 +681,11 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback",
+    "llm_analysis_source": "openai",
     "llm_status": {
-      "analysis_source": "fallback",
+      "analysis_source": "openai",
       "should_call_openai": true,
-      "fallback_reason": "openai_error",
+      "fallback_reason": null,
       "requested": true,
       "enabled": true,
       "api_key_present": true,
@@ -731,10 +698,9 @@
         "near_misses": 20,
         "initial_baseline_digest": 0
       },
-      "fallback_detail": "HTTP Error 429: Too Many Requests"
-    },
-    "llm_fallback_reason": "openai_error",
-    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
+      "openai_candidate_analyses_count": 13,
+      "fallback_filled_candidate_analyses_count": 20
+    }
   },
   {
     "snapshot_date": "2026-06-05",
@@ -773,7 +739,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -979,7 +945,7 @@
     "alert_instance_id": "2026-06-05:d58c48113e39182a",
     "status": "ALERT",
     "failed_alert_conditions": [],
-    "llm_summary": "Test a scoped sort game with fantasy presentation.",
+    "llm_summary": "A fantasy-themed color sorting puzzle with level progression and monetization.",
     "send_regular_alert": false,
     "initial_baseline_digest": false,
     "would_be_status": null,
@@ -992,28 +958,14 @@
     ],
     "llm_analysis": {
       "recommendation": "TEST",
-      "confidence": "high",
-      "why_interesting": [
-        "diversified_apps",
-        "fresh_traction",
-        "growing_vs_previous_snapshot"
-      ],
-      "why_might_be_false_positive": [
-        "unknown_coverage",
-        "weak_rating_signal"
-      ],
-      "mvp_hypothesis": "Test a scoped sort game with fantasy presentation.",
-      "simplified_mvp_scope": "One core loop, one content theme, lightweight meta progression.",
-      "validation_steps": [
-        "Check top apps manually in AppStoreSpy and stores.",
-        "Separate organic traction from paid acquisition.",
-        "Review creatives and monetization signals before production."
-      ],
-      "risk_notes": [
-        "unknown_coverage",
-        "weak_rating_signal"
-      ],
-      "missing_data": [],
+      "confidence": "medium",
+      "why_interesting": "Sort-puzzle with fantasy theme has fresh traction, ~74k installs daily on 15 apps, good data quality and MVP feasibility. Monetization signals and low giant developer presence bode well.",
+      "why_might_be_false_positive": "Lack of solid rating and some classification uncertainty. Competition penalty present.",
+      "mvp_hypothesis": "A fantasy-themed color sorting puzzle with level progression and monetization.",
+      "simplified_mvp_scope": "Core sorting gameplay with fantasy elements, monetization via IAP or ads optional at initial stage.",
+      "validation_steps": "Validate market reaction and retention against top apps like 'Water Sort: Color Match', assess monetization potential.",
+      "risk_notes": "Moderate risk from classification issues, weak rating data.",
+      "missing_data": "User engagement and lifetime value benchmarks, competitor analysis on retention and monetization.",
       "manual_review_needed": false,
       "summary": "sort_puzzle is a TEST candidate in this single-query AppStoreSpy slice.",
       "signal": "diversified_apps, fresh_traction, growing_vs_previous_snapshot",
@@ -1034,11 +986,11 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback",
+    "llm_analysis_source": "openai",
     "llm_status": {
-      "analysis_source": "fallback",
+      "analysis_source": "openai",
       "should_call_openai": true,
-      "fallback_reason": "openai_error",
+      "fallback_reason": null,
       "requested": true,
       "enabled": true,
       "api_key_present": true,
@@ -1051,10 +1003,9 @@
         "near_misses": 20,
         "initial_baseline_digest": 0
       },
-      "fallback_detail": "HTTP Error 429: Too Many Requests"
-    },
-    "llm_fallback_reason": "openai_error",
-    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
+      "openai_candidate_analyses_count": 13,
+      "fallback_filled_candidate_analyses_count": 20
+    }
   },
   {
     "snapshot_date": "2026-06-05",
@@ -1093,7 +1044,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -1554,7 +1505,7 @@
     "status": "ALERT",
     "failed_alert_conditions": [],
     "llm_summary": null,
-    "send_regular_alert": true,
+    "send_regular_alert": false,
     "initial_baseline_digest": false,
     "would_be_status": null,
     "exclude_from_cooldown": false,
@@ -1562,7 +1513,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "passed"
+      "cooldown"
     ]
   },
   {
@@ -1602,7 +1553,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -2124,7 +2075,7 @@
     "status": "ALERT",
     "failed_alert_conditions": [],
     "llm_summary": null,
-    "send_regular_alert": true,
+    "send_regular_alert": false,
     "initial_baseline_digest": false,
     "would_be_status": null,
     "exclude_from_cooldown": false,
@@ -2132,7 +2083,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "passed"
+      "cooldown"
     ]
   },
   {
@@ -2172,7 +2123,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -2504,7 +2455,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -2832,7 +2783,7 @@
     "status": "ALERT",
     "failed_alert_conditions": [],
     "llm_summary": null,
-    "send_regular_alert": true,
+    "send_regular_alert": false,
     "initial_baseline_digest": false,
     "would_be_status": null,
     "exclude_from_cooldown": false,
@@ -2840,7 +2791,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "passed"
+      "cooldown"
     ]
   },
   {
@@ -2880,7 +2831,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -3111,7 +3062,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -3151,7 +3102,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -3792,7 +3743,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -3832,7 +3783,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -4412,7 +4363,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -4452,7 +4403,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -4652,7 +4603,7 @@
     "status": "ALERT",
     "failed_alert_conditions": [],
     "llm_summary": null,
-    "send_regular_alert": false,
+    "send_regular_alert": true,
     "initial_baseline_digest": false,
     "would_be_status": null,
     "exclude_from_cooldown": false,
@@ -4660,7 +4611,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "passed"
     ]
   },
   {
@@ -4700,7 +4651,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -4896,7 +4847,7 @@
     "status": "ALERT",
     "failed_alert_conditions": [],
     "llm_summary": null,
-    "send_regular_alert": false,
+    "send_regular_alert": true,
     "initial_baseline_digest": false,
     "would_be_status": null,
     "exclude_from_cooldown": false,
@@ -4904,7 +4855,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "passed"
     ]
   },
   {
@@ -4944,7 +4895,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -5165,7 +5116,7 @@
     "status": "ALERT",
     "failed_alert_conditions": [],
     "llm_summary": null,
-    "send_regular_alert": false,
+    "send_regular_alert": true,
     "initial_baseline_digest": false,
     "would_be_status": null,
     "exclude_from_cooldown": false,
@@ -5173,7 +5124,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "passed"
     ]
   },
   {
@@ -5213,7 +5164,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -5433,7 +5384,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -5473,7 +5424,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -5766,7 +5717,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -6245,7 +6196,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -6586,7 +6537,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -6626,7 +6577,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -6874,7 +6825,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -7158,7 +7109,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -7421,7 +7372,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -7678,7 +7629,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -7991,7 +7942,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -8274,7 +8225,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -8649,7 +8600,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -8915,7 +8866,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -9172,7 +9123,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -9438,7 +9389,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -9691,7 +9642,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -9954,7 +9905,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -10278,7 +10229,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -10530,7 +10481,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -10869,7 +10820,7 @@
     "production_complexity": "high",
     "full_product_complexity": "high",
     "mvp_complexity": "medium",
-    "mvp_feasibility_score": 66.06,
+    "mvp_feasibility_score": 66.05,
     "simplifiable": true,
     "simplification_idea": "Focus the MVP on collect gameplay with a narrow other theme and one progression loop.",
     "group_key_type": "market_category_core_mechanic",
@@ -10892,12 +10843,12 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
     },
-    "app_count": 415,
+    "app_count": 416,
     "app_ids": [
       "after.dark.gaem",
       "app.gezoo.android",
@@ -11295,6 +11246,7 @@
       "guess.number.game",
       "hexa.out.tap.puzzle.color.away.escape.block.master",
       "id.indologam.alien.bounce",
+      "jackpot.party.bingo.vegaswin",
       "jigsaw.solitaire.card.puzzle.games",
       "jigsaw.solitaire.sort",
       "koko.chicken.kokoko",
@@ -11315,21 +11267,21 @@
       "sort.yarn.wool.color.match.puzzle.android",
       "stitch.paint.color.cozy.number.puzzle.drawing.yarn"
     ],
-    "total_daily_installs": 2460981,
-    "avg_daily_installs": 5930.07,
-    "median_daily_installs": 1721.0,
+    "total_daily_installs": 2461977,
+    "avg_daily_installs": 5918.21,
+    "median_daily_installs": 1715.5,
     "total_monthly_downloads": 29442000,
     "total_monthly_revenue": 1907000.0,
     "avg_rating": 4.08,
     "rating_count_total": 0,
     "rating_confidence": 0.0,
-    "successful_new_apps_count": 415,
+    "successful_new_apps_count": 416,
     "traction_fresh_apps_count": 120,
-    "top_app_share": 0.1999,
+    "top_app_share": 0.1998,
     "growth_by_one_app_share": 0.6864,
     "advertised_top_app_share": 0.0,
     "giant_developer_share": 0.0442,
-    "single_developer_share": 0.1999,
+    "single_developer_share": 0.1998,
     "classification_confidence_avg": 0.634,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
@@ -11441,8 +11393,8 @@
     ],
     "has_history": true,
     "history_depth_days": 1,
-    "weekly_growth_percent": -0.21,
-    "monthly_growth_percent": -0.21,
+    "weekly_growth_percent": -0.17,
+    "monthly_growth_percent": -0.17,
     "previous_total_daily_installs": 2466055,
     "data_quality_score": 83.0,
     "data_quality_components": {
@@ -11549,7 +11501,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -11930,7 +11882,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -12391,7 +12343,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -12853,7 +12805,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -13102,7 +13054,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -13327,7 +13279,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -13367,7 +13319,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -13749,7 +13701,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -14005,7 +13957,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -14623,7 +14575,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -14995,7 +14947,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -15297,7 +15249,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -15543,7 +15495,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -15831,7 +15783,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -16141,7 +16093,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -16388,7 +16340,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -16618,7 +16570,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -16658,7 +16610,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -16912,7 +16864,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -17176,7 +17128,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -17428,7 +17380,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -17639,7 +17591,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -17679,7 +17631,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -18112,7 +18064,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -18391,7 +18343,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -18696,7 +18648,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -18943,7 +18895,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -19190,7 +19142,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -19483,7 +19435,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -19523,7 +19475,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -19851,7 +19803,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -20104,7 +20056,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -20357,7 +20309,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -20632,7 +20584,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -20850,7 +20802,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -20890,7 +20842,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -21416,7 +21368,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -21674,7 +21626,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -21934,7 +21886,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -22182,7 +22134,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -22431,7 +22383,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -22799,7 +22751,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -22879,8 +22831,8 @@
       "pull.sword.obby.world",
       "ro.nativesoft.ovoquest"
     ],
-    "total_daily_installs": 307706,
-    "avg_daily_installs": 4273.69,
+    "total_daily_installs": 307866,
+    "avg_daily_installs": 4275.92,
     "median_daily_installs": 1314.5,
     "total_monthly_downloads": 2650000,
     "total_monthly_revenue": 30000.0,
@@ -22889,11 +22841,11 @@
     "rating_confidence": 0.0,
     "successful_new_apps_count": 72,
     "traction_fresh_apps_count": 19,
-    "top_app_share": 0.3284,
+    "top_app_share": 0.3282,
     "growth_by_one_app_share": 0.6195,
     "advertised_top_app_share": 0.0,
     "giant_developer_share": 0.0688,
-    "single_developer_share": 0.3284,
+    "single_developer_share": 0.3282,
     "classification_confidence_avg": 0.6101,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
@@ -23005,8 +22957,8 @@
     ],
     "has_history": true,
     "history_depth_days": 1,
-    "weekly_growth_percent": 5.6,
-    "monthly_growth_percent": 5.6,
+    "weekly_growth_percent": 5.66,
+    "monthly_growth_percent": 5.66,
     "previous_total_daily_installs": 291381,
     "data_quality_score": 83.0,
     "data_quality_components": {
@@ -23114,7 +23066,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -23378,7 +23330,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -23674,7 +23626,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -23924,7 +23876,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -24193,7 +24145,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -24440,12 +24392,12 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
     },
-    "app_count": 1088,
+    "app_count": 1089,
     "app_ids": [
       "after.dark.gaem",
       "ai.heyyyy.app",
@@ -25482,6 +25434,7 @@
       "id.indologam.alien.bounce",
       "in.commonmantech.roll_a_dice",
       "it.panini.fifacollection",
+      "jackpot.party.bingo.vegaswin",
       "jigsaw.solitaire.card.puzzle.games",
       "jigsaw.solitaire.match.games.free",
       "jigsaw.solitaire.sort",
@@ -25536,15 +25489,15 @@
       "triumph.free.cash.real.game",
       "uniqo.imposter"
     ],
-    "total_daily_installs": 7350380,
-    "avg_daily_installs": 6755.86,
-    "median_daily_installs": 1795.5,
+    "total_daily_installs": 7351536,
+    "avg_daily_installs": 6750.72,
+    "median_daily_installs": 1794.0,
     "total_monthly_downloads": 72643000,
     "total_monthly_revenue": 8561000.0,
     "avg_rating": 4.12,
     "rating_count_total": 0,
     "rating_confidence": 0.0,
-    "successful_new_apps_count": 1088,
+    "successful_new_apps_count": 1089,
     "traction_fresh_apps_count": 301,
     "top_app_share": 0.0669,
     "growth_by_one_app_share": 0.7469,
@@ -25662,8 +25615,8 @@
     ],
     "has_history": true,
     "history_depth_days": 1,
-    "weekly_growth_percent": 3.28,
-    "monthly_growth_percent": 3.28,
+    "weekly_growth_percent": 3.29,
+    "monthly_growth_percent": 3.29,
     "previous_total_daily_installs": 7117173,
     "data_quality_score": 68.0,
     "data_quality_components": {
@@ -25772,12 +25725,12 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
     },
-    "app_count": 538,
+    "app_count": 539,
     "app_ids": [
       "aenu.ax360e.free",
       "air.com.stupidella.sixseven",
@@ -26307,6 +26260,7 @@
       "id.indologam.alien.bounce",
       "io.heseri.car",
       "io.nimblefork.dropdash",
+      "jackpot.party.bingo.vegaswin",
       "leyi.kingdomfall",
       "noob.chicke.nhunter",
       "obby.brainrot.world",
@@ -26318,15 +26272,15 @@
       "vn.vplay.batluongnhan.t030a",
       "vn.zoneplay.gp01"
     ],
-    "total_daily_installs": 3389374,
-    "avg_daily_installs": 6299.95,
-    "median_daily_installs": 1890.0,
+    "total_daily_installs": 3390370,
+    "avg_daily_installs": 6290.11,
+    "median_daily_installs": 1872.0,
     "total_monthly_downloads": 19163000,
     "total_monthly_revenue": 3468000.0,
     "avg_rating": 3.99,
     "rating_count_total": 0,
     "rating_confidence": 0.0,
-    "successful_new_apps_count": 538,
+    "successful_new_apps_count": 539,
     "traction_fresh_apps_count": 164,
     "top_app_share": 0.0493,
     "growth_by_one_app_share": 0.7136,
@@ -26444,8 +26398,8 @@
     ],
     "has_history": true,
     "history_depth_days": 1,
-    "weekly_growth_percent": 3.74,
-    "monthly_growth_percent": 3.74,
+    "weekly_growth_percent": 3.77,
+    "monthly_growth_percent": 3.77,
     "previous_total_daily_installs": 3267114,
     "data_quality_score": 68.0,
     "data_quality_components": {
@@ -26552,7 +26506,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -26801,7 +26755,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -27011,7 +26965,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   },
   {
@@ -27051,7 +27005,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -27273,7 +27227,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -27592,7 +27546,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -27815,7 +27769,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -28064,7 +28018,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -28414,7 +28368,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -28618,7 +28572,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -28862,7 +28816,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -29107,7 +29061,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -29355,7 +29309,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -29577,7 +29531,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -29822,7 +29776,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -30073,7 +30027,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -30344,7 +30298,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -30608,7 +30562,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -30821,7 +30775,7 @@
     "first_run_without_history": false,
     "confidence_level": "MEDIUM",
     "alert_filter_reasons": [
-      "alert_limit"
+      "cooldown"
     ]
   }
 ]

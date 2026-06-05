@@ -36,7 +36,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -301,11 +301,11 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback",
+    "llm_analysis_source": "fallback_missing_from_openai",
     "llm_status": {
-      "analysis_source": "fallback",
+      "analysis_source": "openai",
       "should_call_openai": true,
-      "fallback_reason": "openai_error",
+      "fallback_reason": null,
       "requested": true,
       "enabled": true,
       "api_key_present": true,
@@ -318,10 +318,10 @@
         "near_misses": 20,
         "initial_baseline_digest": 0
       },
-      "fallback_detail": "HTTP Error 429: Too Many Requests"
+      "openai_candidate_analyses_count": 13,
+      "fallback_filled_candidate_analyses_count": 20
     },
-    "llm_fallback_reason": "openai_error",
-    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
+    "llm_fallback_reason": "missing_from_openai_response"
   },
   {
     "snapshot_date": "2026-06-05",
@@ -360,7 +360,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -724,11 +724,11 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback",
+    "llm_analysis_source": "fallback_missing_from_openai",
     "llm_status": {
-      "analysis_source": "fallback",
+      "analysis_source": "openai",
       "should_call_openai": true,
-      "fallback_reason": "openai_error",
+      "fallback_reason": null,
       "requested": true,
       "enabled": true,
       "api_key_present": true,
@@ -741,10 +741,10 @@
         "near_misses": 20,
         "initial_baseline_digest": 0
       },
-      "fallback_detail": "HTTP Error 429: Too Many Requests"
+      "openai_candidate_analyses_count": 13,
+      "fallback_filled_candidate_analyses_count": 20
     },
-    "llm_fallback_reason": "openai_error",
-    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
+    "llm_fallback_reason": "missing_from_openai_response"
   },
   {
     "snapshot_date": "2026-06-05",
@@ -783,7 +783,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -1483,11 +1483,11 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback",
+    "llm_analysis_source": "fallback_missing_from_openai",
     "llm_status": {
-      "analysis_source": "fallback",
+      "analysis_source": "openai",
       "should_call_openai": true,
-      "fallback_reason": "openai_error",
+      "fallback_reason": null,
       "requested": true,
       "enabled": true,
       "api_key_present": true,
@@ -1500,10 +1500,10 @@
         "near_misses": 20,
         "initial_baseline_digest": 0
       },
-      "fallback_detail": "HTTP Error 429: Too Many Requests"
+      "openai_candidate_analyses_count": 13,
+      "fallback_filled_candidate_analyses_count": 20
     },
-    "llm_fallback_reason": "openai_error",
-    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
+    "llm_fallback_reason": "missing_from_openai_response"
   },
   {
     "snapshot_date": "2026-06-05",
@@ -1542,7 +1542,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -1809,11 +1809,11 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback",
+    "llm_analysis_source": "fallback_missing_from_openai",
     "llm_status": {
-      "analysis_source": "fallback",
+      "analysis_source": "openai",
       "should_call_openai": true,
-      "fallback_reason": "openai_error",
+      "fallback_reason": null,
       "requested": true,
       "enabled": true,
       "api_key_present": true,
@@ -1826,10 +1826,10 @@
         "near_misses": 20,
         "initial_baseline_digest": 0
       },
-      "fallback_detail": "HTTP Error 429: Too Many Requests"
+      "openai_candidate_analyses_count": 13,
+      "fallback_filled_candidate_analyses_count": 20
     },
-    "llm_fallback_reason": "openai_error",
-    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
+    "llm_fallback_reason": "missing_from_openai_response"
   },
   {
     "snapshot_date": "2026-06-05",
@@ -1841,7 +1841,7 @@
     "core_mechanic": "other",
     "theme": "cars",
     "meta": "none",
-    "audience_summary": "broad:729, unknown:714, men_18_35:504",
+    "audience_summary": "broad:730, unknown:714, men_18_35:504",
     "production_complexity": "high",
     "full_product_complexity": "high",
     "mvp_complexity": "high",
@@ -1868,12 +1868,12 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
     },
-    "app_count": 2082,
+    "app_count": 2083,
     "app_ids": [
       "ai.heyyyy.app",
       "ai.mybuddy.talkingfl",
@@ -1888,6 +1888,7 @@
       "bike.motorbike.motorcycle",
       "bike.wheelie.driving.simulator3d",
       "brainrot.suit.hapix",
+      "briok.wild.sping.party",
       "bsm.bathroom.selfie.mania",
       "buenos.casino.buenos",
       "bus.traffic.fever.jam.puzzle.busgo",
@@ -3958,15 +3959,15 @@
       "wild.party.bronk.win",
       "winter.car.simulator"
     ],
-    "total_daily_installs": 13542012,
-    "avg_daily_installs": 6504.33,
-    "median_daily_installs": 1840.5,
-    "total_monthly_downloads": 108673000,
+    "total_daily_installs": 13542766,
+    "avg_daily_installs": 6501.57,
+    "median_daily_installs": 1838.0,
+    "total_monthly_downloads": 108681000,
     "total_monthly_revenue": 11218000.0,
     "avg_rating": 4.0,
     "rating_count_total": 0,
     "rating_confidence": 0.0,
-    "successful_new_apps_count": 2082,
+    "successful_new_apps_count": 2083,
     "traction_fresh_apps_count": 633,
     "top_app_share": 0.0363,
     "growth_by_one_app_share": 0.3624,
@@ -4084,8 +4085,8 @@
     ],
     "has_history": true,
     "history_depth_days": 1,
-    "weekly_growth_percent": 3.12,
-    "monthly_growth_percent": 3.12,
+    "weekly_growth_percent": 3.13,
+    "monthly_growth_percent": 3.13,
     "previous_total_daily_installs": 13132127,
     "data_quality_score": 83.0,
     "data_quality_components": {
@@ -4209,11 +4210,11 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback",
+    "llm_analysis_source": "fallback_missing_from_openai",
     "llm_status": {
-      "analysis_source": "fallback",
+      "analysis_source": "openai",
       "should_call_openai": true,
-      "fallback_reason": "openai_error",
+      "fallback_reason": null,
       "requested": true,
       "enabled": true,
       "api_key_present": true,
@@ -4226,10 +4227,10 @@
         "near_misses": 20,
         "initial_baseline_digest": 0
       },
-      "fallback_detail": "HTTP Error 429: Too Many Requests"
+      "openai_candidate_analyses_count": 13,
+      "fallback_filled_candidate_analyses_count": 20
     },
-    "llm_fallback_reason": "openai_error",
-    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
+    "llm_fallback_reason": "missing_from_openai_response"
   },
   {
     "snapshot_date": "2026-06-05",
@@ -4268,7 +4269,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -4538,11 +4539,11 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback",
+    "llm_analysis_source": "fallback_missing_from_openai",
     "llm_status": {
-      "analysis_source": "fallback",
+      "analysis_source": "openai",
       "should_call_openai": true,
-      "fallback_reason": "openai_error",
+      "fallback_reason": null,
       "requested": true,
       "enabled": true,
       "api_key_present": true,
@@ -4555,10 +4556,10 @@
         "near_misses": 20,
         "initial_baseline_digest": 0
       },
-      "fallback_detail": "HTTP Error 429: Too Many Requests"
+      "openai_candidate_analyses_count": 13,
+      "fallback_filled_candidate_analyses_count": 20
     },
-    "llm_fallback_reason": "openai_error",
-    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
+    "llm_fallback_reason": "missing_from_openai_response"
   },
   {
     "snapshot_date": "2026-06-05",
@@ -4597,7 +4598,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -4958,11 +4959,11 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback",
+    "llm_analysis_source": "fallback_missing_from_openai",
     "llm_status": {
-      "analysis_source": "fallback",
+      "analysis_source": "openai",
       "should_call_openai": true,
-      "fallback_reason": "openai_error",
+      "fallback_reason": null,
       "requested": true,
       "enabled": true,
       "api_key_present": true,
@@ -4975,10 +4976,10 @@
         "near_misses": 20,
         "initial_baseline_digest": 0
       },
-      "fallback_detail": "HTTP Error 429: Too Many Requests"
+      "openai_candidate_analyses_count": 13,
+      "fallback_filled_candidate_analyses_count": 20
     },
-    "llm_fallback_reason": "openai_error",
-    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
+    "llm_fallback_reason": "missing_from_openai_response"
   },
   {
     "snapshot_date": "2026-06-05",
@@ -4990,7 +4991,7 @@
     "core_mechanic": "other",
     "theme": "cars",
     "meta": "none",
-    "audience_summary": "broad:525, unknown:522, men_18_35:350",
+    "audience_summary": "broad:526, unknown:522, men_18_35:350",
     "production_complexity": "high",
     "full_product_complexity": "high",
     "mvp_complexity": "high",
@@ -5017,12 +5018,12 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
     },
-    "app_count": 1456,
+    "app_count": 1457,
     "app_ids": [
       "ai.mybuddy.talkingfl",
       "air.com.shirogames.evolan",
@@ -5036,6 +5037,7 @@
       "beki.nedb.igqz.sbca",
       "bg.rope.hero.vicecity.action.simulation3d",
       "bike.motorbike.motorcycle",
+      "briok.wild.sping.party",
       "bsm.bathroom.selfie.mania",
       "bus.traffic.fever.jam.puzzle.busgo",
       "casual.fish.feed",
@@ -6481,15 +6483,15 @@
       "wild.party.bronk.win",
       "winter.car.simulator"
     ],
-    "total_daily_installs": 8610195,
-    "avg_daily_installs": 5913.6,
-    "median_daily_installs": 1912.0,
-    "total_monthly_downloads": 52058000,
+    "total_daily_installs": 8610789,
+    "avg_daily_installs": 5909.94,
+    "median_daily_installs": 1909.0,
+    "total_monthly_downloads": 52066000,
     "total_monthly_revenue": 7032000.0,
     "avg_rating": 3.96,
     "rating_count_total": 0,
     "rating_confidence": 0.0,
-    "successful_new_apps_count": 1456,
+    "successful_new_apps_count": 1457,
     "traction_fresh_apps_count": 461,
     "top_app_share": 0.0325,
     "growth_by_one_app_share": 0.5186,
@@ -6732,11 +6734,11 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback",
+    "llm_analysis_source": "fallback_missing_from_openai",
     "llm_status": {
-      "analysis_source": "fallback",
+      "analysis_source": "openai",
       "should_call_openai": true,
-      "fallback_reason": "openai_error",
+      "fallback_reason": null,
       "requested": true,
       "enabled": true,
       "api_key_present": true,
@@ -6749,10 +6751,10 @@
         "near_misses": 20,
         "initial_baseline_digest": 0
       },
-      "fallback_detail": "HTTP Error 429: Too Many Requests"
+      "openai_candidate_analyses_count": 13,
+      "fallback_filled_candidate_analyses_count": 20
     },
-    "llm_fallback_reason": "openai_error",
-    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
+    "llm_fallback_reason": "missing_from_openai_response"
   },
   {
     "snapshot_date": "2026-06-05",
@@ -6764,11 +6766,11 @@
     "core_mechanic": "other",
     "theme": "abstract",
     "meta": "none",
-    "audience_summary": "broad:281, men_18_35:55, women_25_45:16",
+    "audience_summary": "broad:282, men_18_35:55, women_25_45:16",
     "production_complexity": "high",
     "full_product_complexity": "high",
     "mvp_complexity": "high",
-    "mvp_feasibility_score": 39.55,
+    "mvp_feasibility_score": 39.53,
     "simplifiable": true,
     "simplification_idea": "Focus the MVP on other gameplay with a narrow abstract theme and one progression loop.",
     "group_key_type": "market_category_core_mechanic",
@@ -6791,15 +6793,16 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
     },
-    "app_count": 352,
+    "app_count": 353,
     "app_ids": [
       "arrow.clash.blast.escape.out.maze",
       "beki.nedb.igqz.sbca",
+      "briok.wild.sping.party",
       "bsm.bathroom.selfie.mania",
       "bus.traffic.fever.jam.puzzle.busgo",
       "casual.fish.feed",
@@ -7151,20 +7154,20 @@
       "swkv.fmsg.ksmgw.vrgwl",
       "tbzh.xorkn.fdsdi.sndl"
     ],
-    "total_daily_installs": 1402036,
-    "avg_daily_installs": 3983.06,
-    "median_daily_installs": 1623.0,
-    "total_monthly_downloads": 10106000,
+    "total_daily_installs": 1402630,
+    "avg_daily_installs": 3973.46,
+    "median_daily_installs": 1619.0,
+    "total_monthly_downloads": 10114000,
     "total_monthly_revenue": 526000.0,
     "avg_rating": 4.0,
     "rating_count_total": 0,
     "rating_confidence": 0.0,
-    "successful_new_apps_count": 352,
+    "successful_new_apps_count": 353,
     "traction_fresh_apps_count": 129,
     "top_app_share": 0.0435,
     "growth_by_one_app_share": 0.4444,
     "advertised_top_app_share": 0.0,
-    "giant_developer_share": 0.0414,
+    "giant_developer_share": 0.0413,
     "single_developer_share": 0.0455,
     "classification_confidence_avg": 0.5092,
     "unknown_or_new_pattern_cluster": true,
@@ -7277,8 +7280,8 @@
     ],
     "has_history": true,
     "history_depth_days": 1,
-    "weekly_growth_percent": 5.77,
-    "monthly_growth_percent": 5.77,
+    "weekly_growth_percent": 5.81,
+    "monthly_growth_percent": 5.81,
     "previous_total_daily_installs": 1325566,
     "data_quality_score": 83.0,
     "data_quality_components": {
@@ -7385,7 +7388,7 @@
         "fresh_traction",
         "growing_vs_previous_snapshot"
       ],
-      "entry_realism": "MVP feasibility score is 39.55.",
+      "entry_realism": "MVP feasibility score is 39.53.",
       "mvp": "Test a scoped other game with abstract presentation.",
       "monetization": "Validate ads/IAP/revenue signals before production.",
       "risks": [
@@ -7399,11 +7402,11 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback",
+    "llm_analysis_source": "fallback_missing_from_openai",
     "llm_status": {
-      "analysis_source": "fallback",
+      "analysis_source": "openai",
       "should_call_openai": true,
-      "fallback_reason": "openai_error",
+      "fallback_reason": null,
       "requested": true,
       "enabled": true,
       "api_key_present": true,
@@ -7416,10 +7419,10 @@
         "near_misses": 20,
         "initial_baseline_digest": 0
       },
-      "fallback_detail": "HTTP Error 429: Too Many Requests"
+      "openai_candidate_analyses_count": 13,
+      "fallback_filled_candidate_analyses_count": 20
     },
-    "llm_fallback_reason": "openai_error",
-    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
+    "llm_fallback_reason": "missing_from_openai_response"
   },
   {
     "snapshot_date": "2026-06-05",
@@ -7458,7 +7461,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -8000,11 +8003,11 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback",
+    "llm_analysis_source": "fallback_missing_from_openai",
     "llm_status": {
-      "analysis_source": "fallback",
+      "analysis_source": "openai",
       "should_call_openai": true,
-      "fallback_reason": "openai_error",
+      "fallback_reason": null,
       "requested": true,
       "enabled": true,
       "api_key_present": true,
@@ -8017,10 +8020,10 @@
         "near_misses": 20,
         "initial_baseline_digest": 0
       },
-      "fallback_detail": "HTTP Error 429: Too Many Requests"
+      "openai_candidate_analyses_count": 13,
+      "fallback_filled_candidate_analyses_count": 20
     },
-    "llm_fallback_reason": "openai_error",
-    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
+    "llm_fallback_reason": "missing_from_openai_response"
   },
   {
     "snapshot_date": "2026-06-05",
@@ -8059,7 +8062,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -8423,11 +8426,11 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback",
+    "llm_analysis_source": "fallback_missing_from_openai",
     "llm_status": {
-      "analysis_source": "fallback",
+      "analysis_source": "openai",
       "should_call_openai": true,
-      "fallback_reason": "openai_error",
+      "fallback_reason": null,
       "requested": true,
       "enabled": true,
       "api_key_present": true,
@@ -8440,10 +8443,10 @@
         "near_misses": 20,
         "initial_baseline_digest": 0
       },
-      "fallback_detail": "HTTP Error 429: Too Many Requests"
+      "openai_candidate_analyses_count": 13,
+      "fallback_filled_candidate_analyses_count": 20
     },
-    "llm_fallback_reason": "openai_error",
-    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
+    "llm_fallback_reason": "missing_from_openai_response"
   },
   {
     "snapshot_date": "2026-06-05",
@@ -8482,7 +8485,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -8759,11 +8762,11 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback",
+    "llm_analysis_source": "fallback_missing_from_openai",
     "llm_status": {
-      "analysis_source": "fallback",
+      "analysis_source": "openai",
       "should_call_openai": true,
-      "fallback_reason": "openai_error",
+      "fallback_reason": null,
       "requested": true,
       "enabled": true,
       "api_key_present": true,
@@ -8776,10 +8779,10 @@
         "near_misses": 20,
         "initial_baseline_digest": 0
       },
-      "fallback_detail": "HTTP Error 429: Too Many Requests"
+      "openai_candidate_analyses_count": 13,
+      "fallback_filled_candidate_analyses_count": 20
     },
-    "llm_fallback_reason": "openai_error",
-    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
+    "llm_fallback_reason": "missing_from_openai_response"
   },
   {
     "snapshot_date": "2026-06-05",
@@ -8818,7 +8821,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -9469,11 +9472,11 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback",
+    "llm_analysis_source": "fallback_missing_from_openai",
     "llm_status": {
-      "analysis_source": "fallback",
+      "analysis_source": "openai",
       "should_call_openai": true,
-      "fallback_reason": "openai_error",
+      "fallback_reason": null,
       "requested": true,
       "enabled": true,
       "api_key_present": true,
@@ -9486,10 +9489,10 @@
         "near_misses": 20,
         "initial_baseline_digest": 0
       },
-      "fallback_detail": "HTTP Error 429: Too Many Requests"
+      "openai_candidate_analyses_count": 13,
+      "fallback_filled_candidate_analyses_count": 20
     },
-    "llm_fallback_reason": "openai_error",
-    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
+    "llm_fallback_reason": "missing_from_openai_response"
   },
   {
     "snapshot_date": "2026-06-05",
@@ -9528,7 +9531,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -9807,11 +9810,11 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback",
+    "llm_analysis_source": "fallback_missing_from_openai",
     "llm_status": {
-      "analysis_source": "fallback",
+      "analysis_source": "openai",
       "should_call_openai": true,
-      "fallback_reason": "openai_error",
+      "fallback_reason": null,
       "requested": true,
       "enabled": true,
       "api_key_present": true,
@@ -9824,10 +9827,10 @@
         "near_misses": 20,
         "initial_baseline_digest": 0
       },
-      "fallback_detail": "HTTP Error 429: Too Many Requests"
+      "openai_candidate_analyses_count": 13,
+      "fallback_filled_candidate_analyses_count": 20
     },
-    "llm_fallback_reason": "openai_error",
-    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
+    "llm_fallback_reason": "missing_from_openai_response"
   },
   {
     "snapshot_date": "2026-06-05",
@@ -9866,7 +9869,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -10460,11 +10463,11 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback",
+    "llm_analysis_source": "fallback_missing_from_openai",
     "llm_status": {
-      "analysis_source": "fallback",
+      "analysis_source": "openai",
       "should_call_openai": true,
-      "fallback_reason": "openai_error",
+      "fallback_reason": null,
       "requested": true,
       "enabled": true,
       "api_key_present": true,
@@ -10477,10 +10480,10 @@
         "near_misses": 20,
         "initial_baseline_digest": 0
       },
-      "fallback_detail": "HTTP Error 429: Too Many Requests"
+      "openai_candidate_analyses_count": 13,
+      "fallback_filled_candidate_analyses_count": 20
     },
-    "llm_fallback_reason": "openai_error",
-    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
+    "llm_fallback_reason": "missing_from_openai_response"
   },
   {
     "snapshot_date": "2026-06-05",
@@ -10519,7 +10522,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -10787,11 +10790,11 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback",
+    "llm_analysis_source": "fallback_missing_from_openai",
     "llm_status": {
-      "analysis_source": "fallback",
+      "analysis_source": "openai",
       "should_call_openai": true,
-      "fallback_reason": "openai_error",
+      "fallback_reason": null,
       "requested": true,
       "enabled": true,
       "api_key_present": true,
@@ -10804,10 +10807,10 @@
         "near_misses": 20,
         "initial_baseline_digest": 0
       },
-      "fallback_detail": "HTTP Error 429: Too Many Requests"
+      "openai_candidate_analyses_count": 13,
+      "fallback_filled_candidate_analyses_count": 20
     },
-    "llm_fallback_reason": "openai_error",
-    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
+    "llm_fallback_reason": "missing_from_openai_response"
   },
   {
     "snapshot_date": "2026-06-05",
@@ -10846,7 +10849,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -11201,11 +11204,11 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback",
+    "llm_analysis_source": "fallback_missing_from_openai",
     "llm_status": {
-      "analysis_source": "fallback",
+      "analysis_source": "openai",
       "should_call_openai": true,
-      "fallback_reason": "openai_error",
+      "fallback_reason": null,
       "requested": true,
       "enabled": true,
       "api_key_present": true,
@@ -11218,10 +11221,10 @@
         "near_misses": 20,
         "initial_baseline_digest": 0
       },
-      "fallback_detail": "HTTP Error 429: Too Many Requests"
+      "openai_candidate_analyses_count": 13,
+      "fallback_filled_candidate_analyses_count": 20
     },
-    "llm_fallback_reason": "openai_error",
-    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
+    "llm_fallback_reason": "missing_from_openai_response"
   },
   {
     "snapshot_date": "2026-06-05",
@@ -11260,7 +11263,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -11964,11 +11967,11 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback",
+    "llm_analysis_source": "fallback_missing_from_openai",
     "llm_status": {
-      "analysis_source": "fallback",
+      "analysis_source": "openai",
       "should_call_openai": true,
-      "fallback_reason": "openai_error",
+      "fallback_reason": null,
       "requested": true,
       "enabled": true,
       "api_key_present": true,
@@ -11981,10 +11984,10 @@
         "near_misses": 20,
         "initial_baseline_digest": 0
       },
-      "fallback_detail": "HTTP Error 429: Too Many Requests"
+      "openai_candidate_analyses_count": 13,
+      "fallback_filled_candidate_analyses_count": 20
     },
-    "llm_fallback_reason": "openai_error",
-    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
+    "llm_fallback_reason": "missing_from_openai_response"
   },
   {
     "snapshot_date": "2026-06-05",
@@ -12023,7 +12026,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -12328,11 +12331,11 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback",
+    "llm_analysis_source": "fallback_missing_from_openai",
     "llm_status": {
-      "analysis_source": "fallback",
+      "analysis_source": "openai",
       "should_call_openai": true,
-      "fallback_reason": "openai_error",
+      "fallback_reason": null,
       "requested": true,
       "enabled": true,
       "api_key_present": true,
@@ -12345,10 +12348,10 @@
         "near_misses": 20,
         "initial_baseline_digest": 0
       },
-      "fallback_detail": "HTTP Error 429: Too Many Requests"
+      "openai_candidate_analyses_count": 13,
+      "fallback_filled_candidate_analyses_count": 20
     },
-    "llm_fallback_reason": "openai_error",
-    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
+    "llm_fallback_reason": "missing_from_openai_response"
   },
   {
     "snapshot_date": "2026-06-05",
@@ -12387,7 +12390,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -12604,11 +12607,11 @@
         "Confirm the signal is not paid traffic."
       ]
     },
-    "llm_analysis_source": "fallback",
+    "llm_analysis_source": "fallback_missing_from_openai",
     "llm_status": {
-      "analysis_source": "fallback",
+      "analysis_source": "openai",
       "should_call_openai": true,
-      "fallback_reason": "openai_error",
+      "fallback_reason": null,
       "requested": true,
       "enabled": true,
       "api_key_present": true,
@@ -12621,10 +12624,10 @@
         "near_misses": 20,
         "initial_baseline_digest": 0
       },
-      "fallback_detail": "HTTP Error 429: Too Many Requests"
+      "openai_candidate_analyses_count": 13,
+      "fallback_filled_candidate_analyses_count": 20
     },
-    "llm_fallback_reason": "openai_error",
-    "llm_fallback_detail": "HTTP Error 429: Too Many Requests"
+    "llm_fallback_reason": "missing_from_openai_response"
   },
   {
     "snapshot_date": "2026-06-05",
@@ -12663,7 +12666,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -12914,7 +12917,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -13170,11 +13173,11 @@
     "core_mechanic": "other",
     "theme": "social",
     "meta": "customization",
-    "audience_summary": "broad:31, unknown:28, men_18_35:15",
+    "audience_summary": "broad:32, unknown:28, men_18_35:15",
     "production_complexity": "high",
     "full_product_complexity": "high",
     "mvp_complexity": "high",
-    "mvp_feasibility_score": 39.69,
+    "mvp_feasibility_score": 39.63,
     "simplifiable": true,
     "simplification_idea": "Focus the MVP on other gameplay with a narrow social theme and one progression loop.",
     "group_key_type": "core_mechanic_theme",
@@ -13197,14 +13200,15 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
     },
-    "app_count": 81,
+    "app_count": 82,
     "app_ids": [
       "app.nanogram.alpha",
+      "briok.wild.sping.party",
       "com.AnakonPlay.StreetMafia",
       "com.BekoCanGames.GooGooGagaScaryFactory",
       "com.DBS.anime.high.school.girl.game",
@@ -13286,22 +13290,22 @@
       "tizi.water.park.aqua.slide.world.theme.avatar.games.pretend.play",
       "wild.party.bronk.win"
     ],
-    "total_daily_installs": 415365,
-    "avg_daily_installs": 5127.96,
-    "median_daily_installs": 1839.0,
-    "total_monthly_downloads": 4097000,
+    "total_daily_installs": 415959,
+    "avg_daily_installs": 5072.67,
+    "median_daily_installs": 1829.0,
+    "total_monthly_downloads": 4105000,
     "total_monthly_revenue": 42000.0,
     "avg_rating": 3.95,
     "rating_count_total": 0,
     "rating_confidence": 0.0,
-    "successful_new_apps_count": 81,
+    "successful_new_apps_count": 82,
     "traction_fresh_apps_count": 17,
-    "top_app_share": 0.1767,
+    "top_app_share": 0.1765,
     "growth_by_one_app_share": 0.7509,
     "advertised_top_app_share": 0.0,
     "giant_developer_share": 0.0147,
-    "single_developer_share": 0.1767,
-    "classification_confidence_avg": 0.5196,
+    "single_developer_share": 0.1765,
+    "classification_confidence_avg": 0.5195,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
       {
@@ -13412,8 +13416,8 @@
     ],
     "has_history": true,
     "history_depth_days": 1,
-    "weekly_growth_percent": 6.3,
-    "monthly_growth_percent": 6.3,
+    "weekly_growth_percent": 6.45,
+    "monthly_growth_percent": 6.45,
     "previous_total_daily_installs": 390766,
     "data_quality_score": 68.0,
     "data_quality_components": {
@@ -13442,13 +13446,13 @@
       "freshness": 15,
       "revenue_monetization": 13.87,
       "rating": 0.0,
-      "mvp_feasibility": 5.95,
+      "mvp_feasibility": 5.94,
       "data_quality": 13.6,
       "competition_penalty": 3.0,
       "giant_risk_penalty": 0.37,
       "paid_spike_penalty": 0.0
     },
-    "opportunity_score": 70.06,
+    "opportunity_score": 70.05,
     "risk_tags": [
       "audience_uncertain",
       "classifier_low_confidence",
@@ -13522,7 +13526,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -13777,7 +13781,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -14051,7 +14055,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -14358,7 +14362,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -14607,7 +14611,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -14858,7 +14862,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -15158,7 +15162,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -15415,7 +15419,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -15670,7 +15674,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -16093,7 +16097,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -16344,7 +16348,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -16597,7 +16601,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -16845,7 +16849,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -17100,7 +17104,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -17349,7 +17353,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -17608,7 +17612,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -18090,7 +18094,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -18292,7 +18296,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -18581,7 +18585,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -18833,7 +18837,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -19093,7 +19097,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -19340,7 +19344,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -19598,7 +19602,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -19857,7 +19861,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -20150,7 +20154,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -20350,7 +20354,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -20643,7 +20647,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -21725,7 +21729,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -21992,7 +21996,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -22270,7 +22274,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -22520,7 +22524,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -22770,7 +22774,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -23022,7 +23026,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -23322,7 +23326,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -23569,7 +23573,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -23830,7 +23834,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -24125,7 +24129,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -24372,7 +24376,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -24629,7 +24633,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -24915,7 +24919,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -25169,7 +25173,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -25425,7 +25429,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -25677,7 +25681,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -25903,7 +25907,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -26151,7 +26155,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -26414,7 +26418,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -26669,7 +26673,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -26918,7 +26922,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -27212,7 +27216,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -27698,7 +27702,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -28017,7 +28021,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -28267,7 +28271,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -28598,7 +28602,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -28846,7 +28850,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -29105,7 +29109,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -29367,7 +29371,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -29696,7 +29700,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -29958,7 +29962,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -30285,7 +30289,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -30465,11 +30469,11 @@
     "core_mechanic": "collect",
     "theme": "home",
     "meta": "collection",
-    "audience_summary": "broad:54, men_18_35:11, women_25_45:7",
+    "audience_summary": "broad:54, men_18_35:11, women_25_45:8",
     "production_complexity": "high",
     "full_product_complexity": "high",
     "mvp_complexity": "medium",
-    "mvp_feasibility_score": 63.0,
+    "mvp_feasibility_score": 63.02,
     "simplifiable": true,
     "simplification_idea": "Focus the MVP on collect gameplay with a narrow home theme and one progression loop.",
     "group_key_type": "core_mechanic_theme",
@@ -30492,12 +30496,12 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
     },
-    "app_count": 79,
+    "app_count": 80,
     "app_ids": [
       "com.Lucinda.CandyMergeMaster",
       "com.Studio17.bikinigirls",
@@ -30575,26 +30579,27 @@
       "com.ze.iam.fishit.game",
       "com.zenchen.lokicraft.building",
       "com.zs.bus.driving.simulator.game",
+      "jackpot.party.bingo.vegaswin",
       "net.pixelrabbit.jh",
       "raft.survival.multiplayer.sandbox",
       "tile.triple.match.puzzle.game.journey"
     ],
-    "total_daily_installs": 411484,
-    "avg_daily_installs": 5208.66,
-    "median_daily_installs": 2076.0,
+    "total_daily_installs": 412640,
+    "avg_daily_installs": 5158.0,
+    "median_daily_installs": 2070.5,
     "total_monthly_downloads": 3297000,
     "total_monthly_revenue": 610000.0,
     "avg_rating": 4.05,
     "rating_count_total": 0,
     "rating_confidence": 0.0,
-    "successful_new_apps_count": 79,
+    "successful_new_apps_count": 80,
     "traction_fresh_apps_count": 17,
-    "top_app_share": 0.1319,
+    "top_app_share": 0.1315,
     "growth_by_one_app_share": 1.0,
     "advertised_top_app_share": 0.0,
-    "giant_developer_share": 0.0346,
-    "single_developer_share": 0.1319,
-    "classification_confidence_avg": 0.6355,
+    "giant_developer_share": 0.0345,
+    "single_developer_share": 0.1315,
+    "classification_confidence_avg": 0.6356,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
       {
@@ -30705,8 +30710,8 @@
     ],
     "has_history": true,
     "history_depth_days": 1,
-    "weekly_growth_percent": 1.08,
-    "monthly_growth_percent": 1.08,
+    "weekly_growth_percent": 1.36,
+    "monthly_growth_percent": 1.36,
     "previous_total_daily_installs": 407101,
     "data_quality_score": 68.0,
     "data_quality_components": {
@@ -30815,7 +30820,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -31134,7 +31139,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -31392,11 +31397,11 @@
     "core_mechanic": "collect",
     "theme": "home",
     "meta": "collection",
-    "audience_summary": "broad:48, men_18_35:8, women_25_45:7",
+    "audience_summary": "broad:48, men_18_35:8, women_25_45:8",
     "production_complexity": "high",
     "full_product_complexity": "high",
     "mvp_complexity": "medium",
-    "mvp_feasibility_score": 63.06,
+    "mvp_feasibility_score": 63.08,
     "simplifiable": true,
     "simplification_idea": "Focus the MVP on collect gameplay with a narrow home theme and one progression loop.",
     "group_key_type": "core_mechanic_theme_meta",
@@ -31419,12 +31424,12 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
     },
-    "app_count": 70,
+    "app_count": 71,
     "app_ids": [
       "com.Lucinda.CandyMergeMaster",
       "com.Studio17.bikinigirls",
@@ -31494,25 +31499,26 @@
       "com.ze.iam.fishit.game",
       "com.zenchen.lokicraft.building",
       "com.zs.bus.driving.simulator.game",
+      "jackpot.party.bingo.vegaswin",
       "net.pixelrabbit.jh",
       "raft.survival.multiplayer.sandbox"
     ],
-    "total_daily_installs": 330945,
-    "avg_daily_installs": 4727.79,
-    "median_daily_installs": 2063.5,
+    "total_daily_installs": 332101,
+    "avg_daily_installs": 4677.48,
+    "median_daily_installs": 2062.0,
     "total_monthly_downloads": 3207000,
     "total_monthly_revenue": 210000.0,
     "avg_rating": 3.98,
     "rating_count_total": 0,
     "rating_confidence": 0.0,
-    "successful_new_apps_count": 70,
+    "successful_new_apps_count": 71,
     "traction_fresh_apps_count": 16,
-    "top_app_share": 0.164,
+    "top_app_share": 0.1634,
     "growth_by_one_app_share": 1.0,
     "advertised_top_app_share": 0.0,
-    "giant_developer_share": 0.0431,
-    "single_developer_share": 0.164,
-    "classification_confidence_avg": 0.6331,
+    "giant_developer_share": 0.0429,
+    "single_developer_share": 0.1634,
+    "classification_confidence_avg": 0.6332,
     "unknown_or_new_pattern_cluster": true,
     "top_apps": [
       {
@@ -31623,8 +31629,8 @@
     ],
     "has_history": true,
     "history_depth_days": 1,
-    "weekly_growth_percent": 1.15,
-    "monthly_growth_percent": 1.15,
+    "weekly_growth_percent": 1.5,
+    "monthly_growth_percent": 1.5,
     "previous_total_daily_installs": 327184,
     "data_quality_score": 68.0,
     "data_quality_components": {
@@ -31656,10 +31662,10 @@
       "mvp_feasibility": 9.46,
       "data_quality": 13.6,
       "competition_penalty": 3.0,
-      "giant_risk_penalty": 1.08,
+      "giant_risk_penalty": 1.07,
       "paid_spike_penalty": 8.0
     },
-    "opportunity_score": 65.98,
+    "opportunity_score": 65.99,
     "risk_tags": [
       "classifier_low_confidence",
       "growth_by_one_app",
@@ -31733,7 +31739,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -31986,7 +31992,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -32293,7 +32299,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -32547,7 +32553,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -32795,7 +32801,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -33047,7 +33053,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -33386,7 +33392,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -33639,7 +33645,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -33889,7 +33895,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -34139,7 +34145,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -34367,7 +34373,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -34595,7 +34601,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -34800,7 +34806,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -35255,7 +35261,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -35515,7 +35521,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -35773,7 +35779,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -36232,7 +36238,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -36479,7 +36485,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -36738,7 +36744,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -36987,7 +36993,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -37260,7 +37266,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -37512,7 +37518,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -37809,7 +37815,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -38036,7 +38042,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -38314,7 +38320,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -38562,7 +38568,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -38837,7 +38843,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -39094,7 +39100,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -39361,7 +39367,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -39639,7 +39645,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -39902,7 +39908,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -40149,7 +40155,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -40411,7 +40417,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -40672,7 +40678,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -40949,7 +40955,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -41230,7 +41236,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -41546,7 +41552,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -41856,7 +41862,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -42133,7 +42139,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -42378,7 +42384,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -42628,7 +42634,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -42935,7 +42941,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -43198,7 +43204,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -43461,7 +43467,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -43712,7 +43718,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -43970,7 +43976,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -44225,7 +44231,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -44481,7 +44487,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -44808,7 +44814,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -45077,7 +45083,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -45337,7 +45343,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -45564,7 +45570,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -45793,7 +45799,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -46022,7 +46028,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -46229,7 +46235,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -46510,7 +46516,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -47026,7 +47032,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -47277,7 +47283,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -47573,7 +47579,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -47802,7 +47808,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -48075,7 +48081,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -48303,7 +48309,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -48987,7 +48993,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -49252,7 +49258,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -49453,7 +49459,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -49680,7 +49686,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -50118,7 +50124,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -50454,7 +50460,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -50680,7 +50686,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -51066,7 +51072,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -51319,7 +51325,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -51699,7 +51705,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -51951,7 +51957,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -52154,7 +52160,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -52682,7 +52688,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -52925,7 +52931,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -53185,7 +53191,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -53490,7 +53496,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -53695,7 +53701,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -53946,7 +53952,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -54198,7 +54204,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -54454,7 +54460,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -54864,7 +54870,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -55068,7 +55074,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -55294,7 +55300,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -55495,7 +55501,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false
@@ -55746,7 +55752,7 @@
     },
     "coverage": {
       "total_count": null,
-      "result_count": 4864,
+      "result_count": 4866,
       "sample_truncated": "unknown",
       "coverage_ratio": null,
       "full_window_claim_allowed": false

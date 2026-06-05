@@ -5,9 +5,9 @@ Source: single AppStoreSpy query without country/language filters.
 ## Status Counts
 - ALERT: 94
 - NEAR_MISS: 173
-- REJECT: 158
+- REJECT: 159
 - SINGLE_APP_WATCH: 17
-- WATCH: 177
+- WATCH: 176
 
 ## Coverage
 - unknown_coverage
@@ -36,9 +36,9 @@ Source: single AppStoreSpy query without country/language filters.
 
 ## Rejected Reason Distribution
 - giant_dominated: 9
-- low_demand: 120
-- low_mvp_feasibility: 43
-- low_score: 158
-- severe_paid_spike: 118
+- low_demand: 121
+- low_mvp_feasibility: 44
+- low_score: 159
+- severe_paid_spike: 119
 - too_few_apps: 105
-- weak_data_quality: 157
+- weak_data_quality: 158
