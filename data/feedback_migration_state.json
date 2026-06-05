@@ -4,7 +4,7 @@
   "migrated_count": 0,
   "skipped_duplicates_count": 0,
   "backup_path": null,
-  "migrated_at": "2026-06-05T20:16:29.509296+00:00",
+  "migrated_at": "2026-06-05T20:46:09.034430+00:00",
   "jsonl_path": "/home/runner/work/ASSA/ASSA/data/feedback.jsonl",
   "legacy_path": "/home/runner/work/ASSA/ASSA/data/feedback.json"
 }

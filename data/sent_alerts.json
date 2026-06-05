@@ -27,7 +27,7 @@
   },
   "d58c48113e39182a": {
     "normalized_niche": "sort_puzzle",
-    "last_sent_at": "2026-06-05T10:44:17.628398+00:00",
+    "last_sent_at": "2026-06-05T20:46:48.271981+00:00",
     "last_alert_instance_id": "2026-06-05:d58c48113e39182a",
     "top_app_ids": [
       "com.game.bubblematch.connect.puzzle",
@@ -36,7 +36,7 @@
     ],
     "last_status": "ALERT",
     "opportunity_score": 80.43,
-    "updated_at": "2026-06-05T10:44:17.628398+00:00"
+    "updated_at": "2026-06-05T20:46:48.271981+00:00"
   },
   "2c59c1dc408a3a1a": {
     "normalized_niche": "arrow_puzzle",
