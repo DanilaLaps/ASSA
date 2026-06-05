@@ -2,29 +2,30 @@
 
 - NEAR_MISS other score=77.61 quality=81.82 mvp=51.67 installs=63258 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS other score=75.91 quality=83.0 mvp=58.0 installs=1149609 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
-- NEAR_MISS sandbox score=75.24 quality=83.0 mvp=50.26 installs=3331791 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
-- NEAR_MISS other score=74.82 quality=73.87 mvp=58.0 installs=134540 risks=classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
-- NEAR_MISS other score=74.0 quality=83.0 mvp=42.6 installs=13541931 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
+- NEAR_MISS sandbox score=75.25 quality=83.0 mvp=50.28 installs=3332626 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
+- NEAR_MISS other score=74.83 quality=73.9 mvp=58.0 installs=134806 risks=classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
+- NEAR_MISS other score=74.0 quality=83.0 mvp=42.6 installs=13542012 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS other score=73.85 quality=83.0 mvp=35.0 installs=38207 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
-- NEAR_MISS shooter score=73.79 quality=83.0 mvp=37.43 installs=618879 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
-- NEAR_MISS other score=73.7 quality=83.0 mvp=40.02 installs=8573407 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
-- NEAR_MISS other score=73.5 quality=83.0 mvp=39.55 installs=1402452 risks=classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
-- NEAR_MISS other score=73.38 quality=83.0 mvp=36.17 installs=1378988 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
+- NEAR_MISS shooter score=73.79 quality=83.0 mvp=37.43 installs=619043 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
+- NEAR_MISS other score=73.71 quality=83.0 mvp=40.05 installs=8610195 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
+- NEAR_MISS other score=73.5 quality=83.0 mvp=39.55 installs=1402036 risks=classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
+- NEAR_MISS other score=73.38 quality=83.0 mvp=36.17 installs=1378596 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS match_3 score=73.29 quality=68.0 mvp=57.36 installs=476885 risks=classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS other score=73.26 quality=64.59 mvp=59.44 installs=98365 risks=classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
-- NEAR_MISS other score=73.25 quality=83.0 mvp=36.48 installs=1858100 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
+- NEAR_MISS other score=73.24 quality=83.0 mvp=36.48 installs=1857708 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS other score=72.98 quality=83.0 mvp=37.86 installs=64779 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
-- NEAR_MISS other score=72.8 quality=83.0 mvp=37.24 installs=2458689 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
+- NEAR_MISS other score=72.8 quality=83.0 mvp=37.24 installs=2458853 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS other score=72.28 quality=80.41 mvp=46.11 installs=83451 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS other score=72.15 quality=83.0 mvp=40.73 installs=936045 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS other score=71.91 quality=68.0 mvp=46.45 installs=3297346 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_monetization_signal, weak_rating_signal
 - NEAR_MISS other score=71.52 quality=83.0 mvp=58.0 installs=241862 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
+- NEAR_MISS runner score=71.16 quality=61.26 mvp=65.0 installs=48355 risks=audience_uncertain, classifier_low_confidence, unknown_coverage, weak_rating_signal
 - NEAR_MISS hidden_object score=70.67 quality=63.72 mvp=65.0 installs=76795 risks=leader_dominated, single_developer_cluster, unknown_coverage, weak_rating_signal
 - NEAR_MISS other score=70.51 quality=83.0 mvp=38.25 installs=87905 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS other score=70.06 quality=68.0 mvp=39.69 installs=415365 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS other score=69.96 quality=79.0 mvp=72.73 installs=36242 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal, weak_revenue_signal
 - NEAR_MISS other score=69.93 quality=83.0 mvp=58.0 installs=150835 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
-- NEAR_MISS word_puzzle score=69.9 quality=68.0 mvp=85.0 installs=183203 risks=classifier_low_confidence, growth_by_one_app, unknown_coverage, weak_rating_signal
+- NEAR_MISS word_puzzle score=69.9 quality=68.0 mvp=85.0 installs=182972 risks=classifier_low_confidence, growth_by_one_app, unknown_coverage, weak_rating_signal
 - NEAR_MISS merge score=69.86 quality=76.4 mvp=67.17 installs=20290 risks=audience_uncertain, classifier_low_confidence, unknown_coverage, weak_rating_signal, weak_revenue_signal
 - NEAR_MISS other score=69.77 quality=78.58 mvp=63.67 installs=26361 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal, weak_revenue_signal
 - NEAR_MISS other score=69.72 quality=68.0 mvp=41.91 installs=275084 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
@@ -36,8 +37,8 @@
 - NEAR_MISS word_puzzle score=69.02 quality=80.42 mvp=85.0 installs=5752 risks=classifier_low_confidence, unknown_coverage, weak_rating_signal
 - NEAR_MISS sort_puzzle score=69.01 quality=59.73 mvp=85.0 installs=243438 risks=classifier_low_confidence, growth_by_one_app, unknown_coverage, weak_rating_signal
 - NEAR_MISS shooter score=68.7 quality=71.49 mvp=35.0 installs=47621 risks=classifier_low_confidence, high_full_complexity, leader_dominated, single_developer_cluster, unknown_coverage, weak_rating_signal
-- NEAR_MISS block_puzzle score=68.61 quality=68.0 mvp=73.4 installs=54398 risks=classifier_low_confidence, growth_by_one_app, unknown_coverage, weak_rating_signal
-- NEAR_MISS arrow_puzzle score=68.54 quality=65.4 mvp=80.03 installs=2284259 risks=classifier_low_confidence, growth_by_one_app, unknown_coverage, weak_rating_signal
+- NEAR_MISS block_puzzle score=68.61 quality=68.0 mvp=73.4 installs=54604 risks=classifier_low_confidence, growth_by_one_app, unknown_coverage, weak_rating_signal
+- NEAR_MISS arrow_puzzle score=68.53 quality=65.4 mvp=80.03 installs=2284691 risks=classifier_low_confidence, growth_by_one_app, unknown_coverage, weak_rating_signal
 - NEAR_MISS idle_tycoon score=68.42 quality=79.83 mvp=62.67 installs=5208 risks=audience_uncertain, classifier_low_confidence, unknown_coverage, weak_rating_signal
 - NEAR_MISS tile_match score=68.23 quality=68.0 mvp=74.43 installs=180983 risks=classifier_low_confidence, growth_by_one_app, unknown_coverage, weak_rating_signal
 - NEAR_MISS merge score=68.1 quality=74.18 mvp=65.0 installs=53894 risks=audience_uncertain, classifier_low_confidence, unknown_coverage, weak_rating_signal, weak_revenue_signal
@@ -48,13 +49,13 @@
 - NEAR_MISS other score=67.78 quality=67.63 mvp=68.37 installs=273428 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS idle_tycoon score=67.77 quality=78.85 mvp=65.0 installs=12859 risks=unknown_coverage, weak_rating_signal, weak_revenue_signal
 - NEAR_MISS other score=67.59 quality=68.0 mvp=69.2 installs=329875 risks=classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
-- NEAR_MISS arrow_puzzle score=67.56 quality=68.0 mvp=72.17 installs=5448085 risks=classifier_low_confidence, growth_by_one_app, unknown_coverage, weak_rating_signal
+- NEAR_MISS arrow_puzzle score=67.56 quality=68.0 mvp=72.19 installs=5449540 risks=classifier_low_confidence, growth_by_one_app, unknown_coverage, weak_rating_signal
 - NEAR_MISS sandbox score=67.56 quality=79.0 mvp=69.74 installs=143089 risks=classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal, weak_revenue_signal
 - NEAR_MISS other score=67.52 quality=68.0 mvp=36.52 installs=82935 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS merge score=67.51 quality=79.0 mvp=69.71 installs=14077 risks=classifier_low_confidence, unknown_coverage, weak_rating_signal, weak_revenue_signal
 - NEAR_MISS runner score=67.49 quality=67.44 mvp=60.0 installs=49243 risks=classifier_low_confidence, growth_by_one_app, unknown_coverage, weak_rating_signal
 - NEAR_MISS arrow_puzzle score=67.46 quality=73.16 mvp=73.0 installs=21289 risks=classifier_low_confidence, unknown_coverage, weak_rating_signal, weak_revenue_signal
-- NEAR_MISS merge score=67.46 quality=68.0 mvp=67.09 installs=248501 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, unknown_coverage, weak_rating_signal
+- NEAR_MISS merge score=67.46 quality=68.0 mvp=67.09 installs=248707 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, unknown_coverage, weak_rating_signal
 - NEAR_MISS sandbox score=67.38 quality=83.0 mvp=74.2 installs=8281 risks=classifier_low_confidence, unknown_coverage, weak_rating_signal
 - NEAR_MISS other score=67.31 quality=68.0 mvp=64.76 installs=36555 risks=classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS idle_tycoon score=67.26 quality=68.0 mvp=64.87 installs=205118 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, unknown_coverage, weak_rating_signal
@@ -69,21 +70,20 @@
 - NEAR_MISS idle_tycoon score=67.08 quality=68.0 mvp=64.33 installs=93283 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, unknown_coverage, weak_rating_signal
 - NEAR_MISS word_puzzle score=66.97 quality=58.0 mvp=85.0 installs=20515 risks=classifier_low_confidence, unknown_coverage, weak_rating_signal, weak_revenue_signal
 - NEAR_MISS hidden_object score=66.95 quality=82.24 mvp=65.0 installs=16907 risks=unknown_coverage, weak_rating_signal, weak_revenue_signal
-- NEAR_MISS runner score=66.9 quality=68.0 mvp=63.2 installs=192223 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, unknown_coverage, weak_rating_signal
+- NEAR_MISS runner score=66.91 quality=68.0 mvp=63.24 installs=192768 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, unknown_coverage, weak_rating_signal
 - NEAR_MISS block_puzzle score=66.83 quality=68.0 mvp=72.54 installs=1223014 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, unknown_coverage, weak_rating_signal
-- NEAR_MISS runner score=66.82 quality=68.0 mvp=62.6 installs=373462 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, unknown_coverage, weak_rating_signal
+- NEAR_MISS runner score=66.82 quality=68.0 mvp=62.63 installs=374007 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, unknown_coverage, weak_rating_signal
 - NEAR_MISS idle_tycoon score=66.78 quality=67.87 mvp=66.2 installs=28323 risks=audience_uncertain, classifier_low_confidence, leader_dominated, single_developer_cluster, unknown_coverage, weak_rating_signal, weak_revenue_signal
 - NEAR_MISS idle_tycoon score=66.78 quality=68.0 mvp=64.98 installs=301084 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, unknown_coverage, weak_rating_signal
 - NEAR_MISS tile_match score=66.75 quality=82.85 mvp=85.0 installs=41423 risks=unknown_coverage, weak_monetization_signal, weak_rating_signal, weak_revenue_signal
 - NEAR_MISS other score=66.72 quality=67.89 mvp=60.93 installs=120777 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
-- NEAR_MISS runner score=66.72 quality=68.0 mvp=62.2 installs=164172 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, unknown_coverage, weak_rating_signal
 - NEAR_MISS mahjong score=66.65 quality=83.0 mvp=70.84 installs=83810 risks=audience_uncertain, classifier_low_confidence, unknown_coverage, weak_rating_signal
 - NEAR_MISS other score=66.55 quality=68.0 mvp=64.15 installs=1017178 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS runner score=66.48 quality=78.49 mvp=64.47 installs=326496 risks=audience_uncertain, classifier_low_confidence, unknown_coverage, weak_rating_signal, weak_revenue_signal
 - NEAR_MISS tile_match score=66.36 quality=68.0 mvp=64.52 installs=461555 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS block_puzzle score=66.2 quality=67.21 mvp=85.0 installs=35755 risks=classifier_low_confidence, leader_dominated, single_developer_cluster, unknown_coverage, weak_rating_signal, weak_revenue_signal
 - NEAR_MISS other score=66.19 quality=68.0 mvp=63.0 installs=411484 risks=classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
-- NEAR_MISS sandbox score=66.03 quality=62.92 mvp=63.68 installs=717391 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
+- NEAR_MISS sandbox score=66.02 quality=62.93 mvp=63.6 installs=718020 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS runner score=66.0 quality=68.0 mvp=64.53 installs=262247 risks=classifier_low_confidence, growth_by_one_app, unknown_coverage, weak_rating_signal
 - NEAR_MISS other score=65.98 quality=68.0 mvp=63.06 installs=330945 risks=classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS other score=65.93 quality=76.79 mvp=42.14 installs=27517 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal, weak_revenue_signal
@@ -101,9 +101,9 @@
 - NEAR_MISS sandbox score=65.53 quality=68.0 mvp=64.34 installs=1907259 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS sandbox score=65.37 quality=67.6 mvp=62.76 installs=201362 risks=classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS coloring score=65.29 quality=62.05 mvp=65.85 installs=209227 risks=classifier_low_confidence, unknown_coverage, weak_rating_signal, weak_revenue_signal
+- NEAR_MISS other score=65.27 quality=68.0 mvp=55.0 installs=1179157 risks=classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS runner score=65.26 quality=80.17 mvp=53.0 installs=28095 risks=audience_uncertain, classifier_low_confidence, unknown_coverage, weak_rating_signal
 - NEAR_MISS runner score=65.25 quality=64.0 mvp=63.0 installs=160421 risks=audience_uncertain, classifier_low_confidence, unknown_coverage, weak_rating_signal, weak_revenue_signal
-- NEAR_MISS other score=65.23 quality=68.0 mvp=54.86 installs=1142117 risks=classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS merge score=65.11 quality=67.62 mvp=65.0 installs=49026 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, unknown_coverage, weak_rating_signal
 - NEAR_MISS coloring score=65.1 quality=68.0 mvp=50.0 installs=207331 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, unknown_coverage, weak_rating_signal
 - NEAR_MISS other score=65.08 quality=78.33 mvp=58.0 installs=33465 risks=classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal, weak_revenue_signal
@@ -115,15 +115,14 @@
 - NEAR_MISS other score=64.7 quality=68.0 mvp=50.0 installs=51094 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS idle_tycoon score=64.57 quality=68.0 mvp=64.44 installs=57324 risks=classifier_low_confidence, growth_by_one_app, unknown_coverage, weak_rating_signal
 - NEAR_MISS shooter score=64.55 quality=80.57 mvp=64.23 installs=186175 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
-- NEAR_MISS shooter score=64.42 quality=68.0 mvp=63.91 installs=72146 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS other score=64.41 quality=68.0 mvp=35.0 installs=73372 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS runner score=64.36 quality=74.96 mvp=60.0 installs=36356 risks=classifier_low_confidence, unknown_coverage, weak_rating_signal, weak_revenue_signal
 - NEAR_MISS other score=64.33 quality=78.05 mvp=38.12 installs=95848 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal, weak_revenue_signal
 - NEAR_MISS other score=64.28 quality=78.54 mvp=38.12 installs=96014 risks=classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal, weak_revenue_signal
+- NEAR_MISS shooter score=64.28 quality=68.0 mvp=63.91 installs=72578 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS other score=64.26 quality=79.0 mvp=36.43 installs=247470 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal, weak_revenue_signal
 - NEAR_MISS other score=64.24 quality=79.0 mvp=37.86 installs=257551 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal, weak_revenue_signal
-- NEAR_MISS runner score=64.16 quality=68.0 mvp=62.89 installs=511133 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, unknown_coverage, weak_rating_signal
-- NEAR_MISS other score=64.15 quality=79.0 mvp=38.91 installs=391510 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal, weak_revenue_signal
+- NEAR_MISS other score=64.15 quality=79.0 mvp=38.91 installs=391279 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal, weak_revenue_signal
 - NEAR_MISS other score=64.13 quality=68.0 mvp=60.61 installs=184441 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS idle_tycoon score=63.95 quality=86.0 mvp=67.6 installs=27608 risks=unknown_coverage, weak_rating_signal, weak_revenue_signal
 - NEAR_MISS shooter score=63.85 quality=70.42 mvp=58.0 installs=24971 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal, weak_revenue_signal
@@ -135,7 +134,6 @@
 - NEAR_MISS other score=63.37 quality=79.0 mvp=55.0 installs=23126 risks=classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal, weak_revenue_signal
 - NEAR_MISS runner score=63.29 quality=73.45 mvp=37.31 installs=283040 risks=audience_uncertain, classifier_low_confidence, unknown_coverage, weak_rating_signal, weak_revenue_signal
 - NEAR_MISS other score=63.27 quality=68.0 mvp=61.82 installs=633142 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
-- NEAR_MISS runner score=63.26 quality=61.79 mvp=65.0 installs=45442 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, unknown_coverage, weak_rating_signal
 - NEAR_MISS other score=63.21 quality=68.0 mvp=65.04 installs=215021 risks=classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS other score=62.98 quality=67.18 mvp=61.2 installs=145592 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS sandbox score=62.92 quality=76.05 mvp=64.75 installs=8785 risks=classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal, weak_revenue_signal
@@ -143,9 +141,9 @@
 - NEAR_MISS shooter score=62.79 quality=57.11 mvp=61.5 installs=18408 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, leader_dominated, single_developer_cluster, unknown_coverage, weak_rating_signal
 - NEAR_MISS sandbox score=62.66 quality=72.47 mvp=55.0 installs=17733 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, leader_dominated, single_developer_cluster, unknown_coverage, weak_rating_signal
 - NEAR_MISS other score=62.63 quality=68.0 mvp=67.75 installs=102874 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
-- NEAR_MISS other score=62.41 quality=68.0 mvp=37.59 installs=1667718 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
+- NEAR_MISS other score=62.41 quality=68.0 mvp=37.59 installs=1667487 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS sort_puzzle score=62.38 quality=63.43 mvp=79.6 installs=8151 risks=classifier_low_confidence, unknown_coverage, weak_rating_signal, weak_revenue_signal
-- NEAR_MISS other score=62.35 quality=68.0 mvp=40.88 installs=161648 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
+- NEAR_MISS other score=62.35 quality=68.0 mvp=40.88 installs=161855 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS coloring score=62.23 quality=55.63 mvp=67.5 installs=46549 risks=classifier_low_confidence, growth_by_one_app, leader_dominated, single_developer_cluster, unknown_coverage, weak_rating_signal
 - NEAR_MISS other score=62.22 quality=68.0 mvp=38.57 installs=75174 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS sort_puzzle score=62.12 quality=78.28 mvp=85.0 installs=13045 risks=classifier_low_confidence, unknown_coverage, weak_rating_signal, weak_revenue_signal
@@ -153,7 +151,7 @@
 - NEAR_MISS other score=62.0 quality=68.0 mvp=45.0 installs=113892 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS idle_tycoon score=61.97 quality=80.32 mvp=65.0 installs=4294 risks=classifier_low_confidence, unknown_coverage, weak_rating_signal
 - NEAR_MISS sandbox score=61.92 quality=71.03 mvp=64.75 installs=21147 risks=audience_uncertain, classifier_low_confidence, high_full_complexity, unknown_coverage, weak_rating_signal, weak_revenue_signal
-- NEAR_MISS shooter score=61.89 quality=68.0 mvp=44.65 installs=1244051 risks=classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
+- NEAR_MISS shooter score=61.89 quality=68.0 mvp=44.65 installs=1244215 risks=classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS other score=61.8 quality=68.0 mvp=35.0 installs=655941 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal
 - NEAR_MISS arrow_puzzle score=61.78 quality=73.89 mvp=60.0 installs=5341 risks=classifier_low_confidence, unknown_coverage, weak_rating_signal, weak_revenue_signal
 - NEAR_MISS other score=61.76 quality=68.0 mvp=45.43 installs=1115129 risks=audience_uncertain, classifier_low_confidence, growth_by_one_app, high_full_complexity, unknown_coverage, weak_rating_signal

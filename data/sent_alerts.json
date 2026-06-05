@@ -37,5 +37,44 @@
     "last_status": "ALERT",
     "opportunity_score": 80.43,
     "updated_at": "2026-06-05T10:44:17.628398+00:00"
+  },
+  "2c59c1dc408a3a1a": {
+    "normalized_niche": "arrow_puzzle",
+    "last_sent_at": "2026-06-05T11:05:56.975373+00:00",
+    "last_alert_instance_id": "2026-06-05:2c59c1dc408a3a1a",
+    "top_app_ids": [
+      "com.arrow.madness.games.arrows.escape.puzzle.game",
+      "com.arrowdash.maze",
+      "com.kinesic.paths.casual"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 80.39,
+    "updated_at": "2026-06-05T11:05:56.975373+00:00"
+  },
+  "43fedc97a6e0484c": {
+    "normalized_niche": "block_puzzle",
+    "last_sent_at": "2026-06-05T11:05:56.975373+00:00",
+    "last_alert_instance_id": "2026-06-05:43fedc97a6e0484c",
+    "top_app_ids": [
+      "com.blockblast.vn",
+      "com.gbs.grand.miami.gangtser.city.crime",
+      "com.golemrise.craftarena"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 80.39,
+    "updated_at": "2026-06-05T11:05:56.975373+00:00"
+  },
+  "0d470463437a13ab": {
+    "normalized_niche": "tile_match",
+    "last_sent_at": "2026-06-05T11:05:56.975373+00:00",
+    "last_alert_instance_id": "2026-06-05:0d470463437a13ab",
+    "top_app_ids": [
+      "com.avs.grand.criminal.sand.box",
+      "com.cedargames.tileclear",
+      "com.oakever.meowdoku"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 79.91,
+    "updated_at": "2026-06-05T11:05:56.975373+00:00"
   }
 }
