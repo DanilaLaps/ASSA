@@ -38,12 +38,12 @@ def candidate(status, **overrides):
 
 
 class LlmInputTests(unittest.TestCase):
-    def test_pack_contains_candidate_status_groups_without_raw_apps(self):
+    def test_pack_contains_only_sendable_alerts_without_raw_apps(self):
         config, _ = load_config("config.yaml")
 
         pack = build_candidate_pack_input(
             [
-                candidate("ALERT"),
+                candidate("ALERT", send_regular_alert=True),
                 candidate("WATCH"),
                 candidate("SINGLE_APP_WATCH"),
                 candidate("NEAR_MISS"),
@@ -55,8 +55,9 @@ class LlmInputTests(unittest.TestCase):
         )
 
         self.assertEqual(len(pack["alerts"]), 1)
-        self.assertEqual(len(pack["watch"]), 2)
-        self.assertEqual(len(pack["near_misses"]), 1)
+        self.assertEqual(len(pack["watch"]), 0)
+        self.assertEqual(len(pack["near_misses"]), 0)
+        self.assertEqual(len(pack["initial_baseline_digest"]), 0)
         self.assertEqual(pack["coverage_summary"]["sample_truncated"], False)
         self.assertEqual(pack["history_summary"]["history_state"], "HISTORY_AVAILABLE")
         self.assertEqual(pack["alerts"][0]["top_products"][0]["url_appstorespy"], "https://appstorespy.example/apps/com.example.a")
@@ -79,6 +80,19 @@ class LlmInputTests(unittest.TestCase):
 
         self.assertEqual(len(pack["alerts"]), 1)
         self.assertEqual(pack["alerts"][0]["candidate_id"], "sendable-alert")
+
+    def test_non_sendable_alerts_are_excluded_from_llm_pack(self):
+        config, _ = load_config("config.yaml")
+
+        pack = build_candidate_pack_input(
+            [
+                candidate("ALERT", candidate_id="cooldown-alert", send_regular_alert=False),
+                candidate("ALERT", candidate_id="unset-alert"),
+            ],
+            config,
+        )
+
+        self.assertEqual(pack["alerts"], [])
 
 
 if __name__ == "__main__":

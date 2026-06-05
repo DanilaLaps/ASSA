@@ -112,22 +112,11 @@ def build_candidate_pack_input(
 ) -> dict[str, Any]:
     limits = config.get("alert_limits", {})
     alerts = select_alerts_for_llm(candidates, int(limits.get("max_alerts_per_run", 3)))
-    watch = [
-        item
-        for item in candidates
-        if item.get("status") in {"WATCH", "SINGLE_APP_WATCH"}
-    ][: int(limits.get("max_watch_items_per_digest", 10))]
-    near_misses = [
-        item for item in candidates if item.get("status") == "NEAR_MISS"
-    ][: int(limits.get("max_near_misses_in_report", 10))]
-    initial = [
-        item for item in candidates if item.get("initial_baseline_digest")
-    ][: int(config.get("first_run_behavior", {}).get("max_initial_digest_items", 10))]
     return {
         "alerts": [compact_candidate_for_llm(item) for item in alerts],
-        "watch": [compact_candidate_for_llm(item) for item in watch],
-        "near_misses": [compact_candidate_for_llm(item) for item in near_misses],
-        "initial_baseline_digest": [compact_candidate_for_llm(item) for item in initial],
+        "watch": [],
+        "near_misses": [],
+        "initial_baseline_digest": [],
         "coverage_summary": coverage_summary or coverage_from_candidates(candidates),
         "history_summary": history_summary or {},
         "rules_summary": {
@@ -147,10 +136,11 @@ def build_candidate_pack_input(
 
 
 def select_alerts_for_llm(candidates: list[dict[str, Any]], max_alerts: int) -> list[dict[str, Any]]:
-    alerts = [item for item in candidates if item.get("status") == "ALERT"]
-    sendable = [item for item in alerts if item.get("send_regular_alert")]
-    remaining = [item for item in alerts if not item.get("send_regular_alert")]
-    return (sendable + remaining)[:max_alerts]
+    return [
+        item
+        for item in candidates
+        if item.get("status") == "ALERT" and item.get("send_regular_alert")
+    ][:max_alerts]
 
 
 def compact_candidate_for_llm(candidate: dict[str, Any]) -> dict[str, Any]:
@@ -445,6 +435,9 @@ def build_pack_prompt(pack_input: dict[str, Any]) -> str:
         "INITIAL_BASELINE_NO_HISTORY and cap confidence at medium.\n"
         "Use the top_products/top_competitors arrays as the top 3 products in each niche. Compare their scale, "
         "release/update dates, monetization flags, ratings, descriptions, and AppStoreSpy links when forming the analysis.\n"
+        "The alerts array contains only the candidates that will be sent as Telegram alerts in this run. "
+        "Return an analysis for every candidate_id in alerts; do not skip any alert candidate. "
+        "Do not add analyses for candidates that are not present in alerts.\n"
         "Return only a JSON object with key candidate_analyses. Its keys must be candidate_id values. Each value must contain "
         "recommendation TEST/WATCH/AVOID, confidence, why_interesting, why_might_be_false_positive, "
         "mvp_hypothesis, simplified_mvp_scope, competitor_takeaways, entry_angle, differentiation_idea, "

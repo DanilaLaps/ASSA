@@ -64,6 +64,7 @@ def pack_candidate(**overrides):
         "risk_tags": [],
         "first_run_without_history": True,
         "initial_baseline_digest": True,
+        "send_regular_alert": True,
     }
     row.update(overrides)
     return row
@@ -187,6 +188,8 @@ class LlmReportTests(unittest.TestCase):
         self.assertIn("single-query AppStoreSpy", prompt)
         self.assertIn("top_products", prompt)
         self.assertIn("competitor_takeaways", prompt)
+        self.assertIn("only the candidates that will be sent as Telegram alerts", prompt)
+        self.assertIn("Return an analysis for every candidate_id in alerts", prompt)
         self.assertNotIn("Рў", prompt)
 
 

@@ -1,0 +1,1035 @@
+# AppStoreSpy Niche Monitor - Project Documentation
+
+This document is a human and AI oriented map of the project. It explains what the system does, the invariants that must not be broken, the runtime pipeline, the data contracts, and where to make safe changes.
+
+## 1. Executive Summary
+
+The project is an automated niche monitor for mobile games on Google Play. It collects one AppStoreSpy `/play/apps/query` response, normalizes and classifies apps, aggregates them into explainable niche clusters, scores those clusters deterministically, filters alert candidates, optionally asks OpenAI for analysis of the alerts that will be sent, and delivers Telegram notifications.
+
+The system is intentionally conservative:
+
+- AppStoreSpy collection is limited to one production API request per run.
+- The AppStoreSpy query must not use country, language, active country, or pagination axes.
+- Scoring and alert selection are deterministic Python logic.
+- LLM analysis is commentary and validation support, not the primary selector.
+- Telegram should never send more than `alert_limits.max_alerts_per_run` regular alerts.
+- The first run without compatible history must not send regular alerts.
+
+## 2. Primary Users and Use Cases
+
+Primary users:
+
+- A solo or small mobile-game team looking for fresh Google Play niche opportunities.
+- A maintainer tuning deterministic rules, thresholds, and feedback loops.
+- An AI coding agent that needs to modify the project without breaking safety constraints.
+
+Main use cases:
+
+- Production monitoring with AppStoreSpy, OpenAI analysis, Telegram alerts, and stored history.
+- Dry-run monitoring against `data/sample/sample_apps.json`.
+- Weekly digest generation from stored history and manual feedback.
+- Feedback ingestion and one-time legacy feedback migration.
+- Regression testing of classifier, scorer, trend, alert, LLM, Telegram, feedback, and collection behavior.
+
+## 3. Non-Negotiable Invariants
+
+These rules come from `AGENTS.md` and the current codebase. Treat them as hard constraints.
+
+### Collection
+
+- Production collection must make exactly one AppStoreSpy `/play/apps/query` request per run.
+- Production collection must not add `country`, `language`, `active_countries`, or pagination.
+- The production payload must use `page=1`, `sort=-release_date`, `published=true`, `category_type=GAME`, recent releases, and `downloads_daily >= 500`.
+- Do not retry with a different query shape if AppStoreSpy rejects fields or limits. Fix config instead.
+
+### Secrets
+
+- Never commit real API keys or tokens.
+- Read secrets only from environment variables.
+- Important env vars:
+  - `APPSTORESPY_API_KEY`
+  - `OPENAI_API_KEY`
+  - `OPENAI_MODEL` optional, controlled by config
+  - `TELEGRAM_BOT_TOKEN`
+  - `TELEGRAM_CHAT_ID`
+
+### Scoring and Alerts
+
+- Keep scoring deterministic and explainable.
+- Every alert must include:
+  - `reason_codes`
+  - `score_components`
+  - `data_quality_score`
+  - classification dimensions: `market_category`, `core_mechanic`, `theme`, `meta`, `audience`, `production_complexity`
+- Never send more than `alert_limits.max_alerts_per_run` regular alerts.
+- First run without compatible history must not send regular alerts.
+- Store manual feedback labels and use them to improve scoring.
+
+### LLM and Messaging
+
+- LLM analysis must receive alert candidates only, not raw full datasets.
+- Current LLM pack is intentionally limited to `ALERT` candidates with `send_regular_alert=True`.
+- LLM and Telegram text must describe the data as one AppStoreSpy query without country/language filters.
+- LLM analysis does not choose which alerts are sent. Python scoring and filtering choose them first.
+
+## 4. Repository Layout
+
+```text
+src/appstorespy_niche_monitor/
+  appstorespy_client.py   HTTP client for AppStoreSpy.
+  collector.py            Builds and validates the single AppStoreSpy query.
+  cleaner.py              Normalizes raw AppStoreSpy app rows.
+  niche_classifier.py     Rule-based niche and dimension classification.
+  aggregator.py           Groups apps into niche summaries.
+  trend_detector.py       Compares current summaries to history.
+  data_quality.py         Computes data-quality score and reasons.
+  scorer.py               Computes opportunity score, reason codes, risk tags.
+  candidate_generator.py  Converts scored summaries into candidates.
+  alert_filter.py         Cooldown, send limits, sent-alert marking.
+  llm_report.py           OpenAI/fallback analysis and alert markdown.
+  telegram_notify.py      Telegram message formatting and delivery.
+  report_writer.py        Daily and baseline markdown reports.
+  storage.py              JSON/CSV/history/report persistence.
+  feedback.py             Feedback JSONL, legacy migration, adjustments.
+  weekly_digest.py        Weekly calibration digest.
+  first_run_handler.py    First-run baseline rules.
+  coverage.py             API response coverage metadata.
+  config.py               JSON/YAML config loader.
+  dedupe.py               Stable hashes and alert IDs.
+  utils.py                Dates, parsing, math, text normalization.
+  main.py                 CLI and pipeline orchestration.
+```
+
+Other important files:
+
+- `config.yaml`: JSON-compatible YAML configuration.
+- `README.md`: concise user-facing overview and commands.
+- `AGENTS.md`: hard development and review rules.
+- `tests/`: standard-library `unittest` test suite.
+- `data/sample/sample_apps.json`: dry-run input.
+- `data/raw/`, `data/processed/`, `data/history/`: runtime artifacts.
+- `reports/alerts/`, `reports/daily/`, `reports/weekly/`: generated reports.
+
+## 5. Runtime Pipeline
+
+Main orchestration lives in `src/appstorespy_niche_monitor/main.py`, function `run_pipeline`.
+
+Pipeline order:
+
+```text
+load config
+ensure storage paths
+migrate/load feedback
+collect raw AppStoreSpy records or sample data
+save raw snapshot
+clean raw app rows
+classify apps
+save processed apps
+aggregate apps into summaries
+load compatible history
+detect trends
+enrich data quality
+score summaries
+save clusters and summaries
+load sent_alerts
+generate candidates
+apply first-run baseline rules
+apply cooldown and max-alert limits
+build history summary
+run LLM/fallback analysis for sendable alerts
+attach analysis to candidates
+split candidates by status
+write daily and alert reports
+save processed candidates/status files
+send Telegram alerts if notify enabled
+mark sent alerts after successful send
+send first-run baseline digest if applicable
+save history summaries
+send completion summary if notify enabled
+return run result JSON
+```
+
+Important ordering notes:
+
+- `save_raw` happens immediately after collection, before normalization.
+- `save_history_summaries` happens after candidate processing and notifications.
+- `sent_alerts.json` is updated only after `send_alerts` returns sent items.
+- Daily reports and processed candidate files are written before Telegram sending.
+- `alert_candidates` means all `status == ALERT`, not only sent alerts.
+- `urgent_alerts` means `status == ALERT and send_regular_alert == True`.
+
+## 6. Collection Contract
+
+Collection code:
+
+- `collector.build_single_query_payload`
+- `collector.validate_single_query_payload`
+- `collector.collect_apps`
+- `appstorespy_client.AppStoreSpyClient.query_play_apps`
+
+External API reference:
+
+- AppStoreSpy API documentation/entry page: https://appstorespy.com/app-store-api
+- If AppStoreSpy provides a private authenticated documentation URL inside the API dashboard, treat that account-specific URL as the source of truth and update this reference.
+
+Production query shape:
+
+```json
+{
+  "limit": 10000,
+  "page": 1,
+  "sort": "-release_date",
+  "fields": ["id", "name", "..."],
+  "filter": {
+    "published": true,
+    "category_type": "GAME",
+    "release_date": {"gte": "<snapshot_date - release_date_days_back>"},
+    "downloads_daily": {"gte": 500}
+  }
+}
+```
+
+Forbidden in payload, filter, and fields:
+
+- `country`
+- `language`
+- `active_countries`
+
+Dry-run behavior:
+
+- `mode=dry-run` reads `data/sample/sample_apps.json`.
+- Dry-run still builds the same payload metadata, but records `collection_mode=single_query_dry_run` and `api_requests_count=0`.
+
+AppStoreSpy client behavior:
+
+- Uses `APPSTORESPY_API_KEY` from environment unless explicitly passed.
+- Does not retry `/play/apps/query`; `query_play_apps` calls `_request` with `max_attempts=1`.
+- Redacts API key from error details.
+- Converts 204 query response into `{"apps": []}`.
+
+## 7. Normalized App Schema
+
+`cleaner.normalize_app` maps raw AppStoreSpy rows to a stable app dict. Important fields:
+
+- identity: `app_id`, `bundle`, `name`
+- developer: `developer_name`, `developer_id`, `website`
+- taxonomy: `platform`, `category`, `category_type`
+- descriptions: `description`, `description_short`, `description_full`
+- metrics: `downloads_daily`, `downloads_month`, `downloads_exact`, `downloads_mark`, `revenue_month`
+- store quality: `rating_avg`, `rating_count`, `review_count`
+- dates: `release_date`, `update_date`
+- monetization/acquisition: `iap`, `ads`, `advertised`
+- assets and links: `icon`, `screenshots`, `url_appstorespy`, `url`
+- metadata: `source_query`, `coverage`
+- raw copy: `raw_source_fields_json`
+
+The normalized app retains `response_country` and `response_language` if AppStoreSpy returns them, but country/language are not query axes and are not grouping dimensions.
+
+Deduplication:
+
+- `clean_apps` dedupes by `(platform, bundle or app_id)`.
+- If duplicate rows appear, the one with higher `downloads_daily` wins.
+
+## 8. Classification
+
+Classifier code:
+
+- `niche_classifier.classify_app`
+- `niche_classifier.match_niche`
+- `niche_classifier.infer_dimension_with_confidence`
+- `niche_classifier.infer_mvp_fields`
+
+Classification is rule-based and uses:
+
+- app name
+- developer name
+- category
+- short and full descriptions
+- configured `niche_rules`
+- configured `dimension_rules`
+
+Output dimensions:
+
+- `niche`
+- `normalized_niche`
+- `market_category`
+- `core_mechanic`
+- `theme`
+- `meta`
+- `audience`
+- `production_complexity`
+- `full_product_complexity`
+- `mvp_complexity`
+- `mvp_feasibility_score`
+- `simplifiable`
+- `simplification_idea`
+- confidence fields
+- `is_unknown_or_new_pattern`
+
+Production complexity is inferred from `production_scores`. Higher production score means easier production:
+
+- score `>= 12`: `low`
+- score `>= 7`: `medium`
+- otherwise: `high`
+
+## 9. Aggregation
+
+Aggregator code:
+
+- `aggregator.aggregate_apps`
+- `aggregator.aggregate_group`
+- `aggregator.compact_app`
+
+Current group definitions:
+
+- `normalized_niche`
+- `core_mechanic`
+- `core_mechanic_theme`
+- `core_mechanic_theme_meta`
+- `market_category_core_mechanic`
+
+Configured group keys live in `config.yaml` under `aggregation.group_keys`.
+
+Country and language are not grouping dimensions. Audience is summarized and retained, but not used as a hard group key.
+
+Aggregated summary includes:
+
+- grouping fields and dimensions
+- `source_scope=single_appstorespy_query_no_country_language`
+- query metadata and coverage
+- app counts and app IDs
+- total/average/median daily installs
+- monthly downloads and revenue
+- ratings
+- new app counts
+- concentration metrics:
+  - `top_app_share`
+  - `growth_by_one_app_share`
+  - `advertised_top_app_share`
+  - `giant_developer_share`
+  - `single_developer_share`
+- `classification_confidence_avg`
+- top apps
+
+Top apps:
+
+- Sorted by `downloads_daily` descending.
+- Stored up to 5.
+- Include AppStoreSpy link, store link, monetization fields, rating fields, descriptions, icon, and first 3 screenshots.
+- Top 3 are treated as top products/competitors for LLM and Telegram.
+
+## 10. History and Trends
+
+Trend code:
+
+- `trend_detector.detect_trends`
+- `trend_detector.nearest_before`
+- `trend_detector.growth_by_one_app_share`
+
+History source:
+
+- `data/history/*_summaries.json`
+- Loaded by `storage.load_history_summaries`
+- Filtered in `main.run_pipeline` to matching `score_version`
+
+Trend fields:
+
+- `has_history`
+- `history_depth_days`
+- `weekly_growth_percent`
+- `monthly_growth_percent`
+- `growth_by_one_app_share`
+- `previous_total_daily_installs`
+
+If no compatible prior history exists:
+
+- growth fields are zeroed
+- first-run behavior may block alerts
+
+## 11. Data Quality
+
+Data-quality code:
+
+- `data_quality.enrich_data_quality`
+- `data_quality.calculate_data_quality`
+
+Data quality is a confidence score, not a standalone selector. It is used in scoring and alert rules.
+
+Components:
+
+- required field completeness
+- history depth
+- sample size
+- signal diversity
+- monetization reliability
+- fresh-success reliability
+- penalties
+
+Common data-quality reasons:
+
+- `no_history`
+- `low_sample_size`
+- `top_app_dominance`
+- `weak_revenue_signal`
+- `weak_monetization_signal`
+- `no_successful_new_apps`
+- `missing_required_fields`
+- `one_app_growth`
+- `paid_spike_risk`
+- `classifier_low_confidence`
+- `sample_truncated`
+- `unknown_coverage`
+
+Coverage risk comes from `coverage.coverage_risk_tags`.
+
+## 12. Scoring
+
+Scoring code:
+
+- `scorer.score_summaries`
+- `scorer.score_summary`
+
+Opportunity score is deterministic and explainable. It combines:
+
+- demand
+- freshness
+- revenue/monetization
+- rating
+- MVP feasibility
+- data quality
+- competition penalty
+- giant developer penalty
+- paid-spike penalty
+
+`score_components` stores each piece. `opportunity_score` is the clamped final score.
+
+Demand scoring:
+
+- If history is mature enough, uses percentile demand.
+- Otherwise uses absolute total daily installs thresholds.
+
+Reason codes are positive explanations such as:
+
+- `multi_app_cluster`
+- `strong_daily_installs`
+- `fresh_traction`
+- `low_mvp_complexity`
+- `simplifiable_high_complexity`
+- `low_giant_share`
+- `diversified_apps`
+- `monetization_signal_present`
+- `good_rating_confidence`
+- `new_pattern_detected`
+- `single_app_breakout`
+- `growing_vs_previous_snapshot`
+- `historical_growth`
+- `small_team_fit`
+
+Risk tags are caution flags such as:
+
+- `leader_dominated`
+- `severe_paid_spike`
+- `possible_paid_spike`
+- `growth_by_one_app`
+- `giant_developer_risk`
+- `single_developer_cluster`
+- `weak_rating_signal`
+- `weak_revenue_signal`
+- `weak_monetization_signal`
+- `low_data_quality`
+- `classifier_low_confidence`
+- `sample_truncated`
+- `unknown_coverage`
+- `high_full_complexity`
+- `audience_uncertain`
+
+## 13. Candidate Generation
+
+Candidate code:
+
+- `candidate_generator.generate_candidates`
+- `candidate_generator.build_candidate`
+- `candidate_generator.determine_status`
+- `candidate_generator.dedupe_candidates`
+
+Statuses:
+
+- `ALERT`: passed configured alert thresholds.
+- `WATCH`: worth tracking but not a sendable alert.
+- `SINGLE_APP_WATCH`: one app breakout that needs manual validation.
+- `NEAR_MISS`: close to alert but failed limited conditions.
+- `REJECT`: not worth acting on.
+
+Alert failure conditions:
+
+- `low_score`
+- `low_demand`
+- `too_few_apps`
+- `no_successful_new_apps`
+- `weak_data_quality`
+- `low_mvp_feasibility`
+- `giant_dominated`
+- `severe_paid_spike`
+
+Candidate IDs:
+
+- `candidate_id`: `<snapshot_date>:<dedupe_key>:<group_key_type>`
+- `dedupe_key`: stable 16-char hash of normalized niche, top 3 app IDs, and release window
+- `alert_instance_id`: `<snapshot_date>:<dedupe_key>` for `ALERT` candidates
+
+Candidate dedupe:
+
+- Keeps the highest ranked candidate per dedupe key.
+- Ranking favors status, group specificity, score, and app count.
+
+## 14. Alert Filtering, Cooldown, and Sending
+
+Alert filtering code:
+
+- `alert_filter.apply_cooldown_and_alert_limits`
+- `alert_filter.split_candidates`
+- `alert_filter.mark_sent`
+
+Filtering rules:
+
+- Sort candidates by descending `opportunity_score`.
+- Only `status == ALERT` can become `send_regular_alert=True`.
+- Cooldown checks both exact dedupe key and normalized niche.
+- Max sent alerts per run is `alert_limits.max_alerts_per_run`.
+- Non-alert statuses never become regular Telegram alerts.
+
+Output sets:
+
+- `urgent_alerts`: `ALERT` and `send_regular_alert=True`
+- `alert_candidates`: all `ALERT`
+- `watch`: `WATCH` and `SINGLE_APP_WATCH`
+- `near_misses`: `NEAR_MISS`
+- `rejected`: `REJECT`
+
+Sent-alert state:
+
+- Stored in `data/sent_alerts.json`.
+- Updated after Telegram alert send succeeds.
+- Includes normalized niche, last sent timestamp, last alert instance ID, top app IDs, status, and score.
+
+## 15. First-Run Behavior
+
+First-run code:
+
+- `first_run_handler.detect_history_state`
+- `first_run_handler.apply_initial_baseline_rules`
+
+History states:
+
+- `FIRST_RUN_NO_HISTORY`
+- `HISTORY_AVAILABLE`
+- `WEEKLY_HISTORY_AVAILABLE`
+
+If there is no compatible historical summary for the current `score_version`:
+
+- Regular alerts are blocked.
+- `send_regular_alert=False`.
+- Candidates may be marked for initial baseline digest.
+- Confidence is capped at configured maximum, usually `MEDIUM`.
+- `INITIAL_BASELINE_NO_HISTORY` is added to reason codes for digest items.
+- Digest items are not written to `sent_alerts` and do not start cooldown.
+
+## 16. LLM Analysis
+
+LLM code:
+
+- `llm_report.analyze_candidate_pack`
+- `llm_report.build_candidate_pack_input`
+- `llm_report.generate_openai_pack_analysis`
+- `llm_report.generate_fallback_pack_analysis`
+
+Current LLM scope:
+
+- OpenAI receives only candidates in `alerts`.
+- `alerts` contains only `status == ALERT and send_regular_alert == True`.
+- `watch`, `near_misses`, and `initial_baseline_digest` arrays are currently empty in the LLM pack.
+- This is deliberate to ensure the LLM gives complete analysis for the Telegram alerts that will actually be sent.
+
+LLM does not rank candidates. It analyzes already selected sendable alerts.
+
+LLM compact candidate includes:
+
+- candidate IDs and status
+- source scope and query metadata
+- classification dimensions
+- demand, revenue, rating, freshness, concentration, and quality metrics
+- score components
+- reason codes and risk tags
+- top apps, top products, top competitors
+
+Top product context:
+
+- `top_apps`: up to 5 apps
+- `top_products`: first 3 top apps
+- `top_competitors`: first 3 top apps
+- Each includes names, developer, installs, revenue, ratings, dates, descriptions, AppStoreSpy URL, store URL, icon, and first 3 screenshots.
+
+OpenAI response contract:
+
+```json
+{
+  "candidate_analyses": {
+    "<candidate_id>": {
+      "recommendation": "TEST|WATCH|AVOID",
+      "confidence": "low|medium|high",
+      "why_interesting": [],
+      "why_might_be_false_positive": [],
+      "mvp_hypothesis": "",
+      "simplified_mvp_scope": "",
+      "competitor_takeaways": [],
+      "entry_angle": "",
+      "differentiation_idea": "",
+      "why_top_products_validate_or_weaken_signal": "",
+      "validation_steps": [],
+      "risk_notes": [],
+      "missing_data": [],
+      "manual_review_needed": false
+    }
+  }
+}
+```
+
+Fallback behavior:
+
+- If LLM is disabled, missing API key, disabled in config, or API call fails, fallback analysis is generated deterministically.
+- If OpenAI returns no usable candidate analyses, the call raises and falls back.
+- If OpenAI returns only some expected candidate IDs, missing candidates receive `fallback_missing_from_openai`.
+
+Important operational note:
+
+- If Telegram shows `AI review: source=fallback_missing_from_openai`, OpenAI responded but omitted that candidate ID or used a non-matching key.
+- The current pack restriction to sendable alerts only is intended to reduce this risk.
+
+## 17. Telegram Notifications
+
+Telegram code:
+
+- `telegram_notify.format_alert_message`
+- `telegram_notify.send_alerts`
+- `telegram_notify.format_initial_baseline_digest_message`
+- `telegram_notify.send_run_summary`
+
+Regular alert message includes:
+
+- niche name
+- platform
+- source/scope disclaimer
+- release window and query sort
+- coverage
+- opportunity score
+- data quality
+- MVP feasibility
+- app count
+- total daily installs
+- top app share
+- risk tags
+- AI review source/confidence/fallback reason
+- why interesting
+- MVP hypothesis
+- top 3 competitors with AppStoreSpy links
+- risks
+- recommendation
+- alert ID
+
+Telegram send behavior:
+
+- Requires `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID`.
+- Sends only candidates with `status == ALERT` and `send_regular_alert == True`.
+- Chunks long messages using `telegram.max_message_chars`.
+- Sends completion summary if `telegram.notify_on_completion=true`.
+
+## 18. Reports and Storage
+
+Storage code:
+
+- `storage.ensure_storage`
+- `storage.save_raw`
+- `storage.save_processed`
+- `storage.save_history_summaries`
+- `storage.write_alert_report`
+- `report_writer.write_daily_reports`
+
+Generated artifacts:
+
+```text
+data/raw/<date>_raw.json
+data/processed/<date>_apps.json
+data/processed/<date>_apps.csv
+data/processed/<date>_clusters.json
+data/processed/<date>_summaries.json
+data/processed/<date>_candidates.json
+data/processed/<date>_alerts.json
+data/processed/<date>_watch.json
+data/processed/<date>_near_misses.json
+data/processed/<date>_rejected.json
+data/history/<date>_summaries.json
+reports/daily/<date>_candidates.json
+reports/daily/<date>_candidates.md
+reports/daily/<date>_watch.md
+reports/daily/<date>_near_misses.md
+reports/daily/<date>_rejected_summary.md
+reports/alerts/<alert_id>.md
+reports/weekly/<date>_weekly_digest.md
+```
+
+CSV caveat:
+
+- `storage.write_csv` excludes `top_apps` because nested structures are not CSV friendly.
+- JSON artifacts preserve nested top app data.
+
+## 19. Feedback Loop
+
+Feedback code:
+
+- `feedback.load_feedback`
+- `feedback.append_feedback`
+- `feedback.add_feedback`
+- `feedback.feedback_adjustments`
+- `feedback.migrate_legacy_feedback_to_jsonl_once`
+
+Canonical feedback format:
+
+- `data/feedback.jsonl`
+
+Legacy format:
+
+- `data/feedback.json`
+- Used only for one-time migration.
+- Normal runtime should read JSONL only.
+
+Allowed verdicts:
+
+- `good`
+- `maybe`
+- `false_positive`
+- `already_known`
+- `too_complex`
+- `too_competitive`
+- `paid_spike`
+
+Feedback adjustments currently influence:
+
+- paid-spike penalty multiplier
+- competition penalty multiplier
+- watch threshold delta
+- MVP feasibility delta
+
+Adjustments are bounded by `feedback.max_weight_adjustment_abs`.
+
+## 20. Weekly Digest
+
+Weekly digest code:
+
+- `weekly_digest.generate_weekly_digest`
+
+Digest includes:
+
+- feedback summary
+- false-positive reasons
+- top WATCH-like candidates
+- niches classified as `other`
+- suspicious paid spike or concentration risks
+- calibration recommendations
+
+CLI:
+
+```powershell
+$env:PYTHONPATH="src"
+python -m appstorespy_niche_monitor --weekly-digest
+```
+
+## 21. CLI Commands
+
+Entrypoint:
+
+- `python -m appstorespy_niche_monitor`
+- package script: `appstorespy-monitor`
+
+Common commands:
+
+```powershell
+$env:PYTHONPATH="src"
+python -m appstorespy_niche_monitor --mode dry-run --snapshot-date 2026-06-04 --no-llm
+```
+
+```powershell
+$env:APPSTORESPY_API_KEY="..."
+$env:OPENAI_API_KEY="..."
+$env:TELEGRAM_BOT_TOKEN="..."
+$env:TELEGRAM_CHAT_ID="..."
+$env:PYTHONPATH="src"
+python -m appstorespy_niche_monitor --mode production --notify
+```
+
+```powershell
+$env:PYTHONPATH="src"
+python -m appstorespy_niche_monitor --weekly-digest
+```
+
+```powershell
+$env:PYTHONPATH="src"
+python -m appstorespy_niche_monitor --migrate-feedback
+```
+
+```powershell
+$env:TELEGRAM_BOT_TOKEN="..."
+$env:TELEGRAM_CHAT_ID="..."
+$env:PYTHONPATH="src"
+python -m appstorespy_niche_monitor --test-telegram
+```
+
+On this machine, `python` may not be in PATH. The bundled Codex runtime path used during development is:
+
+```powershell
+& "C:\Users\Danila\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe"
+```
+
+## 22. Configuration Map
+
+Important `config.yaml` sections:
+
+- `app`: app metadata, mode, score version, sample data path.
+- `collection`: AppStoreSpy query constraints and fields.
+- `filters`: AppStoreSpy filter values.
+- `coverage`: coverage handling flags.
+- `classification`: classifier behavior and aliases.
+- `aggregation`: group keys and grouping strategy.
+- `scoring`: scoring behavior and neutral monetization score.
+- `candidate_generation`: status thresholds.
+- `thresholds`: freshness and dominance thresholds.
+- `alert_rules`: legacy/compatibility alert thresholds used by tests and helper functions.
+- `giant_developers`: aliases for large developers.
+- `production_scores`: small-team feasibility by niche.
+- `niche_rules`: keyword-to-niche mapping.
+- `dimension_rules`: keyword-to-dimension mapping.
+- `classification_dimensions`: allowed values.
+- `data_quality`: required fields and data-quality thresholds.
+- `feedback`: feedback format, migration, allowed labels, adjustment settings.
+- `alert_limits`: send limit, digest limits, cooldown days.
+- `first_run_behavior`: baseline-only behavior.
+- `llm`: OpenAI enablement, model env, default model, output tokens, timeout.
+- `telegram`: Telegram env var names and message limit.
+- `storage`: paths for data and reports.
+
+Config file format:
+
+- The file is JSON-compatible YAML.
+- Runtime can load it with PyYAML if installed, otherwise with Python `json`.
+
+## 23. Testing
+
+Tests use `unittest` and can be run without pytest:
+
+```powershell
+$env:PYTHONPATH="src"
+python -m unittest discover -s tests
+```
+
+Bundled Python example:
+
+```powershell
+& "C:\Users\Danila\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe" -c "import sys, unittest; sys.path.insert(0, r'C:\Users\Danila\Documents\AppstoreSpy_analyze\src'); suite = unittest.defaultTestLoader.discover('tests'); result = unittest.TextTestRunner(verbosity=2).run(suite); raise SystemExit(0 if result.wasSuccessful() else 1)"
+```
+
+Test coverage by file:
+
+- `test_collector.py`: single-query payload and one-request production contract.
+- `test_appstorespy_client.py`: HTTP handling, no retries, redaction.
+- `test_cleaner.py`: normalization and dedupe.
+- `test_classifier.py`: niche and dimension classification.
+- `test_aggregator.py`: aggregation without country and top app compact data.
+- `test_trend_detector.py`: growth metrics.
+- `test_data_quality.py`: quality scoring and reasons.
+- `test_scorer.py`: opportunity scoring, components, reason codes.
+- `test_candidate_generator.py`: status generation and candidate preservation.
+- `test_alert_filter.py`: alert rules, limits, IDs.
+- `test_alert_dedupe.py`: cooldown and dedupe stability.
+- `test_first_run_behavior.py`: baseline-only logic.
+- `test_llm_input.py`: LLM pack restrictions and raw-data exclusion.
+- `test_llm_report.py`: OpenAI/fallback parsing and prompt contract.
+- `test_telegram_notify.py`: Telegram formatting and chunking.
+- `test_report_writer.py`: daily/baseline report content.
+- `test_feedback.py`: feedback round trip.
+- `test_feedback_migration.py`: legacy migration.
+- `test_feedback_migration_cli.py`: migration CLI exits without pipeline.
+- `test_weekly_digest.py`: weekly digest content.
+- `test_workflow.py`: GitHub workflow expectations.
+
+When changing classifier, scorer, trend detector, data quality, feedback, or alert filter behavior, add or update tests.
+
+## 24. Safe Change Guide for Humans and AI Agents
+
+Before editing:
+
+- Read `AGENTS.md`.
+- Check `git status --short`.
+- Identify whether the change touches collection, scoring, alert sending, storage, or secrets.
+- Do not remove or rewrite unrelated user changes.
+
+Collection changes:
+
+- Must preserve exactly one production `/play/apps/query` request.
+- Must keep forbidden query axes out of payload and fields.
+- Must update `tests/test_collector.py`.
+
+Scoring changes:
+
+- Must preserve deterministic behavior.
+- Must keep `score_components` explainable.
+- Must update scorer and candidate tests.
+
+Alert filter changes:
+
+- Must not increase Telegram spam risk.
+- Must preserve `max_alerts_per_run`.
+- Must update alert filter/dedupe/first-run tests.
+
+LLM changes:
+
+- Must not send raw full datasets.
+- Must keep source scope wording: one AppStoreSpy query, no country/language filters.
+- Must maintain fallback behavior when OpenAI is unavailable.
+- Must update LLM input/report tests.
+
+Telegram changes:
+
+- Must not send non-alert statuses as regular alerts.
+- Must include data quality, reason codes, and score context.
+- Must keep completion summary behavior explicit.
+
+Storage/history changes:
+
+- Must avoid silent data loss.
+- Use atomic JSON writes where possible.
+- Preserve history summaries needed for trend detection.
+
+## 25. Debugging Playbook
+
+### No alerts sent
+
+Check:
+
+- `result["baseline_only"]`
+- `data/processed/<date>_alerts.json`
+- `send_regular_alert` fields
+- `alert_filter_reasons`
+- `data/sent_alerts.json`
+- `first_run_without_history`
+
+Common reasons:
+
+- first run without history
+- cooldown
+- alert limit already reached
+- no candidates passed alert thresholds
+- weak data quality or MVP feasibility
+
+### Telegram says fallback or no AI review
+
+Check:
+
+- `llm_status`
+- `llm_analysis_source`
+- `llm_fallback_reason`
+- `OPENAI_API_KEY`
+- `llm.enabled`
+- `--no-llm`
+- whether candidate was included in LLM pack
+
+Meaning of sources:
+
+- `openai`: OpenAI supplied usable analysis.
+- `fallback`: deterministic fallback was used.
+- `fallback_missing_from_openai`: OpenAI response omitted that candidate ID.
+
+### Data quality is low
+
+Check:
+
+- `data_quality_reasons`
+- required fields in config
+- AppStoreSpy response field coverage
+- `coverage.sample_truncated`
+- sample size and top app dominance
+
+### Candidate classified as `other`
+
+Check:
+
+- app `name`, `description_short`, `description_full`, `category`
+- `niche_rules`
+- `dimension_rules`
+- `classification_confidence_avg`
+- `unknown_or_new_pattern_cluster`
+
+### Suspicious paid spike
+
+Check:
+
+- `advertised_top_app_share`
+- `growth_by_one_app_share`
+- `top_app_share`
+- `rating_confidence`
+- `severe_paid_spike_risk`
+- top app `advertised` flag
+
+### History seems ignored
+
+Check:
+
+- `data/history/*_summaries.json`
+- `score_version`
+- `snapshot_date`
+- `history_state`
+- `history_depth_days`
+
+## 26. Current Known Design Choices
+
+- Runtime dependencies are standard library only.
+- `pytest` is optional; tests are `unittest` compatible.
+- Config is JSON-compatible YAML for environments without PyYAML.
+- LLM analysis is done through the OpenAI Responses API endpoint.
+- Telegram uses simple text messages, not Markdown parse mode.
+- Top competitors are derived from the same one AppStoreSpy query, not fetched separately.
+- Raw AppStoreSpy data is stored locally, but LLM receives compact alert candidates only.
+- Weekly digest is offline and uses stored history plus feedback.
+
+## 27. Glossary
+
+- AppStoreSpy query: The single `/play/apps/query` call made in production.
+- App: A normalized Google Play product row.
+- Niche: A rule-derived label such as `sort puzzle`, `merge`, or `runner`.
+- Dimension: One of market category, mechanic, theme, meta, audience, complexity.
+- Summary: Aggregated metrics for a grouped niche.
+- Candidate: A scored summary converted into an actionable status.
+- ALERT: Candidate passed alert thresholds.
+- Sendable alert: An `ALERT` with `send_regular_alert=True`.
+- WATCH: Candidate worth tracking but not sent as regular alert.
+- NEAR_MISS: Candidate close to alert thresholds.
+- REJECT: Candidate filtered out.
+- Dedupe key: Stable hash used for cooldown.
+- Alert instance ID: Date-specific alert identifier.
+- Data quality score: Confidence in the source signal.
+- Reason code: Positive/explanatory signal for why the candidate matters.
+- Risk tag: Caution signal for false positives or poor fit.
+- Top competitors: Top 3 apps from a niche by `downloads_daily` in the same query slice.
+- LLM pack: Compact JSON sent to OpenAI for sendable alerts.
+
+## 28. Quick AI-Agent Checklist
+
+Before finalizing any change, verify:
+
+- No secrets were added.
+- Production collection still uses exactly one request.
+- No country/language/active country/pagination was introduced.
+- Alert sending still respects cooldown and `max_alerts_per_run`.
+- First-run baseline still blocks regular alerts.
+- LLM input still excludes raw full datasets.
+- LLM and Telegram wording still says one AppStoreSpy query without country/language filters.
+- Alerts still include reason codes, score components, data quality, and classification dimensions.
+- Relevant tests were updated and run.
