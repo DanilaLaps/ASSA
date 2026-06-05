@@ -15,6 +15,8 @@ The system is intentionally conservative:
 - `ALERT` is an internal qualified candidate longlist; `SENDABLE_ALERT` is the strict Telegram shortlist stage.
 - Telegram should never send more than `alert_limits.max_alerts_per_run` regular alerts.
 - The first run without compatible history must not send regular alerts.
+- Unknown/new-pattern handling is ratio-based at cluster level and must remain discriminative.
+- App-level unknown classification must not mark the whole market unknown because of one weak secondary dimension or an unlisted combo.
 
 ## 2. Primary Users and Use Cases
 
@@ -75,6 +77,7 @@ These rules come from `AGENTS.md` and the current codebase. Treat them as hard c
 - LLM and Telegram text must describe the data as one AppStoreSpy query without country/language filters.
 - LLM analysis does not choose which alerts are sent. Python scoring and filtering choose them first.
 - A LLM recommendation of `TEST` is commentary only and must not create a separate Telegram message.
+- If there are zero final sendable alerts, OpenAI must be skipped and the run should report `fallback_reason=no_sendable_alerts`.
 
 ## 4. Repository Layout
 
@@ -282,11 +285,59 @@ Output dimensions:
 - confidence fields
 - `is_unknown_or_new_pattern`
 
+Important confidence fields:
+
+- `niche_confidence`
+- `mechanic_confidence`
+- `theme_confidence`
+- `audience_confidence`
+- `complexity_confidence`
+
+`confidence_from_match` is intentionally simple:
+
+- no keyword match: `0.35`
+- keyword match: `0.45 + keyword_length / 30`, clamped to `0.95`
+
+This means short but valid keywords such as `run`, `tile`, `match`, `arrow`, or `level` can have confidence below `classification.min_confidence_for_hard_label`. Do not treat every short-match dimension as an unknown market signal.
+
 Production complexity is inferred from `production_scores`. Higher production score means easier production:
 
 - score `>= 12`: `low`
 - score `>= 7`: `medium`
 - otherwise: `high`
+
+### App-Level Unknown/New-Pattern Detection
+
+App-level `is_unknown_or_new_pattern` is computed in `niche_classifier.is_unknown_or_new_pattern`.
+
+Current semantics:
+
+- The feature is controlled by `classification.unknown_pattern_enabled`.
+- The app is marked unknown only when both the primary `niche` and primary `core_mechanic` are unclassified or below `classification.min_primary_confidence_for_unknown_pattern`.
+- Default `min_primary_confidence_for_unknown_pattern` is `0.5`.
+- `theme`, `meta`, and `audience` uncertainty does not by itself make an app unknown.
+- A recognized niche with a recognized mechanic is not unknown just because a dimension keyword is short.
+- A recognized mechanic with `niche=other` is not automatically unknown; it may still be useful as a coarse mechanic signal.
+
+The old dangerous behavior was to mark an app unknown when:
+
+- any dimension was `other`
+- any confidence value was below the hard-label threshold
+- or `(core_mechanic, theme, meta)` was not in a tiny hardcoded whitelist
+
+That behavior was non-discriminative for real AppStoreSpy slices because nearly every fresh game can have at least one weak dimension or a combination not in a small whitelist.
+
+Optional combo detection:
+
+- `classification.detect_unlisted_pattern_combos` defaults to `false`.
+- If enabled, `known_pattern_combos` may be configured under `classification`.
+- This mode should be treated as experimental because a small whitelist can easily make the whole market look suspicious.
+
+Practical interpretation:
+
+- App-level unknown means "the classifier could not identify the primary game niche and primary mechanic."
+- It does not mean "this is a new opportunity."
+- Cluster-level ratios decide whether unknown apps dominate a market signal.
 
 ## 9. Aggregation
 
@@ -295,6 +346,8 @@ Aggregator code:
 - `aggregator.aggregate_apps`
 - `aggregator.aggregate_group`
 - `aggregator.compact_app`
+- `aggregator.calculate_unknown_pattern_diagnostics`
+- `aggregator.finalize_unknown_pattern_diagnostics`
 
 Current group definitions:
 
@@ -332,6 +385,47 @@ Aggregated summary includes:
   - `single_developer_share`
 - `classification_confidence_avg`
 - top apps
+
+Unknown/new-pattern summary fields:
+
+- `unknown_app_count`: number of apps in the cluster with app-level `is_unknown_or_new_pattern=true`.
+- `unknown_app_share`: `unknown_app_count / app_count`.
+- `unknown_installs_share`: daily installs from app-level unknown apps divided by total cluster daily installs.
+- `top_app_unknown`: whether the highest-install app is app-level unknown.
+- `top3_unknown_app_share`: share of top 3 apps that are app-level unknown.
+- `mixed_unknown_cluster`: true when `unknown_app_count > 0`.
+- `unknown_dominant_cluster`: true when unknown apps dominate the cluster.
+- `unknown_pattern_blocker_active`: true when the cluster is unknown-dominant and classifier confidence is low.
+- `cluster_pattern_status`: one of `known`, `mixed_unknown`, `unknown_dominant`, or `unknown_blocker_active`.
+- `unknown_or_new_pattern_cluster`: backward-compatible alias for `unknown_dominant_cluster`.
+
+Current formulas:
+
+```text
+mixed_unknown_cluster =
+  unknown_app_count > 0
+
+unknown_dominant_cluster =
+  unknown_app_share >= 0.50
+  OR unknown_installs_share >= 0.60
+  OR (top_app_unknown AND top_app_share >= 0.55)
+
+unknown_pattern_blocker_active =
+  unknown_dominant_cluster
+  AND classification_confidence_avg < 0.70
+```
+
+Important semantics:
+
+- `mixed_unknown_cluster` is a soft diagnostic and risk tag.
+- `unknown_dominant_cluster` is a stronger warning, not automatically a Telegram-send blocker.
+- `unknown_pattern_blocker_active` is the hard/near-hard blocker used by candidate generation and sendable filters.
+- `unknown_or_new_pattern_cluster` is preserved for backward compatibility but now means `unknown_dominant_cluster`, not "any app in this cluster is unknown."
+
+Acceptance expectation:
+
+- It should not be possible for all summaries to become unknown merely because every cluster has one unknown app.
+- If all summaries become unknown-dominant, debug app-level classifier rules before changing aggregation thresholds.
 
 Top apps:
 
@@ -497,6 +591,14 @@ Reason codes are positive explanations such as:
 - `historical_growth`
 - `small_team_fit`
 
+`new_pattern_detected` is intentionally conservative. It may be added only when the signal is broad enough:
+
+- `app_count >= 3`
+- `successful_new_apps_count >= 2`
+- `unique_developer_count >= 2`
+
+This prevents a single unclear app or a one-developer cluster from being described as a new market pattern.
+
 Risk tags are caution flags such as:
 
 - `leader_dominated`
@@ -514,6 +616,14 @@ Risk tags are caution flags such as:
 - `unknown_coverage`
 - `high_full_complexity`
 - `audience_uncertain`
+- `mixed_unknown_cluster`
+- `unknown_dominant_cluster`
+
+Unknown risk-tag semantics:
+
+- `mixed_unknown_cluster` is a soft penalty in sendable scoring.
+- `unknown_dominant_cluster` is a stronger diagnostic and appears when unknown apps dominate the cluster.
+- `unknown_pattern_blocker_active` is not just a tag; it is a boolean field that can block or heavily penalize sendable alerts.
 
 ## 13. Candidate Generation
 
@@ -542,7 +652,7 @@ Alert failure conditions:
 - `low_mvp_feasibility`
 - `giant_dominated`
 - `severe_paid_spike`
-- strict alert blockers such as `top_app_too_dominant`, `growth_by_one_app_too_high`, `classifier_low_confidence`, `unknown_pattern_low_confidence`
+- strict alert blockers such as `top_app_too_dominant`, `growth_by_one_app_too_high`, `classifier_low_confidence`, `unknown_pattern_blocker_active`
 
 Important status rules:
 
@@ -550,7 +660,10 @@ Important status rules:
 - Severe paid spike blocks `ALERT`.
 - Strong top-app dominance or one-app-growth dominance blocks `ALERT`.
 - Low classification confidence or weak data quality blocks `ALERT`.
-- `other` or unknown/new-pattern clusters need stronger app count, fresh-success, data-quality, and classification-confidence signals before becoming `ALERT`.
+- Mixed unknown clusters do not automatically block `ALERT`.
+- Unknown-dominant clusters carry risk tags and diagnostics.
+- `unknown_pattern_blocker_active` applies elevated unknown/new-pattern thresholds.
+- `other` or unknown-pattern clusters need stronger app count, fresh-success, data-quality, and classification-confidence signals before becoming `ALERT` only when the unknown blocker is active.
 
 Candidate IDs:
 
@@ -563,6 +676,12 @@ Candidate dedupe:
 - Keeps the highest ranked candidate per dedupe key.
 - Ranking favors status, group specificity, score, and app count.
 
+Broad new-pattern reason code:
+
+- `candidate_reason_codes` removes `new_pattern_detected` when the signal is not broad enough.
+- `new_pattern_detected` requires at least 3 apps, 2 successful fresh apps, and 2 unique developers.
+- This keeps reason codes from overstating isolated or single-developer events.
+
 Candidate sendable funnel fields:
 
 - `alert_stage`: one of `QUALIFIED_CANDIDATE`, `QUALIFIED_CANDIDATE_ONLY`, `SENDABLE_ALERT`, `COOLDOWN_BLOCKED`, `INITIAL_BASELINE_DIGEST`, `EXCLUDED_FROM_COOLDOWN`, or `NONE`
@@ -573,12 +692,18 @@ Candidate sendable funnel fields:
 - `trend_confidence_score`
 - `team_fit_score`
 - `sendable_score_components`
+- `sendable_threshold_margins`
 - `sendable_alert_reasons`
 - `sendable_alert_failures`
+- `first_blocking_failure`
 - `market_signal_key`
 - `market_signal_label`
 - `duplicate_of_candidate_id`
 - `duplicate_reason`
+
+`sendable_threshold_margins` stores signed distance from each hard threshold. Positive values mean the candidate cleared a minimum threshold or stayed below a maximum concentration threshold. Negative values show by how much it missed.
+
+`first_blocking_failure` is set for blocked candidates to make the first practical blocker visible in reports without scanning the full failure list.
 
 ## 14. Alert Filtering, Cooldown, and Sending
 
@@ -613,6 +738,7 @@ Sendable hard filters include:
 - maximum top-app, top-3, one-app-growth, advertised-top-app, giant-developer, and single-developer concentration
 - blocked risk tags, including `severe_paid_spike`
 - `organic_confidence != LOW`
+- `unknown_pattern_blocker_active` when unknown/new-pattern low-confidence blocking is enabled
 
 Common sendable failure codes:
 
@@ -627,6 +753,8 @@ Common sendable failure codes:
 - `growth_by_one_app_too_high`
 - `blocked_risk_tag`
 - `organic_confidence_low`
+- `unknown_pattern_blocker_active`
+- `other_niche_low_confidence`
 - `duplicate_market_signal`
 - `cooldown_exact_dedupe_key`
 - `cooldown_normalized_niche`
@@ -641,6 +769,25 @@ Market-signal dedupe:
 - Candidates with overlapping top apps at or above the configured threshold are treated as the same market signal.
 - The best ranked candidate remains primary.
 - Duplicates keep their status for reporting, but receive `duplicate_of_candidate_id`, `duplicate_reason=market_signal_duplicate`, and sendable failure codes.
+
+Market-signal primary ranking prefers:
+
+- higher `sendable_alert_score`
+- higher `opportunity_score`
+- more specific `group_key_type`
+- lower `unknown_app_share`
+- lower `unknown_installs_share`
+- higher `classification_confidence_avg`
+- higher `data_quality_score`
+
+A candidate with `unknown_pattern_blocker_active=true` receives an additional rank penalty and should not suppress a cleaner duplicate unless it is clearly stronger.
+
+Blocked sendable diagnostics:
+
+- Every enriched candidate has `sendable_score_components`.
+- Every enriched candidate has `sendable_threshold_margins`.
+- Blocked candidates should expose `first_blocking_failure`.
+- Reports should make the first blocker and unknown shares visible, because a candidate can fail many thresholds at once.
 
 Output sets:
 
@@ -695,6 +842,8 @@ Current LLM scope:
 - `alerts` contains only `status == ALERT`, `send_regular_alert == True`, and `alert_stage == SENDABLE_ALERT`.
 - `watch`, `near_misses`, and `initial_baseline_digest` arrays are currently empty in the LLM pack.
 - This is deliberate to ensure the LLM gives complete analysis for the Telegram alerts that will actually be sent.
+- If there are zero sendable alerts, OpenAI is not called.
+- Zero sendable alerts produces deterministic fallback status with `fallback_reason=no_sendable_alerts`.
 
 LLM does not rank candidates. It analyzes already selected sendable alerts.
 
@@ -712,10 +861,21 @@ LLM compact candidate includes:
 - demand, revenue, rating, freshness, concentration, and quality metrics
 - score components
 - sendable alert score, trend confidence, team fit, alert stage, and sendable score components
+- sendable threshold margins and first blocking failure
 - organic confidence
 - market signal key and label
 - reason codes and risk tags
 - sendable reasons and failures
+- unknown diagnostics:
+  - `unknown_app_count`
+  - `unknown_app_share`
+  - `unknown_installs_share`
+  - `top_app_unknown`
+  - `top3_unknown_app_share`
+  - `mixed_unknown_cluster`
+  - `unknown_dominant_cluster`
+  - `unknown_pattern_blocker_active`
+  - `cluster_pattern_status`
 - top apps, top products, top competitors
 
 Top product context:
@@ -753,6 +913,8 @@ OpenAI response contract:
 Fallback behavior:
 
 - If LLM is disabled, missing API key, disabled in config, or API call fails, fallback analysis is generated deterministically.
+- If there are zero sendable alerts, fallback is returned without making an OpenAI request.
+- The expected fallback reason for this case is `no_sendable_alerts`.
 - If OpenAI returns no usable candidate analyses, the call raises and falls back.
 - If OpenAI returns only some expected candidate IDs, missing candidates receive `fallback_missing_from_openai`.
 
@@ -807,6 +969,12 @@ Telegram send behavior:
 - Chunks long messages using `telegram.max_message_chars`.
 - Sends completion summary if `telegram.notify_on_completion=true`.
 - Completion summary reports `SENDABLE alerts`, `LLM TEST recommendations among sendable alerts`, and `Separate TEST messages sent: 0`.
+- Completion summary also reports unknown diagnostics:
+  - `Mixed unknown clusters`
+  - `Unknown-dominant clusters`
+  - `Unknown blocker active`
+  - `Candidates blocked by unknown_pattern_blocker_active`
+- If `SENDABLE alerts` is `0`, completion summary should show LLM fallback with `fallback_reason=no_sendable_alerts`.
 
 ## 18. Reports and Storage
 
@@ -839,6 +1007,7 @@ reports/daily/<date>_candidates.json
 reports/daily/<date>_candidates.md
 reports/daily/<date>_sendable_alerts.md
 reports/daily/<date>_alert_funnel.md
+reports/daily/<date>_unknown_diagnostics.md
 reports/daily/<date>_watch.md
 reports/daily/<date>_near_misses.md
 reports/daily/<date>_rejected_summary.md
@@ -856,6 +1025,19 @@ Processed alert artifacts:
 - `<date>_alerts.json` contains all `status == ALERT` candidates, including qualified-but-not-sent candidates.
 - `<date>_sendable_alerts.json` contains only `status == ALERT`, `send_regular_alert == true`, and `alert_stage == SENDABLE_ALERT`.
 - `<date>_alert_funnel.json` summarizes total candidates, alert candidates, sendable alerts, watch/near-miss/reject counts, duplicate market signals suppressed, cooldown blocks, limit blocks, and sendable failure distributions.
+- `<date>_unknown_diagnostics.md` summarizes mixed unknown clusters, unknown-dominant clusters, active unknown blockers, and top blocked candidates by `unknown_app_share` and `unknown_installs_share`.
+
+Daily markdown reports include:
+
+- status counts
+- alert-stage counts
+- coverage warnings
+- unknown diagnostics
+- candidate rows with unknown app/install shares
+- candidate rows with `first_blocking_failure`
+- sendable failure distributions
+
+Use the markdown reports for human scanning and JSON artifacts for precise debugging.
 
 ## 19. Feedback Loop
 
@@ -972,7 +1154,7 @@ Important `config.yaml` sections:
 - `collection`: AppStoreSpy query constraints and fields.
 - `filters`: AppStoreSpy filter values.
 - `coverage`: coverage handling flags.
-- `classification`: classifier behavior and aliases.
+- `classification`: classifier behavior, unknown-pattern controls, and aliases.
 - `aggregation`: group keys and grouping strategy.
 - `scoring`: scoring behavior and neutral monetization score.
 - `candidate_generation`: status thresholds.
@@ -991,6 +1173,32 @@ Important `config.yaml` sections:
 - `llm`: OpenAI enablement, model env, default model, output tokens, timeout.
 - `telegram`: Telegram env var names and message limit.
 - `storage`: paths for data and reports.
+
+Important `classification` keys:
+
+- `use_rule_based_classifier`: current classifier mode.
+- `use_llm_for_uncertain_apps`: currently disabled; LLM should not classify raw apps in production.
+- `min_confidence_for_hard_label`: hard-label confidence reference used by older logic and diagnostics.
+- `min_primary_confidence_for_unknown_pattern`: app-level unknown threshold for primary niche/mechanic confidence.
+- `unknown_pattern_enabled`: master switch for app-level unknown marking.
+- `detect_unlisted_pattern_combos`: optional experimental combo-whitelist mode; defaults to false.
+- `known_pattern_combos`: optional list of known `(core_mechanic, theme, meta)` combos if combo detection is enabled.
+- `aliases`: niche alias configuration.
+
+Important `sendable_alert_rules` keys:
+
+- `min_sendable_alert_score`: final sendable score floor.
+- `min_opportunity_score`, `min_trend_confidence_score`, `min_team_fit_score`: core sendable floors.
+- `min_data_quality_score`, `min_classification_confidence_avg`, `min_mvp_feasibility_score`: quality and feasibility floors.
+- `min_app_count`, `min_successful_new_apps`, `min_unique_developers`, `min_total_daily_installs`: breadth floors.
+- `max_top_app_share`, `max_top3_app_share`, `max_growth_by_one_app_share`: concentration ceilings.
+- `max_advertised_top_app_share`: paid acquisition concentration ceiling.
+- `max_giant_developer_share`, `max_single_developer_share`: competition/developer concentration ceilings.
+- `blocked_risk_tags`: hard risk tags.
+- `soft_penalty_risk_tags`: risk tags that reduce score but do not directly block.
+- `max_sendable_per_normalized_niche`, `max_sendable_per_core_mechanic`, `max_sendable_per_market_signal_key`: send budget diversity caps.
+- `market_signal_overlap_threshold`: top-app overlap threshold for duplicate market signals.
+- `unknown_pattern_alert_min_classification_confidence`, `unknown_pattern_alert_min_app_count`, `unknown_pattern_alert_min_successful_new_apps`, `unknown_pattern_alert_min_data_quality_score`: elevated requirements used only when `unknown_pattern_blocker_active=true`.
 
 Config file format:
 
@@ -1017,20 +1225,20 @@ Test coverage by file:
 - `test_collector.py`: single-query payload and one-request production contract.
 - `test_appstorespy_client.py`: HTTP handling, no retries, redaction.
 - `test_cleaner.py`: normalization and dedupe.
-- `test_classifier.py`: niche and dimension classification.
-- `test_aggregator.py`: aggregation without country and top app compact data.
+- `test_classifier.py`: niche/dimension classification and app-level unknown-pattern semantics.
+- `test_aggregator.py`: aggregation without country, top app compact data, and ratio-based unknown diagnostics.
 - `test_trend_detector.py`: growth metrics.
 - `test_data_quality.py`: quality scoring and reasons.
 - `test_scorer.py`: opportunity scoring, components, reason codes.
-- `test_alert_ranker.py`: sendable score, components, hard filters, deterministic behavior.
-- `test_candidate_generator.py`: status generation and candidate preservation.
+- `test_alert_ranker.py`: sendable score, components, hard filters, threshold margins, unknown blocker behavior, deterministic behavior.
+- `test_candidate_generator.py`: status generation, candidate preservation, mixed/dominant unknown tags, broad new-pattern reason logic.
 - `test_alert_filter.py`: alert rules, sendable limits, IDs.
 - `test_alert_dedupe.py`: cooldown and dedupe stability.
 - `test_sendable_alert_filter.py`: strict Telegram budget and non-alert status blocking.
-- `test_market_signal_dedupe.py`: duplicate market signal suppression.
+- `test_market_signal_dedupe.py`: duplicate market signal suppression and cleaner duplicate preference over unknown-heavy duplicates.
 - `test_first_run_behavior.py`: baseline-only logic.
 - `test_llm_input.py`: LLM pack restrictions and raw-data exclusion.
-- `test_llm_report.py`: OpenAI/fallback parsing and prompt contract.
+- `test_llm_report.py`: OpenAI/fallback parsing, prompt contract, and no-LLM-call behavior when sendable alert count is zero.
 - `test_telegram_notify.py`: Telegram formatting and chunking.
 - `test_report_writer.py`: daily/baseline report content.
 - `test_feedback.py`: feedback round trip.
@@ -1040,6 +1248,17 @@ Test coverage by file:
 - `test_workflow.py`: GitHub workflow expectations.
 
 When changing classifier, scorer, trend detector, data quality, feedback, or alert filter behavior, add or update tests.
+
+Unknown/new-pattern regression tests should cover:
+
+- one unknown app in a mostly known cluster does not activate the blocker
+- majority-unknown clusters become unknown-dominant
+- unknown top app with high top-app share becomes unknown-dominant
+- mixed unknown clusters do not automatically block sendable alerts
+- active unknown blocker blocks or heavily penalizes sendable alerts
+- cleaner duplicate beats unknown-heavy duplicate in market-signal dedupe
+- valid short classifier keywords do not make an app unknown
+- OpenAI is skipped when there are zero sendable alerts
 
 ## 24. Safe Change Guide for Humans and AI Agents
 
@@ -1154,7 +1373,43 @@ Check:
 - `niche_rules`
 - `dimension_rules`
 - `classification_confidence_avg`
-- `unknown_or_new_pattern_cluster`
+- `unknown_or_new_pattern_cluster`, which is now an alias for `unknown_dominant_cluster`
+- whether `unknown_pattern_blocker_active` is true
+
+Important distinction:
+
+- `niche=other` means the niche keyword rules did not find a configured niche.
+- `is_unknown_or_new_pattern=true` means app-level primary niche and primary mechanic are both unclassified or very weak.
+- `unknown_or_new_pattern_cluster=true` means the cluster is unknown-dominant, not merely that one app is unknown.
+
+### All or most clusters are unknown
+
+Check:
+
+- `data/processed/<date>_apps.json`
+- app-level `is_unknown_or_new_pattern`
+- app-level `niche`, `core_mechanic`, `theme`, and confidence fields
+- `classification.min_primary_confidence_for_unknown_pattern`
+- `classification.detect_unlisted_pattern_combos`
+- `reports/daily/<date>_unknown_diagnostics.md`
+- `data/processed/<date>_alert_funnel.json`
+
+Expected diagnosis flow:
+
+- If almost every app has `is_unknown_or_new_pattern=true`, fix `niche_classifier.is_unknown_or_new_pattern` or classifier rules first.
+- If app-level unknown is reasonable but every summary is unknown-dominant, inspect aggregation grouping and top-app concentration.
+- If only mixed unknown clusters are high, that is not automatically bad; mixed unknown is a soft diagnostic.
+- If `unknown_pattern_blocker_active` is high, inspect whether unknown apps dominate by app count, installs, or top-app share and whether `classification_confidence_avg < 0.70`.
+
+Do not fix this by changing the AppStoreSpy query, adding country/language filters, enabling pagination, or letting the LLM select alerts. The issue is classifier/aggregation semantics, not collection scope.
+
+Useful quick checks:
+
+```powershell
+$apps = Get-Content -Raw data\processed\<date>_apps.json | ConvertFrom-Json
+($apps | Where-Object { $_.is_unknown_or_new_pattern -eq $true }).Count
+$apps | Group-Object niche,core_mechanic,theme,meta,is_unknown_or_new_pattern | Sort-Object Count -Descending | Select-Object -First 20 Name,Count
+```
 
 ### Suspicious paid spike
 
@@ -1212,6 +1467,11 @@ Check:
 - Data quality score: Confidence in the source signal.
 - Reason code: Positive/explanatory signal for why the candidate matters.
 - Risk tag: Caution signal for false positives or poor fit.
+- App-level unknown pattern: `is_unknown_or_new_pattern=true` on an app when primary niche and primary mechanic are both unclassified or very low confidence.
+- Mixed unknown cluster: A cluster with at least one app-level unknown app.
+- Unknown-dominant cluster: A cluster where unknown apps dominate by count, installs, or top-app leadership.
+- Unknown pattern blocker active: A cluster-level hard/near-hard blocker active when the cluster is unknown-dominant and classification confidence is below 0.70.
+- Cluster pattern status: Human-readable status for unknown diagnostics: `known`, `mixed_unknown`, `unknown_dominant`, or `unknown_blocker_active`.
 - Top competitors: Top 3 apps from a niche by `downloads_daily` in the same query slice.
 - LLM pack: Compact JSON sent to OpenAI for final `SENDABLE_ALERT` candidates.
 
@@ -1228,7 +1488,9 @@ Before finalizing any change, verify:
 - First-run baseline still blocks regular alerts.
 - LLM input still excludes raw full datasets.
 - LLM input includes only final sendable alerts.
+- LLM is skipped when there are zero final sendable alerts.
 - LLM and Telegram wording still says one AppStoreSpy query without country/language filters.
 - Alerts still include reason codes, score components, data quality, and classification dimensions.
 - Candidates still include sendable funnel fields and explainable sendable failures.
+- Unknown diagnostics are ratio-based and app-level unknown is not triggered by one weak secondary dimension or a tiny combo whitelist.
 - Relevant tests were updated and run.
