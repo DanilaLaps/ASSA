@@ -135,6 +135,7 @@ def aggregate_group(
         "core_mechanic": dimensions.get("core_mechanic", "other"),
         "theme": dimensions.get("theme", "other"),
         "meta": dimensions.get("meta", "none"),
+        "audience": dimensions.get("audience", "unknown"),
         "audience_summary": audience_summary(apps),
         "production_complexity": dimensions.get("production_complexity", "unknown"),
         "full_product_complexity": dimensions.get("full_product_complexity", dimensions.get("production_complexity", "unknown")),
@@ -183,8 +184,12 @@ def compact_app(app: dict[str, Any]) -> dict[str, Any]:
         "name": app.get("name", ""),
         "developer_name": app.get("developer_name", ""),
         "developer_id": app.get("developer_id", ""),
+        "category": app.get("category", ""),
+        "category_type": app.get("category_type", ""),
         "downloads_daily": int(app.get("downloads_daily", 0)),
         "downloads_month": int(app.get("downloads_month", 0)),
+        "downloads_exact": int(app.get("downloads_exact", 0)),
+        "downloads_mark": app.get("downloads_mark", ""),
         "revenue_month": float(app.get("revenue_month", 0.0)),
         "rating_avg": float(app.get("rating_avg", 0.0)),
         "rating_count": int(app.get("rating_count", 0)),
@@ -194,10 +199,21 @@ def compact_app(app: dict[str, Any]) -> dict[str, Any]:
         "iap": app.get("iap"),
         "advertised": bool(app.get("advertised", False)),
         "ads": app.get("ads"),
+        "icon": app.get("icon", ""),
+        "screenshots": list(app.get("screenshots", [])[:3]) if isinstance(app.get("screenshots"), list) else [],
+        "description_short": truncate_text(app.get("description_short", ""), 500),
+        "description_excerpt": truncate_text(app.get("description_full") or app.get("description", ""), 1200),
         "url_appstorespy": app.get("url_appstorespy", ""),
         "url": app.get("url", ""),
         "website": app.get("website", ""),
     }
+
+
+def truncate_text(value: Any, max_chars: int) -> str:
+    text = " ".join(str(value or "").split())
+    if len(text) <= max_chars:
+        return text
+    return text[: max_chars - 3].rstrip() + "..."
 
 
 def calculate_giant_developer_share(apps: list[dict[str, Any]], config: dict[str, Any]) -> float:
@@ -255,6 +271,7 @@ def dominant_dimensions(apps: list[dict[str, Any]]) -> dict[str, str]:
         "core_mechanic",
         "theme",
         "meta",
+        "audience",
         "production_complexity",
         "full_product_complexity",
         "mvp_complexity",

@@ -13,6 +13,8 @@ def format_alert_message(alert: dict[str, Any]) -> str:
     risks = format_list(analysis.get("risk_notes") or analysis.get("risks") or alert.get("risk_tags", []), limit=2)
     recommendation = analysis.get("recommendation", alert.get("status", "WATCH"))
     mvp = analysis.get("mvp_hypothesis") or analysis.get("mvp") or "Validate the niche manually before starting production."
+    competitors = format_competitors(alert.get("top_competitors") or alert.get("top_products") or alert.get("top_apps", []), limit=3)
+    ai_status = format_alert_ai_status(alert, analysis)
     coverage = alert.get("coverage", {})
     coverage_status = "unknown"
     if isinstance(coverage, dict):
@@ -32,15 +34,57 @@ def format_alert_message(alert: dict[str, Any]) -> str:
         f"Total daily installs: {alert.get('total_daily_installs')}\n"
         f"Top app share: {alert.get('top_app_share')}\n"
         f"Risk tags: {', '.join(alert.get('risk_tags', [])) or 'none'}\n\n"
+        f"{ai_status}\n\n"
         "Why interesting:\n"
         f"{evidence}\n\n"
         "MVP:\n"
         f"{mvp}\n\n"
+        "Top competitors:\n"
+        f"{competitors}\n\n"
         "Risks:\n"
         f"{risks}\n\n"
         f"Recommendation: {recommendation}\n"
         f"Alert ID: {alert.get('alert_instance_id') or alert.get('alert_id')}"
     )
+
+
+def format_alert_ai_status(alert: dict[str, Any], analysis: dict[str, Any]) -> str:
+    source = str(alert.get("llm_analysis_source") or "")
+    llm_status = alert.get("llm_status")
+    if not source and isinstance(llm_status, dict):
+        source = str(llm_status.get("analysis_source") or "")
+    source = source or "fallback"
+    parts = [f"source={source}"]
+    if analysis.get("confidence"):
+        parts.append(f"confidence={analysis.get('confidence')}")
+    fallback_reason = alert.get("llm_fallback_reason")
+    if source != "openai" and fallback_reason:
+        parts.append(f"fallback_reason={fallback_reason}")
+    return f"AI review: {', '.join(parts)}"
+
+
+def format_competitors(apps: Any, limit: int = 3) -> str:
+    if not isinstance(apps, list):
+        return "- No top competitors captured."
+    lines: list[str] = []
+    for index, app in enumerate([item for item in apps if isinstance(item, dict)][:limit], start=1):
+        name = app.get("name") or app.get("bundle") or app.get("app_id") or "Unknown app"
+        developer = app.get("developer_name") or "unknown developer"
+        daily = app.get("downloads_daily", "unknown")
+        revenue = app.get("revenue_month")
+        rating = app.get("rating_avg")
+        details = [f"{index}. {name} - {developer}; daily installs: {daily}"]
+        if revenue not in (None, ""):
+            details.append(f"monthly revenue: {revenue}")
+        if rating not in (None, ""):
+            details.append(f"rating: {rating}")
+        lines.append("; ".join(str(part) for part in details))
+        appstorespy_url = app.get("url_appstorespy") or app.get("appstorespy_url")
+        if appstorespy_url:
+            lines.append(f"   AppStoreSpy: {appstorespy_url}")
+        elif app.get("url"):
+            lines.append(f"   Store: {app.get('url')}")
+    return "\n".join(lines) if lines else "- No top competitors captured."
 
 
 def send_alerts(alerts: list[dict[str, Any]], config: dict[str, Any]) -> list[dict[str, Any]]:

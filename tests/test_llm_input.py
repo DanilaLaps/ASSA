@@ -9,7 +9,26 @@ def candidate(status, **overrides):
         "candidate_id": f"id-{status}",
         "status": status,
         "normalized_niche": f"niche-{status}",
-        "top_apps": [{"app_id": "a", "name": "A", "raw_source_fields_json": {"secret": "raw"}}],
+        "top_apps": [
+            {
+                "app_id": "a",
+                "bundle": "com.example.a",
+                "name": "A",
+                "developer_name": "Tiny Team",
+                "downloads_daily": 5000,
+                "downloads_month": 150000,
+                "revenue_month": 1000,
+                "rating_avg": 4.4,
+                "rating_count": 200,
+                "release_date": "2026-05-01",
+                "update_date": "2026-05-15",
+                "description_short": "Sort products quickly.",
+                "description_excerpt": "Arrange products into shelves with simple sorting rules.",
+                "screenshots": ["one.png", "two.png", "three.png", "four.png"],
+                "url_appstorespy": "https://appstorespy.example/apps/com.example.a",
+                "raw_source_fields_json": {"secret": "raw"},
+            }
+        ],
         "raw_source_fields_json": {"secret": "raw"},
         "reason_codes": ["strong_daily_installs"],
         "risk_tags": [],
@@ -40,8 +59,26 @@ class LlmInputTests(unittest.TestCase):
         self.assertEqual(len(pack["near_misses"]), 1)
         self.assertEqual(pack["coverage_summary"]["sample_truncated"], False)
         self.assertEqual(pack["history_summary"]["history_state"], "HISTORY_AVAILABLE")
+        self.assertEqual(pack["alerts"][0]["top_products"][0]["url_appstorespy"], "https://appstorespy.example/apps/com.example.a")
+        self.assertEqual(pack["alerts"][0]["top_products"][0]["screenshots"], ["one.png", "two.png", "three.png"])
+        self.assertEqual(pack["alerts"][0]["top_competitors"][0]["description_short"], "Sort products quickly.")
         serialized = str(pack)
         self.assertNotIn("raw_source_fields_json", serialized)
+
+    def test_sendable_alerts_are_prioritized_for_llm_pack(self):
+        config, _ = load_config("config.yaml")
+        config["alert_limits"]["max_alerts_per_run"] = 1
+
+        pack = build_candidate_pack_input(
+            [
+                candidate("ALERT", candidate_id="cooldown-alert", send_regular_alert=False),
+                candidate("ALERT", candidate_id="sendable-alert", send_regular_alert=True),
+            ],
+            config,
+        )
+
+        self.assertEqual(len(pack["alerts"]), 1)
+        self.assertEqual(pack["alerts"][0]["candidate_id"], "sendable-alert")
 
 
 if __name__ == "__main__":

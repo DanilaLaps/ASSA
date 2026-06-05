@@ -185,6 +185,8 @@ class LlmReportTests(unittest.TestCase):
 
         self.assertIn("Return only a JSON object", prompt)
         self.assertIn("single-query AppStoreSpy", prompt)
+        self.assertIn("top_products", prompt)
+        self.assertIn("competitor_takeaways", prompt)
         self.assertNotIn("Рў", prompt)
 
 

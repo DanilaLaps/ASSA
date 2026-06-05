@@ -22,6 +22,35 @@ class TelegramNotifyTests(unittest.TestCase):
                 "total_daily_installs": 90000,
                 "app_count": 3,
                 "successful_new_apps_count": 1,
+                "top_apps": [
+                    {
+                        "name": "Goods Sort",
+                        "developer_name": "Tiny Team",
+                        "downloads_daily": 40000,
+                        "revenue_month": 1200,
+                        "rating_avg": 4.5,
+                        "url_appstorespy": "https://appstorespy.example/apps/goods-sort",
+                    },
+                    {
+                        "name": "Shelf Match",
+                        "developer_name": "Small Studio",
+                        "downloads_daily": 30000,
+                        "url_appstorespy": "https://appstorespy.example/apps/shelf-match",
+                    },
+                    {
+                        "name": "Market Sort",
+                        "developer_name": "Indie Lab",
+                        "downloads_daily": 20000,
+                        "url_appstorespy": "https://appstorespy.example/apps/market-sort",
+                    },
+                    {
+                        "name": "Fourth Competitor",
+                        "developer_name": "Extra Studio",
+                        "downloads_daily": 10000,
+                        "url_appstorespy": "https://appstorespy.example/apps/fourth",
+                    },
+                ],
+                "llm_analysis_source": "openai",
                 "llm_analysis": {
                     "evidence": ["Strong demand", "Fresh apps"],
                     "mvp": "Build a goods sort MVP.",
@@ -35,6 +64,12 @@ class TelegramNotifyTests(unittest.TestCase):
         self.assertIn("Scope: one AppStoreSpy query, no country/language filter", message)
         self.assertNotIn("Country:", message)
         self.assertIn("MVP:", message)
+        self.assertIn("AI review: source=openai", message)
+        self.assertIn("Top competitors:", message)
+        self.assertIn("https://appstorespy.example/apps/goods-sort", message)
+        self.assertIn("https://appstorespy.example/apps/shelf-match", message)
+        self.assertIn("https://appstorespy.example/apps/market-sort", message)
+        self.assertNotIn("Fourth Competitor", message)
         self.assertIn("Recommendation: TEST", message)
 
     def test_chunk_text_splits_long_messages(self):

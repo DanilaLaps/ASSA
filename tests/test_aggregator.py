@@ -31,6 +31,11 @@ def app(**overrides):
         "update_date": "2026-05-01",
         "advertised": False,
         "ads": True,
+        "url_appstorespy": "https://appstorespy.example/apps/com.example.sort",
+        "description_short": "Sort goods on supermarket shelves.",
+        "description_full": "A sorting puzzle about arranging goods on supermarket shelves.",
+        "icon": "https://cdn.example/icon.png",
+        "screenshots": ["one.png", "two.png", "three.png", "four.png"],
     }
     row.update(overrides)
     return row
@@ -63,7 +68,11 @@ class AggregatorTests(unittest.TestCase):
         self.assertEqual(summary["source_scope"], "single_appstorespy_query_no_country_language")
         self.assertNotIn("country", summary["group_key"])
         self.assertNotIn("women_25_45", summary["group_key"])
+        self.assertEqual(summary["audience"], "women_25_45")
         self.assertEqual(summary["top_apps"][0]["bundle"], "a")
+        self.assertEqual(summary["top_apps"][0]["url_appstorespy"], "https://appstorespy.example/apps/com.example.sort")
+        self.assertEqual(summary["top_apps"][0]["description_short"], "Sort goods on supermarket shelves.")
+        self.assertEqual(summary["top_apps"][0]["screenshots"], ["one.png", "two.png", "three.png"])
         self.assertGreater(summary["advertised_top_app_share"], 0)
 
 

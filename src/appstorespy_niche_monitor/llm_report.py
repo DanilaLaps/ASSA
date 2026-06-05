@@ -25,6 +25,10 @@ PACK_ANALYSIS_FIELDS = (
     "why_might_be_false_positive",
     "mvp_hypothesis",
     "simplified_mvp_scope",
+    "competitor_takeaways",
+    "entry_angle",
+    "differentiation_idea",
+    "why_top_products_validate_or_weaken_signal",
     "validation_steps",
     "risk_notes",
     "missing_data",
@@ -107,7 +111,7 @@ def build_candidate_pack_input(
     history_summary: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     limits = config.get("alert_limits", {})
-    alerts = [item for item in candidates if item.get("status") == "ALERT"][: int(limits.get("max_alerts_per_run", 3))]
+    alerts = select_alerts_for_llm(candidates, int(limits.get("max_alerts_per_run", 3)))
     watch = [
         item
         for item in candidates
@@ -142,22 +146,54 @@ def build_candidate_pack_input(
     }
 
 
+def select_alerts_for_llm(candidates: list[dict[str, Any]], max_alerts: int) -> list[dict[str, Any]]:
+    alerts = [item for item in candidates if item.get("status") == "ALERT"]
+    sendable = [item for item in alerts if item.get("send_regular_alert")]
+    remaining = [item for item in alerts if not item.get("send_regular_alert")]
+    return (sendable + remaining)[:max_alerts]
+
+
 def compact_candidate_for_llm(candidate: dict[str, Any]) -> dict[str, Any]:
     fields = (
         "candidate_id",
         "dedupe_key",
         "status",
         "would_be_status",
+        "platform",
+        "niche",
         "normalized_niche",
         "group_key_type",
         "group_key_value",
+        "source_scope",
+        "release_date_window",
+        "collection_sort",
+        "min_app_daily_installs",
         "market_category",
         "core_mechanic",
         "theme",
         "meta",
+        "audience",
         "audience_summary",
+        "production_complexity",
+        "full_product_complexity",
+        "mvp_complexity",
+        "simplifiable",
+        "simplification_idea",
         "app_count",
         "total_daily_installs",
+        "avg_daily_installs",
+        "median_daily_installs",
+        "total_monthly_downloads",
+        "total_monthly_revenue",
+        "avg_rating",
+        "rating_count_total",
+        "successful_new_apps_count",
+        "traction_fresh_apps_count",
+        "top_app_share",
+        "growth_by_one_app_share",
+        "advertised_top_app_share",
+        "giant_developer_share",
+        "single_developer_share",
         "opportunity_score",
         "score_components",
         "data_quality_score",
@@ -165,24 +201,61 @@ def compact_candidate_for_llm(candidate: dict[str, Any]) -> dict[str, Any]:
         "risk_tags",
         "reason_codes",
         "failed_alert_conditions",
+        "alert_filter_reasons",
         "confidence_level",
+        "classification_confidence_avg",
+        "unknown_or_new_pattern_cluster",
         "first_run_without_history",
+        "send_regular_alert",
     )
     compact = {field: candidate.get(field) for field in fields if field in candidate}
-    compact["top_apps"] = [
-        {
-            "app_id": app.get("app_id"),
-            "name": app.get("name"),
-            "developer_name": app.get("developer_name"),
-            "downloads_daily": app.get("downloads_daily"),
-            "release_date": app.get("release_date"),
-            "advertised": app.get("advertised"),
-            "ads": app.get("ads"),
-            "iap": app.get("iap"),
-        }
-        for app in candidate.get("top_apps", [])[:5]
-    ]
+    top_apps = [compact_top_product_for_llm(app) for app in candidate.get("top_apps", [])[:5]]
+    compact["top_apps"] = top_apps
+    compact["top_products"] = top_apps[:3]
+    compact["top_competitors"] = top_apps[:3]
     return compact
+
+
+def compact_top_product_for_llm(app: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "app_id": app.get("app_id"),
+        "bundle": app.get("bundle"),
+        "name": app.get("name"),
+        "developer_name": app.get("developer_name"),
+        "developer_id": app.get("developer_id"),
+        "category": app.get("category"),
+        "category_type": app.get("category_type"),
+        "downloads_daily": app.get("downloads_daily"),
+        "downloads_month": app.get("downloads_month"),
+        "downloads_exact": app.get("downloads_exact"),
+        "downloads_mark": app.get("downloads_mark"),
+        "revenue_month": app.get("revenue_month"),
+        "rating_avg": app.get("rating_avg"),
+        "rating_count": app.get("rating_count"),
+        "review_count": app.get("review_count"),
+        "release_date": app.get("release_date"),
+        "update_date": app.get("update_date"),
+        "advertised": app.get("advertised"),
+        "ads": app.get("ads"),
+        "iap": app.get("iap"),
+        "icon": app.get("icon"),
+        "screenshots": list(app.get("screenshots", [])[:3]) if isinstance(app.get("screenshots"), list) else [],
+        "description_short": truncate_text(app.get("description_short", ""), 500),
+        "description_excerpt": truncate_text(
+            app.get("description_excerpt") or app.get("description_full") or app.get("description", ""),
+            1200,
+        ),
+        "url_appstorespy": app.get("url_appstorespy"),
+        "url": app.get("url"),
+        "website": app.get("website"),
+    }
+
+
+def truncate_text(value: Any, max_chars: int) -> str:
+    text = " ".join(str(value or "").split())
+    if len(text) <= max_chars:
+        return text
+    return text[: max_chars - 3].rstrip() + "..."
 
 
 def coverage_from_candidates(candidates: list[dict[str, Any]]) -> dict[str, Any]:
@@ -231,6 +304,13 @@ def generate_pack_item_fallback(candidate: dict[str, Any]) -> dict[str, Any]:
     why_interesting = candidate.get("reason_codes", [])[:3]
     risk_notes = candidate.get("risk_tags", [])
     mvp_hypothesis = f"Test a scoped {candidate.get('core_mechanic')} game with {candidate.get('theme')} presentation."
+    top_products = candidate.get("top_products") or candidate.get("top_competitors") or candidate.get("top_apps", [])[:3]
+    product_names = [str(app.get("name")) for app in top_products if isinstance(app, dict) and app.get("name")]
+    competitor_takeaways = (
+        [f"Top products captured in the niche: {', '.join(product_names[:3])}."]
+        if product_names
+        else ["No top products were captured for competitor review."]
+    )
     return {
         "recommendation": recommendation,
         "confidence": confidence,
@@ -238,6 +318,14 @@ def generate_pack_item_fallback(candidate: dict[str, Any]) -> dict[str, Any]:
         "why_might_be_false_positive": risk_notes[:4],
         "mvp_hypothesis": mvp_hypothesis,
         "simplified_mvp_scope": "One core loop, one content theme, lightweight meta progression.",
+        "competitor_takeaways": competitor_takeaways,
+        "entry_angle": (
+            f"Use the same validated {candidate.get('core_mechanic')} demand but narrow scope, theme, and content depth."
+        ),
+        "differentiation_idea": "Differentiate with clearer first-session UX, lighter content production, and distinct store creatives.",
+        "why_top_products_validate_or_weaken_signal": (
+            "The top products help validate demand, but concentration, ads, and giant-developer exposure still need manual checks."
+        ),
         "validation_steps": [
             "Check top apps manually in AppStoreSpy and stores.",
             "Separate organic traction from paid acquisition.",
@@ -355,9 +443,12 @@ def build_pack_prompt(pack_input: dict[str, Any]) -> str:
         "Do not reject early single-app breakouts automatically; mark them as WATCH/manual validation when appropriate.\n"
         "If this is the first run without compatible history, do not call candidates confirmed alerts. Treat them as "
         "INITIAL_BASELINE_NO_HISTORY and cap confidence at medium.\n"
+        "Use the top_products/top_competitors arrays as the top 3 products in each niche. Compare their scale, "
+        "release/update dates, monetization flags, ratings, descriptions, and AppStoreSpy links when forming the analysis.\n"
         "Return only a JSON object with key candidate_analyses. Its keys must be candidate_id values. Each value must contain "
         "recommendation TEST/WATCH/AVOID, confidence, why_interesting, why_might_be_false_positive, "
-        "mvp_hypothesis, simplified_mvp_scope, validation_steps, risk_notes, missing_data, manual_review_needed.\n\n"
+        "mvp_hypothesis, simplified_mvp_scope, competitor_takeaways, entry_angle, differentiation_idea, "
+        "why_top_products_validate_or_weaken_signal, validation_steps, risk_notes, missing_data, manual_review_needed.\n\n"
         f"Candidate pack JSON:\n{compact}"
     )
 
@@ -549,7 +640,10 @@ def list_risks(alert: dict[str, Any]) -> list[str]:
 
 def render_alert_report(alert: dict[str, Any], analysis: dict[str, Any]) -> str:
     top_apps = "\n".join(
-        f"- {app.get('name')} ({app.get('developer_name')}): {app.get('downloads_daily')} daily installs"
+        (
+            f"- {app.get('name')} ({app.get('developer_name')}): {app.get('downloads_daily')} daily installs"
+            f"{'; AppStoreSpy: ' + str(app.get('url_appstorespy')) if app.get('url_appstorespy') else ''}"
+        )
         for app in alert.get("top_apps", [])
     )
     components = json.dumps(alert.get("score_components", {}), ensure_ascii=False, indent=2)
