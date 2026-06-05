@@ -22,20 +22,28 @@ def candidate(**overrides):
         "group_key": "google_play::sort puzzle::puzzle::sort::supermarket::collection::women_25_45::low",
         "release_date_window": "last_180d",
         "has_history": True,
-        "opportunity_score": 88,
+        "opportunity_score": 92,
         "total_daily_installs": 90000,
         "weekly_growth_percent": 40,
-        "app_count": 3,
-        "successful_new_apps_count": 1,
+        "monthly_growth_percent": 80,
+        "history_depth_days": 14,
+        "app_count": 4,
+        "successful_new_apps_count": 2,
+        "unique_developer_count": 3,
         "giant_developer_share": 0.0,
-        "top_app_share": 0.45,
-        "growth_by_one_app_share": 0.4,
-        "data_quality_score": 82,
+        "single_developer_share": 0.4,
+        "top_app_share": 0.42,
+        "top3_app_share": 0.78,
+        "growth_by_one_app_share": 0.3,
+        "advertised_top_app_share": 0.1,
+        "classification_confidence_avg": 0.82,
+        "data_quality_score": 86,
         "reason_codes": ["high_demand", "historical_growth"],
         "top_apps": [
-            {"app_id": "b", "name": "B"},
-            {"app_id": "a", "name": "A"},
-            {"app_id": "c", "name": "C"},
+            {"app_id": "b", "name": "B", "developer_name": "B Studio", "downloads_daily": 30000},
+            {"app_id": "a", "name": "A", "developer_name": "A Studio", "downloads_daily": 40000},
+            {"app_id": "c", "name": "C", "developer_name": "C Studio", "downloads_daily": 20000},
+            {"app_id": "d", "name": "D", "developer_name": "D Studio", "downloads_daily": 5000},
         ],
     }
     row.update(overrides)
@@ -51,16 +59,17 @@ class AlertFilterTests(unittest.TestCase):
         self.assertTrue(passed)
         self.assertEqual(reasons, ["passed"])
 
-    def test_top_app_dominance_blocks_alert(self):
+    def test_top_app_dominance_blocks_sendable_alert(self):
         config, _ = load_config("config.yaml")
 
         passed, reasons = should_alert(candidate(top_app_share=0.9), config, {}, "2026-06-04")
 
-        self.assertTrue(passed)
-        self.assertIn("passed", reasons)
+        self.assertFalse(passed)
+        self.assertIn("top_app_too_dominant", reasons)
 
     def test_max_alerts_are_applied_without_country_limit(self):
         config, _ = load_config("config.yaml")
+        config["sendable_alert_rules"]["max_sendable_per_core_mechanic"] = 10
         rows = [
             candidate(normalized_niche="a", top_apps=[{"app_id": "a1"}], group_key="a", opportunity_score=90),
             candidate(normalized_niche="b", top_apps=[{"app_id": "b1"}], group_key="b", opportunity_score=89),
@@ -101,8 +110,8 @@ class AlertFilterTests(unittest.TestCase):
             "2026-06-04",
         )
 
-        self.assertTrue(passed)
-        self.assertIn("passed", reasons)
+        self.assertFalse(passed)
+        self.assertIn("below_team_fit_score", reasons)
 
 
 if __name__ == "__main__":

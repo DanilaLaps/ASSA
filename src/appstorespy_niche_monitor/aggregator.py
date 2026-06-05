@@ -97,6 +97,13 @@ def aggregate_group(
     ratings = [float(app.get("rating_avg", 0.0)) for app in apps if float(app.get("rating_avg", 0.0)) > 0]
     rating_counts = [int(app.get("rating_count", 0)) for app in apps if int(app.get("rating_count", 0)) > 0]
     top_apps = sorted(apps, key=lambda app: int(app.get("downloads_daily", 0)), reverse=True)[:5]
+    developer_ids = {
+        str(app.get("developer_id") or app.get("developer_name"))
+        for app in apps
+        if app.get("developer_id") or app.get("developer_name")
+    }
+    unique_developer_count = len(developer_ids)
+    top3_daily = sum(int(app.get("downloads_daily", 0)) for app in top_apps[:3])
 
     successful_new_apps_count = 0
     traction_fresh_apps_count = 0
@@ -166,10 +173,22 @@ def aggregate_group(
         "successful_new_apps_count": successful_new_apps_count,
         "traction_fresh_apps_count": traction_fresh_apps_count,
         "top_app_share": round(safe_div(int(top_apps[0].get("downloads_daily", 0)) if top_apps else 0, total_daily), 4),
+        "top3_app_share": round(safe_div(top3_daily, total_daily), 4),
         "growth_by_one_app_share": 0.0,
         "advertised_top_app_share": round(advertised_top_app_share(top_apps, total_daily), 4),
         "giant_developer_share": round(calculate_giant_developer_share(apps, config), 4),
         "single_developer_share": round(single_developer_share(apps, total_daily), 4),
+        "unique_developer_count": unique_developer_count,
+        "developer_diversity_score": round(min(safe_div(unique_developer_count, len(apps)), 1.0), 4),
+        "fresh_success_ratio": round(safe_div(successful_new_apps_count, len(apps)), 4),
+        "cluster_diversity_score": round(
+            (
+                min(safe_div(unique_developer_count, len(apps)), 1.0)
+                + max(1.0 - safe_div(int(top_apps[0].get("downloads_daily", 0)) if top_apps else 0, total_daily), 0.0)
+            )
+            / 2.0,
+            4,
+        ),
         "classification_confidence_avg": round(mean(classification_confidences), 4) if classification_confidences else 0.0,
         "unknown_or_new_pattern_cluster": any(bool(app.get("is_unknown_or_new_pattern")) for app in apps),
         "top_apps": [compact_app(app) for app in top_apps],

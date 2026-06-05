@@ -85,7 +85,9 @@ class TelegramNotifyTests(unittest.TestCase):
                 "apps_count": 250,
                 "summaries_count": 37,
                 "alerts_count": 0,
+                "sendable_alerts_count": 0,
                 "watch_count": 4,
+                "near_miss_count": 0,
                 "rejected_count": 33,
                 "baseline_only": False,
                 "llm_status": {
@@ -96,8 +98,9 @@ class TelegramNotifyTests(unittest.TestCase):
         )
 
         self.assertIn("AppStoreSpy check completed", message)
-        self.assertIn("TEST alerts: 0", message)
-        self.assertIn("No TEST alerts passed filters", message)
+        self.assertIn("SENDABLE alerts: 0", message)
+        self.assertIn("LLM TEST recommendations among sendable alerts: 0", message)
+        self.assertIn("Separate TEST messages sent: 0", message)
         self.assertIn("Scope: one AppStoreSpy query, no country/language filter", message)
         self.assertIn("LLM review: source=openai", message)
 

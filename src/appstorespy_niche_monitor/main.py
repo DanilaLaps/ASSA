@@ -121,6 +121,11 @@ def run_pipeline(
             candidate["llm_summary"] = analysis.get("mvp_hypothesis") or analysis.get("summary")
 
     urgent_alerts, watch, near_misses, rejected, alert_candidates = split_candidates(candidates)
+    llm_test_recommendations = sum(
+        1
+        for alert in urgent_alerts
+        if str((alert.get("llm_analysis") or {}).get("recommendation", "")).upper() == "TEST"
+    )
     report_paths: list[str] = []
     report_paths.extend(write_daily_reports(paths, candidates, snapshot_date))
     for alert in urgent_alerts:
@@ -130,9 +135,12 @@ def run_pipeline(
 
     save_processed(paths, "candidates", candidates, snapshot_date)
     save_processed(paths, "alerts", alert_candidates, snapshot_date)
+    save_processed(paths, "sendable_alerts", urgent_alerts, snapshot_date)
     save_processed(paths, "watch", watch, snapshot_date)
     save_processed(paths, "near_misses", near_misses, snapshot_date)
     save_processed(paths, "rejected", rejected, snapshot_date)
+    alert_funnel = build_alert_funnel(candidates, urgent_alerts, watch, near_misses, rejected)
+    write_json(paths["processed_dir"] / f"{snapshot_date}_alert_funnel.json", alert_funnel)
 
     sent_count = 0
     initial_digest_sent = False
@@ -155,10 +163,20 @@ def run_pipeline(
         "summaries_count": len(summaries),
         "candidates_count": len(candidates),
         "alerts_count": len(alert_candidates),
+        "alert_candidates_count": len(alert_candidates),
+        "sendable_alerts_count": len(urgent_alerts),
         "watch_count": len(watch),
+        "single_app_watch_count": sum(1 for item in candidates if item.get("status") == "SINGLE_APP_WATCH"),
         "near_miss_count": len(near_misses),
         "rejected_count": len(rejected),
         "sent_count": sent_count,
+        "telegram_regular_alerts_sent": sent_count,
+        "llm_candidates_sent": len(urgent_alerts),
+        "llm_test_recommendations": llm_test_recommendations,
+        "separate_test_messages_sent": 0,
+        "duplicate_market_signals_suppressed": alert_funnel["duplicate_market_signals_suppressed"],
+        "cooldown_blocked_count": alert_funnel["cooldown_blocked_count"],
+        "limit_blocked_count": alert_funnel["limit_blocked_count"],
         "initial_baseline_digest_count": len(initial_digest_items),
         "initial_baseline_digest_sent": initial_digest_sent,
         "history_state": history_state,
@@ -168,6 +186,55 @@ def run_pipeline(
     }
     result["completion_notification_sent"] = send_run_summary(result, config) if notify else False
     return result
+
+
+def build_alert_funnel(
+    candidates: list[dict[str, Any]],
+    urgent_alerts: list[dict[str, Any]],
+    watch: list[dict[str, Any]],
+    near_misses: list[dict[str, Any]],
+    rejected: list[dict[str, Any]],
+) -> dict[str, Any]:
+    return {
+        "candidates_count": len(candidates),
+        "alert_candidates_count": sum(1 for item in candidates if item.get("status") == "ALERT"),
+        "sendable_alerts_count": len(urgent_alerts),
+        "watch_count": len(watch),
+        "single_app_watch_count": sum(1 for item in candidates if item.get("status") == "SINGLE_APP_WATCH"),
+        "near_miss_count": len(near_misses),
+        "rejected_count": len(rejected),
+        "duplicate_market_signals_suppressed": sum(
+            1 for item in candidates if item.get("duplicate_reason") == "market_signal_duplicate"
+        ),
+        "cooldown_blocked_count": sum(
+            1
+            for item in candidates
+            if "cooldown_exact_dedupe_key" in item.get("sendable_alert_failures", [])
+            or "cooldown_normalized_niche" in item.get("sendable_alert_failures", [])
+        ),
+        "limit_blocked_count": sum(
+            1
+            for item in candidates
+            if any(
+                failure in item.get("sendable_alert_failures", [])
+                for failure in (
+                    "per_niche_limit_blocked",
+                    "per_core_mechanic_limit_blocked",
+                    "max_alerts_per_run_blocked",
+                    "telegram_budget_blocked",
+                )
+            )
+        ),
+        "failure_counts": count_sendable_failures(candidates),
+    }
+
+
+def count_sendable_failures(candidates: list[dict[str, Any]]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for candidate in candidates:
+        for failure in candidate.get("sendable_alert_failures", []):
+            counts[str(failure)] = counts.get(str(failure), 0) + 1
+    return dict(sorted(counts.items()))
 
 
 def main(argv: list[str] | None = None) -> int:

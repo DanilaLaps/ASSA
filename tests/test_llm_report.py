@@ -65,6 +65,7 @@ def pack_candidate(**overrides):
         "first_run_without_history": True,
         "initial_baseline_digest": True,
         "send_regular_alert": True,
+        "alert_stage": "SENDABLE_ALERT",
     }
     row.update(overrides)
     return row

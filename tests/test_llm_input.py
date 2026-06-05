@@ -43,7 +43,7 @@ class LlmInputTests(unittest.TestCase):
 
         pack = build_candidate_pack_input(
             [
-                candidate("ALERT", send_regular_alert=True),
+                candidate("ALERT", send_regular_alert=True, alert_stage="SENDABLE_ALERT"),
                 candidate("WATCH"),
                 candidate("SINGLE_APP_WATCH"),
                 candidate("NEAR_MISS"),
@@ -73,7 +73,7 @@ class LlmInputTests(unittest.TestCase):
         pack = build_candidate_pack_input(
             [
                 candidate("ALERT", candidate_id="cooldown-alert", send_regular_alert=False),
-                candidate("ALERT", candidate_id="sendable-alert", send_regular_alert=True),
+                candidate("ALERT", candidate_id="sendable-alert", send_regular_alert=True, alert_stage="SENDABLE_ALERT"),
             ],
             config,
         )

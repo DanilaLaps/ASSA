@@ -4,7 +4,7 @@ This document is a human and AI oriented map of the project. It explains what th
 
 ## 1. Executive Summary
 
-The project is an automated niche monitor for mobile games on Google Play. It collects one AppStoreSpy `/play/apps/query` response, normalizes and classifies apps, aggregates them into explainable niche clusters, scores those clusters deterministically, filters alert candidates, optionally asks OpenAI for analysis of the alerts that will be sent, and delivers Telegram notifications.
+The project is an automated niche monitor for mobile games on Google Play. It collects one AppStoreSpy `/play/apps/query` response, normalizes and classifies apps, aggregates them into explainable niche clusters, scores those clusters deterministically, builds an internal alert longlist, ranks a strict sendable shortlist, optionally asks OpenAI for analysis of the sendable alerts, and delivers Telegram notifications.
 
 The system is intentionally conservative:
 
@@ -12,6 +12,7 @@ The system is intentionally conservative:
 - The AppStoreSpy query must not use country, language, active country, or pagination axes.
 - Scoring and alert selection are deterministic Python logic.
 - LLM analysis is commentary and validation support, not the primary selector.
+- `ALERT` is an internal qualified candidate longlist; `SENDABLE_ALERT` is the strict Telegram shortlist stage.
 - Telegram should never send more than `alert_limits.max_alerts_per_run` regular alerts.
 - The first run without compatible history must not send regular alerts.
 
@@ -62,15 +63,18 @@ These rules come from `AGENTS.md` and the current codebase. Treat them as hard c
   - `data_quality_score`
   - classification dimensions: `market_category`, `core_mechanic`, `theme`, `meta`, `audience`, `production_complexity`
 - Never send more than `alert_limits.max_alerts_per_run` regular alerts.
+- Only candidates with `status == ALERT`, `send_regular_alert == True`, and `alert_stage == SENDABLE_ALERT` may be regular Telegram alerts.
+- Every candidate should expose sendable funnel fields: `alert_stage`, `sendable_alert_score`, `sendable_alert_reasons`, and `sendable_alert_failures`.
 - First run without compatible history must not send regular alerts.
 - Store manual feedback labels and use them to improve scoring.
 
 ### LLM and Messaging
 
-- LLM analysis must receive alert candidates only, not raw full datasets.
-- Current LLM pack is intentionally limited to `ALERT` candidates with `send_regular_alert=True`.
+- LLM analysis must receive sendable alert candidates only, not raw full datasets.
+- Current LLM pack is intentionally limited to `status == ALERT`, `send_regular_alert == True`, and `alert_stage == SENDABLE_ALERT`.
 - LLM and Telegram text must describe the data as one AppStoreSpy query without country/language filters.
 - LLM analysis does not choose which alerts are sent. Python scoring and filtering choose them first.
+- A LLM recommendation of `TEST` is commentary only and must not create a separate Telegram message.
 
 ## 4. Repository Layout
 
@@ -84,8 +88,9 @@ src/appstorespy_niche_monitor/
   trend_detector.py       Compares current summaries to history.
   data_quality.py         Computes data-quality score and reasons.
   scorer.py               Computes opportunity score, reason codes, risk tags.
+  alert_ranker.py         Computes sendable alert score, hard filters, organic confidence.
   candidate_generator.py  Converts scored summaries into candidates.
-  alert_filter.py         Cooldown, send limits, sent-alert marking.
+  alert_filter.py         Sendable ranking, cooldown, send limits, sent-alert marking.
   llm_report.py           OpenAI/fallback analysis and alert markdown.
   telegram_notify.py      Telegram message formatting and delivery.
   report_writer.py        Daily and baseline markdown reports.
@@ -134,9 +139,9 @@ save clusters and summaries
 load sent_alerts
 generate candidates
 apply first-run baseline rules
-apply cooldown and max-alert limits
+rank sendable alerts, apply market-signal dedupe, hard filters, cooldown, and max-alert limits
 build history summary
-run LLM/fallback analysis for sendable alerts
+run LLM/fallback analysis for final sendable alerts
 attach analysis to candidates
 split candidates by status
 write daily and alert reports
@@ -156,7 +161,18 @@ Important ordering notes:
 - `sent_alerts.json` is updated only after `send_alerts` returns sent items.
 - Daily reports and processed candidate files are written before Telegram sending.
 - `alert_candidates` means all `status == ALERT`, not only sent alerts.
-- `urgent_alerts` means `status == ALERT and send_regular_alert == True`.
+- `urgent_alerts` means `status == ALERT`, `send_regular_alert == True`, and `alert_stage == SENDABLE_ALERT`.
+- `sent_alerts.json` must only be updated for successfully sent `SENDABLE_ALERT` candidates.
+
+Run result highlights:
+
+- `alerts_count` / `alert_candidates_count`: all `status == ALERT` candidates.
+- `sendable_alerts_count`: final regular-alert shortlist before Telegram delivery.
+- `telegram_regular_alerts_sent`: successfully sent regular Telegram alert messages.
+- `llm_candidates_sent`: candidates included in the LLM pack.
+- `llm_test_recommendations`: `TEST` recommendations among final sendable alerts.
+- `separate_test_messages_sent`: always `0` for production regular-alert flow.
+- `duplicate_market_signals_suppressed`, `cooldown_blocked_count`, `limit_blocked_count`: funnel diagnostics.
 
 ## 6. Collection Contract
 
@@ -302,8 +318,14 @@ Aggregated summary includes:
 - monthly downloads and revenue
 - ratings
 - new app counts
+- developer diversity and fresh-success metrics:
+  - `unique_developer_count`
+  - `developer_diversity_score`
+  - `fresh_success_ratio`
+  - `cluster_diversity_score`
 - concentration metrics:
   - `top_app_share`
+  - `top3_app_share`
   - `growth_by_one_app_share`
   - `advertised_top_app_share`
   - `giant_developer_share`
@@ -352,8 +374,9 @@ Data-quality code:
 
 - `data_quality.enrich_data_quality`
 - `data_quality.calculate_data_quality`
+- `alert_ranker.calculate_organic_confidence`
 
-Data quality is a confidence score, not a standalone selector. It is used in scoring and alert rules.
+Data quality is a confidence score, not a standalone selector for the broad candidate list. It is used in opportunity scoring, candidate status, and sendable-alert hard filters.
 
 Components:
 
@@ -382,12 +405,25 @@ Common data-quality reasons:
 
 Coverage risk comes from `coverage.coverage_risk_tags`.
 
+Organic confidence fields:
+
+- `organic_confidence`: `LOW`, `MEDIUM`, or `HIGH`
+- `organic_confidence_score`: 0-100 confidence score
+- `organic_confidence_reasons`: reason codes such as `organic_confidence_high_multi_developer`, `organic_confidence_low_paid_spike`, and `organic_confidence_low_top_app_dominance`
+
+`organic_confidence == LOW` blocks a regular sendable alert, but the candidate may still appear in reports for manual review.
+
 ## 12. Scoring
 
 Scoring code:
 
 - `scorer.score_summaries`
 - `scorer.score_summary`
+- `alert_ranker.calculate_trend_confidence_score`
+- `alert_ranker.calculate_team_fit_score`
+- `alert_ranker.calculate_sendable_alert_score`
+- `alert_ranker.passes_sendable_hard_filters`
+- `alert_ranker.enrich_sendable_alert_fields`
 
 Opportunity score is deterministic and explainable. It combines:
 
@@ -402,6 +438,42 @@ Opportunity score is deterministic and explainable. It combines:
 - paid-spike penalty
 
 `score_components` stores each piece. `opportunity_score` is the clamped final score.
+
+Sendable alert score is a second deterministic score for Telegram budget decisions. It answers a stricter question: is this candidate strong enough to send as a standalone regular Telegram alert today?
+
+Sendable scoring combines:
+
+- `opportunity_score`
+- `trend_confidence_score`
+- `team_fit_score`
+- `data_quality_score`
+- concentration penalty
+- paid-spike penalty
+- classifier-confidence penalty
+- soft risk-tag penalty
+
+`sendable_score_components` stores each piece and a `final` value. `sendable_alert_score` is clamped to 0-100.
+
+Trend confidence considers:
+
+- multi-app validation
+- successful fresh apps
+- developer diversity
+- install volume
+- weekly/monthly growth and history depth
+- top-app and one-app-growth concentration
+- paid acquisition exposure
+- data quality and classification confidence
+- severe/possible paid-spike risk
+
+Team fit considers:
+
+- MVP feasibility
+- production and MVP complexity
+- simplifiability
+- giant-developer and leader dominance
+- single-developer dominance
+- high content or complex meta-loop risk tags
 
 Demand scoring:
 
@@ -454,7 +526,7 @@ Candidate code:
 
 Statuses:
 
-- `ALERT`: passed configured alert thresholds.
+- `ALERT`: passed configured alert thresholds and is part of the internal qualified longlist.
 - `WATCH`: worth tracking but not a sendable alert.
 - `SINGLE_APP_WATCH`: one app breakout that needs manual validation.
 - `NEAR_MISS`: close to alert but failed limited conditions.
@@ -470,6 +542,15 @@ Alert failure conditions:
 - `low_mvp_feasibility`
 - `giant_dominated`
 - `severe_paid_spike`
+- strict alert blockers such as `top_app_too_dominant`, `growth_by_one_app_too_high`, `classifier_low_confidence`, `unknown_pattern_low_confidence`
+
+Important status rules:
+
+- Single-app breakouts should not become ordinary `ALERT` candidates.
+- Severe paid spike blocks `ALERT`.
+- Strong top-app dominance or one-app-growth dominance blocks `ALERT`.
+- Low classification confidence or weak data quality blocks `ALERT`.
+- `other` or unknown/new-pattern clusters need stronger app count, fresh-success, data-quality, and classification-confidence signals before becoming `ALERT`.
 
 Candidate IDs:
 
@@ -482,6 +563,23 @@ Candidate dedupe:
 - Keeps the highest ranked candidate per dedupe key.
 - Ranking favors status, group specificity, score, and app count.
 
+Candidate sendable funnel fields:
+
+- `alert_stage`: one of `QUALIFIED_CANDIDATE`, `QUALIFIED_CANDIDATE_ONLY`, `SENDABLE_ALERT`, `COOLDOWN_BLOCKED`, `INITIAL_BASELINE_DIGEST`, `EXCLUDED_FROM_COOLDOWN`, or `NONE`
+- `send_regular_alert`: true only for final regular Telegram alerts
+- `telegram_delivery_channel`: `regular_alert`, `daily_digest_only`, `initial_baseline_digest`, or `none`
+- `sendable_alert_score`
+- `sendable_alert_rank`
+- `trend_confidence_score`
+- `team_fit_score`
+- `sendable_score_components`
+- `sendable_alert_reasons`
+- `sendable_alert_failures`
+- `market_signal_key`
+- `market_signal_label`
+- `duplicate_of_candidate_id`
+- `duplicate_reason`
+
 ## 14. Alert Filtering, Cooldown, and Sending
 
 Alert filtering code:
@@ -489,18 +587,64 @@ Alert filtering code:
 - `alert_filter.apply_cooldown_and_alert_limits`
 - `alert_filter.split_candidates`
 - `alert_filter.mark_sent`
+- `dedupe.build_market_signal_key`
+- `dedupe.top_app_overlap`
+- `dedupe.dedupe_market_signals`
 
 Filtering rules:
 
-- Sort candidates by descending `opportunity_score`.
-- Only `status == ALERT` can become `send_regular_alert=True`.
-- Cooldown checks both exact dedupe key and normalized niche.
-- Max sent alerts per run is `alert_limits.max_alerts_per_run`.
+- Enrich all candidates with sendable scores and funnel fields.
+- Build and apply market-signal dedupe before final send selection.
+- Rank `ALERT` candidates by descending `sendable_alert_score`, then `opportunity_score`.
+- Apply sendable hard filters from `sendable_alert_rules`.
+- Apply cooldown checks for exact dedupe key and normalized niche.
+- Apply per-normalized-niche, per-core-mechanic, and per-market-signal limits.
+- Apply `alert_limits.max_alerts_per_run`.
+- Only `status == ALERT`, `send_regular_alert == True`, and `alert_stage == SENDABLE_ALERT` can be regular Telegram alerts.
 - Non-alert statuses never become regular Telegram alerts.
+
+Sendable hard filters include:
+
+- minimum sendable alert score
+- minimum opportunity score
+- minimum trend confidence and team fit
+- minimum data quality, classification confidence, and MVP feasibility
+- minimum app count, successful fresh apps, unique developers, and total daily installs
+- maximum top-app, top-3, one-app-growth, advertised-top-app, giant-developer, and single-developer concentration
+- blocked risk tags, including `severe_paid_spike`
+- `organic_confidence != LOW`
+
+Common sendable failure codes:
+
+- `below_sendable_alert_score`
+- `below_trend_confidence_score`
+- `below_team_fit_score`
+- `below_data_quality_score`
+- `too_few_apps_for_sendable`
+- `too_few_successful_new_apps`
+- `too_few_unique_developers`
+- `top_app_too_dominant`
+- `growth_by_one_app_too_high`
+- `blocked_risk_tag`
+- `organic_confidence_low`
+- `duplicate_market_signal`
+- `cooldown_exact_dedupe_key`
+- `cooldown_normalized_niche`
+- `per_niche_limit_blocked`
+- `per_core_mechanic_limit_blocked`
+- `max_alerts_per_run_blocked`
+- `telegram_budget_blocked`
+
+Market-signal dedupe:
+
+- Uses `market_signal_key` plus top-app overlap.
+- Candidates with overlapping top apps at or above the configured threshold are treated as the same market signal.
+- The best ranked candidate remains primary.
+- Duplicates keep their status for reporting, but receive `duplicate_of_candidate_id`, `duplicate_reason=market_signal_duplicate`, and sendable failure codes.
 
 Output sets:
 
-- `urgent_alerts`: `ALERT` and `send_regular_alert=True`
+- `urgent_alerts`: `ALERT`, `send_regular_alert=True`, and `alert_stage=SENDABLE_ALERT`
 - `alert_candidates`: all `ALERT`
 - `watch`: `WATCH` and `SINGLE_APP_WATCH`
 - `near_misses`: `NEAR_MISS`
@@ -509,7 +653,8 @@ Output sets:
 Sent-alert state:
 
 - Stored in `data/sent_alerts.json`.
-- Updated after Telegram alert send succeeds.
+- Updated only after Telegram alert send succeeds.
+- Only successfully sent `SENDABLE_ALERT` candidates are written.
 - Includes normalized niche, last sent timestamp, last alert instance ID, top app IDs, status, and score.
 
 ## 15. First-Run Behavior
@@ -530,6 +675,7 @@ If there is no compatible historical summary for the current `score_version`:
 - Regular alerts are blocked.
 - `send_regular_alert=False`.
 - Candidates may be marked for initial baseline digest.
+- Digest candidates use `alert_stage=INITIAL_BASELINE_DIGEST` and `telegram_delivery_channel=initial_baseline_digest`.
 - Confidence is capped at configured maximum, usually `MEDIUM`.
 - `INITIAL_BASELINE_NO_HISTORY` is added to reason codes for digest items.
 - Digest items are not written to `sent_alerts` and do not start cooldown.
@@ -546,11 +692,17 @@ LLM code:
 Current LLM scope:
 
 - OpenAI receives only candidates in `alerts`.
-- `alerts` contains only `status == ALERT and send_regular_alert == True`.
+- `alerts` contains only `status == ALERT`, `send_regular_alert == True`, and `alert_stage == SENDABLE_ALERT`.
 - `watch`, `near_misses`, and `initial_baseline_digest` arrays are currently empty in the LLM pack.
 - This is deliberate to ensure the LLM gives complete analysis for the Telegram alerts that will actually be sent.
 
 LLM does not rank candidates. It analyzes already selected sendable alerts.
+
+LLM recommendation semantics:
+
+- `TEST`, `WATCH`, and `AVOID` are analytical recommendations only.
+- `TEST` must not create additional Telegram messages.
+- Python deterministic filtering has already selected the sendable candidates before OpenAI is called.
 
 LLM compact candidate includes:
 
@@ -559,7 +711,11 @@ LLM compact candidate includes:
 - classification dimensions
 - demand, revenue, rating, freshness, concentration, and quality metrics
 - score components
+- sendable alert score, trend confidence, team fit, alert stage, and sendable score components
+- organic confidence
+- market signal key and label
 - reason codes and risk tags
+- sendable reasons and failures
 - top apps, top products, top competitors
 
 Top product context:
@@ -622,6 +778,11 @@ Regular alert message includes:
 - release window and query sort
 - coverage
 - opportunity score
+- sendable alert score
+- trend confidence
+- team fit
+- organic confidence
+- alert stage
 - data quality
 - MVP feasibility
 - app count
@@ -630,18 +791,22 @@ Regular alert message includes:
 - risk tags
 - AI review source/confidence/fallback reason
 - why interesting
+- why sent now
 - MVP hypothesis
 - top 3 competitors with AppStoreSpy links
 - risks
+- why this can be false positive
 - recommendation
 - alert ID
 
 Telegram send behavior:
 
 - Requires `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID`.
-- Sends only candidates with `status == ALERT` and `send_regular_alert == True`.
+- Sends only candidates with `status == ALERT`, `send_regular_alert == True`, and `alert_stage == SENDABLE_ALERT`.
+- Asserts the `ALERT` status and `SENDABLE_ALERT` stage before sending each regular alert.
 - Chunks long messages using `telegram.max_message_chars`.
 - Sends completion summary if `telegram.notify_on_completion=true`.
+- Completion summary reports `SENDABLE alerts`, `LLM TEST recommendations among sendable alerts`, and `Separate TEST messages sent: 0`.
 
 ## 18. Reports and Storage
 
@@ -664,12 +829,16 @@ data/processed/<date>_clusters.json
 data/processed/<date>_summaries.json
 data/processed/<date>_candidates.json
 data/processed/<date>_alerts.json
+data/processed/<date>_sendable_alerts.json
+data/processed/<date>_alert_funnel.json
 data/processed/<date>_watch.json
 data/processed/<date>_near_misses.json
 data/processed/<date>_rejected.json
 data/history/<date>_summaries.json
 reports/daily/<date>_candidates.json
 reports/daily/<date>_candidates.md
+reports/daily/<date>_sendable_alerts.md
+reports/daily/<date>_alert_funnel.md
 reports/daily/<date>_watch.md
 reports/daily/<date>_near_misses.md
 reports/daily/<date>_rejected_summary.md
@@ -681,6 +850,12 @@ CSV caveat:
 
 - `storage.write_csv` excludes `top_apps` because nested structures are not CSV friendly.
 - JSON artifacts preserve nested top app data.
+
+Processed alert artifacts:
+
+- `<date>_alerts.json` contains all `status == ALERT` candidates, including qualified-but-not-sent candidates.
+- `<date>_sendable_alerts.json` contains only `status == ALERT`, `send_regular_alert == true`, and `alert_stage == SENDABLE_ALERT`.
+- `<date>_alert_funnel.json` summarizes total candidates, alert candidates, sendable alerts, watch/near-miss/reject counts, duplicate market signals suppressed, cooldown blocks, limit blocks, and sendable failure distributions.
 
 ## 19. Feedback Loop
 
@@ -803,6 +978,7 @@ Important `config.yaml` sections:
 - `candidate_generation`: status thresholds.
 - `thresholds`: freshness and dominance thresholds.
 - `alert_rules`: legacy/compatibility alert thresholds used by tests and helper functions.
+- `sendable_alert_rules`: strict shortlist thresholds, sendable hard filters, per-niche/mechanic/market-signal limits, and duplicate-overlap threshold.
 - `giant_developers`: aliases for large developers.
 - `production_scores`: small-team feasibility by niche.
 - `niche_rules`: keyword-to-niche mapping.
@@ -846,9 +1022,12 @@ Test coverage by file:
 - `test_trend_detector.py`: growth metrics.
 - `test_data_quality.py`: quality scoring and reasons.
 - `test_scorer.py`: opportunity scoring, components, reason codes.
+- `test_alert_ranker.py`: sendable score, components, hard filters, deterministic behavior.
 - `test_candidate_generator.py`: status generation and candidate preservation.
-- `test_alert_filter.py`: alert rules, limits, IDs.
+- `test_alert_filter.py`: alert rules, sendable limits, IDs.
 - `test_alert_dedupe.py`: cooldown and dedupe stability.
+- `test_sendable_alert_filter.py`: strict Telegram budget and non-alert status blocking.
+- `test_market_signal_dedupe.py`: duplicate market signal suppression.
 - `test_first_run_behavior.py`: baseline-only logic.
 - `test_llm_input.py`: LLM pack restrictions and raw-data exclusion.
 - `test_llm_report.py`: OpenAI/fallback parsing and prompt contract.
@@ -887,7 +1066,8 @@ Alert filter changes:
 
 - Must not increase Telegram spam risk.
 - Must preserve `max_alerts_per_run`.
-- Must update alert filter/dedupe/first-run tests.
+- Must preserve the requirement that only `SENDABLE_ALERT` candidates can be regular Telegram alerts.
+- Must update alert ranker, alert filter, dedupe, LLM input, Telegram, and first-run tests when relevant.
 
 LLM changes:
 
@@ -916,7 +1096,12 @@ Check:
 
 - `result["baseline_only"]`
 - `data/processed/<date>_alerts.json`
+- `data/processed/<date>_sendable_alerts.json`
+- `data/processed/<date>_alert_funnel.json`
 - `send_regular_alert` fields
+- `alert_stage`
+- `sendable_alert_score`
+- `sendable_alert_failures`
 - `alert_filter_reasons`
 - `data/sent_alerts.json`
 - `first_run_without_history`
@@ -925,9 +1110,12 @@ Common reasons:
 
 - first run without history
 - cooldown
-- alert limit already reached
-- no candidates passed alert thresholds
-- weak data quality or MVP feasibility
+- Telegram budget already reached
+- no candidates passed base alert thresholds
+- no `ALERT` candidates passed sendable hard filters
+- weak data quality, classification confidence, trend confidence, or MVP feasibility
+- duplicate market signal suppression
+- top-app, top-3, one-app-growth, advertised-top-app, giant-developer, or single-developer concentration
 
 ### Telegram says fallback or no AI review
 
@@ -940,6 +1128,7 @@ Check:
 - `llm.enabled`
 - `--no-llm`
 - whether candidate was included in LLM pack
+- whether candidate has `alert_stage=SENDABLE_ALERT`
 
 Meaning of sources:
 
@@ -974,6 +1163,9 @@ Check:
 - `advertised_top_app_share`
 - `growth_by_one_app_share`
 - `top_app_share`
+- `top3_app_share`
+- `organic_confidence`
+- `sendable_alert_failures`
 - `rating_confidence`
 - `severe_paid_spike_risk`
 - top app `advertised` flag
@@ -996,7 +1188,7 @@ Check:
 - LLM analysis is done through the OpenAI Responses API endpoint.
 - Telegram uses simple text messages, not Markdown parse mode.
 - Top competitors are derived from the same one AppStoreSpy query, not fetched separately.
-- Raw AppStoreSpy data is stored locally, but LLM receives compact alert candidates only.
+- Raw AppStoreSpy data is stored locally, but LLM receives compact final sendable alert candidates only.
 - Weekly digest is offline and uses stored history plus feedback.
 
 ## 27. Glossary
@@ -1007,8 +1199,11 @@ Check:
 - Dimension: One of market category, mechanic, theme, meta, audience, complexity.
 - Summary: Aggregated metrics for a grouped niche.
 - Candidate: A scored summary converted into an actionable status.
-- ALERT: Candidate passed alert thresholds.
-- Sendable alert: An `ALERT` with `send_regular_alert=True`.
+- ALERT: Candidate passed base alert thresholds and belongs to the internal qualified longlist.
+- Sendable alert: An `ALERT` with `send_regular_alert=True` and `alert_stage=SENDABLE_ALERT`.
+- Alert stage: Funnel stage explaining whether an alert is a qualified candidate, sendable alert, cooldown block, baseline digest, or non-sendable item.
+- Sendable alert score: Deterministic shortlist score used for Telegram budget selection.
+- Market signal key: Stable key used to suppress duplicate opportunities across grouping strategies.
 - WATCH: Candidate worth tracking but not sent as regular alert.
 - NEAR_MISS: Candidate close to alert thresholds.
 - REJECT: Candidate filtered out.
@@ -1018,7 +1213,7 @@ Check:
 - Reason code: Positive/explanatory signal for why the candidate matters.
 - Risk tag: Caution signal for false positives or poor fit.
 - Top competitors: Top 3 apps from a niche by `downloads_daily` in the same query slice.
-- LLM pack: Compact JSON sent to OpenAI for sendable alerts.
+- LLM pack: Compact JSON sent to OpenAI for final `SENDABLE_ALERT` candidates.
 
 ## 28. Quick AI-Agent Checklist
 
@@ -1028,8 +1223,12 @@ Before finalizing any change, verify:
 - Production collection still uses exactly one request.
 - No country/language/active country/pagination was introduced.
 - Alert sending still respects cooldown and `max_alerts_per_run`.
+- Regular Telegram alerts require `status == ALERT`, `send_regular_alert == True`, and `alert_stage == SENDABLE_ALERT`.
+- LLM TEST recommendations do not create separate Telegram messages.
 - First-run baseline still blocks regular alerts.
 - LLM input still excludes raw full datasets.
+- LLM input includes only final sendable alerts.
 - LLM and Telegram wording still says one AppStoreSpy query without country/language filters.
 - Alerts still include reason codes, score components, data quality, and classification dimensions.
+- Candidates still include sendable funnel fields and explainable sendable failures.
 - Relevant tests were updated and run.

@@ -139,7 +139,9 @@ def select_alerts_for_llm(candidates: list[dict[str, Any]], max_alerts: int) -> 
     return [
         item
         for item in candidates
-        if item.get("status") == "ALERT" and item.get("send_regular_alert")
+        if item.get("status") == "ALERT"
+        and item.get("send_regular_alert") is True
+        and item.get("alert_stage") == "SENDABLE_ALERT"
     ][:max_alerts]
 
 
@@ -187,7 +189,21 @@ def compact_candidate_for_llm(candidate: dict[str, Any]) -> dict[str, Any]:
         "opportunity_score",
         "score_components",
         "data_quality_score",
+        "organic_confidence",
+        "organic_confidence_score",
+        "organic_confidence_reasons",
         "mvp_feasibility_score",
+        "trend_confidence_score",
+        "team_fit_score",
+        "sendable_alert_score",
+        "sendable_alert_rank",
+        "sendable_score_components",
+        "sendable_alert_reasons",
+        "sendable_alert_failures",
+        "alert_stage",
+        "telegram_delivery_channel",
+        "market_signal_key",
+        "market_signal_label",
         "risk_tags",
         "reason_codes",
         "failed_alert_conditions",
@@ -436,6 +452,8 @@ def build_pack_prompt(pack_input: dict[str, Any]) -> str:
         "Use the top_products/top_competitors arrays as the top 3 products in each niche. Compare their scale, "
         "release/update dates, monetization flags, ratings, descriptions, and AppStoreSpy links when forming the analysis.\n"
         "The alerts array contains only the candidates that will be sent as Telegram alerts in this run. "
+        "Python deterministic scoring already selected these sendable alerts; do not add or remove send targets. "
+        "A recommendation of TEST is commentary only and must not imply a separate Telegram message. "
         "Return an analysis for every candidate_id in alerts; do not skip any alert candidate. "
         "Do not add analyses for candidates that are not present in alerts.\n"
         "Return only a JSON object with key candidate_analyses. Its keys must be candidate_id values. Each value must contain "
@@ -640,11 +658,14 @@ def render_alert_report(alert: dict[str, Any], analysis: dict[str, Any]) -> str:
         for app in alert.get("top_apps", [])
     )
     components = json.dumps(alert.get("score_components", {}), ensure_ascii=False, indent=2)
+    sendable_components = json.dumps(alert.get("sendable_score_components", {}), ensure_ascii=False, indent=2)
     analysis_json = json.dumps(analysis, ensure_ascii=False, indent=2)
     return (
         f"# Alert: {alert.get('alert_id')}\n\n"
         f"Recommendation: {analysis.get('recommendation')}\n\n"
         f"Tier: {alert.get('alert_tier', 'WATCH')}\n\n"
+        f"Alert stage: {alert.get('alert_stage', 'UNKNOWN')}\n\n"
+        f"Sendable alert score: {alert.get('sendable_alert_score')}\n\n"
         "## Summary\n"
         f"{analysis.get('summary')}\n\n"
         "## Signal\n"
@@ -677,6 +698,12 @@ def render_alert_report(alert: dict[str, Any], analysis: dict[str, Any]) -> str:
         f"{top_apps or '- No top apps captured'}\n\n"
         "## Score components\n"
         f"```json\n{components}\n```\n\n"
+        "## Sendable score components\n"
+        f"```json\n{sendable_components}\n```\n\n"
+        "## Sendable reasons\n"
+        f"{format_bullets(alert.get('sendable_alert_reasons', []))}\n\n"
+        "## Sendable failures\n"
+        f"{format_bullets(alert.get('sendable_alert_failures', []))}\n\n"
         "## Structured analysis\n"
         f"```json\n{analysis_json}\n```\n\n"
         "## Filter notes\n"

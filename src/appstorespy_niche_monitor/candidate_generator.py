@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from .alert_ranker import fill_signal_defaults, normalized_threshold_100, ratio_metric, sendable_rules
 from .dedupe import make_alert_instance_id, make_dedupe_key, top_app_ids
 
 
@@ -32,6 +33,8 @@ def generate_candidates(
 
 
 def build_candidate(summary: dict[str, Any], config: dict[str, Any], snapshot_date: str) -> dict[str, Any]:
+    summary = dict(summary)
+    fill_signal_defaults(summary)
     top_ids = top_app_ids(summary)
     normalized_niche = str(summary.get("normalized_niche") or summary.get("niche") or "other")
     window = str(summary.get("release_date_window") or "last_180d")
@@ -56,6 +59,19 @@ def build_candidate(summary: dict[str, Any], config: dict[str, Any], snapshot_da
         "risk_tags": sorted(set(summary.get("risk_tags", []))),
         "llm_summary": None,
         "send_regular_alert": False,
+        "alert_stage": "QUALIFIED_CANDIDATE" if status == "ALERT" else "NONE",
+        "sendable_alert_score": 0.0,
+        "sendable_alert_rank": None,
+        "trend_confidence_score": 0.0,
+        "team_fit_score": 0.0,
+        "sendable_score_components": {},
+        "sendable_alert_reasons": ["qualified_alert_candidate"] if status == "ALERT" else [],
+        "sendable_alert_failures": [],
+        "telegram_delivery_channel": "daily_digest_only" if status in {"WATCH", "SINGLE_APP_WATCH", "NEAR_MISS"} else "none",
+        "market_signal_key": "",
+        "market_signal_label": "",
+        "duplicate_of_candidate_id": None,
+        "duplicate_reason": None,
         "initial_baseline_digest": False,
         "would_be_status": None,
         "exclude_from_cooldown": False,
@@ -82,6 +98,10 @@ def alert_failed_conditions(summary: dict[str, Any], config: dict[str, Any]) -> 
         failures.append("giant_dominated")
     if rules.get("block_severe_paid_spike", True) and bool(summary.get("severe_paid_spike_risk")):
         failures.append("severe_paid_spike")
+    strict_failures = strict_alert_blockers(summary, config)
+    for failure in strict_failures:
+        if failure not in failures:
+            failures.append(failure)
     return failures
 
 
@@ -102,6 +122,44 @@ def determine_status(
     if is_watch(summary, config, failed_alert_conditions):
         return "WATCH"
     return "REJECT"
+
+
+def strict_alert_blockers(summary: dict[str, Any], config: dict[str, Any]) -> list[str]:
+    rules = sendable_rules(config)
+    failures: list[str] = []
+    risk_tags = set(str(tag) for tag in summary.get("risk_tags", []))
+    app_count = int(summary.get("app_count", 0))
+    successful_new_apps = int(summary.get("successful_new_apps_count") or summary.get("successful_new_apps") or 0)
+    classification_confidence = ratio_metric(summary, "classification_confidence_avg", default=0.70)
+    data_quality_score = float(summary.get("data_quality_score", 0.0))
+    if 0.0 <= data_quality_score <= 1.0:
+        data_quality_score *= 100.0
+    top_app_share = ratio_metric(summary, "top_app_share")
+    growth_by_one_app_share = ratio_metric(summary, "growth_by_one_app_share")
+    normalized_niche = str(summary.get("normalized_niche") or summary.get("niche") or "other").lower()
+    is_unknown_or_other = normalized_niche in {"other", "unknown"} or bool(summary.get("unknown_or_new_pattern_cluster"))
+
+    if "severe_paid_spike" in risk_tags or bool(summary.get("severe_paid_spike_risk")):
+        failures.append("severe_paid_spike")
+    if top_app_share > float(rules.get("hard_alert_max_top_app_share", 0.75)):
+        failures.append("top_app_too_dominant")
+    if growth_by_one_app_share > float(rules.get("hard_alert_max_growth_by_one_app_share", 0.75)):
+        failures.append("growth_by_one_app_too_high")
+    if classification_confidence < float(rules.get("hard_alert_min_classification_confidence", 0.50)):
+        failures.append("classifier_low_confidence")
+    if data_quality_score < normalized_threshold_100(rules.get("hard_alert_min_data_quality_score", 60.0)):
+        failures.append("weak_data_quality")
+    if is_unknown_or_other:
+        unknown_min_confidence = float(rules.get("unknown_pattern_alert_min_classification_confidence", 0.70))
+        unknown_min_quality = normalized_threshold_100(rules.get("unknown_pattern_alert_min_data_quality_score", 75.0))
+        if (
+            classification_confidence < unknown_min_confidence
+            or app_count < int(rules.get("unknown_pattern_alert_min_app_count", 4))
+            or successful_new_apps < int(rules.get("unknown_pattern_alert_min_successful_new_apps", 2))
+            or data_quality_score < unknown_min_quality
+        ):
+            failures.append("unknown_pattern_low_confidence")
+    return failures
 
 
 def is_watch(summary: dict[str, Any], config: dict[str, Any], failed_alert_conditions: list[str]) -> bool:

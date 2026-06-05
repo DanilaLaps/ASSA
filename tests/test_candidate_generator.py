@@ -19,7 +19,10 @@ def summary(**overrides):
         "app_count": 2,
         "total_daily_installs": 6000,
         "successful_new_apps_count": 1,
-        "top_apps": [{"app_id": "a", "downloads_daily": 3500}, {"app_id": "b", "downloads_daily": 2500}],
+        "top_apps": [
+            {"app_id": "a", "developer_name": "A Studio", "downloads_daily": 3500},
+            {"app_id": "b", "developer_name": "B Studio", "downloads_daily": 2500},
+        ],
         "top_app_share": 0.58,
         "giant_developer_share": 0,
         "opportunity_score": 75,
@@ -55,13 +58,25 @@ class CandidateGeneratorTests(unittest.TestCase):
         self.assertEqual(candidates[0]["status"], "SINGLE_APP_WATCH")
         self.assertIn("single_app_breakout", candidates[0]["reason_codes"])
 
-    def test_leader_dominated_candidate_is_not_auto_deleted(self):
+    def test_leader_dominated_candidate_is_near_miss_not_alert(self):
         config, _ = load_config("config.yaml")
 
         candidates = generate_candidates([summary(top_app_share=0.8, risk_tags=["leader_dominated"])], config, "2026-06-04")
 
-        self.assertEqual(candidates[0]["status"], "ALERT")
+        self.assertEqual(candidates[0]["status"], "NEAR_MISS")
         self.assertIn("leader_dominated", candidates[0]["risk_tags"])
+        self.assertIn("top_app_too_dominant", candidates[0]["failed_alert_conditions"])
+
+    def test_alert_candidate_has_sendable_stage_defaults(self):
+        config, _ = load_config("config.yaml")
+
+        candidates = generate_candidates([summary()], config, "2026-06-04")
+
+        self.assertEqual(candidates[0]["status"], "ALERT")
+        self.assertEqual(candidates[0]["alert_stage"], "QUALIFIED_CANDIDATE")
+        self.assertFalse(candidates[0]["send_regular_alert"])
+        self.assertIn("sendable_alert_score", candidates[0])
+        self.assertIn("sendable_alert_reasons", candidates[0])
 
     def test_near_miss_is_preserved(self):
         config, _ = load_config("config.yaml")

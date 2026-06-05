@@ -28,6 +28,11 @@ def format_alert_message(alert: dict[str, Any]) -> str:
         f"Min daily installs per app in source query: {alert.get('min_app_daily_installs', 500)}\n"
         f"Coverage: {coverage_status}\n"
         f"Score: {alert.get('opportunity_score')}/100\n"
+        f"Sendable alert score: {alert.get('sendable_alert_score')}/100\n"
+        f"Trend confidence: {alert.get('trend_confidence_score')}/100\n"
+        f"Team fit: {alert.get('team_fit_score')}/100\n"
+        f"Organic confidence: {alert.get('organic_confidence', 'unknown')}\n"
+        f"Alert stage: {alert.get('alert_stage', 'unknown')}\n"
         f"Data quality: {alert.get('data_quality_score')}/100\n"
         f"MVP feasibility: {alert.get('mvp_feasibility_score')}/100\n"
         f"Apps in niche: {alert.get('app_count')}\n"
@@ -37,12 +42,16 @@ def format_alert_message(alert: dict[str, Any]) -> str:
         f"{ai_status}\n\n"
         "Why interesting:\n"
         f"{evidence}\n\n"
+        "Why sent now:\n"
+        f"{format_list(alert.get('sendable_alert_reasons', []), limit=4)}\n\n"
         "MVP:\n"
         f"{mvp}\n\n"
         "Top competitors:\n"
         f"{competitors}\n\n"
         "Risks:\n"
         f"{risks}\n\n"
+        "Why this can be false positive:\n"
+        f"{format_list(alert.get('sendable_alert_failures') or alert.get('risk_tags', []), limit=4)}\n\n"
         f"Recommendation: {recommendation}\n"
         f"Alert ID: {alert.get('alert_instance_id') or alert.get('alert_id')}"
     )
@@ -97,8 +106,10 @@ def send_alerts(alerts: list[dict[str, Any]], config: dict[str, Any]) -> list[di
         raise RuntimeError("TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID are required to send notifications.")
     sent: list[dict[str, Any]] = []
     for alert in alerts:
-        if alert.get("status") != "ALERT" or not alert.get("send_regular_alert", True):
+        if alert.get("send_regular_alert") is not True:
             continue
+        assert alert.get("status") == "ALERT"
+        assert alert.get("alert_stage") == "SENDABLE_ALERT"
         send_message(token, chat_id, format_alert_message(alert), int(telegram_cfg.get("max_message_chars", 3900)))
         sent.append(alert)
     return sent
@@ -200,10 +211,11 @@ def send_initial_baseline_digest(items: list[dict[str, Any]], config: dict[str, 
 def format_run_summary_message(result: dict[str, Any]) -> str:
     baseline = "yes" if result.get("baseline_only") else "no"
     llm_line = format_result_llm_status(result)
-    if int(result.get("sent_count", 0)) > 0:
-        status = "TEST alerts passed filters and were sent separately."
-    else:
-        status = "No TEST alerts passed filters in this run. No regular ALERT messages were sent."
+    status = (
+        f"LLM TEST recommendations among sendable alerts: {result.get('llm_test_recommendations', 0)}\n"
+        f"Separate TEST messages sent: {result.get('separate_test_messages_sent', 0)}\n"
+        f"Regular Telegram alerts sent: {result.get('telegram_regular_alerts_sent', result.get('sent_count', 0))}"
+    )
     return (
         "AppStoreSpy check completed\n\n"
         f"Mode: {result.get('mode')}\n"
@@ -211,11 +223,14 @@ def format_run_summary_message(result: dict[str, Any]) -> str:
         "Scope: one AppStoreSpy query, no country/language filter\n"
         f"Apps checked: {result.get('apps_count')}\n"
         f"Niche summaries: {result.get('summaries_count')}\n"
-        f"TEST alerts: {result.get('alerts_count')}\n"
         f"ALERT candidates: {result.get('alerts_count')}\n"
+        f"SENDABLE alerts: {result.get('sendable_alerts_count', result.get('sent_count', 0))}\n"
         f"WATCH candidates: {result.get('watch_count')}\n"
         f"NEAR_MISS candidates: {result.get('near_miss_count')}\n"
         f"Rejected candidates: {result.get('rejected_count')}\n"
+        f"Duplicate market signals suppressed: {result.get('duplicate_market_signals_suppressed', 0)}\n"
+        f"Cooldown blocked: {result.get('cooldown_blocked_count', 0)}\n"
+        f"Limit blocked: {result.get('limit_blocked_count', 0)}\n"
         f"Baseline only: {baseline}\n"
         f"{llm_line}\n\n"
         f"{status}"

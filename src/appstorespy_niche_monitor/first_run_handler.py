@@ -88,6 +88,9 @@ def apply_initial_baseline_rules(
         item.setdefault("initial_baseline_digest", False)
         item.setdefault("exclude_from_cooldown", False)
         item.setdefault("send_regular_alert", False)
+        item.setdefault("alert_stage", "QUALIFIED_CANDIDATE" if item.get("status") == "ALERT" else "NONE")
+        item.setdefault("telegram_delivery_channel", "none")
+        item.setdefault("sendable_alert_failures", [])
         if first_run:
             item["would_be_status"] = item.get("status")
             item["send_regular_alert"] = False
@@ -95,10 +98,14 @@ def apply_initial_baseline_rules(
             item["confidence_level"] = cap_confidence(item["confidence_level"], max_confidence)
             if index in digest_indexes:
                 item["initial_baseline_digest"] = True
+                item["alert_stage"] = "INITIAL_BASELINE_DIGEST"
+                item["telegram_delivery_channel"] = "initial_baseline_digest"
                 reason_codes = list(item.get("reason_codes", []))
                 if required_reason not in reason_codes:
                     reason_codes.append(required_reason)
                 item["reason_codes"] = reason_codes
+            else:
+                item["telegram_delivery_channel"] = "none"
         enriched.append(item)
     return enriched
 

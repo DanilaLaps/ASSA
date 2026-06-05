@@ -22,6 +22,14 @@ def write_daily_reports(
     candidates_md.write_text(render_candidates_report(candidates, snapshot_date), encoding="utf-8")
     report_paths.extend([str(candidates_json), str(candidates_md)])
 
+    sendable_path = reports_dir / f"{snapshot_date}_sendable_alerts.md"
+    sendable_path.write_text(render_sendable_alerts_report(candidates, snapshot_date), encoding="utf-8")
+    report_paths.append(str(sendable_path))
+
+    funnel_path = reports_dir / f"{snapshot_date}_alert_funnel.md"
+    funnel_path.write_text(render_alert_funnel_report(candidates, snapshot_date), encoding="utf-8")
+    report_paths.append(str(funnel_path))
+
     status_files = {
         "watch": [item for item in candidates if item.get("status") in {"WATCH", "SINGLE_APP_WATCH"}],
         "near_misses": [item for item in candidates if item.get("status") == "NEAR_MISS"],
@@ -42,6 +50,7 @@ def write_daily_reports(
 
 def render_candidates_report(candidates: list[dict[str, Any]], snapshot_date: str) -> str:
     counts = Counter(str(item.get("status", "UNKNOWN")) for item in candidates)
+    stage_counts = Counter(str(item.get("alert_stage", "NONE")) for item in candidates)
     rejected_reasons = Counter(
         reason
         for item in candidates
@@ -64,6 +73,9 @@ def render_candidates_report(candidates: list[dict[str, Any]], snapshot_date: st
         "## Status Counts",
         format_counter(counts),
         "",
+        "## Alert Stage Counts",
+        format_counter(stage_counts),
+        "",
         "## Coverage",
         format_bullets(coverage_warnings or ["coverage_ok"]),
         "",
@@ -72,6 +84,90 @@ def render_candidates_report(candidates: list[dict[str, Any]], snapshot_date: st
         "",
         "## Rejected Reason Distribution",
         format_counter(rejected_reasons),
+    ]
+    return "\n".join(lines) + "\n"
+
+
+def render_sendable_alerts_report(candidates: list[dict[str, Any]], snapshot_date: str) -> str:
+    rows = [
+        item
+        for item in candidates
+        if item.get("status") == "ALERT"
+        and item.get("send_regular_alert") is True
+        and item.get("alert_stage") == "SENDABLE_ALERT"
+    ]
+    return "\n".join(
+        [
+            f"# Sendable Alerts - {snapshot_date}",
+            "",
+            "Source: single AppStoreSpy query without country/language filters.",
+            "",
+            format_candidate_rows(rows),
+        ]
+    ) + "\n"
+
+
+def render_alert_funnel_report(candidates: list[dict[str, Any]], snapshot_date: str) -> str:
+    status_counts = Counter(str(item.get("status", "UNKNOWN")) for item in candidates)
+    stage_counts = Counter(str(item.get("alert_stage", "NONE")) for item in candidates)
+    failure_counts = Counter(
+        failure
+        for item in candidates
+        for failure in item.get("sendable_alert_failures", [])
+    )
+    duplicate_count = sum(1 for item in candidates if item.get("duplicate_reason") == "market_signal_duplicate")
+    cooldown_count = sum(
+        1
+        for item in candidates
+        if "cooldown_exact_dedupe_key" in item.get("sendable_alert_failures", [])
+        or "cooldown_normalized_niche" in item.get("sendable_alert_failures", [])
+    )
+    limit_count = sum(
+        1
+        for item in candidates
+        if any(
+            failure in item.get("sendable_alert_failures", [])
+            for failure in (
+                "per_niche_limit_blocked",
+                "per_core_mechanic_limit_blocked",
+                "max_alerts_per_run_blocked",
+                "telegram_budget_blocked",
+            )
+        )
+    )
+    lines = [
+        f"# Alert Funnel - {snapshot_date}",
+        "",
+        "Source: single AppStoreSpy query without country/language filters.",
+        "",
+        "## Status Counts",
+        format_counter(status_counts),
+        "",
+        "## Alert Stage Counts",
+        format_counter(stage_counts),
+        "",
+        "## Blocked Counts",
+        format_counter(
+            Counter(
+                {
+                    "duplicate_market_signals_suppressed": duplicate_count,
+                    "cooldown_blocked": cooldown_count,
+                    "limit_blocked": limit_count,
+                }
+            )
+        ),
+        "",
+        "## Sendable Failure Distribution",
+        format_counter(failure_counts),
+        "",
+        "## Top Qualified But Not Sent",
+        format_candidate_rows(
+            [
+                item
+                for item in candidates
+                if item.get("status") == "ALERT" and item.get("alert_stage") != "SENDABLE_ALERT"
+            ][:20]
+        ),
     ]
     return "\n".join(lines) + "\n"
 
@@ -200,7 +296,8 @@ def format_candidate_rows(rows: list[dict[str, Any]]) -> str:
         lines.append(
             "- "
             f"{row.get('status')} {row.get('normalized_niche')} "
-            f"score={row.get('opportunity_score')} quality={row.get('data_quality_score')} "
+            f"score={row.get('opportunity_score')} sendable={row.get('sendable_alert_score')} "
+            f"stage={row.get('alert_stage')} quality={row.get('data_quality_score')} "
             f"mvp={row.get('mvp_feasibility_score')} installs={row.get('total_daily_installs')} "
             f"risks={', '.join(row.get('risk_tags', [])) or 'none'}"
         )

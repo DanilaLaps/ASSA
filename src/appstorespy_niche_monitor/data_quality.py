@@ -3,6 +3,7 @@ from __future__ import annotations
 from collections import Counter
 from typing import Any
 
+from .alert_ranker import calculate_organic_confidence
 from .coverage import coverage_risk_tags
 from .utils import clamp, safe_div
 
@@ -97,6 +98,9 @@ def calculate_data_quality(
         penalty += 8.0 if tag == "sample_truncated" else 5.0
 
     score = clamp(field_score + history_score + sample_score + diversity_score + monetization_score + freshness_score - penalty)
+    organic_label, organic_score, organic_reasons = calculate_organic_confidence(
+        {**summary, "data_quality_score": score, "data_quality_reasons": sorted(set(reasons))}
+    )
     return {
         "data_quality_score": round(score, 2),
         "data_quality_components": {
@@ -109,6 +113,9 @@ def calculate_data_quality(
             "penalty": round(penalty, 2),
         },
         "data_quality_reasons": sorted(set(reasons)),
+        "organic_confidence": organic_label,
+        "organic_confidence_score": organic_score,
+        "organic_confidence_reasons": organic_reasons,
     }
 
 
