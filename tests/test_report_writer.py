@@ -2,7 +2,11 @@ import unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-from appstorespy_niche_monitor.report_writer import render_initial_baseline_report, write_no_sendable_diagnostics
+from appstorespy_niche_monitor.report_writer import (
+    render_initial_baseline_report,
+    render_manual_review_digest,
+    write_no_sendable_diagnostics,
+)
 
 
 class ReportWriterTests(unittest.TestCase):
@@ -122,6 +126,33 @@ class ReportWriterTests(unittest.TestCase):
             )
             self.assertIn("Top ALERT Candidates Closest To SENDABLE", markdown)
             self.assertIn("below_sendable_alert_score", markdown)
+
+    def test_manual_review_digest_is_russian(self):
+        markdown = render_manual_review_digest(
+            {
+                "top_alert_candidates_closest_to_sendable": [
+                    {
+                        "status": "ALERT",
+                        "normalized_niche": "sort_puzzle",
+                        "alert_strength": "MEDIUM_ALERT",
+                        "sendable_alert_score": 69,
+                        "opportunity_score": 74,
+                        "hard_blockers_count": 0,
+                        "soft_blockers_count": 1,
+                        "first_blocking_failure": "below_sendable_alert_score",
+                        "organic_confidence": "MEDIUM",
+                        "sendable_alert_failures": ["below_sendable_alert_score"],
+                    }
+                ],
+                "top_candidates_blocked_by_exactly_one_condition": [],
+            },
+            "2026-06-05",
+        )
+
+        self.assertIn("Сегодня нет сильных SENDABLE-alerts", markdown)
+        self.assertIn("только для ручной проверки", markdown)
+        self.assertIn("не записаны в sent_alerts.json", markdown)
+        self.assertIn("below_sendable_alert_score", markdown)
 
 
 if __name__ == "__main__":

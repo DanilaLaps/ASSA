@@ -436,7 +436,7 @@ def main(argv: list[str] | None = None) -> int:
         chat_id = os.environ.get(telegram.get("chat_id_env", "TELEGRAM_CHAT_ID"))
         if not token or not chat_id:
             raise RuntimeError("Telegram token/chat env vars are required for --test-telegram.")
-        send_message(token, chat_id, "AppStoreSpy Niche Monitor test alert.")
+        send_message(token, chat_id, "Тестовое сообщение AppStoreSpy Niche Monitor.")
         print(json.dumps({"test_telegram": "sent"}, indent=2))
         return 0
 

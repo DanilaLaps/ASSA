@@ -5,6 +5,13 @@ import os
 import urllib.request
 from typing import Any
 
+from .localization import (
+    contains_non_russian_human_text,
+    describe_reason_code,
+    describe_risk_tag,
+    ru_fallback_reason,
+)
+
 
 ANALYSIS_FIELDS = (
     "summary",
@@ -35,6 +42,20 @@ PACK_ANALYSIS_FIELDS = (
     "manual_review_needed",
 )
 
+PACK_HUMAN_READABLE_FIELDS = (
+    "why_interesting",
+    "why_might_be_false_positive",
+    "mvp_hypothesis",
+    "simplified_mvp_scope",
+    "competitor_takeaways",
+    "entry_angle",
+    "differentiation_idea",
+    "why_top_products_validate_or_weaken_signal",
+    "validation_steps",
+    "risk_notes",
+    "missing_data",
+)
+
 
 def analyze_candidate_pack(
     candidates: list[dict[str, Any]],
@@ -50,6 +71,7 @@ def analyze_candidate_pack(
     fallback["llm_status"] = llm_status
     if llm_status.get("fallback_reason"):
         fallback["llm_fallback_note"] = llm_status.get("fallback_reason")
+        fallback["llm_fallback_note_ru"] = f"ИИ-анализ не запускался: {ru_fallback_reason(llm_status.get('fallback_reason'))}."
     if not llm_status.get("should_call_openai"):
         return fallback
     try:
@@ -63,6 +85,7 @@ def analyze_candidate_pack(
         }
         fallback["llm_status"] = llm_status
         fallback["llm_fallback_note"] = f"openai_error: {exc}"
+        fallback["llm_fallback_note_ru"] = "ИИ-анализ недоступен: OpenAI вернул ошибку, используется fallback-анализ."
     return fallback
 
 
@@ -322,15 +345,28 @@ def generate_pack_item_fallback(candidate: dict[str, Any]) -> dict[str, Any]:
     confidence = "medium" if first_run else ("high" if float(candidate.get("data_quality_score", 0.0)) >= 75 else "medium")
     if float(candidate.get("data_quality_score", 0.0)) < 45:
         confidence = "low"
-    why_interesting = candidate.get("reason_codes", [])[:3]
-    risk_notes = candidate.get("risk_tags", [])
-    mvp_hypothesis = f"Test a scoped {candidate.get('core_mechanic')} game with {candidate.get('theme')} presentation."
+    reason_codes = candidate.get("reason_codes", [])
+    why_interesting = (
+        [describe_reason_code(code) for code in reason_codes[:3]]
+        if reason_codes
+        else ["Кандидат прошел детерминированные scoring-сигналы в одном AppStoreSpy query-срезе."]
+    )
+    risk_tags = candidate.get("risk_tags", [])
+    risk_notes = (
+        [describe_risk_tag(tag) for tag in risk_tags]
+        if risk_tags
+        else ["Нужна ручная проверка, потому что один AppStoreSpy query-срез не подтверждает рынок полностью."]
+    )
+    mvp_hypothesis = (
+        f"Проверить узкий MVP вокруг механики {candidate.get('core_mechanic')} "
+        f"с темой {candidate.get('theme')} и коротким core-loop."
+    )
     top_products = candidate.get("top_products") or candidate.get("top_competitors") or candidate.get("top_apps", [])[:3]
     product_names = [str(app.get("name")) for app in top_products if isinstance(app, dict) and app.get("name")]
     competitor_takeaways = (
-        [f"Top products captured in the niche: {', '.join(product_names[:3])}."]
+        [f"Top products из этого query-среза: {', '.join(product_names[:3])}."]
         if product_names
-        else ["No top products were captured for competitor review."]
+        else ["Top products для конкурентного просмотра не найдены в срезе."]
     )
     return {
         "recommendation": recommendation,
@@ -338,35 +374,39 @@ def generate_pack_item_fallback(candidate: dict[str, Any]) -> dict[str, Any]:
         "why_interesting": why_interesting,
         "why_might_be_false_positive": risk_notes[:4],
         "mvp_hypothesis": mvp_hypothesis,
-        "simplified_mvp_scope": "One core loop, one content theme, lightweight meta progression.",
+        "simplified_mvp_scope": "Один core-loop, одна контентная тема, легкая meta-прогрессия.",
         "competitor_takeaways": competitor_takeaways,
         "entry_angle": (
-            f"Use the same validated {candidate.get('core_mechanic')} demand but narrow scope, theme, and content depth."
+            f"Использовать спрос на {candidate.get('core_mechanic')}, но сузить scope, тему и глубину контента."
         ),
-        "differentiation_idea": "Differentiate with clearer first-session UX, lighter content production, and distinct store creatives.",
+        "differentiation_idea": (
+            "Отличаться более ясным first-session UX, меньшей стоимостью контента и отдельным store creative angle."
+        ),
         "why_top_products_validate_or_weaken_signal": (
-            "The top products help validate demand, but concentration, ads, and giant-developer exposure still need manual checks."
+            "Top products помогают проверить спрос, но концентрацию, ads и долю крупных разработчиков нужно проверить вручную."
         ),
         "validation_steps": [
-            "Check top apps manually in AppStoreSpy and stores.",
-            "Separate organic traction from paid acquisition.",
-            "Review creatives and monetization signals before production.",
+            "Проверить top apps вручную в AppStoreSpy и сторах.",
+            "Отделить органическую traction от paid acquisition.",
+            "Проверить creatives и monetization-сигналы до production.",
         ],
         "risk_notes": risk_notes,
-        "missing_data": candidate.get("failed_alert_conditions", []),
+        "missing_data": [
+            describe_reason_code(condition) for condition in candidate.get("failed_alert_conditions", [])
+        ],
         "manual_review_needed": status in {"WATCH", "SINGLE_APP_WATCH", "NEAR_MISS"} or first_run,
         "summary": (
-            f"{candidate.get('normalized_niche')} is a {recommendation} candidate in this single-query AppStoreSpy slice."
+            f"{candidate.get('normalized_niche')} выглядит как {recommendation}-кандидат в одном AppStoreSpy query-срезе."
         ),
-        "signal": ", ".join(why_interesting) or "Candidate passed deterministic scoring signals.",
+        "signal": ", ".join(why_interesting) or "Кандидат прошел детерминированные scoring-сигналы.",
         "evidence": why_interesting,
-        "entry_realism": f"MVP feasibility score is {candidate.get('mvp_feasibility_score')}.",
+        "entry_realism": f"MVP feasibility score: {candidate.get('mvp_feasibility_score')}.",
         "mvp": mvp_hypothesis,
-        "monetization": "Validate ads/IAP/revenue signals before production.",
-        "risks": risk_notes or ["Need manual validation."],
+        "monetization": "Проверить ads/IAP/revenue-сигналы до production.",
+        "risks": risk_notes or ["Нужна ручная валидация."],
         "checks": [
-            "Check top apps manually in AppStoreSpy and stores.",
-            "Confirm the signal is not paid traffic.",
+            "Проверить top apps вручную в AppStoreSpy и сторах.",
+            "Подтвердить, что сигнал не является paid traffic.",
         ],
     }
 
@@ -414,10 +454,13 @@ def generate_openai_pack_analysis(
             continue
         if not isinstance(analysis, dict):
             continue
-        candidate_analyses[candidate_key] = normalize_pack_item_analysis(
+        normalized_analysis = normalize_pack_item_analysis(
             analysis,
             fallback_analyses.get(candidate_key, {}),
         )
+        if pack_item_has_non_russian_text(normalized_analysis):
+            normalized_analysis["llm_language_warning"] = "non_russian_text_detected"
+        candidate_analyses[candidate_key] = normalized_analysis
         candidate_analysis_sources[candidate_key] = "openai"
         openai_candidate_analyses_count += 1
     if expected_ids and openai_candidate_analyses_count == 0:
@@ -453,28 +496,40 @@ def normalize_pack_item_analysis(value: dict[str, Any], fallback: dict[str, Any]
     return analysis
 
 
+def pack_item_has_non_russian_text(analysis: dict[str, Any]) -> bool:
+    return any(contains_non_russian_human_text(analysis.get(field)) for field in PACK_HUMAN_READABLE_FIELDS)
+
+
 def build_pack_prompt(pack_input: dict[str, Any]) -> str:
     compact = json.dumps(pack_input, ensure_ascii=False, indent=2)
     return (
-        "You are a mobile-game niche analyst for a small team.\n"
-        "Evaluate fresh Google Play games found by exactly one single-query AppStoreSpy request.\n"
-        "The source query has no country, language, or active_countries filters. Do not call the slice global "
-        "and do not make country-specific claims.\n"
-        "Separate fresh demand from paid traffic spikes. Do not recommend direct competition with giant developers.\n"
-        "Do not reject early single-app breakouts automatically; mark them as WATCH/manual validation when appropriate.\n"
-        "If this is the first run without compatible history, do not call candidates confirmed alerts. Treat them as "
-        "INITIAL_BASELINE_NO_HISTORY and cap confidence at medium.\n"
-        "Use the top_products/top_competitors arrays as the top 3 products in each niche. Compare their scale, "
-        "release/update dates, monetization flags, ratings, descriptions, and AppStoreSpy links when forming the analysis.\n"
-        "The alerts array contains only the candidates that will be sent as Telegram alerts in this run. "
-        "Python deterministic scoring already selected these sendable alerts; do not add or remove send targets. "
-        "A recommendation of TEST is commentary only and must not imply a separate Telegram message. "
-        "Return an analysis for every candidate_id in alerts; do not skip any alert candidate. "
-        "Do not add analyses for candidates that are not present in alerts.\n"
-        "Return only a JSON object with key candidate_analyses. Its keys must be candidate_id values. Each value must contain "
-        "recommendation TEST/WATCH/AVOID, confidence, why_interesting, why_might_be_false_positive, "
+        "Ты аналитик мобильных игр для небольшой команды разработчиков.\n"
+        "Отвечай только на русском языке.\n"
+        "Пиши весь человекочитаемый анализ на русском языке: why_interesting, why_might_be_false_positive, "
         "mvp_hypothesis, simplified_mvp_scope, competitor_takeaways, entry_angle, differentiation_idea, "
-        "why_top_products_validate_or_weaken_signal, validation_steps, risk_notes, missing_data, manual_review_needed.\n\n"
+        "why_top_products_validate_or_weaken_signal, validation_steps, risk_notes и missing_data.\n"
+        "Стиль: практичный, короткий, без маркетинговой воды. Не обещай успех ниши; всегда указывай риски "
+        "и возможные false positive.\n"
+        "Не используй английские заголовки и английские фразы вроде Why interesting, MVP, Risks или Recommendation explanation.\n"
+        "Не переводи machine-readable поля и enum-значения: candidate_id, recommendation, confidence, reason_codes, "
+        "risk_tags, status, alert_stage, source_scope, score fields, URLs, app IDs и bundle IDs.\n"
+        "Поле recommendation оставь только TEST, WATCH или AVOID. Поле confidence оставь только low, medium или high.\n"
+        "Данные получены из одного AppStoreSpy query. В query нет фильтра по стране, языку или active_countries. "
+        "Не называй срез глобальным рынком и не делай country-specific выводов.\n"
+        "Top competitors — это top apps из того же одного query-среза, а не полный рынок.\n"
+        "Отделяй fresh demand от paid traffic spikes. Не рекомендуй прямую конкуренцию с giant developers.\n"
+        "Если это первый запуск без совместимой истории, не называй кандидатов подтвержденными alerts; "
+        "трактуй их как INITIAL_BASELINE_NO_HISTORY и ограничь confidence уровнем medium.\n"
+        "Массив alerts содержит только кандидатов, которые Python уже выбрал для Telegram в этом run. "
+        "Python deterministic scoring уже выбрал sendable alerts; ты не выбираешь, что отправлять, и не меняешь список. "
+        "Recommendation TEST/WATCH/AVOID — это комментарий, а не команда отправки. TEST не должен подразумевать "
+        "отдельное Telegram-сообщение.\n"
+        "Верни анализ для каждого candidate_id из alerts и не добавляй анализы для кандидатов вне alerts.\n"
+        "Return only a JSON object with key candidate_analyses. Верни JSON строго по контракту. Ключи — candidate_id. "
+        "Каждое значение должно содержать recommendation TEST/WATCH/AVOID, confidence, why_interesting, "
+        "why_might_be_false_positive, mvp_hypothesis, simplified_mvp_scope, competitor_takeaways, entry_angle, "
+        "differentiation_idea, why_top_products_validate_or_weaken_signal, validation_steps, risk_notes, missing_data, "
+        "manual_review_needed.\n\n"
         f"Candidate pack JSON:\n{compact}"
     )
 
@@ -531,13 +586,15 @@ def extract_response_text(data: dict[str, Any]) -> str:
 def build_prompt(alert: dict[str, Any]) -> str:
     compact = json.dumps(alert, ensure_ascii=False, indent=2)
     return (
-        "You are a mobile-game niche analyst for a small team.\n"
-        "The candidate below comes from exactly one AppStoreSpy Google Play /play/apps/query request.\n"
-        "The request intentionally has no country, language, or active_countries filters. Do not call this a global market "
-        "and do not make country-specific claims.\n"
-        "Do not recommend competing directly with giant developers. Do not infer opportunity from installs alone.\n"
-        "Separate a large noisy market from a realistic small-team entry. If the signal is weak, concentrated, "
-        "or resembles a paid traffic spike, choose WATCH or AVOID honestly.\n\n"
+        "Ты аналитик мобильных игр для небольшой команды разработчиков.\n"
+        "Отвечай только на русском языке. Все человекочитаемые строки и массивы должны быть на русском.\n"
+        "Не переводи machine-readable поля и enum-значения. Поле recommendation оставь только TEST, WATCH или AVOID.\n"
+        "Кандидат ниже получен ровно из одного AppStoreSpy Google Play /play/apps/query request.\n"
+        "В request намеренно нет country, language или active_countries filters. Не называй это глобальным рынком "
+        "и не делай country-specific выводов.\n"
+        "Не рекомендуй прямую конкуренцию с giant developers и не выводи opportunity только из installs.\n"
+        "Отделяй noisy market от реалистичного small-team entry. Если сигнал слабый, концентрированный "
+        "или похож на paid traffic spike, честно выбери WATCH или AVOID.\n\n"
         "Analyze the AppStoreSpy alert candidate and return only a JSON object, without markdown.\n"
         "JSON schema:\n"
         "{\n"
@@ -551,7 +608,7 @@ def build_prompt(alert: dict[str, Any]) -> str:
         '  "checks": ["manual check 1", "manual check 2"],\n'
         '  "recommendation": "TEST|WATCH|AVOID"\n'
         "}\n"
-        "Do not invent metrics. Use only the JSON facts. Consider data_quality_score and false-positive risk.\n\n"
+        "Не придумывай метрики. Используй только JSON facts. Учитывай data_quality_score и false-positive risk.\n\n"
         f"Alert JSON:\n{compact}"
     )
 
@@ -586,6 +643,8 @@ def validate_analysis(value: dict[str, Any], alert: dict[str, Any]) -> dict[str,
             analysis[field] = str(candidate).strip() or fallback[field]
     recommendation = analysis["recommendation"].upper()
     analysis["recommendation"] = recommendation if recommendation in {"TEST", "WATCH", "AVOID"} else fallback["recommendation"]
+    if any(contains_non_russian_human_text(analysis.get(field)) for field in ANALYSIS_FIELDS if field != "recommendation"):
+        analysis["llm_language_warning"] = "non_russian_text_detected"
     return analysis
 
 
@@ -606,8 +665,8 @@ def generate_fallback_analysis(alert: dict[str, Any]) -> dict[str, Any]:
     top_apps = [str(app.get("name", "")) for app in alert.get("top_apps", []) if app.get("name")]
     evidence = [
         (
-            "Source scope: one AppStoreSpy Google Play query, no country/language filters, "
-            f"release window {alert.get('release_date_window', 'last_180d')}."
+            "Охват источника: один AppStoreSpy Google Play query без country/language filters, "
+            f"окно релизов {alert.get('release_date_window', 'last_180d')}."
         ),
         (
             f"Daily installs: {alert.get('total_daily_installs')}; app count: {alert.get('app_count')}; "
@@ -615,33 +674,33 @@ def generate_fallback_analysis(alert: dict[str, Any]) -> dict[str, Any]:
         ),
     ]
     if top_apps:
-        evidence.append(f"Top confirming apps: {', '.join(top_apps[:3])}.")
+        evidence.append(f"Top apps, подтверждающие сигнал: {', '.join(top_apps[:3])}.")
     risks = list_risks(alert)
     return {
         "summary": (
-            f"{alert.get('niche')} looks like a {recommendation} candidate in this single-query AppStoreSpy slice "
-            f"with score {alert.get('opportunity_score')} and quality {alert.get('data_quality_score')}."
+            f"{alert.get('niche')} выглядит как {recommendation}-кандидат в одном AppStoreSpy query-срезе "
+            f"со score {alert.get('opportunity_score')} и quality {alert.get('data_quality_score')}."
         ),
         "signal": (
-            f"The signal combines demand, fresh app activity, monetization, data quality, and the micro-niche dimensions "
+            f"Сигнал объединяет demand, fresh app activity, monetization, data quality и micro-niche dimensions "
             f"{alert.get('core_mechanic')} + {alert.get('theme')} + {alert.get('meta')}."
         ),
         "evidence": evidence,
         "entry_realism": (
-            f"Production complexity is {alert.get('production_complexity')}; this is most realistic for a small team "
-            "when top-app concentration and giant share stay below the configured limits."
+            f"Production complexity: {alert.get('production_complexity')}; это реалистичнее для небольшой команды, "
+            "если top-app concentration и giant share остаются ниже configured limits."
         ),
         "mvp": (
-            f"Build a 4-8 week MVP around {alert.get('core_mechanic')} gameplay, {alert.get('theme')} theme, "
-            f"and {alert.get('meta')} progression for {alert.get('audience')}."
+            f"Собрать MVP на 4-8 недель вокруг {alert.get('core_mechanic')} gameplay, темы {alert.get('theme')} "
+            f"и {alert.get('meta')} progression для {alert.get('audience')}."
         ),
-        "monetization": "Test rewarded ads, interstitial pacing, and light IAP bundles after retention is validated.",
+        "monetization": "Проверить rewarded ads, interstitial pacing и легкие IAP bundles после validation retention.",
         "risks": risks,
         "checks": [
-            "Verify whether growth is organic or paid user acquisition.",
-            "Check the top apps manually in AppStoreSpy and stores.",
-            "Do not treat the single-query slice as a country-specific or global market estimate.",
-            "Confirm monetization per install before starting production.",
+            "Проверить, является ли рост organic или paid user acquisition.",
+            "Проверить top apps вручную в AppStoreSpy и сторах.",
+            "Не трактовать single-query slice как country-specific или global market estimate.",
+            "Подтвердить monetization per install до production.",
         ],
         "recommendation": recommendation,
     }
@@ -650,17 +709,17 @@ def generate_fallback_analysis(alert: dict[str, Any]) -> dict[str, Any]:
 def list_risks(alert: dict[str, Any]) -> list[str]:
     risks: list[str] = []
     if float(alert.get("growth_by_one_app_share", 0.0)) >= 0.7 or float(alert.get("advertised_top_app_share", 0.0)) >= 0.7:
-        risks.append("Growth or demand may be driven by one app or paid user acquisition.")
+        risks.append("Рост или demand могут быть вызваны одним приложением или paid user acquisition.")
     if float(alert.get("top_app_share", 0.0)) >= 0.75:
-        risks.append("Top app concentration is high.")
+        risks.append("Top app concentration высокая.")
     if float(alert.get("giant_developer_share", 0.0)) >= 0.7:
-        risks.append("Giant developer share is too high for direct competition.")
+        risks.append("Giant developer share слишком высока для прямой конкуренции.")
     if float(alert.get("data_quality_score", 0.0)) < 65:
-        risks.append("Data quality is below the alert threshold.")
+        risks.append("Data quality ниже alert threshold.")
     if alert.get("production_complexity") == "high":
-        risks.append("Production complexity is too high for the target small-team entry.")
+        risks.append("Production complexity слишком высокая для small-team entry.")
     if not risks:
-        risks.append("Need manual validation of store creatives, UA pressure, and retention assumptions.")
+        risks.append("Нужна ручная проверка store creatives, UA pressure и retention assumptions.")
     return risks
 
 

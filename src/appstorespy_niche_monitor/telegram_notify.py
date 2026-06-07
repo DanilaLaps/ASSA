@@ -6,55 +6,106 @@ import urllib.parse
 import urllib.request
 from typing import Any
 
+from .localization import (
+    describe_reason_code,
+    describe_risk_tag,
+    human_join,
+    release_window_ru,
+    ru_confidence,
+    ru_coverage,
+    ru_fallback_reason,
+    ru_llm_source,
+    ru_recommendation,
+)
+
 
 def format_alert_message(alert: dict[str, Any]) -> str:
     analysis = alert.get("llm_analysis", {})
-    evidence = format_list(analysis.get("why_interesting") or analysis.get("evidence") or alert.get("reason_codes", []), limit=3)
-    risks = format_list(analysis.get("risk_notes") or analysis.get("risks") or alert.get("risk_tags", []), limit=2)
-    recommendation = analysis.get("recommendation", alert.get("status", "WATCH"))
-    mvp = analysis.get("mvp_hypothesis") or analysis.get("mvp") or "Validate the niche manually before starting production."
+    if not isinstance(analysis, dict):
+        analysis = {}
+    evidence_items = analysis.get("why_interesting") or analysis.get("evidence")
+    if not evidence_items:
+        evidence_items = [describe_reason_code(code) for code in alert.get("reason_codes", [])]
+    risk_items = analysis.get("risk_notes") or analysis.get("risks")
+    if not risk_items:
+        risk_items = [describe_risk_tag(tag) for tag in alert.get("risk_tags", [])]
+    recommendation = str(analysis.get("recommendation", alert.get("status", "WATCH"))).upper()
+    mvp = (
+        analysis.get("mvp_hypothesis")
+        or analysis.get("mvp")
+        or "Проверить нишу вручную перед стартом production."
+    )
     competitors = format_competitors(alert.get("top_competitors") or alert.get("top_products") or alert.get("top_apps", []), limit=3)
-    ai_status = format_alert_ai_status(alert, analysis)
-    coverage = alert.get("coverage", {})
-    coverage_status = "unknown"
-    if isinstance(coverage, dict):
-        coverage_status = str(coverage.get("sample_truncated", "unknown"))
+    coverage_status = extract_coverage_status(alert.get("coverage", {}))
     return (
-        f"Fresh Game Niche Alert: {alert.get('normalized_niche', alert.get('niche'))}\n\n"
-        "Platform: Google Play\n"
-        "Scope: one AppStoreSpy query, no country/language filter\n"
-        "Source: single AppStoreSpy query\n"
-        f"Window: {alert.get('release_date_window', 'last_180d')}; sort: {alert.get('collection_sort', '-release_date')}\n"
-        f"Min daily installs per app in source query: {alert.get('min_app_daily_installs', 500)}\n"
-        f"Coverage: {coverage_status}\n"
-        f"Score: {alert.get('opportunity_score')}/100\n"
-        f"Sendable alert score: {alert.get('sendable_alert_score')}/100\n"
-        f"Trend confidence: {alert.get('trend_confidence_score')}/100\n"
-        f"Team fit: {alert.get('team_fit_score')}/100\n"
-        f"Organic confidence: {alert.get('organic_confidence', 'unknown')}\n"
-        f"Alert stage: {alert.get('alert_stage', 'unknown')}\n"
-        f"Data quality: {alert.get('data_quality_score')}/100\n"
-        f"MVP feasibility: {alert.get('mvp_feasibility_score')}/100\n"
-        f"Apps in niche: {alert.get('app_count')}\n"
-        f"Total daily installs: {alert.get('total_daily_installs')}\n"
-        f"Top app share: {alert.get('top_app_share')}\n"
-        f"Risk tags: {', '.join(alert.get('risk_tags', [])) or 'none'}\n\n"
-        f"{ai_status}\n\n"
-        "Why interesting:\n"
-        f"{evidence}\n\n"
-        "Why sent now:\n"
-        f"{format_list(alert.get('sendable_alert_reasons', []), limit=4)}\n\n"
-        "MVP:\n"
+        f"{format_alert_title(alert, recommendation)}\n\n"
+        "Платформа: Google Play\n"
+        "Охват данных: один запрос AppStoreSpy, без фильтра страны и языка\n"
+        "Источник: один AppStoreSpy query\n"
+        f"Окно релизов: {release_window_ru(alert.get('release_date_window', 'last_180d'))}; "
+        f"сортировка: {alert.get('collection_sort', '-release_date')}\n"
+        "Минимум установок в исходном запросе: "
+        f"{alert.get('min_app_daily_installs', 500)} в день на приложение\n"
+        f"Покрытие данных: {ru_coverage(coverage_status)}\n\n"
+        "Классификация:\n"
+        f"- market_category: {alert.get('market_category', 'unknown')}\n"
+        f"- core_mechanic: {alert.get('core_mechanic', 'unknown')}\n"
+        f"- theme: {alert.get('theme', 'unknown')}\n"
+        f"- meta: {alert.get('meta', 'unknown')}\n"
+        f"- audience: {alert.get('audience', 'unknown')}\n"
+        f"- production_complexity: {alert.get('production_complexity', 'unknown')}\n\n"
+        "Оценки:\n"
+        f"- Opportunity score: {alert.get('opportunity_score')}/100\n"
+        f"- Sendable alert score: {alert.get('sendable_alert_score')}/100\n"
+        f"- Уверенность тренда: {alert.get('trend_confidence_score')}/100\n"
+        f"- Подходит небольшой команде: {alert.get('team_fit_score')}/100\n"
+        f"- Органическая уверенность: {alert.get('organic_confidence', 'unknown')}\n"
+        f"- Стадия alert-а: {alert.get('alert_stage', 'unknown')}\n"
+        f"- Качество данных: {alert.get('data_quality_score')}/100\n"
+        f"- Реализуемость MVP: {alert.get('mvp_feasibility_score')}/100\n\n"
+        "Размер ниши:\n"
+        f"- Приложений в кластере: {alert.get('app_count')}\n"
+        f"- Суммарные daily installs: {alert.get('total_daily_installs')}\n"
+        f"- Доля top-приложения: {alert.get('top_app_share')}\n\n"
+        "Risk tags:\n"
+        f"{format_code_list(alert.get('risk_tags', []), describe_risk_tag)}\n\n"
+        f"{format_alert_ai_status(alert, analysis)}\n\n"
+        "Почему интересно:\n"
+        f"{format_list(evidence_items, limit=3)}\n\n"
+        "Почему отправлено сейчас:\n"
+        f"{format_code_list(alert.get('sendable_alert_reasons', []), describe_reason_code, limit=4)}\n\n"
+        "Гипотеза MVP:\n"
         f"{mvp}\n\n"
-        "Top competitors:\n"
+        "Основные конкуренты:\n"
         f"{competitors}\n\n"
-        "Risks:\n"
-        f"{risks}\n\n"
-        "Why this can be false positive:\n"
-        f"{format_list(alert.get('sendable_alert_failures') or alert.get('risk_tags', []), limit=4)}\n\n"
-        f"Recommendation: {recommendation}\n"
+        "Риски:\n"
+        f"{format_list(risk_items, limit=3)}\n\n"
+        "Почему сигнал может быть ложноположительным:\n"
+        f"{format_code_list(alert.get('sendable_alert_failures') or alert.get('risk_tags', []), describe_risk_tag, limit=4)}\n\n"
         f"Alert ID: {alert.get('alert_instance_id') or alert.get('alert_id')}"
     )
+
+
+def format_alert_title(alert: dict[str, Any], recommendation: str) -> str:
+    niche = alert.get("normalized_niche", alert.get("niche"))
+    selection_mode = str(alert.get("selection_mode") or "")
+    if selection_mode == "calibrated_promotion" or alert.get("calibrated_promotion") is True:
+        return f"Кандидат для ручной проверки: {niche}"
+    if selection_mode == "normal_sendable" and recommendation == "TEST":
+        return f"Свежий сигнал по игровой нише: {niche}"
+    if recommendation == "WATCH":
+        return f"Кандидат для наблюдения: {niche}"
+    return f"Сигнал по игровой нише: {niche}"
+
+
+def extract_coverage_status(coverage: Any) -> Any:
+    if not isinstance(coverage, dict):
+        return "unknown"
+    if "status" in coverage:
+        return coverage.get("status")
+    if "sample_truncated" in coverage:
+        return coverage.get("sample_truncated")
+    return "unknown"
 
 
 def format_alert_ai_status(alert: dict[str, Any], analysis: dict[str, Any]) -> str:
@@ -63,18 +114,27 @@ def format_alert_ai_status(alert: dict[str, Any], analysis: dict[str, Any]) -> s
     if not source and isinstance(llm_status, dict):
         source = str(llm_status.get("analysis_source") or "")
     source = source or "fallback"
-    parts = [f"source={source}"]
+    lines = [
+        "ИИ-анализ:",
+        f"- Источник: {ru_llm_source(source)}",
+    ]
     if analysis.get("confidence"):
-        parts.append(f"confidence={analysis.get('confidence')}")
+        lines.append(f"- Уверенность: {ru_confidence(analysis.get('confidence'))}")
     fallback_reason = alert.get("llm_fallback_reason")
     if source != "openai" and fallback_reason:
-        parts.append(f"fallback_reason={fallback_reason}")
-    return f"AI review: {', '.join(parts)}"
+        lines.append(f"- fallback_reason: {fallback_reason} ({ru_fallback_reason(fallback_reason)})")
+    recommendation = analysis.get("recommendation")
+    if recommendation:
+        lines.append(f"- Рекомендация ИИ: {ru_recommendation(recommendation)}")
+    warning = analysis.get("llm_language_warning") or alert.get("llm_language_warning")
+    if warning == "non_russian_text_detected":
+        lines.append("- Предупреждение: OpenAI вернул часть анализа не на русском языке.")
+    return "\n".join(lines)
 
 
 def format_competitors(apps: Any, limit: int = 3) -> str:
     if not isinstance(apps, list):
-        return "- No top competitors captured."
+        return "- Основные конкуренты не найдены в срезе."
     lines: list[str] = []
     for index, app in enumerate([item for item in apps if isinstance(item, dict)][:limit], start=1):
         name = app.get("name") or app.get("bundle") or app.get("app_id") or "Unknown app"
@@ -82,18 +142,19 @@ def format_competitors(apps: Any, limit: int = 3) -> str:
         daily = app.get("downloads_daily", "unknown")
         revenue = app.get("revenue_month")
         rating = app.get("rating_avg")
-        details = [f"{index}. {name} - {developer}; daily installs: {daily}"]
+        lines.append(f"{index}. {name} — {developer}")
+        lines.append(f"   Daily installs: {daily}")
         if revenue not in (None, ""):
-            details.append(f"monthly revenue: {revenue}")
+            lines.append(f"   Monthly revenue: {revenue}")
         if rating not in (None, ""):
-            details.append(f"rating: {rating}")
-        lines.append("; ".join(str(part) for part in details))
+            lines.append(f"   Rating: {rating}")
         appstorespy_url = app.get("url_appstorespy") or app.get("appstorespy_url")
         if appstorespy_url:
             lines.append(f"   AppStoreSpy: {appstorespy_url}")
         elif app.get("url"):
             lines.append(f"   Store: {app.get('url')}")
-    return "\n".join(lines) if lines else "- No top competitors captured."
+        lines.append("")
+    return "\n".join(lines).rstrip() if lines else "- Основные конкуренты не найдены в срезе."
 
 
 def send_alerts(alerts: list[dict[str, Any]], config: dict[str, Any]) -> list[dict[str, Any]]:
@@ -117,48 +178,48 @@ def send_alerts(alerts: list[dict[str, Any]], config: dict[str, Any]) -> list[di
 
 def format_initial_baseline_digest_message(items: list[dict[str, Any]]) -> str:
     lines = [
-        "Initial Baseline Discovery Report",
+        "Первичный baseline-отчет",
         "",
-        "Source: single AppStoreSpy query",
-        "Window: releases from last 180 days",
-        "History: no previous compatible snapshot",
-        "Important: this is not a regular ALERT; confidence is capped at MEDIUM.",
+        "Это первый запуск без совместимой истории.",
+        "Обычные ALERT-сообщения не отправляются.",
+        "",
+        "Источник: один AppStoreSpy query",
+        "Охват данных: один запрос AppStoreSpy, без фильтра страны и языка",
+        "Окно релизов: последние 180 дней",
+        "Найденные кандидаты не считаются отправленными alert-ами.",
+        "Для них используется reason_code = INITIAL_BASELINE_NO_HISTORY.",
+        "Уверенность ограничена уровнем MEDIUM.",
     ]
     lines.extend(format_initial_llm_status(items))
-    lines.extend(["", "Top baseline candidates:"])
+    lines.extend(["", "Кандидаты для первичного просмотра:"])
     for index, item in enumerate(items, start=1):
         lines.append(
-            f"{index}. {item.get('normalized_niche')} - would_be_status={item.get('would_be_status')}, "
+            f"{index}. {item.get('normalized_niche')} — would_be_status={item.get('would_be_status')}, "
             f"score={item.get('opportunity_score')}, installs={item.get('total_daily_installs')}, "
-            f"reason_codes={', '.join(item.get('reason_codes', []))}"
+            f"reason_codes={human_join(item.get('reason_codes', []))}"
         )
         analysis = item.get("llm_analysis")
         if isinstance(analysis, dict) and analysis:
             source = item.get("llm_analysis_source", "fallback")
             fallback_reason = item.get("llm_fallback_reason")
-            review_parts = [
-                f"recommendation={analysis.get('recommendation', 'WATCH')}",
-                f"confidence={analysis.get('confidence', item.get('confidence_level', 'MEDIUM'))}",
-                f"source={source}",
-            ]
+            lines.append(f"   Рекомендация ИИ: {ru_recommendation(analysis.get('recommendation', 'WATCH'))}")
+            lines.append(f"   Уверенность: {ru_confidence(analysis.get('confidence', item.get('confidence_level', 'MEDIUM')))}")
+            lines.append(f"   Источник: {ru_llm_source(source)}")
             if source != "openai" and fallback_reason:
-                review_parts.append(f"fallback_reason={fallback_reason}")
-            lines.append(
-                f"   Review: {', '.join(review_parts)}"
-            )
+                lines.append(f"   fallback_reason: {fallback_reason} ({ru_fallback_reason(fallback_reason)})")
             if analysis.get("mvp_hypothesis"):
-                lines.append(f"   MVP: {analysis.get('mvp_hypothesis')}")
+                lines.append(f"   Гипотеза MVP: {analysis.get('mvp_hypothesis')}")
             risks = analysis.get("why_might_be_false_positive") or analysis.get("risk_notes") or []
             if risks:
                 risk_text = "; ".join(str(risk) for risk in risks[:3])
-                lines.append(f"   Risks: {risk_text}")
+                lines.append(f"   Риски: {risk_text}")
     lines.extend(
         [
             "",
-            "Limitations:",
-            "- No historical growth confirmation.",
-            "- Paid-spike risk is based only on the current slice.",
-            "- These items were not written to sent_alerts and do not start cooldown.",
+            "Ограничения:",
+            "- Нет исторического подтверждения роста.",
+            "- Риск paid-spike оценивается только по текущему срезу.",
+            "- Эти кандидаты не записаны в sent_alerts.json и не запускают cooldown.",
         ]
     )
     return "\n".join(lines)
@@ -180,7 +241,9 @@ def format_initial_llm_status(items: list[dict[str, Any]]) -> list[str]:
     ]
     if status.get("fallback_reason"):
         parts.append(f"fallback_reason={status.get('fallback_reason')}")
-    lines = ["", f"LLM: {', '.join(parts)}"]
+    lines = ["", f"Статус LLM: {', '.join(parts)}"]
+    if status.get("fallback_reason"):
+        lines.append(f"Пояснение fallback: {ru_fallback_reason(status.get('fallback_reason'))}")
     if status.get("fallback_detail"):
         lines.append(f"LLM fallback_detail: {status.get('fallback_detail')}")
     return lines
@@ -210,60 +273,64 @@ def send_initial_baseline_digest(items: list[dict[str, Any]], config: dict[str, 
 
 def format_run_summary_message(result: dict[str, Any]) -> str:
     baseline = "yes" if result.get("baseline_only") else "no"
-    llm_line = format_result_llm_status(result)
-    status = (
-        f"LLM TEST recommendations among sendable alerts: {result.get('llm_test_recommendations', 0)}\n"
-        f"Separate TEST messages sent: {result.get('separate_test_messages_sent', 0)}\n"
-        f"Regular Telegram alerts sent: {result.get('telegram_regular_alerts_sent', result.get('sent_count', 0))}"
-    )
     return (
-        "AppStoreSpy check completed\n\n"
-        f"Mode: {result.get('mode')}\n"
-        f"Snapshot date: {result.get('snapshot_date')}\n"
-        "Scope: one AppStoreSpy query, no country/language filter\n"
-        f"Apps checked: {result.get('apps_count')}\n"
-        f"Niche summaries: {result.get('summaries_count')}\n"
-        f"ALERT candidates: {result.get('alerts_count')}\n"
-        f"STRONG_ALERT candidates: {result.get('strong_alert_candidates_count', 0)}\n"
-        f"SENDABLE alerts: {result.get('sendable_alerts_count', result.get('sent_count', 0))}\n"
-        f"WATCH candidates: {result.get('watch_count')}\n"
-        f"SINGLE_APP_WATCH candidates: {result.get('single_app_watch_count', 0)}\n"
-        f"NEAR_MISS candidates: {result.get('near_miss_count')}\n"
-        f"Rejected candidates: {result.get('rejected_count')}\n"
-        f"Candidates before market-signal dedupe: {result.get('candidates_before_market_signal_dedupe', 0)}\n"
-        f"Candidates after market-signal dedupe: {result.get('candidates_after_market_signal_dedupe', 0)}\n"
-        f"Status counts before dedupe: {format_compact_counts(result.get('status_counts_before_dedupe', {}))}\n"
-        f"Status counts after dedupe: {format_compact_counts(result.get('status_counts_after_dedupe', {}))}\n"
-        f"Duplicate market signals suppressed: {result.get('duplicate_market_signals_suppressed', 0)}\n"
-        f"Cooldown blocked: {result.get('cooldown_blocked_count', 0)}\n"
-        f"Limit blocked: {result.get('limit_blocked_count', 0)}\n"
-        "Sendable hard-filter pass/fail: "
+        "Проверка AppStoreSpy завершена\n\n"
+        f"Режим: {result.get('mode')}\n"
+        f"Дата snapshot: {result.get('snapshot_date')}\n"
+        "Охват: один запрос AppStoreSpy, без фильтра страны и языка\n"
+        f"Проверено приложений: {result.get('apps_count')}\n"
+        f"Сводок по нишам: {result.get('summaries_count')}\n\n"
+        "Воронка:\n"
+        f"- ALERT-кандидаты: {result.get('alerts_count')}\n"
+        f"- STRONG_ALERT-кандидаты: {result.get('strong_alert_candidates_count', 0)}\n"
+        f"- Финальные SENDABLE alerts: {result.get('sendable_alerts_count', result.get('sent_count', 0))}\n"
+        f"- WATCH-кандидаты: {result.get('watch_count')}\n"
+        f"- SINGLE_APP_WATCH-кандидаты: {result.get('single_app_watch_count', 0)}\n"
+        f"- NEAR_MISS-кандидаты: {result.get('near_miss_count')}\n"
+        f"- Отклонено: {result.get('rejected_count')}\n\n"
+        "Дедупликация и лимиты:\n"
+        f"- Кандидатов до market-signal dedupe: {result.get('candidates_before_market_signal_dedupe', 0)}\n"
+        f"- Кандидатов после market-signal dedupe: {result.get('candidates_after_market_signal_dedupe', 0)}\n"
+        f"- Status counts до dedupe: {format_compact_counts(result.get('status_counts_before_dedupe', {}))}\n"
+        f"- Status counts после dedupe: {format_compact_counts(result.get('status_counts_after_dedupe', {}))}\n"
+        f"- Подавлено дублей market-signal: {result.get('duplicate_market_signals_suppressed', 0)}\n"
+        f"- Заблокировано cooldown: {result.get('cooldown_blocked_count', 0)}\n"
+        f"- Заблокировано лимитом: {result.get('limit_blocked_count', 0)}\n\n"
+        "SENDABLE-фильтр:\n"
+        "- Прошли strict hard-filter: "
         f"{result.get('sendable_hard_filter_pass_count', 0)}/"
         f"{result.get('sendable_hard_filter_fail_count', 0)}\n"
-        f"Calibrated promotions: {result.get('calibrated_promotions_count', 0)}\n"
-        f"Mixed unknown clusters: {result.get('mixed_unknown_clusters_count', 0)}\n"
-        f"Unknown-dominant clusters: {result.get('unknown_dominant_clusters_count', 0)}\n"
-        f"Unknown blocker active: {result.get('unknown_blocker_active_count', 0)}\n"
-        "Candidates blocked by unknown_pattern_blocker_active: "
-        f"{result.get('unknown_pattern_blocker_active_blocked_count', 0)}\n"
-        f"Sendable blockers: {format_top_counts(result.get('top_first_blocking_failures', {}), limit=10)}\n"
-        f"Baseline only: {baseline}\n"
-        f"{llm_line}\n\n"
-        f"{status}"
+        f"- Calibrated promotions: {result.get('calibrated_promotions_count', 0)}\n"
+        f"- Основные блокеры: {format_top_counts(result.get('top_first_blocking_failures', {}), limit=10)}\n\n"
+        "Unknown diagnostics:\n"
+        f"- Mixed unknown clusters: {result.get('mixed_unknown_clusters_count', 0)}\n"
+        f"- Unknown-dominant clusters: {result.get('unknown_dominant_clusters_count', 0)}\n"
+        f"- Unknown blocker active: {result.get('unknown_blocker_active_count', 0)}\n"
+        "- Заблокировано unknown_pattern_blocker_active: "
+        f"{result.get('unknown_pattern_blocker_active_blocked_count', 0)}\n\n"
+        "LLM:\n"
+        f"{format_result_llm_status(result)}\n"
+        f"- TEST-рекомендаций среди отправленных alerts: {result.get('llm_test_recommendations', 0)}\n"
+        f"- Отдельных TEST-сообщений отправлено: {result.get('separate_test_messages_sent', 0)}\n\n"
+        "Telegram:\n"
+        f"- Обычных alert-сообщений отправлено: {result.get('telegram_regular_alerts_sent', result.get('sent_count', 0))}\n"
+        f"- Baseline only: {baseline}"
     )
 
 
 def format_result_llm_status(result: dict[str, Any]) -> str:
     llm_status = result.get("llm_status")
     if not isinstance(llm_status, dict) or not llm_status:
-        return "LLM review: unavailable"
-    parts = [
-        f"source={llm_status.get('analysis_source', 'fallback')}",
-        f"model={llm_status.get('model', 'unknown')}",
+        return "- Источник: недоступно"
+    source = llm_status.get("analysis_source", "fallback")
+    lines = [
+        f"- Источник: {ru_llm_source(source)}",
+        f"- Модель: {llm_status.get('model', 'unknown')}",
     ]
     if llm_status.get("fallback_reason"):
-        parts.append(f"fallback_reason={llm_status.get('fallback_reason')}")
-    return f"LLM review: {', '.join(parts)}"
+        fallback_reason = llm_status.get("fallback_reason")
+        lines.append(f"- fallback_reason: {fallback_reason} ({ru_fallback_reason(fallback_reason)})")
+    return "\n".join(lines)
 
 
 def format_compact_counts(value: Any) -> str:
@@ -324,5 +391,16 @@ def format_list(items: Any, limit: int) -> str:
         items = [items]
     clean_items = [str(item).strip() for item in items if str(item).strip()]
     if not clean_items:
-        return "- No details."
+        return "- Нет деталей."
     return "\n".join(f"- {item}" for item in clean_items[:limit])
+
+
+def format_code_list(items: Any, formatter: Any = str, limit: int | None = None) -> str:
+    if not isinstance(items, list):
+        items = [items]
+    clean_items = [formatter(item) for item in items if str(item).strip()]
+    if limit is not None:
+        clean_items = clean_items[:limit]
+    if not clean_items:
+        return "- none"
+    return "\n".join(f"- {item}" for item in clean_items)

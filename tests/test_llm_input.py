@@ -94,6 +94,28 @@ class LlmInputTests(unittest.TestCase):
 
         self.assertEqual(pack["alerts"], [])
 
+    def test_llm_pack_source_scope_preserved_with_russian_output_config(self):
+        config, _ = load_config("config.yaml")
+
+        pack = build_candidate_pack_input(
+            [
+                candidate(
+                    "ALERT",
+                    candidate_id="sendable-alert",
+                    send_regular_alert=True,
+                    alert_stage="SENDABLE_ALERT",
+                    source_scope="single_appstorespy_query_no_country_language",
+                )
+            ],
+            config,
+        )
+
+        self.assertEqual(config["language"]["telegram_language"], "ru")
+        self.assertEqual(config["llm"]["output_language"], "ru")
+        self.assertEqual(pack["alerts"][0]["source_scope"], "single_appstorespy_query_no_country_language")
+        serialized = str(pack)
+        self.assertNotIn("raw_source_fields_json", serialized)
+
 
 if __name__ == "__main__":
     unittest.main()

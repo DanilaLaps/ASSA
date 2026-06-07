@@ -6,6 +6,14 @@
     "score_version": "v1.3.2",
     "sample_data_path": "data/sample/sample_apps.json"
   },
+  "language": {
+    "output_language": "ru",
+    "telegram_language": "ru",
+    "llm_output_language": "ru",
+    "translate_human_labels": true,
+    "translate_llm_text": true,
+    "keep_machine_codes_english": true
+  },
   "platforms": ["google_play"],
   "collection": {
     "mode": "single_query",
@@ -397,6 +405,9 @@
     "enabled": true,
     "model_env": "OPENAI_MODEL",
     "default_model": "gpt-4.1-mini",
+    "output_language": "ru",
+    "require_russian_response": true,
+    "keep_recommendation_enum_english": true,
     "max_output_tokens": 6000,
     "timeout_seconds": 60
   },
@@ -405,6 +416,10 @@
     "notify_on_completion": true,
     "bot_token_env": "TELEGRAM_BOT_TOKEN",
     "chat_id_env": "TELEGRAM_CHAT_ID",
+    "language": "ru",
+    "use_plain_text": true,
+    "translate_labels": true,
+    "include_original_codes": true,
     "max_message_chars": 3900
   },
   "storage": {

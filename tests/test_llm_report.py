@@ -138,7 +138,7 @@ class LlmReportTests(unittest.TestCase):
     def test_fallback_analysis_avoids_country_specific_claims(self):
         analysis = generate_fallback_analysis(alert())
 
-        self.assertIn("single-query AppStoreSpy slice", analysis["summary"])
+        self.assertIn("одном AppStoreSpy query-срезе", analysis["summary"])
         self.assertNotIn("BR", analysis["summary"])
 
     def test_analyze_candidate_pack_reports_missing_openai_key(self):
@@ -177,6 +177,7 @@ class LlmReportTests(unittest.TestCase):
         urlopen.assert_not_called()
         self.assertEqual(analysis["analysis_source"], "fallback")
         self.assertEqual(analysis["llm_status"]["fallback_reason"], "no_sendable_alerts")
+        self.assertIn("нет финальных SENDABLE_ALERT-кандидатов", analysis["llm_fallback_note_ru"])
         self.assertFalse(analysis["llm_status"]["should_call_openai"])
 
     def test_generate_openai_pack_analysis_marks_openai_candidate_sources(self):
@@ -199,17 +200,66 @@ class LlmReportTests(unittest.TestCase):
         self.assertEqual(analysis["analysis_source"], "openai")
         self.assertEqual(analysis["candidate_analysis_sources"]["candidate-1"], "openai")
         self.assertEqual(analysis["candidate_analyses"]["candidate-1"]["mvp_hypothesis"], "Test a focused sorting MVP.")
+        self.assertEqual(
+            analysis["candidate_analyses"]["candidate-1"]["llm_language_warning"],
+            "non_russian_text_detected",
+        )
 
     def test_pack_prompt_is_readable_and_requests_json(self):
         prompt = build_pack_prompt({"alerts": [], "watch": [], "near_misses": [], "initial_baseline_digest": []})
 
         self.assertIn("Return only a JSON object", prompt)
-        self.assertIn("single-query AppStoreSpy", prompt)
+        self.assertIn("Отвечай только на русском языке", prompt)
+        self.assertIn("одного AppStoreSpy query", prompt)
         self.assertIn("top_products", prompt)
         self.assertIn("competitor_takeaways", prompt)
-        self.assertIn("only the candidates that will be sent as Telegram alerts", prompt)
-        self.assertIn("Return an analysis for every candidate_id in alerts", prompt)
-        self.assertNotIn("Рў", prompt)
+        self.assertIn("Python deterministic scoring уже выбрал sendable alerts", prompt)
+        self.assertIn("Верни анализ для каждого candidate_id из alerts", prompt)
+        self.assertIn("recommendation", prompt)
+        self.assertIn("TEST", prompt)
+        self.assertIn("WATCH", prompt)
+        self.assertIn("AVOID", prompt)
+        self.assertIn("confidence", prompt)
+        self.assertIn("low", prompt)
+        self.assertIn("medium", prompt)
+        self.assertIn("high", prompt)
+        self.assertIn("не переводи", prompt.lower())
+
+    def test_fallback_pack_analysis_is_russian(self):
+        pack_input = build_candidate_pack_input([pack_candidate()], llm_config())
+
+        analysis = generate_fallback_pack_analysis(pack_input)
+        candidate_analysis = analysis["candidate_analyses"]["candidate-1"]
+
+        self.assertEqual(candidate_analysis["recommendation"], "WATCH")
+        self.assertEqual(candidate_analysis["confidence"], "medium")
+        self.assertIn("Проверить узкий MVP", candidate_analysis["mvp_hypothesis"])
+        self.assertIn("одном AppStoreSpy query-срезе", candidate_analysis["summary"])
+
+    def test_openai_response_schema_unchanged(self):
+        pack_input = build_candidate_pack_input([pack_candidate()], llm_config())
+        fallback = generate_fallback_pack_analysis(pack_input)
+
+        self.assertIn("candidate_analyses", fallback)
+        self.assertIn("candidate-1", fallback["candidate_analyses"])
+        candidate_analysis = fallback["candidate_analyses"]["candidate-1"]
+        for field in (
+            "recommendation",
+            "confidence",
+            "why_interesting",
+            "why_might_be_false_positive",
+            "mvp_hypothesis",
+            "simplified_mvp_scope",
+            "competitor_takeaways",
+            "entry_angle",
+            "differentiation_idea",
+            "why_top_products_validate_or_weaken_signal",
+            "validation_steps",
+            "risk_notes",
+            "missing_data",
+            "manual_review_needed",
+        ):
+            self.assertIn(field, candidate_analysis)
 
 
 if __name__ == "__main__":

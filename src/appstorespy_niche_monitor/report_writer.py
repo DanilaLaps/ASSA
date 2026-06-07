@@ -383,14 +383,15 @@ def render_no_sendable_diagnostics_report(diagnostics: dict[str, Any], snapshot_
 def render_manual_review_digest(diagnostics: dict[str, Any], snapshot_date: str) -> str:
     return "\n".join(
         [
-            f"# No strong SENDABLE alerts today. Closest candidates for manual review only. - {snapshot_date}",
+            f"# Сегодня нет сильных SENDABLE-alerts. Ближайшие кандидаты только для ручной проверки. - {snapshot_date}",
             "",
-            "These candidates are not regular Telegram alerts and must not be written to sent_alerts.",
+            "Эти кандидаты не отправлены как regular alert.",
+            "Они не записаны в sent_alerts.json и не запускают cooldown.",
             "",
-            "## Closest ALERT Candidates",
+            "## Ближайшие ALERT-кандидаты",
             format_no_sendable_rows(diagnostics.get("top_alert_candidates_closest_to_sendable", [])[:10]),
             "",
-            "## One-Condition Calibration Set",
+            "## Кандидаты, заблокированные одним условием",
             format_no_sendable_rows(diagnostics.get("top_candidates_blocked_by_exactly_one_condition", [])[:10]),
         ]
     ) + "\n"
