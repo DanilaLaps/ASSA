@@ -206,5 +206,18 @@
     "last_status": "ALERT",
     "opportunity_score": 80.38,
     "updated_at": "2026-06-06T09:23:34.643826+00:00"
+  },
+  "b70797818ad9c225": {
+    "normalized_niche": "sort_puzzle",
+    "last_sent_at": "2026-06-07T09:58:28.167345+00:00",
+    "last_alert_instance_id": "2026-06-07:b70797818ad9c225",
+    "top_app_ids": [
+      "com.game.bubblematch.connect.puzzle",
+      "com.magic.relaxing.water.sort.colorgame.puzzle",
+      "com.mintgames.jigsolitaire"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 80.39,
+    "updated_at": "2026-06-07T09:58:28.167345+00:00"
   }
 }
