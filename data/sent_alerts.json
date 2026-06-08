@@ -219,5 +219,18 @@
     "last_status": "ALERT",
     "opportunity_score": 80.39,
     "updated_at": "2026-06-07T09:58:28.167345+00:00"
+  },
+  "ee20dcd5f4fd0377": {
+    "normalized_niche": "sort_puzzle",
+    "last_sent_at": "2026-06-08T11:54:42.787173+00:00",
+    "last_alert_instance_id": "2026-06-08:ee20dcd5f4fd0377",
+    "top_app_ids": [
+      "com.drink.bar",
+      "com.game.bubblematch.connect.puzzle",
+      "com.magic.relaxing.water.sort.colorgame.puzzle"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 80.04,
+    "updated_at": "2026-06-08T11:54:42.787173+00:00"
   }
 }
