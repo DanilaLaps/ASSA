@@ -232,5 +232,18 @@
     "last_status": "ALERT",
     "opportunity_score": 80.04,
     "updated_at": "2026-06-08T11:54:42.787173+00:00"
+  },
+  "a45ef8b4e878ea32": {
+    "normalized_niche": "sort_puzzle",
+    "last_sent_at": "2026-06-09T10:33:22.594658+00:00",
+    "last_alert_instance_id": "2026-06-09:a45ef8b4e878ea32",
+    "top_app_ids": [
+      "com.NutBrainCompany.NutBrain",
+      "com.colorrful.sunny.sodda.sort",
+      "com.dreamwaterss.sort"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 79.76,
+    "updated_at": "2026-06-09T10:33:22.594658+00:00"
   }
 }
