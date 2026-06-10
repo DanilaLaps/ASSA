@@ -245,5 +245,18 @@
     "last_status": "ALERT",
     "opportunity_score": 79.76,
     "updated_at": "2026-06-09T10:33:22.594658+00:00"
+  },
+  "e5b5d6674c37e302": {
+    "normalized_niche": "sort_puzzle",
+    "last_sent_at": "2026-06-10T10:54:30.375921+00:00",
+    "last_alert_instance_id": "2026-06-10:e5b5d6674c37e302",
+    "top_app_ids": [
+      "com.colorrful.sunny.sodda.sort",
+      "com.dreamwaterss.sort",
+      "com.giraffeeapp.power"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 79.72,
+    "updated_at": "2026-06-10T10:54:30.375921+00:00"
   }
 }
