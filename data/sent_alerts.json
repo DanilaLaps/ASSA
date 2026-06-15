@@ -284,5 +284,18 @@
     "last_status": "ALERT",
     "opportunity_score": 73.19,
     "updated_at": "2026-06-15T13:11:15.532800+00:00"
+  },
+  "fa2c82b539126d3f": {
+    "normalized_niche": "coloring",
+    "last_sent_at": "2026-06-15T14:14:08.503870+00:00",
+    "last_alert_instance_id": "2026-06-15:fa2c82b539126d3f",
+    "top_app_ids": [
+      "color.number.paint.pixle.art.sort.jigsaw",
+      "com.AnakonPlay.GlobalOffRoad",
+      "com.car.driving.openworld.simulator"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 79.28,
+    "updated_at": "2026-06-15T14:14:08.503870+00:00"
   }
 }
