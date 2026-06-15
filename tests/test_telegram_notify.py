@@ -6,7 +6,9 @@ from appstorespy_niche_monitor.telegram_notify import (
     format_alert_message,
     format_initial_baseline_digest_message,
     format_run_summary_message,
+    format_trend_watch_message,
     send_alerts,
+    send_trend_watch,
 )
 
 
@@ -262,6 +264,52 @@ class TelegramNotifyTests(unittest.TestCase):
                             "send_regular_alert": True,
                             "alert_stage": "SENDABLE_ALERT",
                             "llm_analysis": {"recommendation": "TEST"},
+                        }
+                    ],
+                    {"telegram": {"enabled": True}},
+                )
+
+        self.assertEqual(len(sent), 1)
+        self.assertEqual(send_message.call_count, 1)
+
+    def test_trend_watch_message_is_separate_from_regular_alerts(self):
+        item = {
+            "candidate_id": "trend-1",
+            "normalized_niche": "hidden_object",
+            "send_trend_watch": True,
+            "trend_watch_stage": "TREND_WATCH",
+            "trend_watch_score": 82,
+            "trend_watch_reasons": ["strong_growth_trend_watch"],
+            "trend_watch_failures": [],
+            "alert_stage": "QUALIFIED_CANDIDATE_ONLY",
+            "status": "ALERT",
+            "send_regular_alert": False,
+            "weekly_growth_percent": 35,
+            "monthly_growth_percent": 80,
+            "top_apps": [],
+        }
+
+        message = format_trend_watch_message(item)
+
+        self.assertIn("TREND_WATCH: strongly growing trend, not a regular alert", message)
+        self.assertIn("does not mean SENDABLE_ALERT", message)
+        self.assertIn("Trend watch score: 82/100", message)
+
+    def test_send_trend_watch_does_not_require_sendable_alert_stage(self):
+        with patch.dict(
+            "os.environ",
+            {"TELEGRAM_BOT_TOKEN": "token", "TELEGRAM_CHAT_ID": "chat"},
+            clear=True,
+        ):
+            with patch("appstorespy_niche_monitor.telegram_notify.send_message") as send_message:
+                sent = send_trend_watch(
+                    [
+                        {
+                            "status": "ALERT",
+                            "send_regular_alert": False,
+                            "alert_stage": "QUALIFIED_CANDIDATE_ONLY",
+                            "send_trend_watch": True,
+                            "trend_watch_stage": "TREND_WATCH",
                         }
                     ],
                     {"telegram": {"enabled": True}},

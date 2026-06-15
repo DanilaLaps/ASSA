@@ -29,8 +29,9 @@ from .storage import (
     write_json,
     write_weekly_report,
 )
-from .telegram_notify import send_alerts, send_initial_baseline_digest, send_message, send_run_summary
+from .telegram_notify import send_alerts, send_initial_baseline_digest, send_message, send_run_summary, send_trend_watch
 from .trend_detector import detect_trends
+from .trend_watch import mark_trend_watch_sent, select_trend_watch
 from .utils import utc_today
 from .aggregator import aggregate_apps
 from .weekly_digest import generate_weekly_digest
@@ -86,6 +87,13 @@ def run_pipeline(
         sent_alerts if isinstance(sent_alerts, dict) else {},
         snapshot_date,
         baseline_only=history_state == FIRST_RUN_NO_HISTORY,
+    )
+    sent_trend_watch = read_json(paths["sent_trend_watch_path"], {})
+    candidates, trend_watch_items = select_trend_watch(
+        candidates,
+        config,
+        sent_trend_watch if isinstance(sent_trend_watch, dict) else {},
+        snapshot_date,
     )
 
     history_summary = {
@@ -151,6 +159,7 @@ def run_pipeline(
     save_processed(paths, "candidates", candidates, snapshot_date)
     save_processed(paths, "alerts", alert_candidates, snapshot_date)
     save_processed(paths, "sendable_alerts", urgent_alerts, snapshot_date)
+    save_processed(paths, "trend_watch", trend_watch_items, snapshot_date)
     save_processed(paths, "watch", watch, snapshot_date)
     save_processed(paths, "near_misses", near_misses, snapshot_date)
     save_processed(paths, "rejected", rejected, snapshot_date)
@@ -166,12 +175,22 @@ def run_pipeline(
     write_json(paths["processed_dir"] / f"{snapshot_date}_alert_funnel.json", alert_funnel)
 
     sent_count = 0
+    trend_watch_sent_count = 0
     initial_digest_sent = False
     if urgent_alerts and notify:
         sent = send_alerts(urgent_alerts, config)
         sent_count = len(sent)
         updated_sent_alerts = mark_sent(sent_alerts if isinstance(sent_alerts, dict) else {}, sent, snapshot_date)
         write_json(paths["sent_alerts_path"], updated_sent_alerts)
+    if trend_watch_items and notify:
+        sent_watch = send_trend_watch(trend_watch_items, config)
+        trend_watch_sent_count = len(sent_watch)
+        updated_sent_trend_watch = mark_trend_watch_sent(
+            sent_trend_watch if isinstance(sent_trend_watch, dict) else {},
+            sent_watch,
+            snapshot_date,
+        )
+        write_json(paths["sent_trend_watch_path"], updated_sent_trend_watch)
     initial_digest_items = [item for item in candidates if item.get("initial_baseline_digest")]
     if notify and mode == "production" and initial_digest_items:
         initial_digest_sent = send_initial_baseline_digest(initial_digest_items, config)
@@ -195,11 +214,14 @@ def run_pipeline(
         "rejected_count": len(rejected),
         "sent_count": sent_count,
         "telegram_regular_alerts_sent": sent_count,
+        "trend_watch_count": len(trend_watch_items),
+        "telegram_trend_watch_sent": trend_watch_sent_count,
         "llm_candidates_sent": len(urgent_alerts),
         "llm_test_recommendations": llm_test_recommendations,
         "separate_test_messages_sent": 0,
         "duplicate_market_signals_suppressed": alert_funnel["duplicate_market_signals_suppressed"],
         "cooldown_blocked_count": alert_funnel["cooldown_blocked_count"],
+        "trend_watch_cooldown_blocked_count": alert_funnel["trend_watch_cooldown_blocked_count"],
         "limit_blocked_count": alert_funnel["limit_blocked_count"],
         "candidates_before_market_signal_dedupe": alert_funnel["candidates_before_market_signal_dedupe"],
         "candidates_after_market_signal_dedupe": alert_funnel["candidates_after_market_signal_dedupe"],
@@ -252,6 +274,11 @@ def build_alert_funnel(
         "candidates_count": len(candidates),
         "alert_candidates_count": sum(1 for item in candidates if item.get("status") == "ALERT"),
         "sendable_alerts_count": len(urgent_alerts),
+        "trend_watch_count": sum(
+            1
+            for item in candidates
+            if item.get("send_trend_watch") is True and item.get("trend_watch_stage") == "TREND_WATCH"
+        ),
         "watch_count": sum(1 for item in candidates if item.get("status") == "WATCH"),
         "watch_like_count": len(watch),
         "single_app_watch_count": sum(1 for item in candidates if item.get("status") == "SINGLE_APP_WATCH"),
@@ -281,6 +308,11 @@ def build_alert_funnel(
             for item in candidates
             if "cooldown_exact_dedupe_key" in item.get("sendable_alert_failures", [])
             or "cooldown_normalized_niche" in item.get("sendable_alert_failures", [])
+        ),
+        "trend_watch_cooldown_blocked_count": sum(
+            1
+            for item in candidates
+            if any(str(failure).startswith("trend_watch_cooldown") for failure in item.get("trend_watch_failures", []))
         ),
         "limit_blocked_count": sum(
             1

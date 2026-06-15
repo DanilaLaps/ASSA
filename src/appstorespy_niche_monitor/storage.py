@@ -16,6 +16,10 @@ def storage_paths(config: dict[str, Any], config_dir: Path) -> dict[str, Path]:
         "processed_dir": resolve_path(config_dir, storage.get("processed_dir", "data/processed")),
         "history_dir": resolve_path(config_dir, storage.get("history_dir", "data/history")),
         "sent_alerts_path": resolve_path(config_dir, storage.get("sent_alerts_path", "data/sent_alerts.json")),
+        "sent_trend_watch_path": resolve_path(
+            config_dir,
+            storage.get("sent_trend_watch_path", "data/sent_trend_watch.json"),
+        ),
         "feedback_path": resolve_path(config_dir, storage.get("feedback_path", config.get("feedback", {}).get("path", "data/feedback.jsonl"))),
         "reports_alerts_dir": resolve_path(config_dir, storage.get("reports_alerts_dir", "reports/alerts")),
         "reports_daily_dir": resolve_path(config_dir, storage.get("reports_daily_dir", "reports/daily")),
@@ -32,6 +36,8 @@ def ensure_storage(config: dict[str, Any], config_dir: Path) -> dict[str, Path]:
             path.parent.mkdir(parents=True, exist_ok=True)
     if not paths["sent_alerts_path"].exists():
         write_json(paths["sent_alerts_path"], {})
+    if not paths["sent_trend_watch_path"].exists():
+        write_json(paths["sent_trend_watch_path"], {})
     if not paths["feedback_path"].exists() and paths["feedback_path"].suffix == ".json":
         write_json(paths["feedback_path"], [])
     elif not paths["feedback_path"].exists():

@@ -38,7 +38,8 @@ def format_alert_message(alert: dict[str, Any]) -> str:
     competitors = format_competitors(alert.get("top_competitors") or alert.get("top_products") or alert.get("top_apps", []), limit=3)
     coverage_status = extract_coverage_status(alert.get("coverage", {}))
     return (
-        f"{format_alert_title(alert, recommendation)}\n\n"
+        f"{format_alert_title(alert, recommendation)}\n"
+        f"{format_alert_notice(alert)}"
         "Платформа: Google Play\n"
         "Охват данных: один запрос AppStoreSpy, без фильтра страны и языка\n"
         "Источник: один AppStoreSpy query\n"
@@ -57,6 +58,7 @@ def format_alert_message(alert: dict[str, Any]) -> str:
         "Оценки:\n"
         f"- Opportunity score: {alert.get('opportunity_score')}/100\n"
         f"- Sendable alert score: {alert.get('sendable_alert_score')}/100\n"
+        f"{format_trend_watch_score_line(alert)}"
         f"- Уверенность тренда: {alert.get('trend_confidence_score')}/100\n"
         f"- Подходит небольшой команде: {alert.get('team_fit_score')}/100\n"
         f"- Органическая уверенность: {alert.get('organic_confidence', 'unknown')}\n"
@@ -73,7 +75,7 @@ def format_alert_message(alert: dict[str, Any]) -> str:
         "Почему интересно:\n"
         f"{format_list(evidence_items, limit=3)}\n\n"
         "Почему отправлено сейчас:\n"
-        f"{format_code_list(alert.get('sendable_alert_reasons', []), describe_reason_code, limit=4)}\n\n"
+        f"{format_code_list(delivery_reasons(alert), describe_reason_code, limit=4)}\n\n"
         "Гипотеза MVP:\n"
         f"{mvp}\n\n"
         "Основные конкуренты:\n"
@@ -81,7 +83,7 @@ def format_alert_message(alert: dict[str, Any]) -> str:
         "Риски:\n"
         f"{format_list(risk_items, limit=3)}\n\n"
         "Почему сигнал может быть ложноположительным:\n"
-        f"{format_code_list(alert.get('sendable_alert_failures') or alert.get('risk_tags', []), describe_risk_tag, limit=4)}\n\n"
+        f"{format_code_list(delivery_failures(alert) or alert.get('risk_tags', []), describe_risk_tag, limit=4)}\n\n"
         f"Alert ID: {alert.get('alert_instance_id') or alert.get('alert_id')}"
     )
 
@@ -89,6 +91,8 @@ def format_alert_message(alert: dict[str, Any]) -> str:
 def format_alert_title(alert: dict[str, Any], recommendation: str) -> str:
     niche = alert.get("normalized_niche", alert.get("niche"))
     selection_mode = str(alert.get("selection_mode") or "")
+    if selection_mode == "trend_watch" or alert.get("send_trend_watch") is True:
+        return f"TREND_WATCH: strongly growing trend, not a regular alert: {niche}"
     if selection_mode == "calibrated_promotion" or alert.get("calibrated_promotion") is True:
         return f"Кандидат для ручной проверки: {niche}"
     if selection_mode == "normal_sendable" and recommendation == "TEST":
@@ -96,6 +100,33 @@ def format_alert_title(alert: dict[str, Any], recommendation: str) -> str:
     if recommendation == "WATCH":
         return f"Кандидат для наблюдения: {niche}"
     return f"Сигнал по игровой нише: {niche}"
+
+
+def format_alert_notice(alert: dict[str, Any]) -> str:
+    if str(alert.get("selection_mode") or "") == "trend_watch" or alert.get("send_trend_watch") is True:
+        return (
+            "\nTREND_WATCH notice: this is not a regular Telegram alert and does not mean SENDABLE_ALERT. "
+            "It is a separate manual-review signal for a strongly growing trend.\n\n"
+        )
+    return "\n"
+
+
+def format_trend_watch_score_line(alert: dict[str, Any]) -> str:
+    if str(alert.get("selection_mode") or "") == "trend_watch" or alert.get("send_trend_watch") is True:
+        return f"- Trend watch score: {alert.get('trend_watch_score')}/100\n"
+    return ""
+
+
+def delivery_reasons(alert: dict[str, Any]) -> Any:
+    if str(alert.get("selection_mode") or "") == "trend_watch" or alert.get("send_trend_watch") is True:
+        return alert.get("trend_watch_reasons", [])
+    return alert.get("sendable_alert_reasons", [])
+
+
+def delivery_failures(alert: dict[str, Any]) -> Any:
+    if str(alert.get("selection_mode") or "") == "trend_watch" or alert.get("send_trend_watch") is True:
+        return alert.get("trend_watch_failures", [])
+    return alert.get("sendable_alert_failures", [])
 
 
 def extract_coverage_status(coverage: Any) -> Any:
@@ -173,6 +204,41 @@ def send_alerts(alerts: list[dict[str, Any]], config: dict[str, Any]) -> list[di
         assert alert.get("alert_stage") == "SENDABLE_ALERT"
         send_message(token, chat_id, format_alert_message(alert), int(telegram_cfg.get("max_message_chars", 3900)))
         sent.append(alert)
+    return sent
+
+
+def format_trend_watch_message(item: dict[str, Any]) -> str:
+    alert = dict(item)
+    alert["selection_mode"] = "trend_watch"
+    alert["alert_stage"] = "TREND_WATCH"
+    alert["alert_id"] = alert.get("trend_watch_instance_id") or alert.get("candidate_id")
+    alert.setdefault(
+        "llm_analysis",
+        {
+            "recommendation": "WATCH",
+            "confidence": "medium",
+            "mvp_hypothesis": "Manual review only: validate whether the growth is organic and replicable before testing.",
+        },
+    )
+    alert.setdefault("llm_analysis_source", "deterministic_trend_watch")
+    return format_alert_message(alert)
+
+
+def send_trend_watch(items: list[dict[str, Any]], config: dict[str, Any]) -> list[dict[str, Any]]:
+    telegram_cfg = config.get("telegram", {})
+    if not telegram_cfg.get("enabled", True):
+        return []
+    token = os.environ.get(telegram_cfg.get("bot_token_env", "TELEGRAM_BOT_TOKEN"))
+    chat_id = os.environ.get(telegram_cfg.get("chat_id_env", "TELEGRAM_CHAT_ID"))
+    if not token or not chat_id:
+        raise RuntimeError("TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID are required to send notifications.")
+    sent: list[dict[str, Any]] = []
+    for item in items:
+        if item.get("send_trend_watch") is not True:
+            continue
+        assert item.get("trend_watch_stage") == "TREND_WATCH"
+        send_message(token, chat_id, format_trend_watch_message(item), int(telegram_cfg.get("max_message_chars", 3900)))
+        sent.append(item)
     return sent
 
 

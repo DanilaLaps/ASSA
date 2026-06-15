@@ -104,6 +104,33 @@ class SendableAlertFilterTests(unittest.TestCase):
         self.assertIn("promoted_best_clean_alert_when_no_sendable", urgent_alerts[0]["sendable_alert_reasons"])
         self.assertEqual(urgent_alerts[0]["hard_blockers_count"], 0)
 
+    def test_promotion_respects_cooldown(self):
+        config, _ = load_config("config.yaml")
+        filtered = apply_cooldown_and_alert_limits(
+            [
+                alert_candidate(
+                    1,
+                    opportunity_score=78,
+                    top_app_share=0.62,
+                    sendable_alert_reasons=[],
+                )
+            ],
+            config,
+            {
+                "previous-alert": {
+                    "normalized_niche": "niche_1",
+                    "last_sent_at": "2026-06-03T10:00:00+00:00",
+                }
+            },
+            "2026-06-04",
+        )
+        urgent_alerts, *_ = split_candidates(filtered)
+
+        self.assertEqual(len(urgent_alerts), 0)
+        self.assertFalse(filtered[0].get("calibrated_promotion"))
+        self.assertIn("cooldown_normalized_niche", filtered[0]["sendable_alert_failures"])
+        self.assertEqual(filtered[0]["alert_stage"], "COOLDOWN_BLOCKED")
+
     def test_no_promotion_with_hard_blocker(self):
         config, _ = load_config("config.yaml")
         filtered = apply_cooldown_and_alert_limits(

@@ -389,6 +389,28 @@
     "promoted_alert_stage": "SENDABLE_ALERT",
     "promoted_reason_code": "promoted_best_clean_alert_when_no_sendable"
   },
+  "trend_watch": {
+    "enabled": true,
+    "max_items_per_run": 1,
+    "cooldown_days": 7,
+    "allowed_statuses": ["ALERT", "WATCH", "NEAR_MISS"],
+    "exclude_regular_alerts": true,
+    "min_weekly_growth_percent": 10.0,
+    "min_monthly_growth_percent": 20.0,
+    "min_history_depth_days": 2,
+    "min_total_daily_installs": 5000,
+    "min_app_count": 3,
+    "min_successful_new_apps": 1,
+    "min_data_quality_score": 60.0,
+    "min_classification_confidence_avg": 0.50,
+    "max_growth_by_one_app_share": 0.75,
+    "max_top_app_share": 0.80,
+    "block_unknown_pattern_if_low_confidence": true,
+    "blocked_risk_tags": [
+      "severe_paid_spike",
+      "low_data_quality"
+    ]
+  },
   "first_run_behavior": {
     "save_baseline_snapshot": true,
     "send_regular_alerts": false,
@@ -427,6 +449,7 @@
     "processed_dir": "data/processed",
     "history_dir": "data/history",
     "sent_alerts_path": "data/sent_alerts.json",
+    "sent_trend_watch_path": "data/sent_trend_watch.json",
     "feedback_path": "data/feedback.jsonl",
     "reports_alerts_dir": "reports/alerts",
     "reports_daily_dir": "reports/daily",

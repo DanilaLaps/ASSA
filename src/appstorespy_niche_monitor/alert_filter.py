@@ -157,6 +157,9 @@ def apply_cooldown_and_alert_limits_with_diagnostics(
     if sent_count == 0 and maybe_promote_best_alert(
         by_id,
         config,
+        sent_alerts,
+        snapshot_date,
+        cooldown_days,
         baseline_only=baseline_only,
         max_alerts=max_alerts,
     ):
@@ -243,6 +246,9 @@ def calibration_rules(config: dict[str, Any]) -> dict[str, Any]:
 def maybe_promote_best_alert(
     by_id: dict[str, dict[str, Any]],
     config: dict[str, Any],
+    sent_alerts: dict[str, Any],
+    snapshot_date: str,
+    cooldown_days: int,
     *,
     baseline_only: bool,
     max_alerts: int,
@@ -255,14 +261,30 @@ def maybe_promote_best_alert(
     if not bool(rules.get("allow_promote_best_alert_if_no_sendable", True)):
         return False
 
-    candidates = [
-        item
-        for item in by_id.values()
-        if item.get("status") == "ALERT"
-        and item.get("send_regular_alert") is not True
-        and item.get("alert_stage") != "SENDABLE_ALERT"
-        and is_promotable_clean_alert(item, config, rules)
-    ]
+    candidates: list[dict[str, Any]] = []
+    for item in by_id.values():
+        if (
+            item.get("status") != "ALERT"
+            or item.get("send_regular_alert") is True
+            or item.get("alert_stage") == "SENDABLE_ALERT"
+        ):
+            continue
+        cooldown_failures = cooldown_failure_reasons(
+            str(item.get("dedupe_key")),
+            str(item.get("normalized_niche")),
+            sent_alerts,
+            cooldown_days,
+            snapshot_date,
+        )
+        if cooldown_failures:
+            item["alert_stage"] = "COOLDOWN_BLOCKED"
+            item["telegram_delivery_channel"] = "none"
+            add_filter_reasons(item, ["cooldown", *cooldown_failures])
+            add_sendable_failures(item, cooldown_failures)
+            assign_blocker_fields(item, config)
+            continue
+        if is_promotable_clean_alert(item, config, rules):
+            candidates.append(item)
     if not candidates:
         return False
     candidates.sort(
