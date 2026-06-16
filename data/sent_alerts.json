@@ -297,5 +297,18 @@
     "last_status": "ALERT",
     "opportunity_score": 79.28,
     "updated_at": "2026-06-15T14:14:08.503870+00:00"
+  },
+  "f5f04baa5e71302d": {
+    "normalized_niche": "block_puzzle",
+    "last_sent_at": "2026-06-16T12:10:55.630259+00:00",
+    "last_alert_instance_id": "2026-06-16:f5f04baa5e71302d",
+    "top_app_ids": [
+      "com.Kick.Block.Lucky.Rush",
+      "com.gs.erskraft.game",
+      "com.gss.gorillataggame"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 73.0,
+    "updated_at": "2026-06-16T12:10:55.630259+00:00"
   }
 }
