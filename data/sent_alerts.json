@@ -66,16 +66,16 @@
   },
   "0d470463437a13ab": {
     "normalized_niche": "tile_match",
-    "last_sent_at": "2026-06-05T11:05:56.975373+00:00",
-    "last_alert_instance_id": "2026-06-05:0d470463437a13ab",
+    "last_sent_at": "2026-06-17T11:45:52.016780+00:00",
+    "last_alert_instance_id": "2026-06-17:0d470463437a13ab",
     "top_app_ids": [
       "com.avs.grand.criminal.sand.box",
       "com.cedargames.tileclear",
       "com.oakever.meowdoku"
     ],
     "last_status": "ALERT",
-    "opportunity_score": 79.91,
-    "updated_at": "2026-06-05T11:05:56.975373+00:00"
+    "opportunity_score": 77.53,
+    "updated_at": "2026-06-17T11:45:52.016780+00:00"
   },
   "0457e0ffe94d9f6f": {
     "normalized_niche": "word_puzzle",
