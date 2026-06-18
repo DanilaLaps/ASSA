@@ -310,5 +310,18 @@
     "last_status": "ALERT",
     "opportunity_score": 73.0,
     "updated_at": "2026-06-16T12:10:55.630259+00:00"
+  },
+  "a094e605d1865812": {
+    "normalized_niche": "other",
+    "last_sent_at": "2026-06-18T11:08:24.732274+00:00",
+    "last_alert_instance_id": "2026-06-18:a094e605d1865812",
+    "top_app_ids": [
+      "com.cedargames.tileclear",
+      "com.oakever.meowdoku",
+      "com.sd.obby.parkour.runner.games"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 78.37,
+    "updated_at": "2026-06-18T11:08:24.732274+00:00"
   }
 }
