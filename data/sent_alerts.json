@@ -336,5 +336,18 @@
     "last_status": "ALERT",
     "opportunity_score": 88.99,
     "updated_at": "2026-06-19T11:19:24.564666+00:00"
+  },
+  "b7870a826f59f3ce": {
+    "normalized_niche": "match_3",
+    "last_sent_at": "2026-06-20T10:08:25.630860+00:00",
+    "last_alert_instance_id": "2026-06-20:b7870a826f59f3ce",
+    "top_app_ids": [
+      "com.happygogame.ASMRMakeupBeautySalon",
+      "com.kinesic.paths.casual",
+      "com.racing.square.run"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 84.76,
+    "updated_at": "2026-06-20T10:08:25.630860+00:00"
   }
 }
