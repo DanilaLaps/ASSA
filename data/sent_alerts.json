@@ -349,5 +349,18 @@
     "last_status": "ALERT",
     "opportunity_score": 84.76,
     "updated_at": "2026-06-20T10:08:25.630860+00:00"
+  },
+  "a2818fa6989b820d": {
+    "normalized_niche": "word_puzzle",
+    "last_sent_at": "2026-06-21T10:28:53.374241+00:00",
+    "last_alert_instance_id": "2026-06-21:a2818fa6989b820d",
+    "top_app_ids": [
+      "com.astrocade.app",
+      "com.bird.prankster.gird.game.sim",
+      "com.gv.i.am.hunter.game"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 85.36,
+    "updated_at": "2026-06-21T10:28:53.374241+00:00"
   }
 }
