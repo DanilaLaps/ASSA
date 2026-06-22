@@ -362,5 +362,31 @@
     "last_status": "ALERT",
     "opportunity_score": 85.36,
     "updated_at": "2026-06-21T10:28:53.374241+00:00"
+  },
+  "b652ff7bc8d1ff09": {
+    "normalized_niche": "sort_puzzle",
+    "last_sent_at": "2026-06-22T12:47:51.171379+00:00",
+    "last_alert_instance_id": "2026-06-22:b652ff7bc8d1ff09",
+    "top_app_ids": [
+      "com.bbqsort.game",
+      "com.chaos.drink.sort",
+      "com.sortfluids.nsb"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 90.32,
+    "updated_at": "2026-06-22T12:47:51.171379+00:00"
+  },
+  "c148d1edb504d65f": {
+    "normalized_niche": "coloring",
+    "last_sent_at": "2026-06-22T12:47:51.171379+00:00",
+    "last_alert_instance_id": "2026-06-22:c148d1edb504d65f",
+    "top_app_ids": [
+      "color.number.paint.pixle.art.sort.jigsaw",
+      "com.db.mini.party.fun.games",
+      "com.gt.fragarena.clashreborn"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 88.61,
+    "updated_at": "2026-06-22T12:47:51.171379+00:00"
   }
 }
