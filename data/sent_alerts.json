@@ -388,5 +388,18 @@
     "last_status": "ALERT",
     "opportunity_score": 88.61,
     "updated_at": "2026-06-22T12:47:51.171379+00:00"
+  },
+  "c7986f6a702ae55a": {
+    "normalized_niche": "block_puzzle",
+    "last_sent_at": "2026-06-23T10:35:31.989832+00:00",
+    "last_alert_instance_id": "2026-06-23:c7986f6a702ae55a",
+    "top_app_ids": [
+      "com.blockblast.vn",
+      "com.gbs.grand.miami.gangtser.city.crime",
+      "com.gss.gorillataggame"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 87.14,
+    "updated_at": "2026-06-23T10:35:31.989832+00:00"
   }
 }
