@@ -414,5 +414,18 @@
     "last_status": "ALERT",
     "opportunity_score": 83.21,
     "updated_at": "2026-06-24T10:20:47.510692+00:00"
+  },
+  "760a53adac113c77": {
+    "normalized_niche": "hidden_object",
+    "last_sent_at": "2026-06-25T10:14:56.725422+00:00",
+    "last_alert_instance_id": "2026-06-25:760a53adac113c77",
+    "top_app_ids": [
+      "com.bbs.playtoy.scary.game",
+      "com.cpl.schoolgirl.home.escape.stealth",
+      "com.find.search.hidden.objects.free.puzzle"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 78.42,
+    "updated_at": "2026-06-25T10:14:56.725422+00:00"
   }
 }
