@@ -427,5 +427,18 @@
     "last_status": "ALERT",
     "opportunity_score": 78.42,
     "updated_at": "2026-06-25T10:14:56.725422+00:00"
+  },
+  "bbd9a8b730ed2f3c": {
+    "normalized_niche": "arrow_puzzle",
+    "last_sent_at": "2026-06-26T10:21:59.946835+00:00",
+    "last_alert_instance_id": "2026-06-26:bbd9a8b730ed2f3c",
+    "top_app_ids": [
+      "com.arrow.madness.games.arrows.escape.puzzle.game",
+      "com.earahgkfhudio.arjgiwsnap",
+      "com.kinesic.paths.casual"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 89.69,
+    "updated_at": "2026-06-26T10:21:59.946835+00:00"
   }
 }
