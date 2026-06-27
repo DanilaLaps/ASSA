@@ -440,5 +440,18 @@
     "last_status": "ALERT",
     "opportunity_score": 89.69,
     "updated_at": "2026-06-26T10:21:59.946835+00:00"
+  },
+  "8e4f10b2c42d9cf3": {
+    "normalized_niche": "other",
+    "last_sent_at": "2026-06-27T09:27:39.328186+00:00",
+    "last_alert_instance_id": "2026-06-27:8e4f10b2c42d9cf3",
+    "top_app_ids": [
+      "com.blitzauragames.tilemagic",
+      "com.craftclovestudios.bingo",
+      "com.hfl.soccercup.footballgame"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 73.66,
+    "updated_at": "2026-06-27T09:27:39.328186+00:00"
   }
 }
