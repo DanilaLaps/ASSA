@@ -453,5 +453,18 @@
     "last_status": "ALERT",
     "opportunity_score": 73.66,
     "updated_at": "2026-06-27T09:27:39.328186+00:00"
+  },
+  "5856625fb58b13cd": {
+    "normalized_niche": "word_puzzle",
+    "last_sent_at": "2026-06-28T09:56:40.738485+00:00",
+    "last_alert_instance_id": "2026-06-28:5856625fb58b13cd",
+    "top_app_ids": [
+      "com.arean.blade.steel.adven.sim",
+      "com.gv.i.am.hunter.game",
+      "com.number.clear"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 80.21,
+    "updated_at": "2026-06-28T09:56:40.738485+00:00"
   }
 }
