@@ -466,5 +466,31 @@
     "last_status": "ALERT",
     "opportunity_score": 80.21,
     "updated_at": "2026-06-28T09:56:40.738485+00:00"
+  },
+  "39fe91ff2b967b8f": {
+    "normalized_niche": "sort_puzzle",
+    "last_sent_at": "2026-06-29T11:57:46.028736+00:00",
+    "last_alert_instance_id": "2026-06-29:39fe91ff2b967b8f",
+    "top_app_ids": [
+      "com.hypervation.goodssort",
+      "com.meemeegames.categorysort",
+      "com.sortfluids.nsb"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 90.26,
+    "updated_at": "2026-06-29T11:57:46.028736+00:00"
+  },
+  "b7c122540bce9da0": {
+    "normalized_niche": "coloring",
+    "last_sent_at": "2026-06-29T11:57:46.028736+00:00",
+    "last_alert_instance_id": "2026-06-29:b7c122540bce9da0",
+    "top_app_ids": [
+      "com.car.driving.traffic.simulation",
+      "com.db.mini.party.fun.games",
+      "com.mc.city.runner.adventure"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 88.74,
+    "updated_at": "2026-06-29T11:57:46.028736+00:00"
   }
 }
