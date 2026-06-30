@@ -492,5 +492,18 @@
     "last_status": "ALERT",
     "opportunity_score": 88.74,
     "updated_at": "2026-06-29T11:57:46.028736+00:00"
+  },
+  "ca974809cb31ea88": {
+    "normalized_niche": "block_puzzle",
+    "last_sent_at": "2026-06-30T10:31:16.221296+00:00",
+    "last_alert_instance_id": "2026-06-30:ca974809cb31ea88",
+    "top_app_ids": [
+      "arrow.clash.blast.escape.out.maze",
+      "com.blockblast.vn",
+      "com.gbs.grand.miami.gangtser.city.crime"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 86.96,
+    "updated_at": "2026-06-30T10:31:16.221296+00:00"
   }
 }
