@@ -505,5 +505,18 @@
     "last_status": "ALERT",
     "opportunity_score": 86.96,
     "updated_at": "2026-06-30T10:31:16.221296+00:00"
+  },
+  "03a204beb3ebcb6a": {
+    "normalized_niche": "tile_match",
+    "last_sent_at": "2026-07-01T10:41:04.202087+00:00",
+    "last_alert_instance_id": "2026-07-01:03a204beb3ebcb6a",
+    "top_app_ids": [
+      "com.cedargames.tileclear",
+      "com.oakever.meowdoku",
+      "com.piano.music.rhythm.tiles.games"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 88.93,
+    "updated_at": "2026-07-01T10:41:04.202087+00:00"
   }
 }
