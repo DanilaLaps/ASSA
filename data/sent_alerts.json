@@ -518,5 +518,18 @@
     "last_status": "ALERT",
     "opportunity_score": 88.93,
     "updated_at": "2026-07-01T10:41:04.202087+00:00"
+  },
+  "4562710ff4edf611": {
+    "normalized_niche": "hidden_object",
+    "last_sent_at": "2026-07-02T09:59:53.461654+00:00",
+    "last_alert_instance_id": "2026-07-02:4562710ff4edf611",
+    "top_app_ids": [
+      "com.KotzillaGames.MadGran2.Scary.Horror.Escape",
+      "com.flower.forest.word.puzzle",
+      "com.gp20.grumpygran.escapehouse"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 83.44,
+    "updated_at": "2026-07-02T09:59:53.461654+00:00"
   }
 }
