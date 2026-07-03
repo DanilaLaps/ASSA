@@ -326,16 +326,16 @@
   },
   "d0500f19d8e208b7": {
     "normalized_niche": "arrow_puzzle",
-    "last_sent_at": "2026-06-19T11:19:24.564666+00:00",
-    "last_alert_instance_id": "2026-06-19:d0500f19d8e208b7",
+    "last_sent_at": "2026-07-03T09:54:41.951450+00:00",
+    "last_alert_instance_id": "2026-07-03:d0500f19d8e208b7",
     "top_app_ids": [
       "com.arrow.madness.games.arrows.escape.puzzle.game",
       "com.blockblast.vn",
       "com.cedargames.tileclear"
     ],
     "last_status": "ALERT",
-    "opportunity_score": 88.99,
-    "updated_at": "2026-06-19T11:19:24.564666+00:00"
+    "opportunity_score": 86.33,
+    "updated_at": "2026-07-03T09:54:41.951450+00:00"
   },
   "b7870a826f59f3ce": {
     "normalized_niche": "match_3",
