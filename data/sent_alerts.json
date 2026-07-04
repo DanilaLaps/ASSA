@@ -531,5 +531,18 @@
     "last_status": "ALERT",
     "opportunity_score": 83.44,
     "updated_at": "2026-07-02T09:59:53.461654+00:00"
+  },
+  "e0dad0df2b7d499a": {
+    "normalized_niche": "other",
+    "last_sent_at": "2026-07-04T09:21:24.751417+00:00",
+    "last_alert_instance_id": "2026-07-04:e0dad0df2b7d499a",
+    "top_app_ids": [
+      "com.cedargames.tileclear",
+      "com.mahjong.master.solitaire.match.puzzle",
+      "com.oakever.meowdoku"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 87.05,
+    "updated_at": "2026-07-04T09:21:24.751417+00:00"
   }
 }
