@@ -557,5 +557,18 @@
     "last_status": "ALERT",
     "opportunity_score": 83.25,
     "updated_at": "2026-07-05T09:41:15.105363+00:00"
+  },
+  "f7a2ee2d28ffabd7": {
+    "normalized_niche": "sort_puzzle",
+    "last_sent_at": "2026-07-06T11:26:34.414397+00:00",
+    "last_alert_instance_id": "2026-07-06:f7a2ee2d28ffabd7",
+    "top_app_ids": [
+      "com.chaos.drink.sort",
+      "com.hypervation.goodssort",
+      "com.sortfluids.nsb"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 90.13,
+    "updated_at": "2026-07-06T11:26:34.414397+00:00"
   }
 }
