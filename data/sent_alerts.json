@@ -583,5 +583,18 @@
     "last_status": "ALERT",
     "opportunity_score": 87.36,
     "updated_at": "2026-07-07T10:24:48.189708+00:00"
+  },
+  "07922fe4542be87b": {
+    "normalized_niche": "tile_match",
+    "last_sent_at": "2026-07-08T09:24:40.114344+00:00",
+    "last_alert_instance_id": "2026-07-08:07922fe4542be87b",
+    "top_app_ids": [
+      "com.cedargames.tileclear",
+      "com.gsb24.hidenseek.prophuntgames",
+      "com.oakever.meowdoku"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 90.31,
+    "updated_at": "2026-07-08T09:24:40.114344+00:00"
   }
 }
