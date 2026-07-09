@@ -596,5 +596,18 @@
     "last_status": "ALERT",
     "opportunity_score": 90.31,
     "updated_at": "2026-07-08T09:24:40.114344+00:00"
+  },
+  "bc4e4773e6b5c37e": {
+    "normalized_niche": "coloring",
+    "last_sent_at": "2026-07-09T10:22:40.290599+00:00",
+    "last_alert_instance_id": "2026-07-09:bc4e4773e6b5c37e",
+    "top_app_ids": [
+      "com.db.mini.party.fun.games",
+      "com.gaw.hidden.color.arena",
+      "com.oakever.paintbynumber"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 90.04,
+    "updated_at": "2026-07-09T10:22:40.290599+00:00"
   }
 }
