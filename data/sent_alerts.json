@@ -635,5 +635,18 @@
     "last_status": "ALERT",
     "opportunity_score": 81.65,
     "updated_at": "2026-07-11T08:45:20.878017+00:00"
+  },
+  "6090b52de68a6502": {
+    "normalized_niche": "other",
+    "last_sent_at": "2026-07-12T09:01:42.030242+00:00",
+    "last_alert_instance_id": "2026-07-12:6090b52de68a6502",
+    "top_app_ids": [
+      "com.FifthOceanStuido.GamesHubTest",
+      "com.cedargames.tileclear",
+      "com.gaw.hidden.color.arena"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 86.15,
+    "updated_at": "2026-07-12T09:01:42.030242+00:00"
   }
 }
