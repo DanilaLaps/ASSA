@@ -648,5 +648,31 @@
     "last_status": "ALERT",
     "opportunity_score": 86.15,
     "updated_at": "2026-07-12T09:01:42.030242+00:00"
+  },
+  "da386d3d3d33643e": {
+    "normalized_niche": "sort_puzzle",
+    "last_sent_at": "2026-07-13T10:22:50.365323+00:00",
+    "last_alert_instance_id": "2026-07-13:da386d3d3d33643e",
+    "top_app_ids": [
+      "com.game.bubblematch.connect.puzzle",
+      "com.mintgames.jigsolitaire",
+      "com.waterfallbbq.factorystack.flamechute"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 78.74,
+    "updated_at": "2026-07-13T10:22:50.365323+00:00"
+  },
+  "7ae9e57ae8094bb3": {
+    "normalized_niche": "word_puzzle",
+    "last_sent_at": "2026-07-13T10:22:50.365323+00:00",
+    "last_alert_instance_id": "2026-07-13:7ae9e57ae8094bb3",
+    "top_app_ids": [
+      "com.astrocade.app",
+      "com.cr.godzilla.kong.clash.game",
+      "com.fc.p.to.room.secret.scary.puzzle"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 85.46,
+    "updated_at": "2026-07-13T10:22:50.365323+00:00"
   }
 }
