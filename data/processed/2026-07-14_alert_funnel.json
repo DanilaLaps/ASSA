@@ -1,0 +1,203 @@
+{
+  "candidates_count": 606,
+  "alert_candidates_count": 123,
+  "sendable_alerts_count": 1,
+  "trend_watch_count": 1,
+  "watch_count": 179,
+  "watch_like_count": 186,
+  "single_app_watch_count": 7,
+  "near_miss_count": 98,
+  "rejected_count": 199,
+  "status_counts": {
+    "ALERT": 123,
+    "NEAR_MISS": 98,
+    "REJECT": 199,
+    "SINGLE_APP_WATCH": 7,
+    "WATCH": 179
+  },
+  "alert_strength_counts": {
+    "MEDIUM_ALERT": 35,
+    "NONE": 483,
+    "STRONG_ALERT": 88
+  },
+  "strong_alert_candidates_count": 88,
+  "candidates_before_market_signal_dedupe": 606,
+  "candidates_after_market_signal_dedupe": 606,
+  "status_counts_before_dedupe": {
+    "ALERT": 123,
+    "NEAR_MISS": 98,
+    "REJECT": 199,
+    "SINGLE_APP_WATCH": 7,
+    "WATCH": 179
+  },
+  "status_counts_after_dedupe": {
+    "ALERT": 123,
+    "NEAR_MISS": 98,
+    "REJECT": 199,
+    "SINGLE_APP_WATCH": 7,
+    "WATCH": 179
+  },
+  "sendable_hard_filter_pass_count": 11,
+  "sendable_hard_filter_fail_count": 112,
+  "sendable_hard_filter_denominator": 123,
+  "original_sendable_alerts_count": 1,
+  "calibrated_promotions_count": 0,
+  "duplicate_market_signals_suppressed": 141,
+  "cooldown_blocked_count": 10,
+  "trend_watch_cooldown_blocked_count": 0,
+  "limit_blocked_count": 0,
+  "mixed_unknown_clusters_count": 76,
+  "unknown_dominant_clusters_count": 72,
+  "unknown_blocker_active_count": 72,
+  "unknown_pattern_blocker_active_blocked_count": 72,
+  "failure_counts": {
+    "below_classification_confidence": 203,
+    "below_data_quality_for_trend_confidence": 282,
+    "below_data_quality_score": 282,
+    "below_mvp_feasibility": 206,
+    "below_opportunity_score": 487,
+    "below_sendable_alert_score": 595,
+    "below_team_fit_score": 392,
+    "below_trend_confidence_score": 264,
+    "blocked_risk_tag": 153,
+    "complex_full_product": 288,
+    "cooldown_exact_dedupe_key": 2,
+    "cooldown_normalized_niche": 10,
+    "duplicate_market_signal": 141,
+    "giant_developer_competition": 34,
+    "giant_developer_penalty": 32,
+    "giant_share_too_high": 27,
+    "growth_by_one_app_too_high": 260,
+    "high_mvp_complexity": 133,
+    "high_production_complexity": 58,
+    "leader_dominated_market": 251,
+    "low_classification_confidence": 203,
+    "low_developer_diversity": 141,
+    "low_mvp_feasibility": 206,
+    "low_total_daily_installs": 112,
+    "low_total_daily_installs_for_trend_confidence": 112,
+    "market_signal_duplicate": 14,
+    "no_growth_history": 4,
+    "not_alert_status": 483,
+    "one_app_growth_penalty": 291,
+    "organic_confidence_low": 232,
+    "other_niche_low_confidence": 66,
+    "severe_paid_spike_penalty": 148,
+    "single_app_breakout_not_regular_alert": 141,
+    "single_developer_dominance": 227,
+    "single_developer_penalty": 266,
+    "single_developer_share_too_high": 251,
+    "too_few_apps_for_sendable": 223,
+    "too_few_apps_for_trend_confidence": 223,
+    "too_few_successful_new_apps": 141,
+    "too_few_successful_new_apps_for_trend_confidence": 141,
+    "too_few_unique_developers": 141,
+    "top3_too_dominant": 367,
+    "top_app_concentration_penalty": 291,
+    "top_app_too_dominant": 291,
+    "unknown_pattern_blocker_active": 72
+  },
+  "blocked_alert_first_blocking_failure_counts": {
+    "below_sendable_alert_score": 112,
+    "cooldown_exact_dedupe_key": 2,
+    "cooldown_normalized_niche": 8
+  },
+  "blocked_alert_sendable_failure_counts": {
+    "below_classification_confidence": 12,
+    "below_data_quality_for_trend_confidence": 3,
+    "below_data_quality_score": 3,
+    "below_opportunity_score": 35,
+    "below_sendable_alert_score": 112,
+    "below_team_fit_score": 46,
+    "complex_full_product": 46,
+    "cooldown_exact_dedupe_key": 2,
+    "cooldown_normalized_niche": 10,
+    "duplicate_market_signal": 14,
+    "growth_by_one_app_too_high": 9,
+    "high_mvp_complexity": 1,
+    "low_classification_confidence": 12,
+    "market_signal_duplicate": 14,
+    "one_app_growth_penalty": 16,
+    "single_developer_penalty": 2,
+    "top3_too_dominant": 13,
+    "top_app_concentration_penalty": 6,
+    "top_app_too_dominant": 6
+  },
+  "blocked_alert_metric_stats": {
+    "sendable_alert_score": {
+      "avg": 68.6871,
+      "p50": 68.93,
+      "p75": 73.28,
+      "p90": 78.79
+    },
+    "opportunity_score": {
+      "avg": 79.2461,
+      "p50": 78.69,
+      "p75": 83.65,
+      "p90": 86.37
+    },
+    "trend_confidence_score": {
+      "avg": 80.4913,
+      "p50": 81.16,
+      "p75": 82.22,
+      "p90": 82.56
+    },
+    "team_fit_score": {
+      "avg": 63.8531,
+      "p50": 64.75,
+      "p75": 80.14,
+      "p90": 89.75
+    },
+    "data_quality_score": {
+      "avg": 86.5884,
+      "p50": 88.0,
+      "p75": 88.0,
+      "p90": 88.0
+    },
+    "classification_confidence_avg": {
+      "avg": 0.6477,
+      "p50": 0.6384,
+      "p75": 0.6652,
+      "p90": 0.693
+    },
+    "mvp_feasibility_score": {
+      "avg": 69.0032,
+      "p50": 66.16,
+      "p75": 71.5,
+      "p90": 85.0
+    },
+    "top_app_share": {
+      "avg": 0.2837,
+      "p50": 0.2536,
+      "p75": 0.3807,
+      "p90": 0.5089
+    },
+    "top3_app_share": {
+      "avg": 0.5311,
+      "p50": 0.5123,
+      "p75": 0.6906,
+      "p90": 0.8631
+    },
+    "growth_by_one_app_share": {
+      "avg": 0.4218,
+      "p50": 0.3888,
+      "p75": 0.4954,
+      "p90": 0.6302
+    },
+    "advertised_top_app_share": {
+      "avg": 0.0,
+      "p50": 0.0,
+      "p75": 0.0,
+      "p90": 0.0
+    },
+    "organic_confidence_numeric": {
+      "avg": 100.0,
+      "p50": 100.0,
+      "p75": 100.0,
+      "p90": 100.0
+    }
+  },
+  "blocked_alert_organic_confidence_distribution": {
+    "HIGH": 122
+  }
+}
