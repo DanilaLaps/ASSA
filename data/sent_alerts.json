@@ -687,5 +687,18 @@
     "last_status": "ALERT",
     "opportunity_score": 89.13,
     "updated_at": "2026-07-14T09:03:53.830609+00:00"
+  },
+  "a194b904e3ad3fbf": {
+    "normalized_niche": "tile_match",
+    "last_sent_at": "2026-07-15T09:09:13.707894+00:00",
+    "last_alert_instance_id": "2026-07-15:a194b904e3ad3fbf",
+    "top_app_ids": [
+      "com.nebula.tiles",
+      "com.oakever.meowdoku",
+      "com.piano.music.rhythm.tiles.games"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 89.92,
+    "updated_at": "2026-07-15T09:09:13.707894+00:00"
   }
 }
