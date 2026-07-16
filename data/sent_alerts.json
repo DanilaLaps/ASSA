@@ -700,5 +700,18 @@
     "last_status": "ALERT",
     "opportunity_score": 89.92,
     "updated_at": "2026-07-15T09:09:13.707894+00:00"
+  },
+  "8438f6ba5d7c38cf": {
+    "normalized_niche": "coloring",
+    "last_sent_at": "2026-07-16T09:12:09.442824+00:00",
+    "last_alert_instance_id": "2026-07-16:8438f6ba5d7c38cf",
+    "top_app_ids": [
+      "com.cdt.mega.mechagame",
+      "com.db.mini.party.fun.games",
+      "com.gaw.hidden.color.arena"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 87.36,
+    "updated_at": "2026-07-16T09:12:09.442824+00:00"
   }
 }
