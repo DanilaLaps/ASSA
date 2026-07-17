@@ -713,5 +713,18 @@
     "last_status": "ALERT",
     "opportunity_score": 87.36,
     "updated_at": "2026-07-16T09:12:09.442824+00:00"
+  },
+  "3c1e85d409ec3edd": {
+    "normalized_niche": "arrow_puzzle",
+    "last_sent_at": "2026-07-17T09:08:05.677426+00:00",
+    "last_alert_instance_id": "2026-07-17:3c1e85d409ec3edd",
+    "top_app_ids": [
+      "com.blockblast.vn",
+      "com.kinesic.paths.casual",
+      "com.mahjong.master.solitaire.match.puzzle"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 86.54,
+    "updated_at": "2026-07-17T09:08:05.677426+00:00"
   }
 }
