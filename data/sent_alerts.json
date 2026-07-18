@@ -726,5 +726,18 @@
     "last_status": "ALERT",
     "opportunity_score": 86.54,
     "updated_at": "2026-07-17T09:08:05.677426+00:00"
+  },
+  "75c302d27d7de112": {
+    "normalized_niche": "hidden_object",
+    "last_sent_at": "2026-07-18T08:48:00.477965+00:00",
+    "last_alert_instance_id": "2026-07-18:75c302d27d7de112",
+    "top_app_ids": [
+      "com.abi.packingdom",
+      "com.bbs.playtoy.scary.game",
+      "com.camosniper.shooting"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 78.32,
+    "updated_at": "2026-07-18T08:48:00.477965+00:00"
   }
 }
