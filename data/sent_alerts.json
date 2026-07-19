@@ -739,5 +739,18 @@
     "last_status": "ALERT",
     "opportunity_score": 78.32,
     "updated_at": "2026-07-18T08:48:00.477965+00:00"
+  },
+  "ae349d812aff93e4": {
+    "normalized_niche": "other",
+    "last_sent_at": "2026-07-19T09:05:33.031771+00:00",
+    "last_alert_instance_id": "2026-07-19:ae349d812aff93e4",
+    "top_app_ids": [
+      "com.brain.monster.emoarrow.sfaex.puzzle",
+      "com.cyphergames.royalsmash",
+      "com.ew.solitaire"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 85.72,
+    "updated_at": "2026-07-19T09:05:33.031771+00:00"
   }
 }
