@@ -765,5 +765,18 @@
     "last_status": "ALERT",
     "opportunity_score": 80.45,
     "updated_at": "2026-07-20T09:57:41.656571+00:00"
+  },
+  "54cc3a08c53b11c8": {
+    "normalized_niche": "block_puzzle",
+    "last_sent_at": "2026-07-21T09:27:06.458088+00:00",
+    "last_alert_instance_id": "2026-07-21:54cc3a08c53b11c8",
+    "top_app_ids": [
+      "com.gbs.grand.miami.gangtser.city.crime",
+      "com.gsp.boomchip.blast.challenge.clash.games",
+      "com.nb.speed.clicker"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 90.29,
+    "updated_at": "2026-07-21T09:27:06.458088+00:00"
   }
 }
