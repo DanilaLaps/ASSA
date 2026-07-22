@@ -778,5 +778,18 @@
     "last_status": "ALERT",
     "opportunity_score": 90.29,
     "updated_at": "2026-07-21T09:27:06.458088+00:00"
+  },
+  "a17b37fa673d0f65": {
+    "normalized_niche": "runner",
+    "last_sent_at": "2026-07-22T09:25:51.475102+00:00",
+    "last_alert_instance_id": "2026-07-22:a17b37fa673d0f65",
+    "top_app_ids": [
+      "color.number.paint.pixle.art.sort.jigsaw",
+      "com.hp.tap.fun.party.games",
+      "com.markettrainingvpgame.moneytycoon"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 84.42,
+    "updated_at": "2026-07-22T09:25:51.475102+00:00"
   }
 }
