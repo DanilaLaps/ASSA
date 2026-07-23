@@ -690,16 +690,16 @@
   },
   "a194b904e3ad3fbf": {
     "normalized_niche": "tile_match",
-    "last_sent_at": "2026-07-15T09:09:13.707894+00:00",
-    "last_alert_instance_id": "2026-07-15:a194b904e3ad3fbf",
+    "last_sent_at": "2026-07-23T09:24:39.385817+00:00",
+    "last_alert_instance_id": "2026-07-23:a194b904e3ad3fbf",
     "top_app_ids": [
       "com.nebula.tiles",
       "com.oakever.meowdoku",
       "com.piano.music.rhythm.tiles.games"
     ],
     "last_status": "ALERT",
-    "opportunity_score": 89.92,
-    "updated_at": "2026-07-15T09:09:13.707894+00:00"
+    "opportunity_score": 89.96,
+    "updated_at": "2026-07-23T09:24:39.385817+00:00"
   },
   "8438f6ba5d7c38cf": {
     "normalized_niche": "coloring",
@@ -791,5 +791,18 @@
     "last_status": "ALERT",
     "opportunity_score": 84.42,
     "updated_at": "2026-07-22T09:25:51.475102+00:00"
+  },
+  "c35a422b04e6a955": {
+    "normalized_niche": "coloring",
+    "last_sent_at": "2026-07-23T09:24:39.385817+00:00",
+    "last_alert_instance_id": "2026-07-23:c35a422b04e6a955",
+    "top_app_ids": [
+      "color.number.paint.pixle.art.sort.jigsaw",
+      "com.cdt.mega.mechagame",
+      "com.db.mini.party.fun.games"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 89.56,
+    "updated_at": "2026-07-23T09:24:39.385817+00:00"
   }
 }
