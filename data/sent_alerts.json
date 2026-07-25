@@ -817,5 +817,18 @@
     "last_status": "ALERT",
     "opportunity_score": 86.38,
     "updated_at": "2026-07-24T09:19:47.800557+00:00"
+  },
+  "c965e47a1a07ec02": {
+    "normalized_niche": "hidden_object",
+    "last_sent_at": "2026-07-25T08:59:47.922173+00:00",
+    "last_alert_instance_id": "2026-07-25:c965e47a1a07ec02",
+    "top_app_ids": [
+      "com.dps.adventure.drive.yet",
+      "com.flower.forest.word.puzzle",
+      "com.gbr11.midnighthaunted.houseescape"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 84.9,
+    "updated_at": "2026-07-25T08:59:47.922173+00:00"
   }
 }
