@@ -830,5 +830,18 @@
     "last_status": "ALERT",
     "opportunity_score": 84.9,
     "updated_at": "2026-07-25T08:59:47.922173+00:00"
+  },
+  "d2c847cae43ec6bd": {
+    "normalized_niche": "other",
+    "last_sent_at": "2026-07-26T09:11:15.078001+00:00",
+    "last_alert_instance_id": "2026-07-26:d2c847cae43ec6bd",
+    "top_app_ids": [
+      "com.gamedive.superhero.fight.game",
+      "com.mz.wrestling.champion.game",
+      "com.oakever.meowdoku"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 88.18,
+    "updated_at": "2026-07-26T09:11:15.078001+00:00"
   }
 }
