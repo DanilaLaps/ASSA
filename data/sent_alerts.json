@@ -843,5 +843,18 @@
     "last_status": "ALERT",
     "opportunity_score": 88.18,
     "updated_at": "2026-07-26T09:11:15.078001+00:00"
+  },
+  "a68e7904efdabe7b": {
+    "normalized_niche": "sort_puzzle",
+    "last_sent_at": "2026-07-27T10:40:45.157302+00:00",
+    "last_alert_instance_id": "2026-07-27:a68e7904efdabe7b",
+    "top_app_ids": [
+      "com.game.bubblematch.connect.puzzle",
+      "com.magic.relaxing.water.sort.colorgame.puzzle",
+      "com.sortmagicbrews.magicsortbottles"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 82.11,
+    "updated_at": "2026-07-27T10:40:45.157302+00:00"
   }
 }
