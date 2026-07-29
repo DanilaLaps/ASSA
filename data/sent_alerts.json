@@ -869,5 +869,18 @@
     "last_status": "ALERT",
     "opportunity_score": 88.15,
     "updated_at": "2026-07-28T09:35:33.892474+00:00"
+  },
+  "c0cf8d7444566dc2": {
+    "normalized_niche": "word_puzzle",
+    "last_sent_at": "2026-07-29T09:36:57.622597+00:00",
+    "last_alert_instance_id": "2026-07-29:c0cf8d7444566dc2",
+    "top_app_ids": [
+      "com.garena.game.kgvn",
+      "com.mangame.wordtreasure",
+      "com.megagames.sensultra"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 77.56,
+    "updated_at": "2026-07-29T09:36:57.622597+00:00"
   }
 }
