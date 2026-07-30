@@ -794,16 +794,16 @@
   },
   "c35a422b04e6a955": {
     "normalized_niche": "coloring",
-    "last_sent_at": "2026-07-23T09:24:39.385817+00:00",
-    "last_alert_instance_id": "2026-07-23:c35a422b04e6a955",
+    "last_sent_at": "2026-07-30T09:29:23.299412+00:00",
+    "last_alert_instance_id": "2026-07-30:c35a422b04e6a955",
     "top_app_ids": [
       "color.number.paint.pixle.art.sort.jigsaw",
       "com.cdt.mega.mechagame",
       "com.db.mini.party.fun.games"
     ],
     "last_status": "ALERT",
-    "opportunity_score": 89.56,
-    "updated_at": "2026-07-23T09:24:39.385817+00:00"
+    "opportunity_score": 90.38,
+    "updated_at": "2026-07-30T09:29:23.299412+00:00"
   },
   "cb84fb05e85839b3": {
     "normalized_niche": "mahjong",
