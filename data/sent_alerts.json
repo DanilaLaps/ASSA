@@ -807,16 +807,16 @@
   },
   "cb84fb05e85839b3": {
     "normalized_niche": "mahjong",
-    "last_sent_at": "2026-07-24T09:19:47.800557+00:00",
-    "last_alert_instance_id": "2026-07-24:cb84fb05e85839b3",
+    "last_sent_at": "2026-07-31T09:42:04.691140+00:00",
+    "last_alert_instance_id": "2026-07-31:cb84fb05e85839b3",
     "top_app_ids": [
       "com.ew.mahjong",
       "com.jc.mahjongpop",
       "com.mahjong.cashlink.gg"
     ],
     "last_status": "ALERT",
-    "opportunity_score": 86.38,
-    "updated_at": "2026-07-24T09:19:47.800557+00:00"
+    "opportunity_score": 87.42,
+    "updated_at": "2026-07-31T09:42:04.691140+00:00"
   },
   "c965e47a1a07ec02": {
     "normalized_niche": "hidden_object",
