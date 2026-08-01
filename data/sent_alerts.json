@@ -882,5 +882,18 @@
     "last_status": "ALERT",
     "opportunity_score": 77.56,
     "updated_at": "2026-07-29T09:36:57.622597+00:00"
+  },
+  "507cec295c6ce917": {
+    "normalized_niche": "hidden_object",
+    "last_sent_at": "2026-08-01T09:04:26.172890+00:00",
+    "last_alert_instance_id": "2026-08-01:507cec295c6ce917",
+    "top_app_ids": [
+      "com.abi.packingdom",
+      "com.fivebn.md2.f2p",
+      "com.schoolboyescapesimulatorgame"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 75.04,
+    "updated_at": "2026-08-01T09:04:26.172890+00:00"
   }
 }
