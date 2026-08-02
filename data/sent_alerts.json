@@ -895,5 +895,18 @@
     "last_status": "ALERT",
     "opportunity_score": 75.04,
     "updated_at": "2026-08-01T09:04:26.172890+00:00"
+  },
+  "6da52a52530f19e4": {
+    "normalized_niche": "arrow_puzzle",
+    "last_sent_at": "2026-08-02T09:08:50.290876+00:00",
+    "last_alert_instance_id": "2026-08-02:6da52a52530f19e4",
+    "top_app_ids": [
+      "com.arrow.maze.tap.away.puzzle",
+      "com.blockblast.vn",
+      "com.oakever.meowdoku"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 88.52,
+    "updated_at": "2026-08-02T09:08:50.290876+00:00"
   }
 }
