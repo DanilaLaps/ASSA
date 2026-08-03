@@ -908,5 +908,18 @@
     "last_status": "ALERT",
     "opportunity_score": 88.52,
     "updated_at": "2026-08-02T09:08:50.290876+00:00"
+  },
+  "38f4a40f478075e1": {
+    "normalized_niche": "sort_puzzle",
+    "last_sent_at": "2026-08-03T10:40:25.681298+00:00",
+    "last_alert_instance_id": "2026-08-03:38f4a40f478075e1",
+    "top_app_ids": [
+      "com.nutsbolts.zgsn",
+      "com.sortfluids.nsb",
+      "com.tube.master.color.sort"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 87.82,
+    "updated_at": "2026-08-03T10:40:25.681298+00:00"
   }
 }
