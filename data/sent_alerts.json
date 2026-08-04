@@ -921,5 +921,18 @@
     "last_status": "ALERT",
     "opportunity_score": 87.82,
     "updated_at": "2026-08-03T10:40:25.681298+00:00"
+  },
+  "60b0cd6ac344c420": {
+    "normalized_niche": "block_puzzle",
+    "last_sent_at": "2026-08-04T09:39:13.906292+00:00",
+    "last_alert_instance_id": "2026-08-04:60b0cd6ac344c420",
+    "top_app_ids": [
+      "com.blockblast.vn",
+      "com.nb.speed.clicker",
+      "com.ocean.block.shoot"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 90.03,
+    "updated_at": "2026-08-04T09:39:13.906292+00:00"
   }
 }
