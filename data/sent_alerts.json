@@ -947,5 +947,18 @@
     "last_status": "ALERT",
     "opportunity_score": 89.58,
     "updated_at": "2026-08-05T09:35:54.360102+00:00"
+  },
+  "2033dc4e9d84a31e": {
+    "normalized_niche": "other",
+    "last_sent_at": "2026-08-06T09:38:55.915059+00:00",
+    "last_alert_instance_id": "2026-08-06:2033dc4e9d84a31e",
+    "top_app_ids": [
+      "com.RC56.crafty.blox.world",
+      "com.d24.rp.open.world.grand.gangster",
+      "com.mini.football.filter.games"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 88.11,
+    "updated_at": "2026-08-06T09:38:55.915059+00:00"
   }
 }
