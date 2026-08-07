@@ -960,5 +960,18 @@
     "last_status": "ALERT",
     "opportunity_score": 88.11,
     "updated_at": "2026-08-06T09:38:55.915059+00:00"
+  },
+  "6415089ca23efbd8": {
+    "normalized_niche": "runner",
+    "last_sent_at": "2026-08-07T08:12:36.324207+00:00",
+    "last_alert_instance_id": "2026-08-07:6415089ca23efbd8",
+    "top_app_ids": [
+      "com.BusinessIndia.IndianTrainDriving3D",
+      "com.abreeq.spider.hero.rope.games",
+      "com.gamesxecutors.rope.hero.spider.fighter"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 75.66,
+    "updated_at": "2026-08-07T08:12:36.324207+00:00"
   }
 }
