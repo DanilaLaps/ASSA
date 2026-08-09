@@ -986,5 +986,18 @@
     "last_status": "ALERT",
     "opportunity_score": 75.72,
     "updated_at": "2026-08-08T07:46:33.228708+00:00"
+  },
+  "f15454241786e5bc": {
+    "normalized_niche": "mahjong",
+    "last_sent_at": "2026-08-09T07:52:53.044175+00:00",
+    "last_alert_instance_id": "2026-08-09:f15454241786e5bc",
+    "top_app_ids": [
+      "com.bamboobreeze.mahjonggame",
+      "com.ew.mahjong",
+      "com.jc.mahjongpop"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 86.99,
+    "updated_at": "2026-08-09T07:52:53.044175+00:00"
   }
 }
