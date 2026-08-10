@@ -999,5 +999,31 @@
     "last_status": "ALERT",
     "opportunity_score": 86.99,
     "updated_at": "2026-08-09T07:52:53.044175+00:00"
+  },
+  "6589bfbdbbd205a3": {
+    "normalized_niche": "coloring",
+    "last_sent_at": "2026-08-10T08:26:32.241922+00:00",
+    "last_alert_instance_id": "2026-08-10:6589bfbdbbd205a3",
+    "top_app_ids": [
+      "color.number.paint.pixle.art.sort.jigsaw",
+      "com.cdt.mega.mechagame",
+      "com.meta.trafficcar.racer.driving3d"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 90.57,
+    "updated_at": "2026-08-10T08:26:32.241922+00:00"
+  },
+  "089a7598965d4c4d": {
+    "normalized_niche": "sort_puzzle",
+    "last_sent_at": "2026-08-10T08:26:32.241922+00:00",
+    "last_alert_instance_id": "2026-08-10:089a7598965d4c4d",
+    "top_app_ids": [
+      "com.game.bubblematch.connect.puzzle",
+      "com.magic.relaxing.water.sort.colorgame.puzzle",
+      "com.sunny.arrow.clear.escape.puzzle.game"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 80.25,
+    "updated_at": "2026-08-10T08:26:32.241922+00:00"
   }
 }
