@@ -1051,5 +1051,18 @@
     "last_status": "ALERT",
     "opportunity_score": 87.93,
     "updated_at": "2026-08-11T08:09:29.646839+00:00"
+  },
+  "a7922f1177f48986": {
+    "normalized_niche": "other",
+    "last_sent_at": "2026-08-13T08:18:24.823366+00:00",
+    "last_alert_instance_id": "2026-08-13:a7922f1177f48986",
+    "top_app_ids": [
+      "com.d24.rp.open.world.grand.gangster",
+      "com.mini.football.filter.games",
+      "com.oakever.meowdoku"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 88.13,
+    "updated_at": "2026-08-13T08:18:24.823366+00:00"
   }
 }
