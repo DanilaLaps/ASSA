@@ -1064,5 +1064,18 @@
     "last_status": "ALERT",
     "opportunity_score": 88.13,
     "updated_at": "2026-08-13T08:18:24.823366+00:00"
+  },
+  "8d896059218145c4": {
+    "normalized_niche": "word_puzzle",
+    "last_sent_at": "2026-08-14T08:13:43.551782+00:00",
+    "last_alert_instance_id": "2026-08-14:8d896059218145c4",
+    "top_app_ids": [
+      "com.garena.game.kgvn",
+      "com.oc.lost.memory",
+      "com.proximabeta.kingswar"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 79.98,
+    "updated_at": "2026-08-14T08:13:43.551782+00:00"
   }
 }
