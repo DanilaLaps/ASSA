@@ -1077,5 +1077,18 @@
     "last_status": "ALERT",
     "opportunity_score": 79.98,
     "updated_at": "2026-08-14T08:13:43.551782+00:00"
+  },
+  "730ccf85f8ccc80b": {
+    "normalized_niche": "hidden_object",
+    "last_sent_at": "2026-08-15T07:29:08.292135+00:00",
+    "last_alert_instance_id": "2026-08-15:730ccf85f8ccc80b",
+    "top_app_ids": [
+      "com.abi.packingdom",
+      "com.animalhosptial.escape.adventure",
+      "com.fivebn.md2.f2p"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 77.85,
+    "updated_at": "2026-08-15T07:29:08.292135+00:00"
   }
 }
