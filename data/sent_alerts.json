@@ -1090,5 +1090,18 @@
     "last_status": "ALERT",
     "opportunity_score": 77.85,
     "updated_at": "2026-08-15T07:29:08.292135+00:00"
+  },
+  "58da53c860856744": {
+    "normalized_niche": "idle_tycoon",
+    "last_sent_at": "2026-08-16T07:29:13.848448+00:00",
+    "last_alert_instance_id": "2026-08-16:58da53c860856744",
+    "top_app_ids": [
+      "com.BillionaireGames.TicketHero",
+      "com.bank.cash.rich.coin.money.clicker",
+      "com.gspin3.zrushseven"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 77.09,
+    "updated_at": "2026-08-16T07:29:13.848448+00:00"
   }
 }
