@@ -1103,5 +1103,18 @@
     "last_status": "ALERT",
     "opportunity_score": 77.09,
     "updated_at": "2026-08-16T07:29:13.848448+00:00"
+  },
+  "0f50c855bb68ed10": {
+    "normalized_niche": "sort_puzzle",
+    "last_sent_at": "2026-08-17T07:51:04.124205+00:00",
+    "last_alert_instance_id": "2026-08-17:0f50c855bb68ed10",
+    "top_app_ids": [
+      "com.Lucky.Sort.Water.Puzzle",
+      "com.sortfluids.nsb",
+      "com.tube.master.color.sort"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 87.99,
+    "updated_at": "2026-08-17T07:51:04.124205+00:00"
   }
 }
