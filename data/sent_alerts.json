@@ -1116,5 +1116,18 @@
     "last_status": "ALERT",
     "opportunity_score": 87.99,
     "updated_at": "2026-08-17T07:51:04.124205+00:00"
+  },
+  "93c298aa67412fe9": {
+    "normalized_niche": "arrow_puzzle",
+    "last_sent_at": "2026-08-18T07:36:56.402989+00:00",
+    "last_alert_instance_id": "2026-08-18:93c298aa67412fe9",
+    "top_app_ids": [
+      "com.arrow.romantic.puzzle.goddess",
+      "com.arrowescape.puzzle",
+      "com.casuper.arrow"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 87.62,
+    "updated_at": "2026-08-18T07:36:56.402989+00:00"
   }
 }
