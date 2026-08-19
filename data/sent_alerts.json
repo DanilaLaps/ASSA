@@ -1129,5 +1129,18 @@
     "last_status": "ALERT",
     "opportunity_score": 87.62,
     "updated_at": "2026-08-18T07:36:56.402989+00:00"
+  },
+  "62fa3b59356d9050": {
+    "normalized_niche": "block_puzzle",
+    "last_sent_at": "2026-08-19T07:36:59.427793+00:00",
+    "last_alert_instance_id": "2026-08-19:62fa3b59356d9050",
+    "top_app_ids": [
+      "com.dancing.hop.rolling.cats.tiles.music.games",
+      "com.glass.puzzle.artwork",
+      "com.sgs.miami.mafia.gangster.simulator"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 89.07,
+    "updated_at": "2026-08-19T07:36:59.427793+00:00"
   }
 }
