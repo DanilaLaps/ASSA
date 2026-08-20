@@ -1142,5 +1142,18 @@
     "last_status": "ALERT",
     "opportunity_score": 89.07,
     "updated_at": "2026-08-19T07:36:59.427793+00:00"
+  },
+  "dc85026582df45ec": {
+    "normalized_niche": "tile_match",
+    "last_sent_at": "2026-08-20T07:39:34.368572+00:00",
+    "last_alert_instance_id": "2026-08-20:dc85026582df45ec",
+    "top_app_ids": [
+      "com.gb.hide.color.game",
+      "com.moco.crgame",
+      "com.oakever.meowdoku"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 85.5,
+    "updated_at": "2026-08-20T07:39:34.368572+00:00"
   }
 }
