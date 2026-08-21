@@ -1155,5 +1155,31 @@
     "last_status": "ALERT",
     "opportunity_score": 85.5,
     "updated_at": "2026-08-20T07:39:34.368572+00:00"
+  },
+  "b38e2ddb4395b625": {
+    "normalized_niche": "coloring",
+    "last_sent_at": "2026-08-21T07:41:50.201909+00:00",
+    "last_alert_instance_id": "2026-08-21:b38e2ddb4395b625",
+    "top_app_ids": [
+      "color.number.paint.pixle.art.sort.jigsaw",
+      "com.cdt.mega.mechagame",
+      "com.gb.hide.color.game"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 90.53,
+    "updated_at": "2026-08-21T07:41:50.201909+00:00"
+  },
+  "d36a6ca19150da6c": {
+    "normalized_niche": "other",
+    "last_sent_at": "2026-08-21T07:41:50.201909+00:00",
+    "last_alert_instance_id": "2026-08-21:d36a6ca19150da6c",
+    "top_app_ids": [
+      "com.RC56.crafty.blox.world",
+      "com.gb.hide.color.game",
+      "com.hp.hide.hunt.paint"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 87.66,
+    "updated_at": "2026-08-21T07:41:50.201909+00:00"
   }
 }
