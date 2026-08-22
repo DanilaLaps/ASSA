@@ -1181,5 +1181,18 @@
     "last_status": "ALERT",
     "opportunity_score": 87.66,
     "updated_at": "2026-08-21T07:41:50.201909+00:00"
+  },
+  "46830ffcff491723": {
+    "normalized_niche": "hidden_object",
+    "last_sent_at": "2026-08-22T07:29:34.151544+00:00",
+    "last_alert_instance_id": "2026-08-22:46830ffcff491723",
+    "top_app_ids": [
+      "com.agavegames.findemall",
+      "com.animalhosptial.escape.adventure",
+      "com.flower.forest.word.puzzle"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 85.83,
+    "updated_at": "2026-08-22T07:29:34.151544+00:00"
   }
 }
