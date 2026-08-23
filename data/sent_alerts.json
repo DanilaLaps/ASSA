@@ -1194,5 +1194,18 @@
     "last_status": "ALERT",
     "opportunity_score": 85.83,
     "updated_at": "2026-08-22T07:29:34.151544+00:00"
+  },
+  "af9dc798e67dc1e2": {
+    "normalized_niche": "word_puzzle",
+    "last_sent_at": "2026-08-23T07:31:42.354644+00:00",
+    "last_alert_instance_id": "2026-08-23:af9dc798e67dc1e2",
+    "top_app_ids": [
+      "com.garena.game.kgvn",
+      "com.proximabeta.kingswar",
+      "com.ragdoll.physics.destroypuppet"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 81.04,
+    "updated_at": "2026-08-23T07:31:42.354644+00:00"
   }
 }
