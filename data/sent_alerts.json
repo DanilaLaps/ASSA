@@ -1207,5 +1207,18 @@
     "last_status": "ALERT",
     "opportunity_score": 81.04,
     "updated_at": "2026-08-23T07:31:42.354644+00:00"
+  },
+  "8ab9a5948f451a9d": {
+    "normalized_niche": "sort_puzzle",
+    "last_sent_at": "2026-08-24T07:56:14.723102+00:00",
+    "last_alert_instance_id": "2026-08-24:8ab9a5948f451a9d",
+    "top_app_ids": [
+      "com.apnabankshop.beach",
+      "com.mouradsninou.cargosort",
+      "com.prismx.fillthefridge.organization.games.restock.organizing"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 81.91,
+    "updated_at": "2026-08-24T07:56:14.723102+00:00"
   }
 }
