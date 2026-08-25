@@ -1220,5 +1220,18 @@
     "last_status": "ALERT",
     "opportunity_score": 81.91,
     "updated_at": "2026-08-24T07:56:14.723102+00:00"
+  },
+  "90f75a66792fae76": {
+    "normalized_niche": "arrow_puzzle",
+    "last_sent_at": "2026-08-25T07:42:32.335386+00:00",
+    "last_alert_instance_id": "2026-08-25:90f75a66792fae76",
+    "top_app_ids": [
+      "com.arrow.maze.tap.away.puzzle",
+      "com.arrowescape.puzzle",
+      "com.casuper.arrow"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 87.16,
+    "updated_at": "2026-08-25T07:42:32.335386+00:00"
   }
 }
