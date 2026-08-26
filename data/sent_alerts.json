@@ -1233,5 +1233,18 @@
     "last_status": "ALERT",
     "opportunity_score": 87.16,
     "updated_at": "2026-08-25T07:42:32.335386+00:00"
+  },
+  "98857646d95f09ff": {
+    "normalized_niche": "block_puzzle",
+    "last_sent_at": "2026-08-26T07:44:24.842269+00:00",
+    "last_alert_instance_id": "2026-08-26:98857646d95f09ff",
+    "top_app_ids": [
+      "com.bibota.blocky",
+      "com.blockblast.vn",
+      "com.glass.puzzle.artwork"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 89.8,
+    "updated_at": "2026-08-26T07:44:24.842269+00:00"
   }
 }
