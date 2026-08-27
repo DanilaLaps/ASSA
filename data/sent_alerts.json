@@ -1246,5 +1246,18 @@
     "last_status": "ALERT",
     "opportunity_score": 89.8,
     "updated_at": "2026-08-26T07:44:24.842269+00:00"
+  },
+  "52ac998a2fad930e": {
+    "normalized_niche": "tile_match",
+    "last_sent_at": "2026-08-27T18:06:43.125907+00:00",
+    "last_alert_instance_id": "2026-08-27:52ac998a2fad930e",
+    "top_app_ids": [
+      "com.flyfox.triple.harvest.explorer.match3d.puzzle",
+      "com.mayepic.zombajourneykv",
+      "com.mindyourlogic.krishnastories"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 86.05,
+    "updated_at": "2026-08-27T18:06:43.125907+00:00"
   }
 }
