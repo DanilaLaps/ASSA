@@ -1259,5 +1259,18 @@
     "last_status": "ALERT",
     "opportunity_score": 86.05,
     "updated_at": "2026-08-27T18:06:43.125907+00:00"
+  },
+  "62e57cadaaf2a97e": {
+    "normalized_niche": "coloring",
+    "last_sent_at": "2026-08-28T19:15:47.170661+00:00",
+    "last_alert_instance_id": "2026-08-28:62e57cadaaf2a97e",
+    "top_app_ids": [
+      "com.cdt.mega.mechagame",
+      "com.hp.hide.hunt.paint",
+      "com.neura.chameleonpaint"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 89.94,
+    "updated_at": "2026-08-28T19:15:47.170661+00:00"
   }
 }
