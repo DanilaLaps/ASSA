@@ -1272,5 +1272,18 @@
     "last_status": "ALERT",
     "opportunity_score": 89.94,
     "updated_at": "2026-08-28T19:15:47.170661+00:00"
+  },
+  "88b25ad3161d0bc2": {
+    "normalized_niche": "hidden_object",
+    "last_sent_at": "2026-08-29T12:59:17.767770+00:00",
+    "last_alert_instance_id": "2026-08-29:88b25ad3161d0bc2",
+    "top_app_ids": [
+      "com.agavegames.findemall",
+      "com.cpl.schoolgirl.home.escape.stealth",
+      "com.fivebn.md2.f2p"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 83.14,
+    "updated_at": "2026-08-29T12:59:17.767770+00:00"
   }
 }
