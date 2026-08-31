@@ -1298,5 +1298,18 @@
     "last_status": "ALERT",
     "opportunity_score": 88.07,
     "updated_at": "2026-08-30T12:35:21.353104+00:00"
+  },
+  "0753929655096c0e": {
+    "normalized_niche": "sort_puzzle",
+    "last_sent_at": "2026-08-31T14:49:58.265783+00:00",
+    "last_alert_instance_id": "2026-08-31:0753929655096c0e",
+    "top_app_ids": [
+      "com.magic.relaxing.water.sort.colorgame.puzzle",
+      "com.meow.sort.puzzle.pet.arrange.color.android",
+      "com.mintgames.jigsolitaire"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 80.05,
+    "updated_at": "2026-08-31T14:49:58.265783+00:00"
   }
 }
