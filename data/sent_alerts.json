@@ -1311,5 +1311,18 @@
     "last_status": "ALERT",
     "opportunity_score": 80.05,
     "updated_at": "2026-08-31T14:49:58.265783+00:00"
+  },
+  "f86905eab17459d6": {
+    "normalized_niche": "arrow_puzzle",
+    "last_sent_at": "2026-09-01T12:22:04.129725+00:00",
+    "last_alert_instance_id": "2026-09-01:f86905eab17459d6",
+    "top_app_ids": [
+      "busflow.traffic.puzzle",
+      "com.arrowdash.maze",
+      "com.arrowescape.puzzle"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 86.66,
+    "updated_at": "2026-09-01T12:22:04.129725+00:00"
   }
 }
