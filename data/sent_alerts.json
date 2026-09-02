@@ -1324,5 +1324,18 @@
     "last_status": "ALERT",
     "opportunity_score": 86.66,
     "updated_at": "2026-09-01T12:22:04.129725+00:00"
+  },
+  "d07d76847e6e87dc": {
+    "normalized_niche": "block_puzzle",
+    "last_sent_at": "2026-09-02T11:58:48.542850+00:00",
+    "last_alert_instance_id": "2026-09-02:d07d76847e6e87dc",
+    "top_app_ids": [
+      "com.blockblast.vn",
+      "com.glass.puzzle.artwork",
+      "com.hw.people.jam.seat.puzzle"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 87.77,
+    "updated_at": "2026-09-02T11:58:48.542850+00:00"
   }
 }
