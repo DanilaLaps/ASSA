@@ -1363,5 +1363,18 @@
     "last_status": "ALERT",
     "opportunity_score": 82.36,
     "updated_at": "2026-09-04T11:59:43.803242+00:00"
+  },
+  "3ccbd26138daa026": {
+    "normalized_niche": "mahjong",
+    "last_sent_at": "2026-09-05T11:09:34.096737+00:00",
+    "last_alert_instance_id": "2026-09-05:3ccbd26138daa026",
+    "top_app_ids": [
+      "com.bigcake.android.chess.offline",
+      "com.easybrain.ludo.board.games",
+      "com.ew.mahjong"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 78.78,
+    "updated_at": "2026-09-05T11:09:34.096737+00:00"
   }
 }
