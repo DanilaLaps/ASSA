@@ -1376,5 +1376,18 @@
     "last_status": "ALERT",
     "opportunity_score": 78.78,
     "updated_at": "2026-09-05T11:09:34.096737+00:00"
+  },
+  "bc1d0dafff61c1de": {
+    "normalized_niche": "hidden_object",
+    "last_sent_at": "2026-09-06T11:32:27.982848+00:00",
+    "last_alert_instance_id": "2026-09-06:bc1d0dafff61c1de",
+    "top_app_ids": [
+      "com.agavegames.findemall",
+      "com.eyestorm.deletefun.braingame",
+      "com.flower.forest.word.puzzle"
+    ],
+    "last_status": "ALERT",
+    "opportunity_score": 86.23,
+    "updated_at": "2026-09-06T11:32:27.982848+00:00"
   }
 }
